@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 
+#include "initial_placement.h"
 #include "CG.h"
 #include "readfile.h"
 
@@ -189,4 +190,22 @@ double TSVofNet( vector <RawNet> rawNet, double gamma)
     return score;
 }
 
+double scoreOfz( vector <RawNet> rawNet)
+{
+    double score = 0;
+
+    double h = 0.05;
+
+    for ( int i = 0; i < rawNet.size(); i++)
+    {   
+        score += TSVofNet(rawNet, h);
+    }
+
+    return score;
+}
+
+double returnPenalty(Instance instance, double density, gridInfo )
+{
+
+}
 

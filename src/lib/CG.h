@@ -16,3 +16,5 @@ double RSum(double z);
 double scoreOfDensity(double z, double layer);
 
 double returnPsi(double z);
+
+double scoreOfz( vector <RawNet> rawNet);
