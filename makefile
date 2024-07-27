@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall -O3
-BINS = main
+BINS = a.out
 SRC_DIRS := src/lib
 OUT = test.svg placement.txt *.out cost.svg
 
