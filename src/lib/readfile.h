@@ -76,6 +76,8 @@ typedef struct _Instance{
     double inflateWidth;
     double inflateHeight;
 
+    double inflationRatio;
+
 }Instance;
 
 typedef struct _NetConnection{

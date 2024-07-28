@@ -13,6 +13,13 @@
 using namespace std;
 using std::vector;
 
+
+// void pr(int *arr, int arr_s)
+// {
+
+// 	printf("%d\n", arr_s);
+// }
+
 int main(int argc, char *argv[]){
 	
 	// start_time = omp_get_wtime();
@@ -42,21 +49,19 @@ int main(int argc, char *argv[]){
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
 
+	// int arr[] = {0, 1, 2};
+	// int arr_s = sizeof(arr) / sizeof(arr[0]);
+
+	// pr( arr, arr_s);
 	//read file part
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
-	// printTechnologyInfo(NumTechnologies, TechMenu);
-	
+
 	readDieInfo(input, &top_die, &bottom_die);
-	// printDieInfo(top_die, bottom_die);
-	
+
 	readHybridTerminalInfo(input, &terminal);
-	// printHybridTerminalInfo(terminal);
-	
 	readInstanceInfo(input, &NumInstances, InstanceArray, &NumTechnologies, TechMenu);
-	// printInstanceInfo(NumInstances, InstanceArray);
-	
+
 	readNetInfo(input, &NumNets, rawnet, InstanceArray);
-	// printNetInfo(NumNets, rawnet);
 
 	returnGridInfo(top_die, binInfo);
 	
@@ -65,8 +70,12 @@ int main(int argc, char *argv[]){
 	printInstanceInfo(NumInstances, InstanceArray);
 	
 
+	// printTechnologyInfo(NumTechnologies, TechMenu);
+	// printDieInfo(top_die, bottom_die);
+	// printHybridTerminalInfo(terminal);
+	// printInstanceInfo(NumInstances, InstanceArray);
+	// printNetInfo(NumNets, rawnet);
 
-	//HybridPlacement(&terminal, top_die, NetArray);
-	//outputAnswer(outputName, ArrayInfo, top_die, bottom_die, NumTerminal, NetArray);
+
 	return 0;
 }
