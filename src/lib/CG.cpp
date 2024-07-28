@@ -204,8 +204,29 @@ double scoreOfz( vector <RawNet> rawNet)
     return score;
 }
 
-double returnPenalty(Instance instance, double density, gridInfo )
+double returnPenalty(Instance instance, double density, gridInfo binInfo)
 {
+    int row = 0;
+
+    row = (int)binInfo.dieWidth / (int)binInfo.dieWidth;
+
+    double leftX = instance.x - (instance.width * 0.5);
+
+    double rightX = instance.x + (instance.width * 0.5);
+
+    double topY = instance.y - (instance.height * 0.5);
+
+    double btmY = instance.y - (instance.height * 0.5);
+
+    double inflateLeftX = instance.x - (instance.inflateWidth * 0.5);
+
+    double inflateRightX = instance.x + (instance.inflateWidth * 0.5);
+
+    double inflateTopY = instance.y - (instance.inflateHeight * 0.5);
+
+    double inflateBtmY = instance.y - (instance.inflateHeight * 0.5);
+
+    
 
 }
 
