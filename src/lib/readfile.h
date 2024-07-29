@@ -72,6 +72,8 @@ typedef struct _Instance{
 
     double width;
     double height;
+
+    double density;
     
     double inflateWidth;
     double inflateHeight;

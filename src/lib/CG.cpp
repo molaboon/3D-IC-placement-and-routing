@@ -8,10 +8,11 @@
 
 #define eta 0.1
 #define total_layer 2
+#define alpha 10
 
 using namespace std;
 
-double scoreOfX( vector <RawNet> rawNet, double gamma)
+double scoreOfX( const vector <RawNet> rawNet, const double gamma)
 {
     double score = 0.0;
 
@@ -48,7 +49,7 @@ double scoreOfX( vector <RawNet> rawNet, double gamma)
 
 }
 
-double scoreOfY( vector <RawNet> rawNet, double gamma)
+double scoreOfY( const vector <RawNet> rawNet, const double gamma)
 {
     double score = 0.0;
 
@@ -85,7 +86,7 @@ double scoreOfY( vector <RawNet> rawNet, double gamma)
 
 }
 
-double bellShapeFunc(double z, double layer)
+double bellShapeFunc( const double z, const double layer)
 {     
     double distance = abs(z - layer);
 
@@ -103,7 +104,7 @@ double bellShapeFunc(double z, double layer)
     }
 }
 
-double RSum(double z){
+double RSum( const double z){
     
     double rsum = 0.0 ;
     
@@ -122,7 +123,7 @@ double RSum(double z){
     return rsum;
 }
 
-double scoreOfDensity(double z, double layer)
+double returnBz(const double z, const double layer)
 {
     double Rz, Bz, BzRSum;
 
@@ -146,7 +147,7 @@ double returnPsi(double z)
     {
         double score ;
 
-        score = scoreOfDensity(z, (double)i);
+        score = returnBz(z, (double)i);
 
         psi += score;
     }
@@ -154,7 +155,7 @@ double returnPsi(double z)
     return psi;
 }
 
-double TSVofNet( vector <RawNet> rawNet, double gamma)
+double TSVofNet( const vector <RawNet> rawNet, const double gamma)
 {
     double score = 0.0;
 
@@ -190,7 +191,7 @@ double TSVofNet( vector <RawNet> rawNet, double gamma)
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNet)
+double scoreOfz( vector <RawNet> rawNet, int *bin)
 {
     double score = 0;
 
@@ -204,7 +205,7 @@ double scoreOfz( vector <RawNet> rawNet)
     return score;
 }
 
-void penaltyInfoOfinstance(Instance instance, double density, gridInfo binInfo)
+void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo)
 {
     int row = 0;
 
@@ -263,6 +264,8 @@ void penaltyInfoOfinstance(Instance instance, double density, gridInfo binInfo)
 
     length[3] = btmYnum;
 
+    calculatePenaltyArea( coordinate, length, ,)
+
     // if_left_x_num = int( if_left_x // grid_info[2] )
     // if_right_x_num = int( if_right_x // grid_info[2])
     // if_top_y_num = int( if_top_y // grid_info[3] )
@@ -272,8 +275,7 @@ void penaltyInfoOfinstance(Instance instance, double density, gridInfo binInfo)
 
 }
 
-
-void calculatePenaltyArea(int *coordinate, int *length, double *bins, double density, int row, Instance instance, gridInfo binInfo)
+void calculatePenaltyArea( int *coordinate, int *length, double *bins, double density, int row, Instance instance, gridInfo binInfo)
 {
     int y_length, x_length;
     double routing_overflow;
@@ -349,5 +351,38 @@ double scoreOfPenalty(int *bins, int binSize, gridInfo binInfo)
     }
              
     return score;
+    
+}
+
+double infaltionRatio(Instance instance, double routingOverflow)
+{   
+    return 0.0;
+}
+
+double returnAlpha(int *CG)
+{
+    return 0.0;
+}
+
+double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins)
+{
+    double score_of_x, score_of_y, score_of_z, densityScore, totalScore;
+
+    score_of_x = scoreOfX(rawNet, gamma);
+
+    score_of_y = scoreOfY(rawNet, gamma);
+
+    score_of_z = scoreOfz(rawNet, bins);
+
+    densityScore = scoreOfPenalty();
+
+    totalScore = score_of_x + score_of_y + score_of_z * alpha;
+
+    return totalScore;
+
+}
+
+void gradientOfx( )
+{
     
 }

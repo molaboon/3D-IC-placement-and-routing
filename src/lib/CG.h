@@ -3,25 +3,32 @@
 
 
 
-double scoreOfX( vector <RawNet> rawNet, double gamma);
+double scoreOfX( const vector <RawNet> rawNet, const double gamma);
 
-double scoreOfY( vector <RawNet> rawNet, double gamma);
+double scoreOfY( const vector <RawNet> rawNet, const double gamma);
 
-double TSVofNet(vector <RawNet> rawNet, double gamma);
+double TSVofNet( const vector <RawNet> rawNet, const double gamma);
 
-double bellShapeFunc(double z, double layer);
+double bellShapeFunc( const double z, const double layer);
 
-double RSum(double z);
+double RSum( const double z);
 
-double scoreOfDensity(double z, double layer);
+double returnBz(const double z, const double layer);
 
-double returnPsi(double z);
+double returnPsi( const double z);
 
-double scoreOfz( vector <RawNet> rawNet);
+double scoreOfz( const vector <RawNet> rawNet, int *bin);
 
-void penaltyInfoOfinstance(Instance instance, double density, gridInfo binInfo);
+void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo);
 
 void calculatePenaltyArea(int *coordinate, int *length, double *bins, double density, int row, Instance instance, gridInfo binInfo);
 
 double scoreOfPenalty(int *bins, int binSize, gridInfo binInfo);
+
+double infaltionRatio(Instance instance, double routingOverflow);
+
+double infaltionRatio(Instance instance, double routingOverflow);
+
+double returnAlpha(int *CG);
+
 
