@@ -191,7 +191,7 @@ double TSVofNet( const vector <RawNet> rawNet, const double gamma)
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNet, int *bin)
+double scoreOfz( vector <RawNet> rawNet, int *bin, vector<Instance> instance)
 {
     double score = 0;
 
@@ -200,6 +200,15 @@ double scoreOfz( vector <RawNet> rawNet, int *bin)
     for ( int i = 0; i < rawNet.size(); i++)
     {   
         score += TSVofNet(rawNet, h);
+
+    }
+
+    for(int i = 0; i < instance.size(); i++)
+    {
+        double tmpD = returnBz(instance[i].z, 0.0);
+
+        instance[i].density = tmpD;
+
     }
 
     return score;
@@ -364,7 +373,7 @@ double returnAlpha(int *CG)
     return 0.0;
 }
 
-double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins)
+double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins, gridInfo binInfo, double penaltyWeight)
 {
     double score_of_x, score_of_y, score_of_z, densityScore, totalScore;
 
@@ -374,11 +383,54 @@ double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins)
 
     score_of_z = scoreOfz(rawNet, bins);
 
-    densityScore = scoreOfPenalty();
+    int binSize = sizeof(bins) / sizeof(bins[1]);
 
-    totalScore = score_of_x + score_of_y + score_of_z * alpha;
+    densityScore = scoreOfPenalty(bins, binSize, binInfo);
+
+    totalScore = score_of_x + score_of_y + score_of_z * alpha + densityScore * penaltyWeight;
 
     return totalScore;
+}
+
+void CGandGraPreprocessing( vector <Instance> instance, int *tmpGra, int *tmpCG)
+{
+    // for(int i = 0; i < instance.size(); i++)
+    // {
+    //     tmpGra[ 3 * i] = instance[i].gra_x;
+
+    //     tmpGra[ 3 * i + 1] = instance[i].gra_y;
+
+    //     tmpGra[ 3 * i + 2] = instance[i].gra_z;
+
+    //     tmpCG[ 3 * i] = -instance[i].gra_x;
+
+    //     tmpCG[ 3 * i + 1] = -instance[i].gra_y;
+
+    //     tmpCG[ 3 * i + 2] = -instance[i].gra_z;
+    // }
+
+    // for cell in cells:
+        
+    //     tmp_gra = []
+        
+    //     tmp_cg = []
+        
+    //     tmp_gra.append ( cell.gradientx )
+                  
+    //     tmp_gra.append ( cell.gradienty )
+
+    //     tmp_gra.append ( cell.gradientz + cell.gradientd )
+       
+    //     tmp_cg.append ( -cell.gradientx )
+
+    //     tmp_cg.append ( -cell.gradienty )
+
+    //     tmp_cg.append ( -(cell.gradientz + cell.gradientd) )
+        
+    //     gradient.append(tmp_gra)
+        
+    //     cg.append(tmp_cg)
+        
 
 }
 

@@ -80,6 +80,10 @@ typedef struct _Instance{
 
     double inflationRatio;
 
+    double gra_x;
+    double gra_y;
+    double gra_z;
+
 }Instance;
 
 typedef struct _NetConnection{
