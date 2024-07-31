@@ -17,18 +17,20 @@ double returnBz(const double z, const double layer);
 
 double returnPsi( const double z);
 
-double scoreOfz( const vector <RawNet> rawNet, int *bin);
+double scoreOfz( vector <RawNet> rawNet, int *bin, vector<Instance> instance);
 
-void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo);
+int *createBin(gridInfo binInfo);
 
-void calculatePenaltyArea(int *coordinate, int *length, double *bins, double density, int row, Instance instance, gridInfo binInfo);
+// void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo);
 
-double scoreOfPenalty(int *bins, int binSize, gridInfo binInfo);
+// void calculatePenaltyArea(int *coordinate, int *length, double *bins, double density, int row, Instance instance, gridInfo binInfo);
 
-double infaltionRatio(Instance instance, double routingOverflow);
+// double scoreOfPenalty(int *bins, int binSize, gridInfo binInfo);
 
-double infaltionRatio(Instance instance, double routingOverflow);
+// double infaltionRatio(Instance instance, double routingOverflow);
 
-double returnAlpha(int *CG);
+// double infaltionRatio(Instance instance, double routingOverflow);
+
+// double returnAlpha(int *CG);
 
 

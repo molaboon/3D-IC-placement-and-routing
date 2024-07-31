@@ -166,7 +166,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
         fscanf(input, "%*s %s %d", temp.netName , &temp.numPins);
 
         //allocate memory for the detail connection in the net
-        vector <Instance> temp_connection(temp.numPins);
+        vector <Instance*> temp_connection(temp.numPins);
 
         for(int j = 0; j < temp.numPins; j++){
             char buffer[BUFFER_SIZE];
@@ -174,18 +174,22 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
             fscanf(input, "%*s %s", buffer);
             //divide the string by using delimiter "/"
             char *token = strtok(buffer, "/");
-            strcpy(temp_connection[j].instName, token);
-            token = strtok(NULL, " ");
-            strcpy(temp_connection[j].libPinName, token);
+            // strcpy(temp_connection[j]->instName, token);
+            // token = strtok(NULL, " ");
+            // strcpy(temp_connection[j]->libPinName, token);
 
             // save *instance in to net array
             char current_libCellName[LIBCELL_NAME_SIZE];
     		
             memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
-	    	
-            // strncpy(current_libCellName, temp.libCellName + 1, strlen(tmp.libCellName)-1);
 
-            temp_connection.emplace_back( InstanceArray[atoi(current_libCellName)-1] ) ;
+            // char tmpName[BUFFER_SIZE];
+
+            strncpy(current_libCellName, token + 1, strlen(token)-1);
+            
+            // printf("%s, %p \n", current_libCellName, &InstanceArray[atoi(current_libCellName)-1]);
+            
+            temp_connection[j] = ( &InstanceArray[atoi(current_libCellName)-1]) ;
 
         }
         temp.Connection = temp_connection;
@@ -199,7 +203,7 @@ void printNetInfo(int NumNets, vector <RawNet> rawnet){
     for(int i = 0; i < NumNets; i++){
         printf("\tNet <netName> <numPins>: %s %d\n", rawnet[i].netName, rawnet[i].numPins);
         for(int j = 0; j < rawnet[i].numPins; j++){
-            printf("\t\t<instance>: %s\n", rawnet[i].Connection[j].instName, rawnet[i].Connection[j]);
+            printf("\t\t<instance>: %lf %lf %lf \n",  rawnet[i].Connection[j]->x, rawnet[i].Connection[j]->y, rawnet[i].Connection[j]->z);
         }
         printf("\n");
     }

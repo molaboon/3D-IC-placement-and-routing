@@ -95,7 +95,9 @@ typedef struct _NetConnection{
 typedef struct _RawNet{
     char netName[NET_NAME_SIZE];
     int numPins;
-    vector <Instance> Connection;
+    
+    vector < Instance* > Connection;
+
 }RawNet;
 
 typedef struct  _Net

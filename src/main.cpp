@@ -7,18 +7,13 @@
 
 #include "lib/readfile.h"
 #include "lib/initial_placement.h"
+#include "lib/CG.h"
 
 // double start_time;
 
 using namespace std;
 using std::vector;
 
-
-// void pr(int *arr, int arr_s)
-// {
-
-// 	printf("%d\n", arr_s);
-// }
 
 int main(int argc, char *argv[]){
 	
@@ -59,22 +54,39 @@ int main(int argc, char *argv[]){
 	readDieInfo(input, &top_die, &bottom_die);
 
 	readHybridTerminalInfo(input, &terminal);
+
 	readInstanceInfo(input, &NumInstances, InstanceArray, &NumTechnologies, TechMenu);
 
 	readNetInfo(input, &NumNets, rawnet, InstanceArray);
 
 	returnGridInfo(top_die, binInfo);
 	
+
+
+
 	firstPlacement(InstanceArray, binInfo);
 
-	printInstanceInfo(NumInstances, InstanceArray);
-	
+	// printNetInfo(NumNets, rawnet);
+
+
+	// printInstanceInfo(NumInstances, InstanceArray);
+
+	double ans = scoreOfX(rawnet, 0.05*30);
+
+	double ansy = scoreOfY(rawnet, 0.05 * 30);
+
+	double ansz = TSVofNet(rawnet, 0.05 * 1.0);
+
+	int *bins = createBin(binInfo);
+
+	free(bins);
+
+	printf("%lf %lf %lf\n", ans, ansy, ansz);
 
 	// printTechnologyInfo(NumTechnologies, TechMenu);
 	// printDieInfo(top_die, bottom_die);
 	// printHybridTerminalInfo(terminal);
 	// printInstanceInfo(NumInstances, InstanceArray);
-	// printNetInfo(NumNets, rawnet);
 
 
 	return 0;

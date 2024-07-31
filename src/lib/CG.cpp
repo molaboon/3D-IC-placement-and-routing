@@ -12,6 +12,16 @@
 
 using namespace std;
 
+/*
+    check list
+
+        score of x
+        score of y
+
+
+*/
+
+
 double scoreOfX( const vector <RawNet> rawNet, const double gamma)
 {
     double score = 0.0;
@@ -19,18 +29,17 @@ double scoreOfX( const vector <RawNet> rawNet, const double gamma)
     for (int net = 0; net < rawNet.size(); net++)
     {
         double numerator_1 = 0.0;
-        
+
         double denominator_1 = 0.0;
-        
+
         double numerator_2 = 0.0;
 
         double denominator_2 = 0.0;
 
-
-        for (int instance = 0 ; instance < rawNet[net].Connection.size(); instance++)
+        for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
         {
 
-            double tmp = rawNet[net].Connection[instance].x;
+            double tmp = rawNet[net].Connection[instance]->x;
 
             numerator_1 += tmp * exp(tmp / gamma);
             
@@ -67,7 +76,7 @@ double scoreOfY( const vector <RawNet> rawNet, const double gamma)
         for (int instance = 0 ; instance < rawNet[net].Connection.size(); instance++)
         {
 
-            double tmp = rawNet[net].Connection[instance].y;
+            double tmp = rawNet[net].Connection[instance]->y;
 
             numerator_1 += tmp * exp(tmp / gamma);
             
@@ -79,11 +88,9 @@ double scoreOfY( const vector <RawNet> rawNet, const double gamma)
         }
 
         score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
-
     }
 
     return score;
-
 }
 
 double bellShapeFunc( const double z, const double layer)
@@ -91,17 +98,13 @@ double bellShapeFunc( const double z, const double layer)
     double distance = abs(z - layer);
 
     if (distance <= 0.5) 
-    {
         return 1.0 - 2.0 * (distance * distance);
 
-    } else if (distance > 0.5 && distance <= 1) {
-
+    else if (distance > 0.5 && distance <= 1) 
         return 2.0 * ((distance - 1.0) * (distance - 1.0));
     
-    } else 
-    {
+    else 
         return 0.0;
-    }
 }
 
 double RSum( const double z){
@@ -115,11 +118,9 @@ double RSum( const double z){
         double l = (double) i;
         
         double tmp = bellShapeFunc(z, l);
-        
-        rsum += exp( tmp / eta);
 
+        rsum += exp( tmp / eta);
     }
-    
     return rsum;
 }
 
@@ -147,7 +148,7 @@ double returnPsi(double z)
     {
         double score ;
 
-        score = returnBz(z, (double)i);
+        score = (double)i * returnBz(z, (double)i);
 
         psi += score;
     }
@@ -170,10 +171,10 @@ double TSVofNet( const vector <RawNet> rawNet, const double gamma)
         double denominator_2 = 0.0;
 
 
-        for (int instance = 0 ; instance < rawNet[net].Connection.size(); instance++)
+        for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
         {
 
-            double tmpPsi = returnPsi(rawNet[net].Connection[instance].z);
+            double tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
 
             numerator_1 += tmpPsi * exp(tmpPsi / gamma);
             
@@ -191,29 +192,36 @@ double TSVofNet( const vector <RawNet> rawNet, const double gamma)
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNet, int *bin, vector<Instance> instance)
+double scoreOfz( vector <RawNet> rawNets, int *bin, vector<Instance> instances)
 {
     double score = 0;
-
     double h = 0.05;
 
-    for ( int i = 0; i < rawNet.size(); i++)
+    for ( int i = 0; i < rawNets.size(); i++)
     {   
-        score += TSVofNet(rawNet, h);
-
+        score += TSVofNet(rawNets, h);
     }
 
-    for(int i = 0; i < instance.size(); i++)
+    for(int i = 0; i < instances.size(); i++)
     {
-        double tmpD = returnBz(instance[i].z, 0.0);
+        double tmpD = returnBz(instances[i].z, 0.0);
 
-        instance[i].density = tmpD;
-
+        instances[i].density = tmpD;
     }
 
     return score;
 }
 
+int *createBin(gridInfo binInfo)
+{
+    int *bins;
+
+    bins = (int *)calloc(total_layer * binInfo.binXnum * binInfo.binYnum, sizeof(double));
+
+    return bins;
+}
+
+/*
 void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo)
 {
     int row = 0;
@@ -273,7 +281,7 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
     length[3] = btmYnum;
 
-    calculatePenaltyArea( coordinate, length, ,)
+    // calculatePenaltyArea( coordinate, length, ,)
 
     // if_left_x_num = int( if_left_x // grid_info[2] )
     // if_right_x_num = int( if_right_x // grid_info[2])
@@ -381,7 +389,7 @@ double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins, gridInfo
 
     score_of_y = scoreOfY(rawNet, gamma);
 
-    score_of_z = scoreOfz(rawNet, bins);
+    // score_of_z = scoreOfz(rawNet, bins);
 
     int binSize = sizeof(bins) / sizeof(bins[1]);
 
@@ -434,7 +442,4 @@ void CGandGraPreprocessing( vector <Instance> instance, int *tmpGra, int *tmpCG)
 
 }
 
-void gradientOfx( )
-{
-    
-}
+*/
