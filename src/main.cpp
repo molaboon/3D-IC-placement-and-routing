@@ -71,15 +71,15 @@ int main(int argc, char *argv[]){
 
 	// printInstanceInfo(NumInstances, InstanceArray);
 
+	int *firstLayer = createBins(binInfo);
+	int *secondLayer = createBins(binInfo);
+
 	double ans = scoreOfX(rawnet, 0.05*30);
 
 	double ansy = scoreOfY(rawnet, 0.05 * 30);
 
-	double ansz = TSVofNet(rawnet, 0.05 * 1.0);
+	double ansz = scoreOfz( rawnet, firstLayer, secondLayer, InstanceArray, binInfo);
 
-	int *bins = createBin(binInfo);
-
-	free(bins);
 
 	printf("%lf %lf %lf\n", ans, ansy, ansz);
 

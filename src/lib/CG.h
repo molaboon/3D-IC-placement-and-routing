@@ -13,19 +13,19 @@ double bellShapeFunc( const double z, const double layer);
 
 double RSum( const double z);
 
-double returnBz(const double z, const double layer);
+double returnDensity(const double z, const double layer);
 
 double returnPsi( const double z);
 
-double scoreOfz( vector <RawNet> rawNet, int *bin, vector<Instance> instance);
+double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vector<Instance> instances, gridInfo binInfo);
 
-int *createBin(gridInfo binInfo);
+int *createBins(gridInfo binInfo);
 
-// void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo);
+void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo, int *firstLayer, int *secondLayer);
 
-// void calculatePenaltyArea(int *coordinate, int *length, double *bins, double density, int row, Instance instance, gridInfo binInfo);
+void calculatePenaltyArea( int *coordinate, int *length, int *firstLayer, int *secondLayer, double density, int row, Instance instance, gridInfo binInfo);
 
-// double scoreOfPenalty(int *bins, int binSize, gridInfo binInfo);
+double scoreOfPenalty(int *firstLayer, int *secondLayer, int binSize, gridInfo binInfo);
 
 // double infaltionRatio(Instance instance, double routingOverflow);
 

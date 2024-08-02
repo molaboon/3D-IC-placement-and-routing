@@ -78,7 +78,7 @@ typedef struct _Instance{
     double inflateWidth;
     double inflateHeight;
 
-    double inflationRatio;
+    double inflationRatio = 1.0;
 
     double gra_x;
     double gra_y;
@@ -95,7 +95,7 @@ typedef struct _NetConnection{
 typedef struct _RawNet{
     char netName[NET_NAME_SIZE];
     int numPins;
-    
+
     vector < Instance* > Connection;
 
 }RawNet;
