@@ -63,7 +63,6 @@ int main(int argc, char *argv[]){
 	
 
 
-
 	firstPlacement(InstanceArray, binInfo);
 
 	// printNetInfo(NumNets, rawnet);

@@ -193,7 +193,7 @@ double TSVofNet( const vector <RawNet> rawNet, const double gamma)
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vector<Instance> instances, gridInfo binInfo)
+double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vector<Instance> &instances, gridInfo binInfo)
 {
     double score = 0;
     double h = 0.05;
@@ -246,15 +246,15 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
     int inflate_leftXnum, inflate_rightXnum, inflate_topYnum, inflate_btmYnum;
 
-    int coordinate[4] = {0};
+    double coordinate[4] = { 0.0 };
 
-    int inflateCoordinate[4] = {0};
+    int inflateCoordinate[4] = { 0 };
 
     int length[4] = {0};
 
     int inflateLength[4] = {0};
 
-    row = (int)binInfo.dieWidth / (int)binInfo.dieWidth;
+    row = (int) binInfo.dieWidth / (int) binInfo.dieWidth;
 
     double leftX = instance.x - (instance.width * 0.5);
 
@@ -262,24 +262,21 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
     double topY = instance.y - (instance.height * 0.5);
 
-    double btmY = instance.y - (instance.height * 0.5);
+    double btmY = instance.y + (instance.height * 0.5);
 
-    double inflateLeftX = instance.x - (instance.inflateWidth * 0.5);
+    // double inflateLeftX = instance.x - (instance.inflateWidth * 0.5);
+    // double inflateRightX = instance.x + (instance.inflateWidth * 0.5);
+    // double inflateTopY = instance.y - (instance.inflateHeight * 0.5);
+    // double inflateBtmY = instance.y + (instance.inflateHeight * 0.5);
 
-    double inflateRightX = instance.x + (instance.inflateWidth * 0.5);
+    leftXnum = (int) (leftX / binInfo.binWidth);
 
-    double inflateTopY = instance.y - (instance.inflateHeight * 0.5);
+    rightXnum = (int) (rightX / binInfo.binWidth) ; 
 
-    double inflateBtmY = instance.y - (instance.inflateHeight * 0.5);
+    topYnum = (int) (topY / binInfo.binHeight);
 
-    leftXnum = (int) (leftX / binInfo.binXnum);
+    btmYnum =  (int) (btmY / binInfo.binHeight);
 
-    rightXnum = (int) (rightX / binInfo.binXnum) ; 
-
-    topYnum = (int) (topY / topYnum);
-
-    btmY = (int) (btmY / topYnum);
-    
     coordinate[0] = leftX;
     
     coordinate[1] = rightX;
@@ -296,6 +293,8 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
     length[3] = btmYnum;
 
+    // printf("%d %d %d %d\n", length[0], length[1], length[2], length[3]);
+
     calculatePenaltyArea( coordinate, length, firstLayer, secondLayer, instance.density, row, instance, binInfo);
 
     // if_left_x_num = int( if_left_x // grid_info[2] )
@@ -307,14 +306,14 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
 }
 
-void calculatePenaltyArea( int *coordinate, int *length, int *firstLayer, int *secondLayer, double density, int row, Instance instance, gridInfo binInfo)
+void calculatePenaltyArea( double coordinate[], int *length, int *firstLayer, int *secondLayer, double density, int row, Instance instance, gridInfo binInfo)
 {
-    int y_length, x_length;
+    double y_length, x_length;
     double routing_overflow;
 
     // grid_info = [die width, die height, grid width, grid height] 
 
-    for (int y = 0; y <= length[3] - length[2]; ++y) {
+    for (int y = 0; y < length[3] - length[2]; y++) {
 
         if (length[3] == length[2]) {
     
@@ -322,19 +321,19 @@ void calculatePenaltyArea( int *coordinate, int *length, int *firstLayer, int *s
     
         } else if (y == 0) { // top bin
     
-            y_length = binInfo.binHeight - (coordinate[2] % (int)binInfo.binHeight);
+            y_length = binInfo.binHeight - fmod(coordinate[2], binInfo.binHeight);
     
         } else if (y == length[3] - length[2]) { // btm bin
     
-            y_length = coordinate[3] % (int)binInfo.binHeight;
+            y_length = fmod(coordinate[3], binInfo.binHeight);
     
         } else { // other bins
     
-            y_length = (int)binInfo.binHeight;
+            y_length = binInfo.binHeight;
     
         }
 
-        for (int x = 0; x <= length[1] - length[0]; ++x) {
+        for (int x = 0; x <length[1] - length[0]; x++) {
     
             if (length[1] == length[0]) {
     
@@ -342,19 +341,19 @@ void calculatePenaltyArea( int *coordinate, int *length, int *firstLayer, int *s
     
             } else if (x == 0) { // left bin
     
-                x_length = binInfo.binWidth - (coordinate[0] % (int)binInfo.binWidth);
+                x_length = binInfo.binWidth - fmod(coordinate[0], binInfo.binWidth);
     
             } else if (x == length[1] - length[0]) { // right bin
     
-                x_length = coordinate[1] % (int)binInfo.binWidth;
+                x_length = fmod(coordinate[1], binInfo.binWidth);
     
             } else { // other bins
     
-                x_length = (int)binInfo.binWidth;
+                x_length = binInfo.binWidth;
             }
 
             int bin_index = (length[0] + x) + (row * (length[2] + y));
-            
+
             
             firstLayer[bin_index] += y_length * x_length * density * instance.inflationRatio;
 

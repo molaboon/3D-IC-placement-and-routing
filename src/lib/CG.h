@@ -17,13 +17,13 @@ double returnDensity(const double z, const double layer);
 
 double returnPsi( const double z);
 
-double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vector<Instance> instances, gridInfo binInfo);
+double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vector<Instance> &instances, gridInfo binInfo);
 
 int *createBins(gridInfo binInfo);
 
 void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo, int *firstLayer, int *secondLayer);
 
-void calculatePenaltyArea( int *coordinate, int *length, int *firstLayer, int *secondLayer, double density, int row, Instance instance, gridInfo binInfo);
+void calculatePenaltyArea( double coordinate[], int *length, int *firstLayer, int *secondLayer, double density, int row, Instance instance, gridInfo binInfo);
 
 double scoreOfPenalty(int *firstLayer, int *secondLayer, int binSize, gridInfo binInfo);
 

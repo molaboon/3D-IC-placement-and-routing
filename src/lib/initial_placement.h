@@ -9,16 +9,16 @@ typedef struct grid_info
     double dieHeight;
     double dieWidth;
 
-    int binWidth;
-    int binHeight;
+    double binWidth;
+    double binHeight;
 
-    int binXnum;
-    int binYnum;
+    double binXnum;
+    double binYnum;
 
 }gridInfo;
 
 
-void returnGridInfo(Die die, gridInfo &binInfo);
+void returnGridInfo(Die &die, gridInfo &binInfo);
 
 void calculatePenaltyWeight();
 

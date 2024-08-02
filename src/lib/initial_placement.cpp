@@ -8,17 +8,17 @@
 
 
 
-void returnGridInfo(Die die, gridInfo &binInfo)
+void returnGridInfo(Die &die, gridInfo &binInfo)
 {   
     binInfo.dieWidth = die.upperRightX ; 
-    
+
     binInfo.dieHeight = die.upperRightY ;
 
-    binInfo.binWidth = 100;
+    binInfo.binWidth = 10.0;
 
-    binInfo.binHeight = 100;
+    binInfo.binHeight = 10.0;
 
-    binInfo.binXnum = binInfo.dieWidth / binInfo.binWidth;
+    binInfo.binXnum = (binInfo.dieWidth / binInfo.binWidth);
 
     binInfo.binYnum = binInfo.dieHeight / binInfo.binHeight;
 
