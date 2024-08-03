@@ -14,7 +14,6 @@
 using namespace std;
 using std::vector;
 
-
 int main(int argc, char *argv[]){
 	
 	// start_time = omp_get_wtime();
@@ -24,13 +23,13 @@ int main(int argc, char *argv[]){
 	char *inputName = *(argv + 1);
 	
 	char *outputName = *(argv + 2);
-	
+
 	FILE *input = fopen(inputName, "r");
 	assert(input);
 
 	Die top_die, bottom_die;												//store the die information
 	Hybrid_terminal terminal;												//store the size of the hybrid bond terminal connect between two dies
-	int NumTerminal;														//cut size calculated by shmetis
+	// int NumTerminal;														//cut size calculated by shmetis
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
 	int NumInstances;														//How many instances need to be placeed in the two dies
@@ -60,8 +59,6 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, InstanceArray);
 
 	returnGridInfo(top_die, binInfo);
-	
-
 
 	firstPlacement(InstanceArray, binInfo);
 
@@ -70,10 +67,10 @@ int main(int argc, char *argv[]){
 
 	// printInstanceInfo(NumInstances, InstanceArray);
 
-	int *firstLayer = createBins(binInfo);
-	int *secondLayer = createBins(binInfo);
+	double *firstLayer = createBins(binInfo);
+	double *secondLayer = createBins(binInfo);
 
-	double ans = scoreOfX(rawnet, 0.05*30);
+	double ans = scoreOfX(rawnet, 0.05 * 30);
 
 	double ansy = scoreOfY(rawnet, 0.05 * 30);
 

@@ -9,6 +9,7 @@
 #define eta 0.1
 #define total_layer 2
 #define alpha 10
+// #define h 0.00001
 
 using namespace std;
 
@@ -17,10 +18,11 @@ using namespace std;
 
         score of x
         score of y
+        score of z 
+        create bins
 
 
 */
-
 
 double scoreOfX( const vector <RawNet> rawNet, const double gamma)
 {
@@ -193,7 +195,7 @@ double TSVofNet( const vector <RawNet> rawNet, const double gamma)
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vector<Instance> &instances, gridInfo binInfo)
+double scoreOfz( vector <RawNet> rawNets, double *firstLayer, double *secondLayer, vector<Instance> &instances, gridInfo binInfo)
 {
     double score = 0;
     double h = 0.05;
@@ -211,34 +213,29 @@ double scoreOfz( vector <RawNet> rawNets, int *firstLayer, int *secondLayer, vec
 
     // calculate score of TSV
 
-    for(int i = 0; i < 8; i++)
-    {
-        printf("%lf\n", firstLayer[i]);
-    }
-
     for ( int i = 0; i < rawNets.size(); i++)
     {   
         score += TSVofNet(rawNets, h);
     }
     
 
-    int size = sizeof(firstLayer) / sizeof(firstLayer[0]);
+    int size = (int)(binInfo.binXnum * binInfo.binYnum);
 
     score += scoreOfPenalty(firstLayer, secondLayer, size, binInfo);
 
     return score;
 }
 
-int *createBins(gridInfo binInfo)
+double *createBins(gridInfo binInfo)
 {
-    int *bins;
+    double *bins;
 
-    bins = (int *)calloc( binInfo.binXnum * binInfo.binYnum, sizeof(double) );
+    bins = (double *)calloc( binInfo.binXnum * binInfo.binYnum, sizeof(double) );
 
     return bins;
 }
 
-void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo, int *firstLayer, int *secondLayer)
+void penaltyInfoOfinstance( const Instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer)
 {
     int row = 0;
 
@@ -254,7 +251,7 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
     int inflateLength[4] = {0};
 
-    row = (int) binInfo.dieWidth / (int) binInfo.dieWidth;
+    row = (int) binInfo.binXnum;
 
     double leftX = instance.x - (instance.width * 0.5);
 
@@ -306,34 +303,30 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
 }
 
-void calculatePenaltyArea( double coordinate[], int *length, int *firstLayer, int *secondLayer, double density, int row, Instance instance, gridInfo binInfo)
+void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, Instance instance, gridInfo binInfo)
 {
-    double y_length, x_length;
+   
     double routing_overflow;
 
     // grid_info = [die width, die height, grid width, grid height] 
 
-    for (int y = 0; y < length[3] - length[2]; y++) {
+    for (int y = 0; y <= length[3] - length[2]; ++y) {
 
-        if (length[3] == length[2]) {
-    
+        double y_length, x_length;
+        
+        if (length[3] == length[2]) 
             y_length = coordinate[3] - coordinate[2];
-    
-        } else if (y == 0) { // top bin
-    
+
+        else if (y == 0)  // top bin
             y_length = binInfo.binHeight - fmod(coordinate[2], binInfo.binHeight);
     
-        } else if (y == length[3] - length[2]) { // btm bin
-    
+        else if (y == length[3] - length[2])  // btm bin
             y_length = fmod(coordinate[3], binInfo.binHeight);
     
-        } else { // other bins
-    
+        else
             y_length = binInfo.binHeight;
-    
-        }
 
-        for (int x = 0; x <length[1] - length[0]; x++) {
+        for (int x = 0; x <= length[1] - length[0]; ++x) {
     
             if (length[1] == length[0]) {
     
@@ -354,10 +347,10 @@ void calculatePenaltyArea( double coordinate[], int *length, int *firstLayer, in
 
             int bin_index = (length[0] + x) + (row * (length[2] + y));
 
-            
-            firstLayer[bin_index] += y_length * x_length * density * instance.inflationRatio;
+            // printf("length0:%d x:%d row:%d y:%d length:%d yl:%lf xl:%lf\n", length[0], x,  row, y, length[2], y_length, x_length);
+            firstLayer[bin_index] += y_length * x_length * density ;
 
-            secondLayer[bin_index] += y_length * x_length * (1.0 - density) * instance.inflationRatio;
+            secondLayer[bin_index] += y_length * x_length * (1.0 - density) ;
             
             // routing_overflow = ((x_length + y_length) / 2.0) * y_length * x_length;
         }
@@ -367,27 +360,62 @@ void calculatePenaltyArea( double coordinate[], int *length, int *firstLayer, in
     // instance.inflate_ratio = 1;
 }
 
-double scoreOfPenalty(int *firstLayer, int *secondLayer, int binSize, gridInfo binInfo)
+double scoreOfPenalty(double *firstLayer, double *secondLayer, int binSize, gridInfo binInfo)
 {
-    double score = 0;
+    double score = 0.0;
+    double area = binInfo.binWidth * binInfo.binHeight;
 
-    for(int layer = 0 ; layer < 2; layer++)
+    for(int bin = 0; bin < binSize; bin++)
+        score +=  (firstLayer[bin] - area) * (firstLayer[bin] - area) + (secondLayer[bin] - area) * (secondLayer[bin] - area);
+     
+    return score;    
+}
+
+double gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore)
+{
+    double h = 0.00001;
+
+    for(int i = 0; i < instances.size(); i++)
     {
-        for(int bin = 0; bin < binSize; bin++)
-        {
-            double area = binInfo.binWidth * binInfo.binHeight;
+        double *firstLayer = createBins(binInfo);
 
-            score +=  (firstLayer[bin] - area) * (firstLayer[bin] - area);
+        double *secondLayer = createBins(binInfo);
 
-            score +=  (secondLayer[bin] - area) * (secondLayer[bin] - area);
-            
-        }
+        double tmpx = instances[i].x;
+
+        double score2;
+
+        instances[i].x += h;
+
+        score2 = scoreOfX(rawNet, gamma);
+
+        
 
     }
-             
-    return score;
-    
+
 }
+// def gradient_of_x(nets, gamma, instances, score_of_x, score_of_density, grid_info, penalty_weight):
+    
+//     h = 1e-5
+    
+//     for instance in instances:
+//         bins = new_bin(grid_info)
+//         tmpx = dc(instance.x)
+        
+//         instance.x += h
+        
+//         score2 = calculate_score_of_x(nets, gamma)
+        
+//         for i in instances:
+//             density = calculate_score_of_Density(i.z, 0) # no inflate
+
+//             calculate_penalty(i, density, bins, grid_info)
+
+//         density_score = penlaty_score(bins, grid_info)
+        
+//         instance.gradientx = ( (score2 - score_of_x) + penalty_weight * (density_score - score_of_density ) ) / h
+        
+//         instance.x = dc(tmpx)
 /*
 double infaltionRatio(Instance instance, double routingOverflow)
 {   
