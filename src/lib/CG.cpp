@@ -218,10 +218,7 @@ double scoreOfz( vector <RawNet> rawNets, double *firstLayer, double *secondLaye
         score += TSVofNet(rawNets, h);
     }
     
-
-    int size = (int)(binInfo.binXnum * binInfo.binYnum);
-
-    score += scoreOfPenalty(firstLayer, secondLayer, size, binInfo);
+    score += scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
     return score;
 }
@@ -360,10 +357,11 @@ void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer,
     // instance.inflate_ratio = 1;
 }
 
-double scoreOfPenalty(double *firstLayer, double *secondLayer, int binSize, gridInfo binInfo)
+double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
 {
     double score = 0.0;
     double area = binInfo.binWidth * binInfo.binHeight;
+    int binSize = (int) binInfo.binXnum * binInfo.binYnum;
 
     for(int bin = 0; bin < binSize; bin++)
         score +=  (firstLayer[bin] - area) * (firstLayer[bin] - area) + (secondLayer[bin] - area) * (secondLayer[bin] - area);
@@ -371,7 +369,7 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, int binSize, grid
     return score;    
 }
 
-double gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore)
+double gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double densitySocre)
 {
     double h = 0.00001;
 
@@ -389,33 +387,114 @@ double gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &
 
         score2 = scoreOfX(rawNet, gamma);
 
-        
+        for(int j = 0; j < instances.size(); j++)
+            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
 
+        score2 += scoreOfPenalty(firstLayer, secondLayer, binInfo);
+
+        instances[i].gra_x = ( (score2 - xScore) + penaltyWeight * (densitySocre - score2 ) ) / h;
+
+        instances[i].x = tmpx;
+
+        free(firstLayer);
+        free(secondLayer);
     }
 
 }
-// def gradient_of_x(nets, gamma, instances, score_of_x, score_of_density, grid_info, penalty_weight):
-    
+
+double gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre)
+{
+    double h = 0.00001;
+
+    for(int i = 0; i < instances.size(); i++)
+    {
+        double *firstLayer = createBins(binInfo);
+
+        double *secondLayer = createBins(binInfo);
+
+        double tmpy = instances[i].y;
+
+        double score2;
+
+        instances[i].y += h;
+
+        score2 = scoreOfY(rawNet, gamma);
+
+        for(int j = 0; j < instances.size(); j++)
+            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
+
+        score2 += scoreOfPenalty(firstLayer, secondLayer, binInfo);
+
+        instances[i].gra_y = ( (score2 - yScore) + penaltyWeight * (densitySocre - score2 ) ) / h;
+
+        instances[i].y = tmpy;
+
+        free(firstLayer);
+        free(secondLayer);
+    }
+
+}
+
+double gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre)
+{
+    double h = 0.00001;
+
+    for(int i = 0; i < instances.size(); i++)
+    {
+        double *firstLayer = createBins(binInfo);
+
+        double *secondLayer = createBins(binInfo);
+
+        double tmpz = instances[i].z;
+
+        double tmpD = instances[i].density;
+
+        double score2;
+
+        instances[i].z += h;
+
+        score2 = scoreOfz(rawNet, firstLayer, secondLayer, instances, binInfo);
+
+        for(int j = 0; j < instances.size(); j++)
+
+            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
+
+        score2 += scoreOfPenalty(firstLayer, secondLayer, binInfo);
+
+        instances[i].gra_z = ( (score2 - yScore) + penaltyWeight * (densitySocre - score2 ) ) / h;
+
+        instances[i].z = tmpz;
+
+        instances[i].density = tmpD;
+
+        free(firstLayer);
+        free(secondLayer);
+    }
+
+}
+// def gradient_of_z(nets, gamma, instances):
 //     h = 1e-5
-    
+//     score1 = calculate_num_TSV(nets, gamma)
+//     for  instance in instances:
+//         tmpz = dc(instance.z)
+//         instance.z += h
+//         score2 = calculate_num_TSV(nets, gamma)
+//         instance.gradientz += (score2 - score1) / h
+//         instance.z = dc(tmpz)
+
+// def gradient_of_density(instances, score_of_density, die_width, die_height, grid_size, penalty_weight):
+//     h = 1e-5
 //     for instance in instances:
-//         bins = new_bin(grid_info)
-//         tmpx = dc(instance.x)
-        
-//         instance.x += h
-        
-//         score2 = calculate_score_of_x(nets, gamma)
-        
-//         for i in instances:
-//             density = calculate_score_of_Density(i.z, 0) # no inflate
+//         tmpz = dc(instance.z)
+//         bin = new_bin(grid_size)
+//         instance.z += h
+//         for ins in instances:
+//             density = calculate_score_of_Density(ins.z, 0) # no inflate
+//             calculate_penalty(ins, density, bin, grid_size)
+//         score2 = penlaty_score(bin, grid_size)
 
-//             calculate_penalty(i, density, bins, grid_info)
-
-//         density_score = penlaty_score(bins, grid_info)
-        
-//         instance.gradientx = ( (score2 - score_of_x) + penalty_weight * (density_score - score_of_density ) ) / h
-        
-//         instance.x = dc(tmpx)
+//         instance.gradientd += ( penalty_weight * (score2 - score_of_density) ) / h
+//         instance.z = dc(tmpz)
 /*
 double infaltionRatio(Instance instance, double routingOverflow)
 {   

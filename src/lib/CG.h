@@ -25,7 +25,7 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 
 void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, Instance instance, gridInfo binInfo);
 
-double scoreOfPenalty(double *firstLayer, double *secondLayer, int binSize, gridInfo binInfo);
+double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo);
 
 // double infaltionRatio(Instance instance, double routingOverflow);
 

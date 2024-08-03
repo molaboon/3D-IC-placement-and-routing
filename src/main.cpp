@@ -63,12 +63,15 @@ int main(int argc, char *argv[]){
 	firstPlacement(InstanceArray, binInfo);
 
 	// printNetInfo(NumNets, rawnet);
-
-
 	// printInstanceInfo(NumInstances, InstanceArray);
 
 	double *firstLayer = createBins(binInfo);
 	double *secondLayer = createBins(binInfo);
+
+	double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
+	double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
+	double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
+	double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
 
 	double ans = scoreOfX(rawnet, 0.05 * 30);
 
