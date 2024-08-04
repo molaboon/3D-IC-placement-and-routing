@@ -83,6 +83,7 @@ typedef struct _Instance{
     double gra_x;
     double gra_y;
     double gra_z;
+    double gra_d;
 
 }Instance;
 

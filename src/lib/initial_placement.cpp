@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "initial_placement.h"
+#include "CG.h"
 #include "readfile.h"
 
 
@@ -24,12 +25,7 @@ void returnGridInfo(Die &die, gridInfo &binInfo)
 
 }
 
-void calculatePenaltyWeight()
-{
-
-}
-
-void firstPlacement(vector <Instance> &InstanceArray, gridInfo binInfo)
+void firstPlacement(vector <Instance> &instances, gridInfo binInfo)
 {
     // give each cell initial solution
 
@@ -41,7 +37,7 @@ void firstPlacement(vector <Instance> &InstanceArray, gridInfo binInfo)
 
     double z[] = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
 
-    for(int i = 0; i < InstanceArray.size(); i++)
+    for(int i = 0; i < instances.size(); i++)
     {
 
         // double minX = InstanceArray[i].width ;
@@ -60,12 +56,64 @@ void firstPlacement(vector <Instance> &InstanceArray, gridInfo binInfo)
 
         // InstanceArray[i].y = y;
 
-        InstanceArray[i].x = x[i];
+        instances[i].x = x[i];
 
-        InstanceArray[i].y = y[i];
+        instances[i].y = y[i];
 
-        InstanceArray[i].z = z[i];
+        instances[i].z = z[i];
 
     }
 }
 
+void returnPenaltyWeight(vector <RawNet> rawNet, vector<Instance> instances, grid_info binInfo, double gamma)
+{   
+    
+}
+
+double graX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo)
+{
+    double h = 0.00001;
+
+    double xScore, yScore, zScore, grax, gray, graz, grad;
+
+    double *firstLayer = createBins(binInfo);
+	double *secondLayer = createBins(binInfo);
+
+    xScore = scoreOfX(rawNet, gamma);
+    yScore = scoreOfY(rawNet, gamma);
+    zScore = scoreOfz(rawNet, firstLayer, secondLayer, instances, binInfo);
+
+    free(firstLayer);
+    free(secondLayer);
+
+    for(int i = 0; i < instances.size(); i++)
+    {        
+        double tmpx = instances[i].x;
+        double tmpy = instances[i].y;
+
+        double tmpXscore, tmpYscore;
+
+        instances[i].x += h;
+        
+        instances[i].y += h;
+
+        tmpXscore = scoreOfX(rawNet, gamma);
+
+        tmpYscore = scoreOfY(rawNet, gamma);
+
+        grax += (tmpXscore - xScore) / h;
+
+        gray += (tmpYscore - yScore) / h;
+        
+        instances[i].x = tmpx;
+
+        instances[i].y = tmpy;
+    }
+
+    for(int i = 0; i < instances.size(); i++)
+    {
+        double tmpz = instances[i].z;
+
+        
+    }
+}

@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
 	int NumInstances;														//How many instances need to be placeed in the two dies
-	vector <Instance> InstanceArray;										//The standard cell with its library
+	vector <Instance> instances;										//The standard cell with its library
 	int NumNets;															//How many nets connect betweem Instances
 	vector <RawNet> rawnet;													//The rawnet data store in input
 
@@ -54,38 +54,29 @@ int main(int argc, char *argv[]){
 
 	readHybridTerminalInfo(input, &terminal);
 
-	readInstanceInfo(input, &NumInstances, InstanceArray, &NumTechnologies, TechMenu);
+	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu);
 
-	readNetInfo(input, &NumNets, rawnet, InstanceArray);
+	readNetInfo(input, &NumNets, rawnet, instances);
 
 	returnGridInfo(top_die, binInfo);
 
-	firstPlacement(InstanceArray, binInfo);
+	firstPlacement(instances, binInfo);
 
 	// printNetInfo(NumNets, rawnet);
-	// printInstanceInfo(NumInstances, InstanceArray);
-
-	double *firstLayer = createBins(binInfo);
-	double *secondLayer = createBins(binInfo);
+	// printInstanceInfo(NumInstances, instances);
 
 	double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
 	double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
 	double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
 	double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
+	
 
-	double ans = scoreOfX(rawnet, 0.05 * 30);
-
-	double ansy = scoreOfY(rawnet, 0.05 * 30);
-
-	double ansz = scoreOfz( rawnet, firstLayer, secondLayer, InstanceArray, binInfo);
-
-
-	printf("%lf %lf %lf\n", ans, ansy, ansz);
+	// printf("%lf %lf %lf\n", ans, ansy, ansz);
 
 	// printTechnologyInfo(NumTechnologies, TechMenu);
 	// printDieInfo(top_die, bottom_die);
 	// printHybridTerminalInfo(terminal);
-	// printInstanceInfo(NumInstances, InstanceArray);
+	// printInstanceInfo(NumInstances, instances);
 
 
 	return 0;

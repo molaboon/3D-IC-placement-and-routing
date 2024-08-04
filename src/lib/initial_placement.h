@@ -20,7 +20,8 @@ typedef struct grid_info
 
 void returnGridInfo(Die &die, gridInfo &binInfo);
 
-void calculatePenaltyWeight();
+void firstPlacement(vector <Instance> &instances, gridInfo binInfo);
 
-void firstPlacement(vector <Instance> &InstanceArray, gridInfo binInfo);
+void returnPenaltyWeight(vector <RawNet> rawNet, vector<Instance> instances, grid_info binInfo, double gamma);
+
 
