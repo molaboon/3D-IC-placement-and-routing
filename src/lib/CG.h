@@ -4,7 +4,7 @@ double scoreOfX(const vector <RawNet> rawNet, const double gamma);
 
 double scoreOfY(const vector <RawNet> rawNet, const double gamma);
 
-double TSVofNet(const vector <RawNet> rawNet, const double gamma);
+double TSVofNet(const vector <RawNet> rawNet);
 
 double bellShapeFunc(const double z, const double layer);
 
@@ -14,7 +14,7 @@ double returnDensity(const double z, const double layer);
 
 double returnPsi(const double z);
 
-double scoreOfz(vector <RawNet> rawNets, double *firstLayer, double *secondLayer, vector<Instance> &instances, gridInfo binInfo);
+double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo binInfo, int zisChanged);
 
 double *createBins(gridInfo binInfo);
 
@@ -30,6 +30,7 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
 void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre);
 
+double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <Instance> &instances);
 
 // double infaltionRatio(Instance instance, double routingOverflow);
 

@@ -42,41 +42,35 @@ int main(int argc, char *argv[]){
 	
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
-
-	// int arr[] = {0, 1, 2};
-	// int arr_s = sizeof(arr) / sizeof(arr[0]);
-
-	// pr( arr, arr_s);
-	//read file part
+	/*			data preprocessing			 */
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
-
 	readDieInfo(input, &top_die, &bottom_die);
-
 	readHybridTerminalInfo(input, &terminal);
-
 	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu);
-
 	readNetInfo(input, &NumNets, rawnet, instances);
-
 	returnGridInfo(top_die, binInfo);
 
+	/* first placement and CG preprocessing */
+	
+	double gamma, penaltyWeight, totalScore;
+	double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
+	double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
+	double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
+	double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
+	
 	firstPlacement(instances, binInfo);
+	gamma = 0.05 * binInfo.dieWidth;
+
+	penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+
+	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
+
+	printf("%lf \n", totalScore);
+
+
 
 	// printNetInfo(NumNets, rawnet);
 	// printInstanceInfo(NumInstances, instances);
-
-	// double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
-	// double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
-	// double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
-	// double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
-	
-	double gamma = 0.5 * binInfo.binWidth;
-
-	double penaltyweight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
-
-	printf("%lf \n", penaltyweight);
-	// printf("%lf %lf %lf\n", ans, ansy, ansz);
-
 	// printTechnologyInfo(NumTechnologies, TechMenu);
 	// printDieInfo(top_die, bottom_die);
 	// printHybridTerminalInfo(terminal);

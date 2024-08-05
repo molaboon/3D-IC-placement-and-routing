@@ -10,6 +10,8 @@
 #define total_layer 2
 #define alpha 10
 #define h 0.00001
+#define zChanged 1
+#define znotChanged 0
 
 using namespace std;
 
@@ -65,7 +67,7 @@ double scoreOfY( const vector <RawNet> rawNet, const double gamma)
 {
     double score = 0.0;
 
-    for (int net = 0; net < rawNet.size(); net++)
+    for (int net = 0; net < (int) rawNet.size(); net++)
     {
         double numerator_1 = 0.0;
         
@@ -76,7 +78,7 @@ double scoreOfY( const vector <RawNet> rawNet, const double gamma)
         double denominator_2 = 0.0;
 
 
-        for (int instance = 0 ; instance < rawNet[net].Connection.size(); instance++)
+        for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
         {
 
             double tmp = rawNet[net].Connection[instance]->y;
@@ -159,7 +161,7 @@ double returnPsi(double z)
     return psi;
 }
 
-double TSVofNet( const vector <RawNet> rawNet, const double gamma)
+double TSVofNet( const vector <RawNet> rawNet)
 {
     double score = 0.0;
 
@@ -173,48 +175,54 @@ double TSVofNet( const vector <RawNet> rawNet, const double gamma)
 
         double denominator_2 = 0.0;
 
-
         for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
         {
 
             double tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
 
-            numerator_1 += tmpPsi * exp(tmpPsi / gamma);
+            numerator_1 += tmpPsi * exp(tmpPsi / 0.05);
             
-            denominator_1 += exp(tmpPsi / gamma);
+            denominator_1 += exp(tmpPsi / 0.05);
 
-            numerator_2 += tmpPsi * exp(-tmpPsi/ gamma);
+            numerator_2 += tmpPsi * exp(-tmpPsi/ 0.05);
             
-            denominator_2 += exp(-tmpPsi/ gamma);
+            denominator_2 += exp(-tmpPsi/ 0.05);
         }
 
         score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
-
     }
 
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNets, double *firstLayer, double *secondLayer, vector<Instance> &instances, gridInfo binInfo)
+double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo binInfo, int zisChanged)
 {
     double score = 0;
-    double hh = 0.05;
+    int size = instances.size();
+
+    double *firstLayer = createBins(binInfo);
+	double *secondLayer = createBins(binInfo);
 
     //  claculate score of penalty
 
-    for(int i = 0; i < instances.size(); i++)
+    for(int i = 0; i < size; i++)
     {
-        double tmpD = returnDensity(instances[i].z, 0.0);
+        if(zisChanged == 1)
+        {
+            double tmpD = returnDensity(instances[i].z, 0.0);
 
-        instances[i].density = tmpD;
-
+            instances[i].density = tmpD;
+        }
         penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer);
     }
     score += scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
     // calculate score of TSV
 
-    score += TSVofNet(rawNets, hh);
+    score += TSVofNet(rawNets);
+
+    free(firstLayer);
+    free(secondLayer);
         
     return score;
 }
@@ -232,12 +240,12 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 {
     int row = 0;
     int leftXnum, rightXnum, topYnum, btmYnum;
-    int inflate_leftXnum, inflate_rightXnum, inflate_topYnum, inflate_btmYnum;
-    
     double coordinate[4] = { 0.0 };
-    int inflateCoordinate[4] = { 0 };
     int length[4] = {0};
-    int inflateLength[4] = {0};
+    
+    // int inflate_leftXnum, inflate_rightXnum, inflate_topYnum, inflate_btmYnum;
+    // int inflateCoordinate[4] = { 0 };
+    // int inflateLength[4] = {0};
 
     row = (int) binInfo.binXnum;
 
@@ -394,7 +402,6 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
 void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre)
 {
-
     for(int i = 0; i < instances.size(); i++)
     {
         double *firstLayer = createBins(binInfo);
@@ -421,7 +428,6 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
         free(firstLayer);
         free(secondLayer);
     }
-
 }
 
 void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore, const double densitySocre)
@@ -437,9 +443,9 @@ void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
         instances[i].z += h;
 
-        score2 = scoreOfz(rawNet, firstLayer, secondLayer, instances, binInfo); 
+        score2 = scoreOfz(rawNet, instances, binInfo, zChanged); 
 
-        score = TSVofNet(rawNet, h);
+        score = TSVofNet(rawNet);
         
         score2 -= score;
 
@@ -459,7 +465,7 @@ void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
 
 
-/*
+
 double infaltionRatio(Instance instance, double routingOverflow)
 {   
     return 0.0;
@@ -470,7 +476,7 @@ double returnAlpha(int *CG)
     return 0.0;
 }
 
-double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins, gridInfo binInfo, double penaltyWeight)
+double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <Instance> &instances)
 {
     double score_of_x, score_of_y, score_of_z, densityScore, totalScore;
 
@@ -478,13 +484,13 @@ double returnTotalScore(vector<RawNet> rawNet, double gamma, int *bins, gridInfo
 
     score_of_y = scoreOfY(rawNet, gamma);
 
-    // score_of_z = scoreOfz(rawNet, bins);
+    densityScore = scoreOfz(rawNet, instances, binInfo, 1);
 
-    int binSize = sizeof(bins) / sizeof(bins[1]);
+    score_of_z = TSVofNet(rawNet);
 
-    densityScore = scoreOfPenalty(bins, binSize, binInfo);
+    printf("%lf", penaltyWeight);
 
-    totalScore = score_of_x + score_of_y + score_of_z * alpha + densityScore * penaltyWeight;
+    totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore - score_of_z) * penaltyWeight;
 
     return totalScore;
 }
@@ -531,4 +537,3 @@ void CGandGraPreprocessing( vector <Instance> instance, int *tmpGra, int *tmpCG)
 
 }
 
-*/
