@@ -65,12 +65,16 @@ int main(int argc, char *argv[]){
 	// printNetInfo(NumNets, rawnet);
 	// printInstanceInfo(NumInstances, instances);
 
-	double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
-	double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
-	double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
-	double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
+	// double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
+	// double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
+	// double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
+	// double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
 	
+	double gamma = 0.5 * binInfo.binWidth;
 
+	double penaltyweight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+
+	printf("%lf \n", penaltyweight);
 	// printf("%lf %lf %lf\n", ans, ansy, ansz);
 
 	// printTechnologyInfo(NumTechnologies, TechMenu);

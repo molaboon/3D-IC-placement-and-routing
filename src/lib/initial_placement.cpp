@@ -65,28 +65,31 @@ void firstPlacement(vector <Instance> &instances, gridInfo binInfo)
     }
 }
 
-void returnPenaltyWeight(vector <RawNet> rawNet, vector<Instance> instances, grid_info binInfo, double gamma)
-{   
-    
-}
-
-double graX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo)
+double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo)
 {
     double h = 0.00001;
 
-    double xScore, yScore, zScore, grax, gray, graz, grad;
+    double xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, densityScore = 0.0;
+    double grax = 0.0, gray = 0.0, graz = 0.0, grad = 0.0;
+
+    int size = instances.size();
 
     double *firstLayer = createBins(binInfo);
 	double *secondLayer = createBins(binInfo);
 
     xScore = scoreOfX(rawNet, gamma);
     yScore = scoreOfY(rawNet, gamma);
-    zScore = scoreOfz(rawNet, firstLayer, secondLayer, instances, binInfo);
+    
+    tsvScore = TSVofNet(rawNet, gamma);
+
+    densityScore = scoreOfz(rawNet, firstLayer, secondLayer, instances, binInfo);
+
+    densityScore -= tsvScore;
 
     free(firstLayer);
     free(secondLayer);
 
-    for(int i = 0; i < instances.size(); i++)
+    for(int i = 0; i < size; i++)
     {        
         double tmpx = instances[i].x;
         double tmpy = instances[i].y;
@@ -96,7 +99,7 @@ double graX(vector <RawNet> rawNet, const double gamma, vector <Instance> &insta
         instances[i].x += h;
         
         instances[i].y += h;
-
+        
         tmpXscore = scoreOfX(rawNet, gamma);
 
         tmpYscore = scoreOfY(rawNet, gamma);
@@ -110,10 +113,32 @@ double graX(vector <RawNet> rawNet, const double gamma, vector <Instance> &insta
         instances[i].y = tmpy;
     }
 
-    for(int i = 0; i < instances.size(); i++)
+    for(int i = 0; i < size ; i++)
     {
         double tmpz = instances[i].z;
+        double tmpTSV, tmpDen;
 
-        
+        double *firstLayer = createBins(binInfo);
+    	double *secondLayer = createBins(binInfo);
+
+
+        instances[i].z += h;
+
+        tmpTSV = TSVofNet(rawNet, gamma);
+
+        tmpDen = scoreOfz(rawNet, firstLayer, secondLayer, instances, binInfo);
+
+        tmpDen -= tmpTSV;
+
+        graz += (tmpTSV - tsvScore) / h;
+
+        grad += (tmpDen - densityScore) / h;
+
+        instances[i].z = tmpz;
+
+        free(firstLayer);
+        free(secondLayer);
     }
+
+    return (grax + gray + graz) / grad;
 }
