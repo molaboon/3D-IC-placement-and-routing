@@ -65,7 +65,8 @@ int main(int argc, char *argv[]){
 
 	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
 
-	printf("%lf \n", totalScore);
+	CGandGraPreprocessing(instances, nowGra, nowCG);
+	printf("%lf \n", penaltyWeight);
 
 
 

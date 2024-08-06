@@ -80,10 +80,10 @@ typedef struct _Instance{
 
     double inflationRatio = 1.0;
 
-    double gra_x;
-    double gra_y;
-    double gra_z;
-    double gra_d;
+    double gra_x = 0.0;
+    double gra_y = 0.0;
+    double gra_z = 0.0;
+    double gra_d = 0.0;
 
 }Instance;
 

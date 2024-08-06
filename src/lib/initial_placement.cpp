@@ -69,20 +69,22 @@ void firstPlacement(vector <Instance> &instances, gridInfo binInfo)
 double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo)
 {
     double h = 0.00001;
-
-    double xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, densityScore = 0.0;
+    double penaltyWeight;
+    double xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, penaltyScore = 0.0;
     double grax = 0.0, gray = 0.0, graz = 0.0, grad = 0.0;
 
     int size = instances.size();
 
     xScore = scoreOfX(rawNet, gamma);
     yScore = scoreOfY(rawNet, gamma);
+
+    printf("Xscore : %lf\n", xScore);
     
     tsvScore = TSVofNet(rawNet);
 
-    densityScore = scoreOfz(rawNet, instances, binInfo, 1);
+    penaltyScore = scoreOfz(rawNet, instances, binInfo, 1);
 
-    densityScore -= tsvScore;
+    penaltyScore -= tsvScore;
 
     for(int i = 0; i < size; i++)
     {        
@@ -90,18 +92,26 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
         double tmpy = instances[i].y;
         double tmpDen = 0.0;
         double tmpXscore = 0.0, tmpYscore = 0.0;
+        
+        double *fl = createBins(binInfo);
+        double *sl = createBins(binInfo);
         // part of x
         instances[i].x += h;
 
         tmpXscore = scoreOfX(rawNet, gamma);
 
-        tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
+        tmpDen = scoreOfPenalty();
 
         grax += fabs( (tmpXscore - xScore) / h) ;
        
-        grad += fabs( (tmpDen - tsvScore - densityScore) / h );
+        grad += fabs( (tmpDen - tsvScore - penaltyScore) / h );
+
+        printf("%f\n", ((tmpXscore - xScore) / h) + 0.000404* (tmpDen - tsvScore - penaltyScore) / h);
 
         instances[i].x = tmpx;
+
+        free(fl);
+        free(sl);
 
         // part of y
 
@@ -113,8 +123,8 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
 
         gray += fabs( (tmpYscore - yScore) / h);
 
-        grad += fabs( (tmpDen - tsvScore - densityScore) / h );
-            
+        grad += fabs( (tmpDen - tsvScore - penaltyScore) / h );
+                    
         instances[i].y = tmpy;
     }
 
@@ -133,9 +143,18 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
 
         graz += fabs( (tmpTSV - tsvScore) / h);
 
-        grad += fabs( (tmpDen - densityScore) / h);
+        grad += fabs( (tmpDen - penaltyScore) / h);
 
         instances[i].z = tmpz;
     } 
-    return (grax + gray + graz) / grad;
+
+    penaltyWeight = (grax + gray + graz) / grad;
+    
+    gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
+    
+    gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore);
+
+    gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore);
+
+    return penaltyWeight;
 }

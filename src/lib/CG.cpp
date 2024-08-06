@@ -12,6 +12,7 @@
 #define h 0.00001
 #define zChanged 1
 #define znotChanged 0
+#define Dimensions 3
 
 using namespace std;
 
@@ -368,10 +369,11 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
     return score;    
 }
 
-void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double densitySocre)
+void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore)
 {
+    int size = instances.size();
 
-    for(int i = 0; i < instances.size(); i++)
+    for(int i = 0; i < size; i++)
     {
         double *firstLayer = createBins(binInfo);
 
@@ -379,18 +381,20 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
         double tmpx = instances[i].x;
 
-        double score2;
+        double score, score2;
 
         instances[i].x += h;
 
-        score2 = scoreOfX(rawNet, gamma);
+        score = scoreOfX(rawNet, gamma);
 
         for(int j = 0; j < instances.size(); j++)
             penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
 
-        score2 += scoreOfPenalty(firstLayer, secondLayer, binInfo);
+        score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
-        instances[i].gra_x = ( (score2 - xScore) + penaltyWeight * (densitySocre - score2 ) ) / h;
+        printf("Xscore : %lf\n",  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h);
+
+        instances[i].gra_x =  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
 
         instances[i].x = tmpx;
 
@@ -400,7 +404,7 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
 }
 
-void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre)
+void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore)
 {
     for(int i = 0; i < instances.size(); i++)
     {
@@ -410,18 +414,18 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
         double tmpy = instances[i].y;
 
-        double score2;
+        double score, score2;
 
         instances[i].y += h;
 
-        score2 = scoreOfY(rawNet, gamma);
+        score = scoreOfY(rawNet, gamma);
 
         for(int j = 0; j < instances.size(); j++)
             penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
 
-        score2 += scoreOfPenalty(firstLayer, secondLayer, binInfo);
+        score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
-        instances[i].gra_y = ( (score2 - yScore) + penaltyWeight * (densitySocre - score2 ) ) / h;
+        instances[i].gra_y = ( (score - yScore) + penaltyWeight * (score2 - penaltyScore) ) / h;
 
         instances[i].y = tmpy;
 
@@ -430,13 +434,10 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
     }
 }
 
-void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore, const double densitySocre)
+void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore)
 {
     for(int i = 0; i < instances.size(); i++)
     {
-        double *firstLayer = createBins(binInfo);
-        double *secondLayer = createBins(binInfo);
-
         double tmpz = instances[i].z;
         double tmpd = instances[i].density;
         double score , score2;
@@ -451,20 +452,14 @@ void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
         instances[i].gra_z = (score - zScore) / h;
 
-        instances[i].gra_d =  penaltyWeight * (densitySocre - score2 ) / h;
+        instances[i].gra_d = penaltyWeight * ( score2 - penaltyScore) / h;
 
         instances[i].z = tmpz;
 
         instances[i].density = tmpd;
-
-        free(firstLayer);
-        free(secondLayer);
     }
 
 }
-
-
-
 
 double infaltionRatio(Instance instance, double routingOverflow)
 {   
@@ -488,52 +483,30 @@ double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInf
 
     score_of_z = TSVofNet(rawNet);
 
-    printf("%lf", penaltyWeight);
-
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore - score_of_z) * penaltyWeight;
 
     return totalScore;
 }
 
-void CGandGraPreprocessing( vector <Instance> instance, int *tmpGra, int *tmpCG)
+void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG)
 {
-    // for(int i = 0; i < instance.size(); i++)
-    // {
-    //     tmpGra[ 3 * i] = instance[i].gra_x;
+    int size = instances.size();
 
-    //     tmpGra[ 3 * i + 1] = instance[i].gra_y;
+    for(int i = 0; i < size; i++)
+    {
+        nowGra[i*3] = instances[i].gra_x;
 
-    //     tmpGra[ 3 * i + 2] = instance[i].gra_z;
+        nowGra[i*3 + 1] = instances[i].gra_y;
 
-    //     tmpCG[ 3 * i] = -instance[i].gra_x;
+        nowGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
 
-    //     tmpCG[ 3 * i + 1] = -instance[i].gra_y;
+        nowCG[i*3] = -instances[i].gra_x;
 
-    //     tmpCG[ 3 * i + 2] = -instance[i].gra_z;
-    // }
+        nowCG[i*3 + 1] = -instances[i].gra_y;
 
-    // for cell in cells:
-        
-    //     tmp_gra = []
-        
-    //     tmp_cg = []
-        
-    //     tmp_gra.append ( cell.gradientx )
-                  
-    //     tmp_gra.append ( cell.gradienty )
+        nowCG[i*3 + 2] = -instances[i].gra_z + instances[i].gra_d;
 
-    //     tmp_gra.append ( cell.gradientz + cell.gradientd )
-       
-    //     tmp_cg.append ( -cell.gradientx )
-
-    //     tmp_cg.append ( -cell.gradienty )
-
-    //     tmp_cg.append ( -(cell.gradientz + cell.gradientd) )
-        
-    //     gradient.append(tmp_gra)
-        
-    //     cg.append(tmp_cg)
-        
-
+        printf("%lf, %lf, %lf, %lf, %lf, %lf\n", instances[i].gra_x, nowGra[i*3+1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);
+    }
 }
 

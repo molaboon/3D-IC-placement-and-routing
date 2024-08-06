@@ -24,14 +24,15 @@ void calculatePenaltyArea(double coordinate[], int *length, double *firstLayer, 
 
 double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo);
 
-void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double densitySocre);
+void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore);
 
-void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre);
+void gradientY(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore);
 
-void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double densitySocre);
+void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore);
 
 double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <Instance> &instances);
 
+void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG);
 // double infaltionRatio(Instance instance, double routingOverflow);
 
 // double infaltionRatio(Instance instance, double routingOverflow);
