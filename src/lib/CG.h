@@ -32,11 +32,14 @@ void gradientZ(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
 double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <Instance> &instances);
 
-void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG);
-// double infaltionRatio(Instance instance, double routingOverflow);
+void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG, double *lastGra, double *lastCG);
+
+double returnAlpha(double nowCG[]);
+
+void newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG);
 
 // double infaltionRatio(Instance instance, double routingOverflow);
 
-// double returnAlpha(int *CG);
+// double infaltionRatio(Instance instance, double routingOverflow);
 
 

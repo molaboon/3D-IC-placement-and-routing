@@ -15,10 +15,12 @@ typedef struct grid_info
     double binXnum;
     double binYnum;
 
+    int Numinstance;
+
 }gridInfo;
 
 
-void returnGridInfo(Die &die, gridInfo &binInfo);
+void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance);
 
 void firstPlacement(vector <Instance> &instances, gridInfo binInfo);
 

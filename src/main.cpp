@@ -21,9 +21,7 @@ int main(int argc, char *argv[]){
 	// srand(time(NULL));
 	
 	char *inputName = *(argv + 1);
-	
 	char *outputName = *(argv + 2);
-
 	FILE *input = fopen(inputName, "r");
 	assert(input);
 
@@ -36,27 +34,26 @@ int main(int argc, char *argv[]){
 	vector <Instance> instances;										//The standard cell with its library
 	int NumNets;															//How many nets connect betweem Instances
 	vector <RawNet> rawnet;													//The rawnet data store in input
-
 	vector <int> PartitionResult;											//Using hmetis to do 2-way partition to divide the Instances into to die
 	vector <Net> NetArray;													//NetArray store how many cell connects to this net and a list of cell which connects to this net
-	
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
 	/*			data preprocessing			 */
+
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminal);
 	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu);
 	readNetInfo(input, &NumNets, rawnet, instances);
-	returnGridInfo(top_die, binInfo);
+	returnGridInfo(top_die, binInfo, NumInstances);
 
 	/* first placement and CG preprocessing */
 	
-	double gamma, penaltyWeight, totalScore;
-	double *lastCG = (double *)calloc( NumInstances, sizeof(double) );
-	double *nowCG = (double *)calloc( NumInstances, sizeof(double) );
-	double *lastGra = (double *)calloc( NumInstances, sizeof(double) );
-	double *nowGra = (double *)calloc( NumInstances, sizeof(double) );
+	double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+	double lastCG[NumInstances * 3 ] = {0.0};
+	double nowCG[NumInstances * 3 ] = {0.0};
+	double lastGra[NumInstances * 3 ] = {0.0};
+	double nowGra[NumInstances * 3 ] = {0.0};
 	
 	firstPlacement(instances, binInfo);
 	gamma = 0.05 * binInfo.dieWidth;
@@ -65,18 +62,31 @@ int main(int argc, char *argv[]){
 
 	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
 
-	CGandGraPreprocessing(instances, nowGra, nowCG);
-	printf("%lf \n", penaltyWeight);
+	CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
+
+	/*				Coarsening					*/
+
+	/*				Refinement(CG)				*/
+
+	int totalIter = NumInstances;
+
+	for(int i = 0; i < totalIter; i++)
+	{
+		for(int j = 0; j < 30; j++)
+		{
+			
+		}
+	}
 
 
 
-	// printNetInfo(NumNets, rawnet);
-	// printInstanceInfo(NumInstances, instances);
-	// printTechnologyInfo(NumTechnologies, TechMenu);
-	// printDieInfo(top_die, bottom_die);
-	// printHybridTerminalInfo(terminal);
-	// printInstanceInfo(NumInstances, instances);
-
-
+	
 	return 0;
 }
+
+// printNetInfo(NumNets, rawnet);
+// printInstanceInfo(NumInstances, instances);
+// printTechnologyInfo(NumTechnologies, TechMenu);
+// printDieInfo(top_die, bottom_die);
+// printHybridTerminalInfo(terminal);
+// printInstanceInfo(NumInstances, instances);

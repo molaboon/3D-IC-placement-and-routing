@@ -13,6 +13,7 @@
 #define zChanged 1
 #define znotChanged 0
 #define Dimensions 3
+#define spaceZweight 0.01
 
 using namespace std;
 
@@ -208,7 +209,7 @@ double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo 
 
     for(int i = 0; i < size; i++)
     {
-        if(zisChanged == 1)
+        if(zisChanged)
         {
             double tmpD = returnDensity(instances[i].z, 0.0);
 
@@ -363,10 +364,11 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
     double area = binInfo.binWidth * binInfo.binHeight;
     int binSize = (int) binInfo.binXnum * binInfo.binYnum;
 
-    for(int bin = 0; bin < binSize; bin++)
-        score +=  (firstLayer[bin] - area) * (firstLayer[bin] - area) + (secondLayer[bin] - area) * (secondLayer[bin] - area);
-     
-    return score;    
+    for(int b = 0; b < binSize; b++)
+    {
+        score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);
+    }
+        return score;    
 }
 
 void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore)
@@ -381,19 +383,15 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 
         double tmpx = instances[i].x;
 
-        double score, score2;
-
+        double score = 0.0, score2 = 0.0;
         instances[i].x += h;
-
+        
         score = scoreOfX(rawNet, gamma);
 
-        for(int j = 0; j < instances.size(); j++)
+        for(int j = 0; j < size; j++)
             penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
-
-        printf("Xscore : %lf\n",  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h);
-
         instances[i].gra_x =  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
 
         instances[i].x = tmpx;
@@ -466,11 +464,6 @@ double infaltionRatio(Instance instance, double routingOverflow)
     return 0.0;
 }
 
-double returnAlpha(int *CG)
-{
-    return 0.0;
-}
-
 double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <Instance> &instances)
 {
     double score_of_x, score_of_y, score_of_z, densityScore, totalScore;
@@ -488,7 +481,7 @@ double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInf
     return totalScore;
 }
 
-void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG)
+void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG, double *lastGra, double *lastCG)
 {
     int size = instances.size();
 
@@ -500,13 +493,106 @@ void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double 
 
         nowGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
 
+        lastGra[i*3] = instances[i].gra_x;
+
+        lastGra[i*3 + 1] = instances[i].gra_y;
+
+        lastGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
+
         nowCG[i*3] = -instances[i].gra_x;
 
         nowCG[i*3 + 1] = -instances[i].gra_y;
 
-        nowCG[i*3 + 2] = -instances[i].gra_z + instances[i].gra_d;
+        nowCG[i*3 + 2] = -(instances[i].gra_z + instances[i].gra_d);
 
-        printf("%lf, %lf, %lf, %lf, %lf, %lf\n", instances[i].gra_x, nowGra[i*3+1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);
+        lastCG[i*3] = -instances[i].gra_x;
+
+        lastCG[i*3 + 1] = -instances[i].gra_y;
+
+        lastCG[i*3 + 2] = -(instances[i].gra_z + instances[i].gra_d);
+
+        // printf("%lf, %lf, %lf, %lf, %lf, %lf\n", nowGra[i*3], nowGra[i*3 + 1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);
     }
 }
+
+void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration)
+{
+    double beta = 0.0, norm = 0.0;
+
+    for(int index = 0; index < Numinstance * Dimensions; index++)
+    {
+        norm += lastGra[index];
+
+        beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
+    }
+
+    norm = norm * norm;
+
+    beta = beta/norm;
+
+    for(int index = 0; index < Numinstance * Dimensions; index ++)
+        nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);    
+
+}
+
+double returnAlpha(double nowCG[])
+{   
+    double Alpha = 0.0, weight = 0.2;
+
+    for(int i = 0; i < 3; i++)
+        Alpha += nowCG[i] * nowCG[i];
+
+    Alpha = sqrt(Alpha);
+
+    Alpha = weight / Alpha;
+
+    return Alpha;
+}
+
+void glodenSearch()
+{
+
+}
+
+void newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
+{
+    for(int index = 0; index < binInfo.Numinstance; index++)
+    {
+        double tmp[Dimensions] = {0.0};
+        double Alpha, spaceX, spaceY, spaceZ;
+
+        tmp[0] = nowCG[index * Dimensions];
+        tmp[1] = nowCG[index * Dimensions + 1];
+        tmp[2] = nowCG[index * Dimensions + 2];
+
+        Alpha = returnAlpha(tmp);
+
+        spaceX = tmp[0] * Alpha * binInfo.binWidth;
+        spaceY = tmp[1] * Alpha * binInfo.binHeight;
+        spaceZ = tmp[2] * Alpha * 0.01;
+
+        instances[index].x += spaceX;
+        instances[index].y += spaceY;
+        instances[index].z += spaceZ;
+        
+
+
+    }
+
+    // for instance in instances:
+    //     dk = [ tmp_CG[cnt][0], tmp_CG[cnt][1] , tmp_CG[cnt][2]]
+    //     alpha = return_alpha( dk, grid_info[2])        
+    //     spacex =  dk[0] * alpha * grid_info[2]      
+    //     spacey =  dk[1] * alpha * grid_info[3]
+    //     spacez =  dk[2] * alpha * 0.01
+    //     instance.x = dc( instance.tmp_x ) + spacex
+    //     instance.y = dc( instance.tmp_y ) + spacey
+    //     instance.z = dc( instance.tmp_z ) + spacez
+    //     golden_search_x(grid_info[0], instance)
+    //     golden_search_y(grid_info[1], instance)
+    //     golden_search_z( instance )
+    // new_score, wirelength, num_TSV, density_score = calculate_total_score(nets, instances, grid_info, penalty_weight, gamma, bins)
+    // return new_score, wirelength, num_TSV, density_score
+}
+
 

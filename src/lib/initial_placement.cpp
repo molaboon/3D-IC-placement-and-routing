@@ -10,7 +10,7 @@
 
 
 
-void returnGridInfo(Die &die, gridInfo &binInfo)
+void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance)
 {   
     binInfo.dieWidth = die.upperRightX ; 
 
@@ -23,6 +23,8 @@ void returnGridInfo(Die &die, gridInfo &binInfo)
     binInfo.binXnum = (binInfo.dieWidth / binInfo.binWidth);
 
     binInfo.binYnum = binInfo.dieHeight / binInfo.binHeight;
+
+    binInfo.Numinstance = Numinstance;
 
 }
 
@@ -78,7 +80,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
     xScore = scoreOfX(rawNet, gamma);
     yScore = scoreOfY(rawNet, gamma);
 
-    printf("Xscore : %lf\n", xScore);
+    // printf("Xscore : %lf\n", xScore);
     
     tsvScore = TSVofNet(rawNet);
 
@@ -100,13 +102,13 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
 
         tmpXscore = scoreOfX(rawNet, gamma);
 
-        tmpDen = scoreOfPenalty();
+        tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
 
         grax += fabs( (tmpXscore - xScore) / h) ;
        
         grad += fabs( (tmpDen - tsvScore - penaltyScore) / h );
 
-        printf("%f\n", ((tmpXscore - xScore) / h) + 0.000404* (tmpDen - tsvScore - penaltyScore) / h);
+        // printf("%lf \n", ((tmpXscore - xScore) / h) + 0.000404* (tmpDen - tsvScore - penaltyScore) / h);
 
         instances[i].x = tmpx;
 
@@ -149,7 +151,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
     } 
 
     penaltyWeight = (grax + gray + graz) / grad;
-    
+    // printf("\n\nGradinet X\n");
     gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
     
     gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore);

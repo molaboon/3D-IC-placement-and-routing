@@ -70,6 +70,10 @@ typedef struct _Instance{
 	double y;
 	double z;
 
+    double tmpX;
+    double tmpY;
+    double tmpZ;
+
     double width;
     double height;
 
