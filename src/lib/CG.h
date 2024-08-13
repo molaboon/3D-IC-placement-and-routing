@@ -36,7 +36,9 @@ void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double 
 
 double returnAlpha(double nowCG[]);
 
-void newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG);
+void glodenSearch(Instance &inst, gridInfo binInfo);
+
+double newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo);
 
 // double infaltionRatio(Instance instance, double routingOverflow);
 

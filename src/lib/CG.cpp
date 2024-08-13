@@ -549,13 +549,27 @@ double returnAlpha(double nowCG[])
     return Alpha;
 }
 
-void glodenSearch()
-{
+void glodenSearch(Instance &inst, const gridInfo binInfo)
+{   
+    if( inst.x > binInfo.dieWidth)
+        inst.x = binInfo.dieWidth;
+    else if (inst.x < 0.0)
+        inst.x = 0.0;
 
+    if(inst.y > binInfo.dieHeight)
+        inst.y = binInfo.dieHeight;
+    else if (inst.y < 0.0)
+        inst.y = 0.0;
+
+    if(inst.z > 1.0)
+        inst.z = 1.0;
+    else if(inst.z < 0.0)
+        inst.z = 0.0;    
 }
 
-void newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
+double newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
 {
+    double score = 0.0;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         double tmp[Dimensions] = {0.0};
@@ -574,25 +588,15 @@ void newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double pe
         instances[index].x += spaceX;
         instances[index].y += spaceY;
         instances[index].z += spaceZ;
-        
 
+        glodenSearch(instances[index], binInfo);
 
     }
 
-    // for instance in instances:
-    //     dk = [ tmp_CG[cnt][0], tmp_CG[cnt][1] , tmp_CG[cnt][2]]
-    //     alpha = return_alpha( dk, grid_info[2])        
-    //     spacex =  dk[0] * alpha * grid_info[2]      
-    //     spacey =  dk[1] * alpha * grid_info[3]
-    //     spacez =  dk[2] * alpha * 0.01
-    //     instance.x = dc( instance.tmp_x ) + spacex
-    //     instance.y = dc( instance.tmp_y ) + spacey
-    //     instance.z = dc( instance.tmp_z ) + spacez
-    //     golden_search_x(grid_info[0], instance)
-    //     golden_search_y(grid_info[1], instance)
-    //     golden_search_z( instance )
-    // new_score, wirelength, num_TSV, density_score = calculate_total_score(nets, instances, grid_info, penalty_weight, gamma, bins)
-    // return new_score, wirelength, num_TSV, density_score
+    score = returnTotalScore(rawNets, gamma, binInfo, penaltyWeight, instances);
+
+    return score;
+
 }
 
 
