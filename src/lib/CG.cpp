@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <vector>
 #include <cmath>
+#include <string.h>
 
 #include "initial_placement.h"
 #include "CG.h"
@@ -20,10 +21,7 @@ using namespace std;
 /*
     check list
 
-        score of x
-        score of y
-        score of z 
-        create bins
+    need to optimize the speed of calculating gradient
 
 
 */
@@ -197,7 +195,7 @@ double TSVofNet( const vector <RawNet> rawNet)
     return score;
 }
 
-double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo binInfo, int zisChanged)
+double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo binInfo, bool zisChanged)
 {
     double score = 0;
     int size = instances.size();
@@ -302,11 +300,8 @@ void penaltyInfoOfinstance( const Instance instance, const double density, const
 }
 
 void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, Instance instance, gridInfo binInfo)
-{
-   
-    double routing_overflow;
-
-    // grid_info = [die width, die height, grid width, grid height] 
+{   
+    // double routing_overflow;
 
     for (int y = 0; y <= length[3] - length[2]; ++y) {
 
@@ -375,11 +370,16 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
 {
     int size = instances.size();
 
+    // double *originFirstLayer = createBins(binInfo);
+    // double *originSecondLayer = createBins(binInfo);
+
     for(int i = 0; i < size; i++)
     {
         double *firstLayer = createBins(binInfo);
 
         double *secondLayer = createBins(binInfo);
+
+        // memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
         double tmpx = instances[i].x;
 
@@ -599,4 +599,32 @@ double newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double 
 
 }
 
+void updateGra(vector <RawNet> rawNets, double gamma, vector<Instance> &instances, grid_info binInfo, double *lastGra, double *nowGra, double penaltyWeight)
+{
+    double xScore, yScore, zScore, penaltyScore;
 
+    xScore = scoreOfX(rawNets, gamma);
+
+    yScore = scoreOfY(rawNets, gamma);
+
+    zScore = scoreOfz(rawNets, instances, binInfo, 1);
+
+    gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
+
+    gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore);
+
+    gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore);
+
+    memcpy( lastGra, nowGra, Dimensions * binInfo.Numinstance * sizeof(double) );
+
+    for(int i = 0; i < binInfo.Numinstance; i++)
+    {
+        nowGra[i*3] = instances[i].gra_x;
+
+        nowGra[i*3 + 1] = instances[i].gra_y;
+
+        nowGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
+
+        // printf("%lf, %lf, %lf, %lf, %lf, %lf\n", nowGra[i*3], nowGra[i*3 + 1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);
+    }
+}

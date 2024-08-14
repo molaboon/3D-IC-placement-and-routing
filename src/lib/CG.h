@@ -14,7 +14,7 @@ double returnDensity(const double z, const double layer);
 
 double returnPsi(const double z);
 
-double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo binInfo, int zisChanged);
+double scoreOfz( vector <RawNet> rawNets, vector<Instance> &instances, gridInfo binInfo, bool zisChanged);
 
 double *createBins(gridInfo binInfo);
 
@@ -34,11 +34,16 @@ double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInf
 
 void CGandGraPreprocessing( vector <Instance> instances, double *nowGra, double *nowCG, double *lastGra, double *lastCG);
 
+void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration);
+
 double returnAlpha(double nowCG[]);
 
 void glodenSearch(Instance &inst, gridInfo binInfo);
 
 double newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo);
+
+void updateGra(vector <RawNet> rawNets, double gamma, vector<Instance> &instances, grid_info binInfo, double *lastGra, double *nowGra, double penaltyWeight);
+
 
 // double infaltionRatio(Instance instance, double routingOverflow);
 

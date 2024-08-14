@@ -151,7 +151,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
     } 
 
     penaltyWeight = (grax + gray + graz) / grad;
-    // printf("\n\nGradinet X\n");
+
     gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
     
     gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore);

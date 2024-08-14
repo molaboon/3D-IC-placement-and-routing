@@ -74,8 +74,14 @@ int main(int argc, char *argv[]){
 	{
 		for(int j = 0; j < 30; j++)
 		{
-			
+			conjugateGradient(nowGra, nowCG, lastCG, lastGra, NumInstances, i);
+
+			newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
+
+			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
+
 		}
+		penaltyWeight *=2;
 	}
 
 
