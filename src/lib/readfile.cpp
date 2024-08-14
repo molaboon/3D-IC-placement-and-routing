@@ -132,8 +132,11 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &Instanc
         temp.width = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
         temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY;
 		
-        temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
-        temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
+        // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
+        // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
+
+        temp.area = temp.width * temp.height;
+        // temp.inf
 		
         InstanceArray.emplace_back(temp);
     }

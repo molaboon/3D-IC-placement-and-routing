@@ -82,6 +82,9 @@ typedef struct _Instance{
     double inflateWidth;
     double inflateHeight;
 
+    double area;
+    double inflateArea;
+
     double inflationRatio = 1.0;
 
     double gra_x = 0.0;
