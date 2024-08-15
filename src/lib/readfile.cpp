@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <iostream>
+
 #include "readfile.h"
 
 #define BUFFER_SIZE 25
@@ -116,7 +118,7 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &InstanceArray, int *NumTechnologies, vector <Tech_menu> TechMenu ){
+void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu ){
     assert(input);
     
     fscanf(input, "%*s %d", &(*NumInstances));
@@ -134,37 +136,46 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &Instanc
 		
         // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
         // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
-
+        temp.instIndex = i;
         temp.area = temp.width * temp.height;
         // temp.inf
 		
-        InstanceArray.emplace_back(temp);
+        instances.emplace_back(temp);
     }
     read_one_blank_line(input);
 }
 
-void printInstanceInfo(int NumInstances, vector <Instance> InstanceArray){
+void printInstanceInfo(int NumInstances, vector <Instance> instances){
     printf("NumInstances <instanceCount>: %d\n", NumInstances);
     for(int i = 0; i < NumInstances; i++){
         printf("\tInst <Name> <lib> <w> <h> <x> <y>: %s %s %lf %lf %lf %lf %lf\n", 
-        InstanceArray[i].instName, 
-        InstanceArray[i].libCellName, 
-        InstanceArray[i].width, 
-        InstanceArray[i].height,
-        InstanceArray[i].x,
-        InstanceArray[i].y,
-        InstanceArray[i].z
+        instances[i].instName, 
+        instances[i].libCellName, 
+        instances[i].width, 
+        instances[i].height,
+        instances[i].x,
+        instances[i].y,
+        instances[i].z
         );
     }
     printf("\n");
 }
 
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &InstanceArray){
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &instances)
+{
     assert(input);
 
+    int size = instances.size();
+    
     fscanf(input, "%*s %d", &(*NumNets));
-    for(int i = 0; i < *NumNets; i++){
+    
+    for(int index = 0; index < size; index++)
+        instances[index].netsConnect = (bool *) calloc( *NumNets , sizeof(bool));
+
+
+    for(int i = 0; i < *NumNets; i++)
+    {
         RawNet temp;
         fscanf(input, "%*s %s %d", temp.netName , &temp.numPins);
 
@@ -190,14 +201,18 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
 
             strncpy(current_libCellName, token + 1, strlen(token)-1);
             
-            // printf("%s, %p \n", current_libCellName, &InstanceArray[atoi(current_libCellName)-1]);
+            // printf("%s, %p \n", current_libCellName, &instances[atoi(current_libCellName)-1]);
             
-            temp_connection[j] = ( &InstanceArray[atoi(current_libCellName)-1]) ;
+            temp_connection[j] = ( &instances[atoi(current_libCellName)-1]) ;
 
+            temp_connection[j]->netsConnect[i] = 1;
+            
         }
         temp.Connection = temp_connection;
+
         rawnet.emplace_back(temp);
     }
+
     fclose(input);
 }
 

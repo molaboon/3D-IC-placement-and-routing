@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <time.h>
 #include <math.h>
+#include <iostream>
 
 #include "initial_placement.h"
 #include "CG.h"
@@ -78,6 +79,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
     int size = instances.size();
 
     xScore = scoreOfX(rawNet, gamma);
+
     yScore = scoreOfY(rawNet, gamma);
 
     // printf("Xscore : %lf\n", xScore);
@@ -87,6 +89,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
     penaltyScore = scoreOfz(rawNet, instances, binInfo, 1);
 
     penaltyScore -= tsvScore;
+
 
     for(int i = 0; i < size; i++)
     {        
@@ -151,6 +154,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
     } 
 
     penaltyWeight = (grax + gray + graz) / grad;
+
 
     gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
     

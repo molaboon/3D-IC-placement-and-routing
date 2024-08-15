@@ -1,4 +1,5 @@
 #include <vector>
+#include <cstdio>
 
 using namespace std;
 using std::vector;
@@ -66,6 +67,8 @@ typedef struct _Instance{
     char libCellName[LIBCELL_NAME_SIZE];    //MC1, MC2, ...
     char libPinName[PIN_NAME_SIZE];
 
+    int instIndex = 0;
+
     double x;
 	double y;
 	double z;
@@ -91,6 +94,8 @@ typedef struct _Instance{
     double gra_y = 0.0;
     double gra_z = 0.0;
     double gra_d = 0.0;
+
+    bool *netsConnect;
 
 }Instance;
 

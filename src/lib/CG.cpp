@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <string.h>
+#include <iostream>
 
 #include "initial_placement.h"
 #include "CG.h"

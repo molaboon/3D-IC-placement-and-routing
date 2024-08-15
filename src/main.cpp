@@ -4,10 +4,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <omp.h>
+#include <iostream>
 
 #include "lib/readfile.h"
 #include "lib/initial_placement.h"
 #include "lib/CG.h"
+#include "lib/coarsening.h"
 
 // double start_time;
 
@@ -47,14 +49,14 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, instances);
 	returnGridInfo(top_die, binInfo, NumInstances);
 
-	/* first placement and CG preprocessing */
+	// /* first placement and CG preprocessing */
 	
 	double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 	double lastCG[NumInstances * 3 ] = {0.0};
 	double nowCG[NumInstances * 3 ] = {0.0};
 	double lastGra[NumInstances * 3 ] = {0.0};
 	double nowGra[NumInstances * 3 ] = {0.0};
-	
+
 	firstPlacement(instances, binInfo);
 	gamma = 0.05 * binInfo.dieWidth;
 
@@ -65,24 +67,26 @@ int main(int argc, char *argv[]){
 	CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 	/*				Coarsening					*/
+	coarsen(rawnet, instances);
 
 	/*				Refinement(CG)				*/
 
-	int totalIter = NumInstances;
+	
+	// int totalIter = NumInstances;
 
-	for(int i = 0; i < totalIter; i++)
-	{
-		for(int j = 0; j < 30; j++)
-		{
-			conjugateGradient(nowGra, nowCG, lastCG, lastGra, NumInstances, i);
+	// for(int i = 0; i < totalIter; i++)
+	// {
+	// 	for(int j = 0; j < 30; j++)
+	// 	{
+	// 		conjugateGradient(nowGra, nowCG, lastCG, lastGra, NumInstances, i);
 
-			newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
+	// 		// newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo); // 
 
-			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
+	// 		// updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-		}
-		penaltyWeight *=2;
-	}
+	// 	}
+	// 	penaltyWeight *=2;
+	// }
 
 
 

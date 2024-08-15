@@ -6,6 +6,11 @@ typedef struct cell
 {
     char name[cellNameSize];
 
+    int level;
+    double area;
+
+    struct cell *coarsenedCells; // link the cells;
+
 }cell;
 
 typedef struct hierarchyTree
@@ -17,5 +22,6 @@ typedef struct hierarchyTree
 }hierarchyTree;
 
 
+double clusteringScoreFunction( vector <RawNet> rawNets, bool haveMacro, double avgArea);
 
-double clusteringScoreFunction( vector <RawNet> rawNets, bool haveMacro);
+void coarsen(vector <RawNet> rawNets, vector<Instance> &instances);
