@@ -11,13 +11,28 @@ double clusteringScoreFunction( vector <RawNet> rawNets, bool haveMacro, double 
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 {
+    vector <RawNet> tmpRawNets;
+
+    
     int numInstance = instances.size();
     int rawnetSize = rawNets.size();
-
-    double gradeMap[numInstance][numInstance] = {};
-
+    double bestGrade = 0.0;
+    int bestChoice1, bestChoice2;
+    double gradeMap[numInstance][numInstance] = {}; // need optimize
     double avgArea = 0.0; 
 
+    for (int i = 0; i < rawnetSize; i++)
+    {
+        RawNet tmpNet;
+
+        tmpNet.numPins = rawNets[i].numPins;
+
+        tmpNet.Connection = rawNets[i].Connection;
+
+        tmpRawNets.emplace_back(tmpNet);
+    }
+
+    
     for(int i = 0; i < numInstance; i++)
         avgArea += instances[i].area;
 
@@ -33,7 +48,7 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         for(int secondCell = firstCell + 1; secondCell < numInstance; secondCell++ )
         {   
             double degree = 0.0;
-            double tmp= 0.0;
+            double tmpGrade= 0.0;
             bool key = 0;
 
             for(int nets = 0; nets < rawnetSize; nets++)
@@ -41,18 +56,23 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
                 if( instances[firstCell].netsConnect[nets] & instances[secondCell].netsConnect[nets])
                 {
                     degree += (double) (rawNets[nets].numPins - 1);
-                    cout << degree << "\n";
                 }
 
             }
             if(degree != 0.0 )
             {
-                tmp = exp(-(instances[firstCell].area + instances[secondCell].area) / avgArea);
-                gradeMap[firstCell][secondCell] =  tmp * (1.0 / degree);
+                tmpGrade = exp(-(instances[firstCell].area + instances[secondCell].area) / avgArea) * (1.0 / degree);
+                gradeMap[firstCell][secondCell] =  tmpGrade ;
+
+                if (tmpGrade > bestGrade)
+                {
+                    bestChoice1 = firstCell;
+
+                    bestChoice2 = secondCell;
+
+                    bestGrade = tmpGrade;
+                }
             }
-
-            cout << "cell("<<firstCell+1 << ", "<< secondCell+1 <<"): "<< gradeMap[firstCell][secondCell] <<"\n";
-
         }
     }
 

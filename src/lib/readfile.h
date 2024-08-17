@@ -79,14 +79,12 @@ typedef struct _Instance{
 
     double width;
     double height;
-
-    double density;
-    
     double inflateWidth;
     double inflateHeight;
-
     double area;
     double inflateArea;
+
+    double density = 0.0;
 
     double inflationRatio = 1.0;
 
@@ -96,6 +94,10 @@ typedef struct _Instance{
     double gra_d = 0.0;
 
     bool *netsConnect;
+
+    struct _Instance *root;
+    struct _Instance *left;
+    struct _Instance *right;
 
 }Instance;
 

@@ -393,6 +393,7 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <Instance> &in
             penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
+
         instances[i].gra_x =  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
 
         instances[i].x = tmpx;
@@ -467,7 +468,7 @@ double infaltionRatio(Instance instance, double routingOverflow)
 
 double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <Instance> &instances)
 {
-    double score_of_x, score_of_y, score_of_z, densityScore, totalScore;
+    double score_of_x, score_of_y, score_of_z, densityScore, totalScore, wireLength;
 
     score_of_x = scoreOfX(rawNet, gamma);
 
@@ -478,6 +479,8 @@ double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInf
     score_of_z = TSVofNet(rawNet);
 
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore - score_of_z) * penaltyWeight;
+
+    wireLength = score_of_x + score_of_y;
 
     return totalScore;
 }
@@ -525,6 +528,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
         norm += lastGra[index];
 
         beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
+        // cout << lastGra[index]<<endl;
     }
 
     norm = norm * norm;
@@ -532,8 +536,11 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     beta = beta/norm;
 
     for(int index = 0; index < Numinstance * Dimensions; index ++)
-        nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);    
-
+    {
+        nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
+        // cout << nowCG[index] << endl;
+    }
+    
 }
 
 double returnAlpha(double nowCG[])
@@ -570,7 +577,7 @@ void glodenSearch(Instance &inst, const gridInfo binInfo)
 
 double newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
 {
-    double score = 0.0;
+    double score = 0.0, wireLength = 0.0;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         double tmp[Dimensions] = {0.0};
@@ -591,7 +598,6 @@ double newSolution(vector <RawNet> rawNets, vector<Instance> &instances, double 
         instances[index].z += spaceZ;
 
         glodenSearch(instances[index], binInfo);
-
     }
 
     score = returnTotalScore(rawNets, gamma, binInfo, penaltyWeight, instances);

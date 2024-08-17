@@ -35,36 +35,38 @@ void firstPlacement(vector <Instance> &instances, gridInfo binInfo)
 
     srand( time(NULL) );
 
-    double x[] = {10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0};
+    // double x[] = {10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0};
 
-    double y[] = {10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0};
+    // double y[] = {10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0};
 
-    double z[] = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
+    // double z[] = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
 
     for(int i = 0; i < instances.size(); i++)
     {
 
-        // double minX = InstanceArray[i].width ;
+        double minX = instances[i].width ;
 
-        // double maxX = binInfo.dieWidth - InstanceArray[i].width;
+        double maxX = binInfo.dieWidth - instances[i].width;
 
-        // double minY = InstanceArray[i].height ;
+        double minY = instances[i].height ;
 
-        // double maxY = binInfo.dieHeight - InstanceArray[i].height;
+        double maxY = binInfo.dieHeight - instances[i].height;
 
-        // double x = (maxX - minX) * rand() / (RAND_MAX +1.0) + minX;
+        double x = (maxX - minX) * rand() / (RAND_MAX +1.0) + minX;
 
-        // double y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
+        double y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
 
-        // InstanceArray[i].x = x;
+        instances[i].x = x;
 
-        // InstanceArray[i].y = y;
+        instances[i].y = y;
 
-        instances[i].x = x[i];
+        instances[i].z = 0.5;
 
-        instances[i].y = y[i];
+        // instances[i].x = x[i];
 
-        instances[i].z = z[i];
+        // instances[i].y = y[i];
+
+        // instances[i].z = z[i];
 
     }
 }
