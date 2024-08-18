@@ -10,6 +10,10 @@ double clusteringScoreFunction( vector <RawNet> rawNets, bool haveMacro, double 
 }
 
 
+/*
+    所以我想應該是要用vector的方式去寫
+*/
+
 void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets nodeNets)
 {   
     int rawnetSize = rawNets.size();
@@ -22,9 +26,23 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets nodeNets)
 
         for(int cellIndex = 0; cellIndex < netSize ; cellIndex++)
         {
+            node *newNode = createNode( rawNets[netIndex].Connection[cellIndex]->instIndex );
 
+            if( newNodeNet->nextNode == NULL)
+            {
+                newNodeNet->nextNode = newNode;
+            }
+            else
+            {
+                node *currentNode = newNodeNet->nextNode;
+                while ( currentNode != NULL )
+                {
+                    currentNode = currentNode->sibling;
+                }
 
-
+                currentNode = newNode;
+            }
+                
             
 
         }

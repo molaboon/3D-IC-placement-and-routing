@@ -7,14 +7,14 @@ typedef struct node
 {
     char *name;
 
-    int *index = 0;
+    int index = 0;
     int area = 0;    
     node *root;
     node *sibling;
 
 }node;
 
-struct node* createNode(int *index) 
+struct node* createNode(int index) 
 {
     node *newNode = (node*)malloc(sizeof(node));
     newNode->index = index;
@@ -26,7 +26,7 @@ struct node* createNode(int *index)
 typedef struct _nodeNet
 {
     int numNode = 0;
-    int netIndex;
+    int netIndex = 0;
     node *nextNode;
 
 }nodeNet;
