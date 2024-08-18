@@ -95,10 +95,6 @@ typedef struct _Instance{
 
     bool *netsConnect;
 
-    struct _Instance *root;
-    struct _Instance *left;
-    struct _Instance *right;
-
 }Instance;
 
 typedef struct _NetConnection{

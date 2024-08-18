@@ -9,6 +9,32 @@ double clusteringScoreFunction( vector <RawNet> rawNets, bool haveMacro, double 
     return 0.0;
 }
 
+
+void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets nodeNets)
+{   
+    int rawnetSize = rawNets.size();
+
+    for(int netIndex = 0; netIndex < rawnetSize; netIndex++)
+    {
+        int netSize = rawNets[netIndex].numPins;
+
+        nodeNet *newNodeNet = createNodeNet( netIndex );
+
+        for(int cellIndex = 0; cellIndex < netSize ; cellIndex++)
+        {
+
+
+
+            
+
+        }
+    }
+
+
+}
+
+
+
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 {
     vector <RawNet> tmpRawNets;
