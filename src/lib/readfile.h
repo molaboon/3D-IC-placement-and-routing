@@ -111,10 +111,12 @@ typedef struct _RawNet{
 
 }RawNet;
 
-typedef struct  _Net
+typedef struct  _levelNets
 {
-    /* data */
-}Net;
+    int numLevel;
+    vector < RawNet > levels;
+    
+}levelNets;
 
 
 void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> &TechMenu);

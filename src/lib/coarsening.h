@@ -10,44 +10,41 @@ typedef struct node
     int index = 0;
     int area = 0;    
     node *root;
-    node *sibling;
+    node *left;
+    node *right;
+    node *sibling = NULL;
 
-}node;
+    vector <int> connection;
+};
 
-struct node* createNode(int index) 
-{
-    node *newNode = (node*)malloc(sizeof(node));
-    newNode->index = index;
-    newNode->root = NULL;
-    newNode->sibling = NULL;
-    return newNode;
-}
+
 
 typedef struct _nodeNet
 {
-    int numNode = 0;
+    int numPins = 0;
     int netIndex = 0;
-    node *nextNode;
+    
+    node *head = NULL;
+
+    nodeNet *nextNet;
+
+    // vector < node* > net;
+
 
 }nodeNet;
 
-struct _nodeNet *createNodeNet(int netIndex)
-{
-    nodeNet *newNodeNet = (nodeNet*)malloc(sizeof(nodeNet));
-    newNodeNet->netIndex = netIndex;
-    newNodeNet->nextNode = NULL;
 
-    return newNodeNet;
-}
 
 typedef struct _nodeNets
 {
     int numNet = 0;
-    nodeNet *nextNodeNet;
+    nodeNet *nets;
+    // vector <nodeNet*> nets;
 
 }nodeNets;
 
+double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets nodeNests, double avgArea);
 
-double clusteringScoreFunction( vector <RawNet> rawNets, bool haveMacro, double avgArea);
+void clusteringScoreFunction(vector <RawNet> rawNets, vector<Instance> &instances);
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances);

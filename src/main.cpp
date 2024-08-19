@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
 	vector <Instance> instances;										    //The standard cell with its library
 	int NumNets;															//How many nets connect betweem Instances
 	vector <RawNet> rawnet;													//The rawnet data store in input
- 	vector <Net> NetArray;													//NetArray store how many cell connects to this net and a list of cell which connects to this net
+ 	// vector <Net> NetArray;													//NetArray store how many cell connects to this net and a list of cell which connects to this net
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
 	/*			data preprocessing			 */
