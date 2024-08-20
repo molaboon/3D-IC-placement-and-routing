@@ -18,8 +18,7 @@ typedef struct node
 };
 
 
-
-typedef struct _nodeNet
+typedef struct nodeNet
 {
     int numPins = 0;
     int netIndex = 0;
@@ -29,19 +28,17 @@ typedef struct _nodeNet
     nodeNet *nextNet;
 
     // vector < node* > net;
-
-
-}nodeNet;
+};
 
 
 
-typedef struct _nodeNets
+typedef struct nodeNets
 {
     int numNet = 0;
-    nodeNet *nets;
+    nodeNet *nodeNets;
     // vector <nodeNet*> nets;
 
-}nodeNets;
+};
 
 double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets nodeNests, double avgArea);
 

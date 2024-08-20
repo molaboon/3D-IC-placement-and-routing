@@ -15,9 +15,11 @@ struct node* createNode(int index)
     return newNode;
 }
 
-struct _nodeNet *createNodeNet(int netIndex)
+struct nodeNet *createNodeNet(int netIndex)
 {
     nodeNet *newNodeNet = (nodeNet*)malloc(sizeof(nodeNet));
+
+    newNodeNet->netIndex = netIndex;
 
     return newNodeNet;
 }
@@ -27,7 +29,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
     int numRawnet = rawNets.size();
     int numInstance = instances.size();
 
-    nodeNet *position = nodeNets.nets;
+    nodeNet *position = nodeNets.nodeNets;
 
     for(int i = 0 ; i < numInstance; i++)
     {
@@ -48,34 +50,35 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         
         newNodeNet->numPins = numPins;
 
+        vector <int> tmpConnection;
+
         for(int cellIndex = 0; cellIndex < numPins ; cellIndex++)
         {
             int index = rawNets[netIndex].Connection[cellIndex]->instIndex;
+
+            tmpConnection.push_back(netIndex);
 
             if(newNodeNet->head == NULL)
             {
                 newNodeNet->head = nodes[index];
             }
             else
-            {
+            {                
                 node *tmp = newNodeNet->head;
-
-                while ( tmp->sibling != NULL)
+                while ( tmp != NULL)
                 {
                     tmp = tmp->sibling;
                 }
                 tmp = nodes[index];
             }
-            
-            nodes[index]->connection.push_back(netIndex);          
         }
-        
+
         position = newNodeNet;
 
-        position = position->nextNet;
+        position = newNodeNet->nextNet;
+
     }
 }
-
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 {
@@ -100,10 +103,10 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     coarsenPreprocessing(rawNets, nodeNets, instances, nodes); 
      
 
-    for(int i = 0; i < rawnetSize; i++)
-    {
+    // for(int i = 0; i < rawnetSize; i++)
+    // {
         
-    } 
+    // } 
     // for (int firstNode = 0; firstNode < numInstance; firstNode++)
     // {
     //     for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
@@ -122,15 +125,15 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     //     }
     // }
 
-    node *newNode = createNode(instIndex);
+    // node *newNode = createNode(instIndex);
 
-    newNode->left = bestChoice1;
+    // newNode->left = bestChoice1;
 
-    newNode->right = bestChoice2;
+    // newNode->right = bestChoice2;
 
-    newNode->area = bestChoice1->area + bestChoice2->area;
+    // newNode->area = bestChoice1->area + bestChoice2->area;
 
-    nodes.push_back(newNode);
+    // nodes.push_back(newNode);
 
 
 }
@@ -152,7 +155,7 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets nodeNests,
             {
                 int tmp = firstNode.connection[i];
 
-                degree +=  (double) 1.0 / (double) ( nodeNests.nets[tmp]->numPins - 1 );
+                // degree +=  (double) 1.0 / (double) ( .nets[tmp]->numPins - 1 );
             }
         }
     }
@@ -182,7 +185,7 @@ void clusteringScoreFunction(vector <RawNet> rawNets, vector<Instance> &instance
 
     avgArea = avgArea * weight;
 
-    cout << avgArea << endl;
+    // cout << avgArea << endl;
 
     
 }

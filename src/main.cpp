@@ -61,14 +61,15 @@ int main(int argc, char *argv[]){
 
 	penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
 
-	cout << "here" <<endl;
 
 	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
 
 	CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 	/*				Coarsening					*/
-	// coarsen(rawnet, instances);
+	// cout << "here" <<endl;
+
+	coarsen(rawnet, instances);
 
 	/*				Refinement(CG)				*/
 
