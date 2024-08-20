@@ -50,13 +50,13 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         
         newNodeNet->numPins = numPins;
 
-        vector <int> tmpConnection;
+        // vector <int> tmpConnection;
 
         for(int cellIndex = 0; cellIndex < numPins ; cellIndex++)
         {
             int index = rawNets[netIndex].Connection[cellIndex]->instIndex;
 
-            tmpConnection.push_back(netIndex);
+            // tmpConnection.push_back(netIndex);
 
             if(newNodeNet->head == NULL)
             {
@@ -102,39 +102,30 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     coarsenPreprocessing(rawNets, nodeNets, instances, nodes); 
      
+    for (int firstNode = 0; firstNode < numInstance; firstNode++)
+    {
+        for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
+        {  
+            double tmpGrade = returnCoarsenScore( *nodes[firstNode], *nodes[secondNode], nodeNets, avgArea);
 
-    // for(int i = 0; i < rawnetSize; i++)
-    // {
-        
-    // } 
-    // for (int firstNode = 0; firstNode < numInstance; firstNode++)
-    // {
-    //     for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
-    //     {  
+            if (tmpGrade > bestGrade)
+            {
+                bestChoice1 = nodes[firstNode];
 
-    //         double tmpGrade = returnCoarsenScore( *nodes[firstNode], *nodes[secondNode], nodeNets, avgArea);
+                bestChoice2 = nodes[firstNode];
 
-    //         if (tmpGrade > bestGrade)
-    //         {
-    //             bestChoice1 = nodes[firstNode];
+                bestGrade = tmpGrade;
+            }            
+        }
+    }
 
-    //             bestChoice2 = nodes[firstNode];
+    node *newNode = createNode(instIndex);
 
-    //             bestGrade = tmpGrade;
-    //         }            
-    //     }
-    // }
+    newNode->left = bestChoice1;
 
-    // node *newNode = createNode(instIndex);
+    newNode->right = bestChoice2;
 
-    // newNode->left = bestChoice1;
-
-    // newNode->right = bestChoice2;
-
-    // newNode->area = bestChoice1->area + bestChoice2->area;
-
-    // nodes.push_back(newNode);
-
+    newNode->area = bestChoice1->area + bestChoice2->area;
 
 }
 
