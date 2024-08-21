@@ -3,6 +3,13 @@
 
 #define cellNameSize 100
 
+typedef struct netConnet
+{
+    int netIndex = 0;
+    
+    netConnet *connect = NULL;
+};
+
 typedef struct node
 {
     char *name;
@@ -14,7 +21,7 @@ typedef struct node
     node *right;
     node *sibling = NULL;
 
-    vector <int> connection;
+    netConnet *connection = NULL;
 };
 
 

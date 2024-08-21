@@ -11,9 +11,22 @@ struct node* createNode(int index)
     newNode->root = NULL;
     newNode->left = NULL;
     newNode->right = NULL;
+    newNode->connection = NULL;
 
     return newNode;
 }
+
+struct netConnet* createNetConnect( int netIndex )
+{
+    netConnet *newConnect = (netConnet*) malloc(sizeof(netConnet));
+
+    newConnect->netIndex = netIndex;
+
+    newConnect->connect = NULL;
+
+    return newConnect;
+};
+
 
 struct nodeNet *createNodeNet(int netIndex)
 {
@@ -50,13 +63,13 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         
         newNodeNet->numPins = numPins;
 
-        // vector <int> tmpConnection;
-
         for(int cellIndex = 0; cellIndex < numPins ; cellIndex++)
         {
             int index = rawNets[netIndex].Connection[cellIndex]->instIndex;
 
-            // tmpConnection.push_back(netIndex);
+            netConnet *newConnect = createNetConnect( index );
+
+            cout << "here" << endl;
 
             if(newNodeNet->head == NULL)
             {
@@ -71,6 +84,20 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
                 }
                 tmp = nodes[index];
             }
+
+            // if(nodes[index]->connection == NULL)
+            // {
+            //     nodes[index]->connection = tmpconnet;
+            // }
+            // else
+            // {
+            //     netConnet *tmpPointer = tmpconnet;
+            //     while (tmpPointer != NULL)
+            //     {
+            //         tmpPointer = tmpPointer->connect;
+            //     }
+            //     tmpPointer->netIndex = index;
+            // }
         }
 
         position = newNodeNet;
@@ -101,6 +128,17 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     avgArea = avgArea * weight;
 
     coarsenPreprocessing(rawNets, nodeNets, instances, nodes); 
+
+    for(int i = 0; i < numInstance; i++)
+    {
+        netConnet *tmp = nodes[i]->connection;
+        while (tmp!= NULL)
+        {
+            cout << tmp->netIndex << endl;
+            tmp = tmp->connect;
+        }
+        
+    }
      
     for (int firstNode = 0; firstNode < numInstance; firstNode++)
     {
@@ -131,28 +169,28 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
 double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets nodeNests, double avgArea)
 {
-    int firstNodeNumConnect = firstNode.connection.size();
+    // int firstNodeNumConnect = firstNode.connection.size();
 
-    int secondNodeNumConnect = secondNode.connection.size();
+    // int secondNodeNumConnect = secondNode.connection.size();
 
-    double degree = 0;
-    double score;
+    // double degree = 0;
+    // double score;
 
-    for(int i = 0; i < firstNodeNumConnect; i++ )
-    {
-        for(int j = 0; j < secondNodeNumConnect; j++)
-        {
-            if(firstNode.connection[i] == secondNode.connection[j])
-            {
-                int tmp = firstNode.connection[i];
+    // for(int i = 0; i < firstNodeNumConnect; i++ )
+    // {
+    //     for(int j = 0; j < secondNodeNumConnect; j++)
+    //     {
+    //         if(firstNode.connection[i] == secondNode.connection[j])
+    //         {
+    //             int tmp = firstNode.connection[i];
 
-                // degree +=  (double) 1.0 / (double) ( .nets[tmp]->numPins - 1 );
-            }
-        }
-    }
-    score = exp(-(firstNode.area + secondNode.area) / avgArea) * degree;
+    //             degree +=  (double) 1.0 / (double) ();
+    //         }
+    //     }
+    // }
+    // score = exp(-(firstNode.area + secondNode.area) / avgArea) * degree;
 
-    return score;
+    return 0.0;
 
 }
 
