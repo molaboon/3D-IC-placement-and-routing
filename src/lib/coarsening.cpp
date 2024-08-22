@@ -42,7 +42,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
     int numRawnet = rawNets.size();
     int numInstance = instances.size();
 
-    nodeNet *position = nodeNets.nodeNets;
+    nodeNet *position = nodeNets.nets;
 
     for(int i = 0 ; i < numInstance; i++)
     {
@@ -67,9 +67,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         {
             int index = rawNets[netIndex].Connection[cellIndex]->instIndex;
 
-            netConnet *newConnect = createNetConnect( index );
-
-            cout << "here" << endl;
+            netConnet *newConnect = createNetConnect( netIndex );
 
             if(newNodeNet->head == NULL)
             {
@@ -85,25 +83,31 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
                 tmp = nodes[index];
             }
 
-            // if(nodes[index]->connection == NULL)
-            // {
-            //     nodes[index]->connection = tmpconnet;
-            // }
-            // else
-            // {
-            //     netConnet *tmpPointer = tmpconnet;
-            //     while (tmpPointer != NULL)
-            //     {
-            //         tmpPointer = tmpPointer->connect;
-            //     }
-            //     tmpPointer->netIndex = index;
-            // }
+            if(nodes[index]->connection == NULL)
+            {
+                nodes[index]->connection = newConnect;
+                // cout << nodes[index]->connection <<endl<<endl;
+            }
+            else
+            {
+                netConnet *tmpPointer = nodes[index]->connection;
+
+                cout <<newConnect <<endl;
+
+                while (tmpPointer != NULL)
+                {
+                    tmpPointer = tmpPointer->connect;
+                }
+
+                tmpPointer = newConnect;
+
+                cout << tmpPointer << endl<<endl;
+            }
         }
 
         position = newNodeNet;
 
         position = newNodeNet->nextNet;
-
     }
 }
 
@@ -132,11 +136,18 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     for(int i = 0; i < numInstance; i++)
     {
         netConnet *tmp = nodes[i]->connection;
-        while (tmp!= NULL)
+
+        cout << tmp << endl;
+
+        if(tmp->connect == NULL)
         {
-            cout << tmp->netIndex << endl;
-            tmp = tmp->connect;
+            cout << "NO " << i <<endl;
         }
+        // while ( tmp != NULL )
+        // {           
+        //     cout << "cell: "<< i << ",  "<< tmp->netIndex << " " << tmp->connect->netIndex << endl;
+        //     tmp = tmp->connect;
+        // }
         
     }
      

@@ -21,6 +21,8 @@ typedef struct node
     node *right;
     node *sibling = NULL;
 
+    // vector < int > connect;
+
     netConnet *connection = NULL;
 };
 
@@ -42,7 +44,7 @@ typedef struct nodeNet
 typedef struct nodeNets
 {
     int numNet = 0;
-    nodeNet *nodeNets;
+    nodeNet *nets;
     // vector <nodeNet*> nets;
 
 };
