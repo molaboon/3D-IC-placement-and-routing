@@ -163,8 +163,6 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
         {
             if( firstNetConnect->netIndex == secondNetConnect->netIndex )
             {
-                // cout << firstNetConnect->netIndex << ", "<< secondNetConnect->netIndex <<endl;
-
                 int tmp = returnDegree(nodeNests, firstNetConnect->netIndex);
                 degree += 1.0 / (double) (tmp - 1);
             }
@@ -173,13 +171,10 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
         }
 
         firstNetConnect = firstNetConnect->connect;
-    }
-    
-
+    }    
     score = exp(-(firstNode.area + secondNode.area) / avgArea) * degree;
 
     return score;
-
 }
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
@@ -203,15 +198,14 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     avgArea = avgArea * weight;
 
     coarsenPreprocessing(rawNets, nodeNets, instances, nodes); 
-
-    nodeNet * tmptmp = nodeNets.nets;
      
-
     for (int firstNode = 0; firstNode < numInstance; firstNode++)
     {
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
         {  
             double tmpGrade = returnCoarsenScore( *nodes[firstNode], *nodes[secondNode], nodeNets, avgArea);
+
+            // cout << "cell: "<< firstNode << ", "<< secondNode << ", "<< "tmp grade: "<< tmpGrade << endl;
 
             if (tmpGrade > bestGrade)
             {
@@ -220,19 +214,19 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
                 bestChoice2 = nodes[secondNode];
 
                 bestGrade = tmpGrade;
-
-                cout << "cell: "<< bestChoice1->index << ", "<< bestChoice2->index << ", "<< bestGrade << endl;
             }            
         }
     }
 
     node *newNode = createNode(instIndex);
-
+    
     newNode->left = bestChoice1;
 
     newNode->right = bestChoice2;
 
     newNode->area = bestChoice1->area + bestChoice2->area;
+
+    cout << newNode->index <<", "<< newNode->left->index <<", "<< newNode->right->index <<", "<< newNode->area <<endl;
 
 }
 
