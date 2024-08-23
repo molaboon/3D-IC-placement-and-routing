@@ -21,7 +21,7 @@ typedef struct node
     node *right;
     node *sibling = NULL;
 
-    // vector < int > connect;
+    int numConnection = 0;
 
     netConnet *connection = NULL;
 };
@@ -49,7 +49,9 @@ typedef struct nodeNets
 
 };
 
-double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets nodeNests, double avgArea);
+double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, double avgArea);
+
+int returnDegree(nodeNets &nodeNets, int netIndex);
 
 void clusteringScoreFunction(vector <RawNet> rawNets, vector<Instance> &instances);
 
