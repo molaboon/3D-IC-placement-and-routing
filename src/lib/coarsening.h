@@ -16,7 +16,6 @@ typedef struct node
 
     int index = 0;
     int area = 0;    
-    node *root;
     node *left;
     node *right;
     node *sibling = NULL;
@@ -53,6 +52,9 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
 
 int returnDegree(nodeNets &nodeNets, int netIndex);
 
-void clusteringScoreFunction(vector <RawNet> rawNets, vector<Instance> &instances);
+void popOutNode(vector < node* > &nodeForest, int firstNodeIndex, int secondNodeIndex, node *newNode);
+
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets);
+
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances);

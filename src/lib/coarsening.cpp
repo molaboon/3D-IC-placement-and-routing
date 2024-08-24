@@ -1,18 +1,22 @@
 #include "coarsening.h"
 #include <math.h>
 #include <iostream>
+#include <algorithm>
+
 
 #define weight 5.0
 #define debugMode 1
+
+using namespace std;
 
 struct node* createNode(int index) 
 {
     node *newNode = (node*)malloc(sizeof(node));
     newNode->index = index;
-    newNode->root = NULL;
     newNode->left = NULL;
     newNode->right = NULL;
     newNode->connection = NULL;
+    newNode->area = 0;
     newNode->numConnection = 0;
 
     return newNode;
@@ -29,7 +33,6 @@ struct netConnet* createNetConnect( int netIndex )
     return newConnect;
 };
 
-
 struct nodeNet *createNodeNet(int netIndex)
 {
     nodeNet *newNodeNet = (nodeNet*)malloc(sizeof(nodeNet));
@@ -40,7 +43,7 @@ struct nodeNet *createNodeNet(int netIndex)
     return newNodeNet;
 }
 
-void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <Instance> instances, vector <node*> &nodes)
+void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <Instance> instances, vector <node*> &nodesForest)
 {   
     int numRawnet = rawNets.size();
     int numInstance = instances.size();
@@ -53,7 +56,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
 
         newNode->area = instances[i].area;
 
-        nodes.push_back(newNode);
+        nodesForest.push_back(newNode);
     }
 
     for(int netIndex = 0; netIndex < numRawnet; netIndex++)
@@ -72,11 +75,11 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
 
             netConnet *newConnect = createNetConnect( netIndex );
 
-            nodes[index]->numConnection += 1;
+            nodesForest[index]->numConnection += 1;
 
             if(newNodeNet->head == NULL)
             {
-                newNodeNet->head = nodes[index];
+                newNodeNet->head = nodesForest[index];
             }
             else
             {                
@@ -85,14 +88,14 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
                 {
                     tmp = tmp->sibling;
                 }
-                tmp = nodes[index];
+                tmp = nodesForest[index];
             }
 
-            netConnet *tmpPointer = nodes[index]->connection;
+            netConnet *tmpPointer = nodesForest[index]->connection;
 
             if(tmpPointer == NULL)
             {
-                nodes[index]->connection = newConnect;
+                nodesForest[index]->connection = newConnect;
             }
             else
             {
@@ -177,10 +180,87 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
     return score;
 }
 
+void popOutNode(vector < node* > &nodeForest, int firstNodeIndex, int secondNodeIndex, node *newNode)
+{
+    int size = nodeForest.size();
+
+    node *tmp1 = nodeForest[size - 1];
+    node *tmp2 = nodeForest[size - 2];
+
+    for(int i = 0; i < size; i++)
+    {
+        if(nodeForest[i]->index == firstNodeIndex)
+            nodeForest[i] = tmp1;
+        
+        else if(nodeForest[i]->index == secondNodeIndex)
+            nodeForest[i] = tmp2;
+    }
+
+    nodeForest.pop_back();
+    nodeForest.pop_back();
+
+    nodeForest.push_back(newNode);
+
+}
+
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
+{
+    int size = nodeForest.size();
+    node *newNode = nodeForest[size - 1];
+
+    int numConnection1 = newNode->left->numConnection;
+    int numConnection2 = newNode->right->numConnection;
+
+    int array[numConnection1 + numConnection2] = { nets.numNet };
+
+    netConnet *tmp = newNode->left->connection;
+    netConnet *lastTmp = tmp;
+    netConnet *tmp2 = newNode->right->connection;
+    netConnet *lastTmp2 = tmp2;
+
+    for(int i = 0; i < numConnection1; i++)
+    {
+        array[i] = tmp->netIndex;
+
+        lastTmp = tmp;
+        tmp = tmp->connect;
+        
+        free(lastTmp);
+    }
+
+    for(int j = 0; j< numConnection2; j++)
+    {
+        array[j + numConnection1] = tmp2->netIndex;
+        
+        lastTmp2 = tmp2;
+        tmp2 = tmp2->connect;
+
+        free(lastTmp2);
+    }
+
+    sort(array, array +( numConnection1 + numConnection2));
+
+    
+
+    for(int k = 0; k < numConnection1+numConnection2; k++)
+    {
+        cout << array[k] << endl;
+        // if(array[k - 1] == array[k])
+
+    }
+
+    // for(int i = 0; i < newNode->left->numConnection; i++)
+    // {
+        
+    // }
+
+
+}
+
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 {
     nodeNets nodeNets;
-    vector < node* > nodes;
+    vector < node* > nodesForest;
 
     int numInstance = instances.size();
     int rawnetSize = rawNets.size();
@@ -197,21 +277,19 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     avgArea = avgArea * weight;
 
-    coarsenPreprocessing(rawNets, nodeNets, instances, nodes); 
+    coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest); 
      
     for (int firstNode = 0; firstNode < numInstance; firstNode++)
     {
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
         {  
-            double tmpGrade = returnCoarsenScore( *nodes[firstNode], *nodes[secondNode], nodeNets, avgArea);
-
-            // cout << "cell: "<< firstNode << ", "<< secondNode << ", "<< "tmp grade: "<< tmpGrade << endl;
+            double tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nodeNets, avgArea);
 
             if (tmpGrade > bestGrade)
             {
-                bestChoice1 = nodes[firstNode];
+                bestChoice1 = nodesForest[firstNode];
 
-                bestChoice2 = nodes[secondNode];
+                bestChoice2 = nodesForest[secondNode];
 
                 bestGrade = tmpGrade;
             }            
@@ -227,6 +305,10 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     newNode->area = bestChoice1->area + bestChoice2->area;
 
     cout << newNode->index <<", "<< newNode->left->index <<", "<< newNode->right->index <<", "<< newNode->area <<endl;
+
+    popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
+
+    updateDataStucture(nodesForest, nodeNets);
 
 }
 
