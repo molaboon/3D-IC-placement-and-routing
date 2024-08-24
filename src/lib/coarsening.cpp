@@ -6,7 +6,7 @@
 
 #define weight 5.0
 #define debugMode 1
-
+#define MAXNUM 9999
 using namespace std;
 
 struct node* createNode(int index) 
@@ -203,15 +203,14 @@ void popOutNode(vector < node* > &nodeForest, int firstNodeIndex, int secondNode
 
 }
 
-void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
+void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode)
 {
     int size = nodeForest.size();
-    node *newNode = nodeForest[size - 1];
-
     int numConnection1 = newNode->left->numConnection;
     int numConnection2 = newNode->right->numConnection;
 
-    int array[numConnection1 + numConnection2] = { nets.numNet };
+    int numPopOut = 0;
+    vector <int> array(numConnection1 + numConnection2);
 
     netConnet *tmp = newNode->left->connection;
     netConnet *lastTmp = tmp;
@@ -221,33 +220,47 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
     for(int i = 0; i < numConnection1; i++)
     {
         array[i] = tmp->netIndex;
-
         lastTmp = tmp;
         tmp = tmp->connect;
-        
         free(lastTmp);
     }
 
     for(int j = 0; j< numConnection2; j++)
     {
         array[j + numConnection1] = tmp2->netIndex;
-        
         lastTmp2 = tmp2;
         tmp2 = tmp2->connect;
-
         free(lastTmp2);
     }
+    free(tmp);
+    free(tmp2);
 
-    sort(array, array +( numConnection1 + numConnection2));
+    sort(array.begin(), array.end());
 
-    
-
-    for(int k = 0; k < numConnection1+numConnection2; k++)
+    for(int k = 1; k < (numConnection1 + numConnection2); k++)
     {
-        cout << array[k] << endl;
-        // if(array[k - 1] == array[k])
-
+        if(array[k-1] == array[k])
+        {   
+            array[k-1] = MAXNUM;
+            numPopOut += 1;
+        }
     }
+
+    sort(array.begin(), array.end());
+
+    for(int l = 0; l < numPopOut; l++)
+        array.pop_back();
+
+    for(int k = 0; k < numConnection1+numConnection2 - numPopOut; k++)
+        cout << array[k] <<endl;
+}
+
+
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
+{
+    int size = nodeForest.size();
+    node *newNode = nodeForest[size - 1];
+    updateConnection(nodeForest, nets, newNode)
 
     // for(int i = 0; i < newNode->left->numConnection; i++)
     // {
@@ -263,10 +276,8 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     vector < node* > nodesForest;
 
     int numInstance = instances.size();
-    int rawnetSize = rawNets.size();
     double bestGrade = 0.0;
     node *bestChoice1, *bestChoice2;
-    double gradeMap[numInstance][numInstance] = {}; // need optimize
     double avgArea = 0.0; 
     int instIndex = numInstance;
 
@@ -304,7 +315,7 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     newNode->area = bestChoice1->area + bestChoice2->area;
 
-    cout << newNode->index <<", "<< newNode->left->index <<", "<< newNode->right->index <<", "<< newNode->area <<endl;
+    // cout << newNode->index <<", "<< newNode->left->index <<", "<< newNode->right->index <<", "<< newNode->area <<endl;
 
     popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
 

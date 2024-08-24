@@ -54,7 +54,8 @@ int returnDegree(nodeNets &nodeNets, int netIndex);
 
 void popOutNode(vector < node* > &nodeForest, int firstNodeIndex, int secondNodeIndex, node *newNode);
 
-void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets);
+void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode);
 
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets);
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances);
