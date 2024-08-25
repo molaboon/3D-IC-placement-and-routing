@@ -107,6 +107,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
             }
         }
 
+        nodeNets.numNet += 1;
         if(nodeNets.nets == NULL)
         {
             nodeNets.nets = newNodeNet;
@@ -125,7 +126,6 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
 
 int returnDegree(nodeNets &nodeNets, int netIndex)
 {
-    
     nodeNet *tmpPointer = nodeNets.nets;
 
     do
@@ -251,23 +251,54 @@ void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode
     for(int l = 0; l < numPopOut; l++)
         array.pop_back();
 
-    for(int k = 0; k < numConnection1+numConnection2 - numPopOut; k++)
-        cout << array[k] <<endl;
+    int arrSize = array.size();
+
+    newNode->numConnection = arrSize;
+
+    for(int i = 0; i < arrSize; i++)
+    {
+        netConnet *newConnect = createNetConnect( array[i] );
+        netConnet *tmpPointer = newNode->connection;
+
+        if( tmpPointer == NULL)
+        {
+            newNode->connection = newConnect;
+        }
+        else
+        {
+            while ( tmpPointer->connect != NULL )
+            {
+                tmpPointer = tmpPointer->connect;
+            }
+            tmpPointer->connect = newConnect;
+        }
+    }
+    
 }
 
 
-void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
 {
     int size = nodeForest.size();
     node *newNode = nodeForest[size - 1];
-    updateConnection(nodeForest, nets, newNode)
+    updateConnection(nodeForest, Nets, newNode);
+    nodeNet *tmp = Nets.nets;
+    cout << Nets.numNet << endl;
 
-    // for(int i = 0; i < newNode->left->numConnection; i++)
-    // {
+    for(int i = 0; i < Nets.numNet; i++)
+    {
+        int numPin = tmp->numPins;
+        node *head = tmp->head;
+        cout << "Net"<<tmp->netIndex << ": ";
+        for(int j = 0; j < numPin; j++)
+        {
+            cout << head->index << ", ";
+        }
         
-    // }
+        cout << endl;
 
-
+        tmp = tmp->nextNet;
+    }
 }
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)

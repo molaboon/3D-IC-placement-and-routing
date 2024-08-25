@@ -25,7 +25,6 @@ typedef struct node
     netConnet *connection = NULL;
 };
 
-
 typedef struct nodeNet
 {
     int numPins = 0;
@@ -37,8 +36,6 @@ typedef struct nodeNet
 
     // vector < node* > net;
 };
-
-
 
 typedef struct nodeNets
 {
