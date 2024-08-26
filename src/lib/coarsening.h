@@ -12,15 +12,13 @@ typedef struct netConnet
 
 typedef struct node
 {
-    char *name;
-
     int index = 0;
     int area = 0;    
-    node *left;
-    node *right;
-    node *sibling = NULL;
-
     int numConnection = 0;
+
+    node *left = NULL;
+    node *right = NULL;
+    node *sibling = NULL;
 
     netConnet *connection = NULL;
 };
@@ -40,8 +38,7 @@ typedef struct nodeNet
 typedef struct nodeNets
 {
     int numNet = 0;
-    nodeNet *nets;
-    // vector <nodeNet*> nets;
+    nodeNet *nets = NULL;
 
 };
 

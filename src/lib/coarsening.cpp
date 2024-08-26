@@ -48,13 +48,15 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
     int numRawnet = rawNets.size();
     int numInstance = instances.size();
 
-    nodeNet *position;
+    nodeNet *position = nodeNets.nets;
 
     for(int i = 0 ; i < numInstance; i++)
     {
         node *newNode = createNode( i );
 
         newNode->area = instances[i].area;
+
+        cout << newNode->index << ", "<<newNode << endl;
 
         nodesForest.push_back(newNode);
     }
@@ -64,8 +66,6 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         int numPins = rawNets[netIndex].numPins;
 
         nodeNet *newNodeNet = createNodeNet( netIndex );
-
-        newNodeNet->netIndex = netIndex;
         
         newNodeNet->numPins = numPins;
 
@@ -108,6 +108,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         }
 
         nodeNets.numNet += 1;
+
         if(nodeNets.nets == NULL)
         {
             nodeNets.nets = newNodeNet;
@@ -273,7 +274,6 @@ void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode
             tmpPointer->connect = newConnect;
         }
     }
-    
 }
 
 
@@ -283,19 +283,15 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
     node *newNode = nodeForest[size - 1];
     updateConnection(nodeForest, Nets, newNode);
     nodeNet *tmp = Nets.nets;
-    cout << Nets.numNet << endl;
+
+    for(int i = 0; i < 7; i++)
+    {
+        cout << "after update: " << nodeForest[i]->index << ", "<< nodeForest[i] << endl;
+    }
 
     for(int i = 0; i < Nets.numNet; i++)
     {
-        int numPin = tmp->numPins;
-        node *head = tmp->head;
-        cout << "Net"<<tmp->netIndex << ": ";
-        for(int j = 0; j < numPin; j++)
-        {
-            cout << head->index << ", ";
-        }
-        
-        cout << endl;
+        cout << tmp->head->index<< endl;
 
         tmp = tmp->nextNet;
     }
@@ -304,6 +300,7 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 {
     nodeNets nodeNets;
+    nodeNets.nets = NULL;
     vector < node* > nodesForest;
 
     int numInstance = instances.size();
@@ -320,7 +317,7 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     avgArea = avgArea * weight;
 
     coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest); 
-     
+
     for (int firstNode = 0; firstNode < numInstance; firstNode++)
     {
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
