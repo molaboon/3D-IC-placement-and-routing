@@ -30,7 +30,7 @@ typedef struct nodeNet
     
     node *head = NULL;
 
-    nodeNet *nextNet;
+    nodeNet *nextNet = NULL;
 
     // vector < node* > net;
 };

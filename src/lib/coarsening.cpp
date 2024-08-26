@@ -18,6 +18,7 @@ struct node* createNode(int index)
     newNode->connection = NULL;
     newNode->area = 0;
     newNode->numConnection = 0;
+    newNode->sibling = NULL;
 
     return newNode;
 }
@@ -39,6 +40,8 @@ struct nodeNet *createNodeNet(int netIndex)
 
     newNodeNet->netIndex = netIndex;
     newNodeNet->nextNet = NULL;
+    newNodeNet->head = NULL;
+    newNodeNet->numPins = 0;
 
     return newNodeNet;
 }
@@ -56,10 +59,9 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
 
         newNode->area = instances[i].area;
 
-        cout << newNode->index << ", "<<newNode << endl;
-
         nodesForest.push_back(newNode);
     }
+
 
     for(int netIndex = 0; netIndex < numRawnet; netIndex++)
     {
@@ -83,12 +85,13 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
             }
             else
             {                
-                node *tmp = newNodeNet->head;
+                node *tmp = newNodeNet->head->sibling;
                 while ( tmp != NULL)
                 {
                     tmp = tmp->sibling;
                 }
                 tmp = nodesForest[index];
+                
             }
 
             netConnet *tmpPointer = nodesForest[index]->connection;
@@ -276,7 +279,6 @@ void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode
     }
 }
 
-
 void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
 {
     int size = nodeForest.size();
@@ -284,15 +286,16 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
     updateConnection(nodeForest, Nets, newNode);
     nodeNet *tmp = Nets.nets;
 
-    for(int i = 0; i < 7; i++)
-    {
-        cout << "after update: " << nodeForest[i]->index << ", "<< nodeForest[i] << endl;
-    }
-
     for(int i = 0; i < Nets.numNet; i++)
     {
-        cout << tmp->head->index<< endl;
+        cout << tmp->head->sibling << endl;
 
+        // node *tmpNode = tmp->head;
+        // for(int j = 0; j < tmp->numPins; j++)
+        // {
+        //     cout << tmpNode->index<< ", ";
+        //     tmpNode = tmpNode->sibling;
+        // }
         tmp = tmp->nextNet;
     }
 }
