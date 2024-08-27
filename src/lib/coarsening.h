@@ -28,11 +28,9 @@ typedef struct nodeNet
     int numPins = 0;
     int netIndex = 0;
     
-    node *head = NULL;
+    vector < node* > *nodes;
 
     nodeNet *nextNet = NULL;
-
-    // vector < node* > net;
 };
 
 typedef struct nodeNets

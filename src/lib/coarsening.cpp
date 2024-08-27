@@ -34,14 +34,13 @@ struct netConnet* createNetConnect( int netIndex )
     return newConnect;
 };
 
-struct nodeNet *createNodeNet(int netIndex)
+struct nodeNet *createNodeNet(int netIndex, int numPins)
 {
     nodeNet *newNodeNet = (nodeNet*)malloc(sizeof(nodeNet));
 
     newNodeNet->netIndex = netIndex;
     newNodeNet->nextNet = NULL;
-    newNodeNet->head = NULL;
-    newNodeNet->numPins = 0;
+    newNodeNet->numPins = numPins;
 
     return newNodeNet;
 }
@@ -62,14 +61,13 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         nodesForest.push_back(newNode);
     }
 
-
     for(int netIndex = 0; netIndex < numRawnet; netIndex++)
     {
         int numPins = rawNets[netIndex].numPins;
 
-        nodeNet *newNodeNet = createNodeNet( netIndex );
-        
-        newNodeNet->numPins = numPins;
+        nodeNet *newNodeNet = createNodeNet( netIndex, numPins);
+
+        vector <node*> *tmpNodes = new vector <node*>();
 
         for(int cellIndex = 0; cellIndex < numPins ; cellIndex++)
         {
@@ -77,24 +75,15 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
 
             netConnet *newConnect = createNetConnect( netIndex );
 
+            netConnet *tmpPointer = nodesForest[index]->connection;
+
             nodesForest[index]->numConnection += 1;
 
-            if(newNodeNet->head == NULL)
-            {
-                newNodeNet->head = nodesForest[index];
-            }
-            else
-            {                
-                node *tmp = newNodeNet->head->sibling;
-                while ( tmp != NULL)
-                {
-                    tmp = tmp->sibling;
-                }
-                tmp = nodesForest[index];
-                
-            }
+            tmpNodes->push_back( nodesForest[index] );
+            // cout << nodesForest[cellIndex]
 
-            netConnet *tmpPointer = nodesForest[index]->connection;
+            cout <<  (*tmpNodes)[cellIndex]->index + 1 <<endl;
+
 
             if(tmpPointer == NULL)
             {
@@ -112,8 +101,10 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
 
         nodeNets.numNet += 1;
 
+        newNodeNet->nodes = tmpNodes;
+        cout <<endl;
         if(nodeNets.nets == NULL)
-        {
+        {   
             nodeNets.nets = newNodeNet;
             position = nodeNets.nets;
         }
@@ -286,16 +277,14 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
     updateConnection(nodeForest, Nets, newNode);
     nodeNet *tmp = Nets.nets;
 
+    cout << "gogog" <<endl;
     for(int i = 0; i < Nets.numNet; i++)
     {
-        cout << tmp->head->sibling << endl;
-
-        // node *tmpNode = tmp->head;
-        // for(int j = 0; j < tmp->numPins; j++)
-        // {
-        //     cout << tmpNode->index<< ", ";
-        //     tmpNode = tmpNode->sibling;
-        // }
+        for (int j = 0 ; j < tmp->numPins; j++)
+        {
+            cout << tmp->nodes->at(j)->index + 1<< endl;
+        }
+        cout << endl;
         tmp = tmp->nextNet;
     }
 }
@@ -348,7 +337,9 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     // cout << newNode->index <<", "<< newNode->left->index <<", "<< newNode->right->index <<", "<< newNode->area <<endl;
 
+
     popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
+
 
     updateDataStucture(nodesForest, nodeNets);
 
