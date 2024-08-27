@@ -80,10 +80,6 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
             nodesForest[index]->numConnection += 1;
 
             tmpNodes->push_back( nodesForest[index] );
-            // cout << nodesForest[cellIndex]
-
-            cout <<  (*tmpNodes)[cellIndex]->index + 1 <<endl;
-
 
             if(tmpPointer == NULL)
             {
@@ -102,7 +98,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         nodeNets.numNet += 1;
 
         newNodeNet->nodes = tmpNodes;
-        cout <<endl;
+
         if(nodeNets.nets == NULL)
         {   
             nodeNets.nets = newNodeNet;
@@ -275,16 +271,17 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
     int size = nodeForest.size();
     node *newNode = nodeForest[size - 1];
     updateConnection(nodeForest, Nets, newNode);
-    nodeNet *tmp = Nets.nets;
+    nodeNet *tmp = ;
 
-    cout << "gogog" <<endl;
     for(int i = 0; i < Nets.numNet; i++)
     {
         for (int j = 0 ; j < tmp->numPins; j++)
         {
-            cout << tmp->nodes->at(j)->index + 1<< endl;
+            if( tmp->nodes->at(j)->index == newNode->left->index || tmp->nodes->at(j)->index == newNode->right->index)
+            {
+                tmp->nodes->at(j) = newNode;
+            }
         }
-        cout << endl;
         tmp = tmp->nextNet;
     }
 }
@@ -335,13 +332,20 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     newNode->area = bestChoice1->area + bestChoice2->area;
 
-    // cout << newNode->index <<", "<< newNode->left->index <<", "<< newNode->right->index <<", "<< newNode->area <<endl;
-
-
     popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
 
-
     updateDataStucture(nodesForest, nodeNets);
+
+    nodeNet *tmp = nodeNets.nets;
+
+    for(int i = 0; i < nodeNets.numNet; i++)
+    {
+        for (int j = 0 ; j < tmp->numPins; j++)
+        {
+            cout << tmp->nodes->at(j)->index<< " ";    
+        }
+        tmp = tmp->nextNet;
+    }
 
 }
 
