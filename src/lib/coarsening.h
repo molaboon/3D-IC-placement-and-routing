@@ -38,6 +38,7 @@ typedef struct nodeNets
     int numNet = 0;
     nodeNet *nets = NULL;
 
+    vector < nodeNet* > netnets;
 };
 
 double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, double avgArea);
@@ -49,5 +50,7 @@ void popOutNode(vector < node* > &nodeForest, int firstNodeIndex, int secondNode
 void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode);
 
 void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets);
+
+void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node *newNode);
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances);

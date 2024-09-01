@@ -141,7 +141,6 @@ int returnDegree(nodeNets &nodeNets, int netIndex)
 double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, double avgArea)
 {
     int firstNodeNumConnect = firstNode.numConnection;
-
     int secondNodeNumConnect = secondNode.numConnection;
 
     double degree = 0;
@@ -158,7 +157,13 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
             if( firstNetConnect->netIndex == secondNetConnect->netIndex )
             {
                 int tmp = returnDegree(nodeNests, firstNetConnect->netIndex);
-                degree += 1.0 / (double) (tmp - 1);
+
+                if( tmp == 1)
+                {}
+                else
+                {
+                    degree += 1.0 / (double) (tmp - 1);
+                }
             }
 
             secondNetConnect = secondNetConnect->connect;
@@ -270,48 +275,53 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
 {
     int size = nodeForest.size();
     node *newNode = nodeForest[size - 1];
+
     updateConnection(nodeForest, Nets, newNode);
-    nodeNet *tmp = ;
+    
+    nodeNet *tmp = Nets.nets;
 
     for(int i = 0; i < Nets.numNet; i++)
     {
+        int key = 0;
+        int dual = 0;
         for (int j = 0 ; j < tmp->numPins; j++)
         {
             if( tmp->nodes->at(j)->index == newNode->left->index || tmp->nodes->at(j)->index == newNode->right->index)
-            {
-                tmp->nodes->at(j) = newNode;
+            {   
+                if(key == 1)
+                {
+                    dual = j ;
+                }
+                else
+                {
+                    key = 1;
+                    tmp->nodes->at(j) = newNode;
+                }
             }
+        }
+        if(key)
+        {
+            tmp->nodes->at(dual) = tmp->nodes->at(tmp->numPins - 1);
+            tmp->nodes->pop_back();
+            tmp->numPins = tmp->nodes->size();
         }
         tmp = tmp->nextNet;
     }
 }
 
-void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
+void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node *newNode)
 {
-    nodeNets nodeNets;
-    nodeNets.nets = NULL;
-    vector < node* > nodesForest;
+    int numInstance = nodesForest.size();
+    
+    double  bestGrade = 0;
 
-    int numInstance = instances.size();
-    double bestGrade = 0.0;
     node *bestChoice1, *bestChoice2;
-    double avgArea = 0.0; 
-    int instIndex = numInstance;
-
-    for(int i = 0; i < numInstance; i++)
-        avgArea += instances[i].area;
-
-    avgArea = avgArea / double(numInstance);
-
-    avgArea = avgArea * weight;
-
-    coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest); 
 
     for (int firstNode = 0; firstNode < numInstance; firstNode++)
     {
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
         {  
-            double tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nodeNets, avgArea);
+            double tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nets, avgArea);
 
             if (tmpGrade > bestGrade)
             {
@@ -324,28 +334,80 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         }
     }
 
-    node *newNode = createNode(instIndex);
-    
     newNode->left = bestChoice1;
-
+    
     newNode->right = bestChoice2;
 
     newNode->area = bestChoice1->area + bestChoice2->area;
+}
 
-    popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
+void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
+{
+    nodeNets nodeNets;
+    nodeNets.nets = NULL;
+    vector < node* > nodesForest;
 
-    updateDataStucture(nodesForest, nodeNets);
+    int numInstance = instances.size();
+    double bestGrade = 0.0;
+    double area = 0.0;
+    double avgArea = 0.0; 
+    int instIndex = numInstance;
 
-    nodeNet *tmp = nodeNets.nets;
+    for(int i = 0; i < numInstance; i++)
+        area += instances[i].area;
 
-    for(int i = 0; i < nodeNets.numNet; i++)
+    area *= weight;
+
+    coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest); 
+
+    for(int i = 0; i < 2; i++)
     {
-        for (int j = 0 ; j < tmp->numPins; j++)
+        node *newNode = createNode(instIndex);
+
+        avgArea = area / double(numInstance);
+
+        bestChoice(nodesForest, avgArea, nodeNets, newNode);
+        
+        popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
+
+        updateDataStucture(nodesForest, nodeNets);
+
+        instIndex++;
+
+        numInstance--;
+
+        nodeNet *tmp = nodeNets.nets;
+
+        for(int i = 0; i < nodeNets.numNet; i++)
         {
-            cout << tmp->nodes->at(j)->index<< " ";    
+            for (int j = 0 ; j < tmp->numPins; j++)
+            {
+                cout << tmp->nodes->at(j)->index<< " ";    
+            }
+            cout << endl;
+            tmp = tmp->nextNet;
         }
-        tmp = tmp->nextNet;
+        cout << "Next net" << endl;
+
     }
+    
+    // nodeNet *tmp = nodeNets.nets;
+
+    // for(int i = 0; i < nodeNets.numNet; i++)
+    // {
+    //     for (int j = 0 ; j < tmp->numPins; j++)
+    //     {
+    //         cout << tmp->nodes->at(j)->index<< " ";    
+    //     }
+    //     cout << endl;
+    //     tmp = tmp->nextNet;
+    // }
+
+    // for(int i = 0; i < nodesForest.size(); i++)
+    // {
+    //     cout << nodesForest[i]->index << endl;
+    // }
+
 
 }
 
