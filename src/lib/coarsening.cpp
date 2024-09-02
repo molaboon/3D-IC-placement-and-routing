@@ -282,27 +282,29 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
 
     for(int i = 0; i < Nets.numNet; i++)
     {
-        int key = 0;
+        bool nodeChanged = 0;
+        bool haveDual = 0;
         int dual = 0;
+
         for (int j = 0 ; j < tmp->numPins; j++)
         {
             if( tmp->nodes->at(j)->index == newNode->left->index || tmp->nodes->at(j)->index == newNode->right->index)
             {   
-                if(key == 1)
+                if(nodeChanged)
                 {
                     dual = j ;
+                    haveDual = 1;
                 }
                 else
                 {
-                    key = 1;
+                    nodeChanged = true;
                     tmp->nodes->at(j) = newNode;
                 }
             }
         }
-        if(key)
+        if(haveDual)
         {
-            tmp->nodes->at(dual) = tmp->nodes->at(tmp->numPins - 1);
-            tmp->nodes->pop_back();
+            tmp->nodes->erase(tmp->nodes->begin() + dual);
             tmp->numPins = tmp->nodes->size();
         }
         tmp = tmp->nextNet;
@@ -360,7 +362,28 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest); 
 
-    for(int i = 0; i < 2; i++)
+    nodeNet *tmp = nodeNets.nets;
+
+    for(int i = 0; i < nodeNets.numNet; i++)
+    {
+        for (int j = 0 ; j < tmp->numPins; j++)
+        {
+            cout << tmp->nodes->at(j)->index<< " ";    
+        }
+        cout << endl;
+        tmp = tmp->nextNet;
+    }
+    cout << "Cell: ";
+    for(int i = 0; i < nodesForest.size(); i++)
+    {
+        cout << nodesForest[i]->index << " ";
+    }
+    cout << endl;
+    cout << endl;
+    cout << "Next net" << endl;
+
+
+    for(int i = 0; i < 3; i++)
     {
         node *newNode = createNode(instIndex);
 
@@ -387,26 +410,19 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
             cout << endl;
             tmp = tmp->nextNet;
         }
-        cout << "Next net" << endl;
+        cout << "Cell: ";
+        for(int i = 0; i < nodesForest.size(); i++)
+        {
+            cout << nodesForest[i]->index << " ";
+        }
+        cout << endl << endl;
+        cout << "Next" << endl;
 
     }
     
-    // nodeNet *tmp = nodeNets.nets;
+    cout << endl;
 
-    // for(int i = 0; i < nodeNets.numNet; i++)
-    // {
-    //     for (int j = 0 ; j < tmp->numPins; j++)
-    //     {
-    //         cout << tmp->nodes->at(j)->index<< " ";    
-    //     }
-    //     cout << endl;
-    //     tmp = tmp->nextNet;
-    // }
-
-    // for(int i = 0; i < nodesForest.size(); i++)
-    // {
-    //     cout << nodesForest[i]->index << endl;
-    // }
+    cout << nodesForest[5]->area<< endl;
 
 
 }
