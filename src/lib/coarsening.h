@@ -31,6 +31,7 @@ typedef struct nodeNet
     vector < node* > *nodes;
 
     nodeNet *nextNet = NULL;
+    nodeNet *lastNet = NULL;
 };
 
 typedef struct nodeNets

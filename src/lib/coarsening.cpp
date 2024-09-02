@@ -7,6 +7,7 @@
 #define weight 5.0
 #define debugMode 1
 #define MAXNUM 9999
+
 using namespace std;
 
 struct node* createNode(int index) 
@@ -28,7 +29,6 @@ struct netConnet* createNetConnect( int netIndex )
     netConnet *newConnect = (netConnet*) malloc(sizeof(netConnet));
 
     newConnect->netIndex = netIndex;
-
     newConnect->connect = NULL;
 
     return newConnect;
@@ -39,8 +39,10 @@ struct nodeNet *createNodeNet(int netIndex, int numPins)
     nodeNet *newNodeNet = (nodeNet*)malloc(sizeof(nodeNet));
 
     newNodeNet->netIndex = netIndex;
-    newNodeNet->nextNet = NULL;
     newNodeNet->numPins = numPins;
+
+    newNodeNet->nextNet = NULL;
+    newNodeNet->lastNet = NULL;
 
     return newNodeNet;
 }
@@ -102,6 +104,8 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
         if(nodeNets.nets == NULL)
         {   
             nodeNets.nets = newNodeNet;
+            newNodeNet->lastNet = NULL;
+
             position = nodeNets.nets;
         }
         else
@@ -110,7 +114,9 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <I
             {
                 position = position->nextNet;
             }
+            newNodeNet->lastNet = position;
             position->nextNet = newNodeNet;
+
         }
     }
 }
@@ -271,15 +277,14 @@ void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode
     }
 }
 
-void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
 {
     int size = nodeForest.size();
     node *newNode = nodeForest[size - 1];
 
-    
-    nodeNet *tmp = Nets.nets;
+    nodeNet *tmp = nets.nets;
 
-    for(int i = 0; i < Nets.numNet; i++)
+    for(int i = 0; i < nets.numNet; i++)
     {
         bool nodeChanged = 0;
         bool haveDual = 0;
@@ -301,15 +306,44 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
                 }
             }
         }
+
         if(haveDual)
         {
             tmp->nodes->erase(tmp->nodes->begin() + dual);
             tmp->numPins = tmp->nodes->size();
+
+            if(tmp->numPins == 1)
+            {
+                nodeNet *freeNet = tmp;
+                nets.numNet--;
+
+                if( tmp->lastNet == NULL)
+                {
+                    tmp = tmp->nextNet;
+                    tmp->lastNet == NULL;
+
+                    free(freeNet);
+                }
+                else if (tmp->nextNet == NULL)
+                {
+                    free(tmp);
+                }
+                else
+                {
+                    nodeNet *tmpLastNet = tmp->lastNet;
+
+                    tmpLastNet->nextNet = tmp->nextNet;
+                    cout << tmpLastNet->nextNet << endl;
+                    tmp = tmp->lastNet;
+                    free(freeNet);
+                }
+            }
         }
+
         tmp = tmp->nextNet;
     }
-    updateConnection(nodeForest, Nets, newNode);
 
+    updateConnection(nodeForest, nets, newNode);
 }
 
 void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node *newNode)
@@ -338,7 +372,7 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
     }
 
     newNode->left = bestChoice1;
-    
+
     newNode->right = bestChoice2;
 
     newNode->area = bestChoice1->area + bestChoice2->area;
@@ -420,7 +454,6 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         }
         cout << endl << endl;
         cout << "Next" << endl;
-
     }
 
     cout << endl;
