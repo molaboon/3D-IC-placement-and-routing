@@ -276,7 +276,6 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
     int size = nodeForest.size();
     node *newNode = nodeForest[size - 1];
 
-    updateConnection(nodeForest, Nets, newNode);
     
     nodeNet *tmp = Nets.nets;
 
@@ -309,6 +308,8 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &Nets)
         }
         tmp = tmp->nextNet;
     }
+    updateConnection(nodeForest, Nets, newNode);
+
 }
 
 void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node *newNode)
@@ -349,18 +350,19 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     nodeNets.nets = NULL;
     vector < node* > nodesForest;
 
-    int numInstance = instances.size();
-    double bestGrade = 0.0;
-    double area = 0.0;
-    double avgArea = 0.0; 
+    int numInstance = instances.size();  
     int instIndex = numInstance;
 
+    double bestGrade = 0.0;
+    double totalArea = 0.0;
+    double avgArea = 0.0; 
+
     for(int i = 0; i < numInstance; i++)
-        area += instances[i].area;
+        totalArea += instances[i].area;
 
-    area *= weight;
+    totalArea *= weight;
 
-    coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest); 
+    coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest);
 
     nodeNet *tmp = nodeNets.nets;
 
@@ -382,12 +384,11 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     cout << endl;
     cout << "Next net" << endl;
 
-
     for(int i = 0; i < 3; i++)
     {
         node *newNode = createNode(instIndex);
 
-        avgArea = area / double(numInstance);
+        avgArea = totalArea / double(numInstance);
 
         bestChoice(nodesForest, avgArea, nodeNets, newNode);
         
@@ -400,6 +401,8 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         numInstance--;
 
         nodeNet *tmp = nodeNets.nets;
+
+        cout << newNode->left->index << ", " << newNode->right->index << ", " <<newNode->area << endl;
 
         for(int i = 0; i < nodeNets.numNet; i++)
         {
@@ -419,10 +422,9 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         cout << "Next" << endl;
 
     }
-    
-    cout << endl;
 
-    cout << nodesForest[5]->area<< endl;
+    cout << endl;
+    cout << nodesForest[4]->area << endl;
 
 
 }
