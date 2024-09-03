@@ -161,7 +161,6 @@ void printInstanceInfo(int NumInstances, vector <Instance> instances){
     printf("\n");
 }
 
-
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &instances)
 {
     assert(input);

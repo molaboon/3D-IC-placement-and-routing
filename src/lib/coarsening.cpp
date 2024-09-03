@@ -47,6 +47,18 @@ struct nodeNet *createNodeNet(int netIndex, int numPins)
     return newNodeNet;
 }
 
+struct _eachLevel *creatNewLevel(int levelIndex)
+{
+    eachLevel *newLevel = (eachLevel*)malloc(sizeof(eachLevel));
+
+    newLevel->levelIndex = levelIndex;
+
+    newLevel->nextLevel = NULL;
+    newLevel->previousLevel = NULL;
+
+    return newLevel;
+}
+
 void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <Instance> instances, vector <node*> &nodesForest)
 {   
     int numRawnet = rawNets.size();
@@ -286,8 +298,8 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
 
     for(int i = 0; i < nets.numNet; i++)
     {
-        bool nodeChanged = 0;
-        bool haveDual = 0;
+        bool nodeChanged = false;
+        bool haveDual = false;
         int dual = 0;
 
         for (int j = 0 ; j < tmp->numPins; j++)
@@ -319,8 +331,9 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
 
                 if( tmp->lastNet == NULL)
                 {
-                    tmp = tmp->nextNet;
-                    tmp->lastNet == NULL;
+                    nets.nets = tmp->nextNet;
+                    tmp = nets.nets;
+                    tmp->lastNet = NULL;
 
                     free(freeNet);
                 }
@@ -333,14 +346,16 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
                     nodeNet *tmpLastNet = tmp->lastNet;
 
                     tmpLastNet->nextNet = tmp->nextNet;
-                    cout << tmpLastNet->nextNet << endl;
                     tmp = tmp->lastNet;
                     free(freeNet);
                 }
             }
         }
+        else
+        {
+            tmp = tmp->nextNet;
+        }
 
-        tmp = tmp->nextNet;
     }
 
     updateConnection(nodeForest, nets, newNode);
@@ -376,6 +391,26 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
     newNode->right = bestChoice2;
 
     newNode->area = bestChoice1->area + bestChoice2->area;
+}
+
+void nodesToInstances(vector < node* > &nodesForest, vector <Instance> &newLevelInstance, int numNodes)
+{
+
+    /*
+        1. create each level nets struct
+        2. create "creat new level"
+        3. write the function to nodes to instances
+    */
+    for(int i = 0; i < numNodes; i++)
+    {
+        Instance newInstance;
+
+        newInstance.instIndex = nodesForest[i]->index;
+
+        newInstance.area = nodesForest[i]->area;
+
+        newLevelInstance.push_back(newInstance);
+    }
 }
 
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
@@ -416,7 +451,7 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
     }
     cout << endl;
     cout << endl;
-    cout << "Next net" << endl;
+    cout << "Next" << endl;
 
     for(int i = 0; i < 3; i++)
     {
@@ -425,7 +460,7 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         avgArea = totalArea / double(numInstance);
 
         bestChoice(nodesForest, avgArea, nodeNets, newNode);
-        
+
         popOutNode(nodesForest, newNode->left->index, newNode->right->index, newNode);
 
         updateDataStucture(nodesForest, nodeNets);
@@ -436,13 +471,13 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
         nodeNet *tmp = nodeNets.nets;
 
-        cout << newNode->left->index << ", " << newNode->right->index << ", " <<newNode->area << endl;
+        cout << "Merge: "<<newNode->left->index << ", " << newNode->right->index << ", Area:" <<newNode->area << endl << endl;
 
         for(int i = 0; i < nodeNets.numNet; i++)
         {
             for (int j = 0 ; j < tmp->numPins; j++)
             {
-                cout << tmp->nodes->at(j)->index<< " ";    
+                cout << tmp->nodes->at(j)->index<< " ";
             }
             cout << endl;
             tmp = tmp->nextNet;
@@ -455,10 +490,5 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
         cout << endl << endl;
         cout << "Next" << endl;
     }
-
-    cout << endl;
-    cout << nodesForest[4]->area << endl;
-
-
 }
 

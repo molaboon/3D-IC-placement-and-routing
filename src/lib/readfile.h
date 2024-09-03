@@ -111,13 +111,22 @@ typedef struct _RawNet{
 
 }RawNet;
 
+typedef struct _eachLevel
+{
+    int levelIndex;
+
+    eachLevel *nextLevel = NULL;
+    eachLevel *previousLevel = NULL;
+
+}eachLevel;
+
 typedef struct  _levelNets
 {
     int numLevel;
-    vector < RawNet > levels;
-    
-}levelNets;
 
+    eachLevel *levels;
+
+}levelNets;
 
 void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> &TechMenu);
 void printTechnologyInfo(int NumTechnologies, vector <Tech_menu> TechMenu);

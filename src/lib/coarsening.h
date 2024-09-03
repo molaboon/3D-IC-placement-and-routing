@@ -54,4 +54,6 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets);
 
 void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node *newNode);
 
+void nodesToInstances(vector < node* > &nodesForest, vector <Instance> &newLevelInstance, int numNodes);
+
 void coarsen(vector <RawNet> rawNets, vector<Instance> &instances);
