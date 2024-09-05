@@ -92,7 +92,6 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <I
 
     penaltyScore -= tsvScore;
 
-
     for(int i = 0; i < size; i++)
     {        
         double tmpx = instances[i].x;

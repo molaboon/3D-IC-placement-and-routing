@@ -115,8 +115,8 @@ typedef struct _eachLevel
 {
     int levelIndex;
 
-    eachLevel *nextLevel = NULL;
-    eachLevel *previousLevel = NULL;
+    _eachLevel *nextLevel = NULL;
+    _eachLevel *previousLevel = NULL;
 
 }eachLevel;
 

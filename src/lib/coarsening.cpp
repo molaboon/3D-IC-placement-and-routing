@@ -47,17 +47,17 @@ struct nodeNet *createNodeNet(int netIndex, int numPins)
     return newNodeNet;
 }
 
-struct _eachLevel *creatNewLevel(int levelIndex)
-{
-    eachLevel *newLevel = (eachLevel*)malloc(sizeof(eachLevel));
+// struct _eachLevel *creatNewLevel(int levelIndex)
+// {
+//     eachLevel *newLevel = (eachLevel*)malloc(sizeof(eachLevel));
 
-    newLevel->levelIndex = levelIndex;
+//     newLevel->levelIndex = levelIndex;
 
-    newLevel->nextLevel = NULL;
-    newLevel->previousLevel = NULL;
+//     newLevel->nextLevel = NULL;
+//     newLevel->previousLevel = NULL;
 
-    return newLevel;
-}
+//     return newLevel;
+// }
 
 void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <Instance> instances, vector <node*> &nodesForest)
 {   
@@ -161,7 +161,7 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
     int firstNodeNumConnect = firstNode.numConnection;
     int secondNodeNumConnect = secondNode.numConnection;
 
-    double degree = 0;
+    double Ddegree = 0;
     double score;
 
     netConnet *firstNetConnect = firstNode.connection;
@@ -180,7 +180,7 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
                 {}
                 else
                 {
-                    degree += 1.0 / (double) (tmp - 1);
+                    Ddegree += 1.0 / (double) (tmp - 1);
                 }
             }
 
@@ -189,7 +189,7 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
 
         firstNetConnect = firstNetConnect->connect;
     }    
-    score = exp(-(firstNode.area + secondNode.area) / avgArea) * degree;
+    score = exp(-(firstNode.area + secondNode.area) / avgArea) * Ddegree;
 
     return score;
 }
@@ -367,12 +367,15 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
     
     double  bestGrade = 0;
 
+    double bestDegree = 0.0;
+
     node *bestChoice1, *bestChoice2;
 
     for (int firstNode = 0; firstNode < numInstance; firstNode++)
     {
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
         {  
+            double degree = 0.0;
             double tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nets, avgArea);
 
             if (tmpGrade > bestGrade)
@@ -385,20 +388,18 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
             }            
         }
     }
-
     newNode->left = bestChoice1;
 
     newNode->right = bestChoice2;
 
     newNode->area = bestChoice1->area + bestChoice2->area;
+
 }
 
 void nodesToInstances(vector < node* > &nodesForest, vector <Instance> &newLevelInstance, int numNodes)
 {
 
     /*
-        1. create each level nets struct
-        2. create "creat new level"
         3. write the function to nodes to instances
     */
     for(int i = 0; i < numNodes; i++)
@@ -435,25 +436,25 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
     nodeNet *tmp = nodeNets.nets;
 
-    for(int i = 0; i < nodeNets.numNet; i++)
-    {
-        for (int j = 0 ; j < tmp->numPins; j++)
-        {
-            cout << tmp->nodes->at(j)->index<< " ";    
-        }
-        cout << endl;
-        tmp = tmp->nextNet;
-    }
-    cout << "Cell: ";
-    for(int i = 0; i < nodesForest.size(); i++)
-    {
-        cout << nodesForest[i]->index << " ";
-    }
-    cout << endl;
-    cout << endl;
-    cout << "Next" << endl;
+    // for(int i = 0; i < nodeNets.numNet; i++)
+    // {
+    //     for (int j = 0 ; j < tmp->numPins; j++)
+    //     {
+    //         cout << tmp->nodes->at(j)->index<< " ";    
+    //     }
+    //     cout << endl;
+    //     tmp = tmp->nextNet;
+    // }
+    // cout << "Cell: ";
+    // for(int i = 0; i < nodesForest.size(); i++)
+    // {
+    //     cout << nodesForest[i]->index << " ";
+    // }
+    // cout << endl;
+    // cout << endl;
+    // cout << "Next" << endl;
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 200; i++)
     {
         node *newNode = createNode(instIndex);
 
@@ -473,21 +474,21 @@ void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
 
         cout << "Merge: "<<newNode->left->index << ", " << newNode->right->index << ", Area:" <<newNode->area << endl << endl;
 
-        for(int i = 0; i < nodeNets.numNet; i++)
-        {
-            for (int j = 0 ; j < tmp->numPins; j++)
-            {
-                cout << tmp->nodes->at(j)->index<< " ";
-            }
-            cout << endl;
-            tmp = tmp->nextNet;
-        }
-        cout << "Cell: ";
-        for(int i = 0; i < nodesForest.size(); i++)
-        {
-            cout << nodesForest[i]->index << " ";
-        }
-        cout << endl << endl;
+        // for(int i = 0; i < nodeNets.numNet; i++)
+        // {
+        //     for (int j = 0 ; j < tmp->numPins; j++)
+        //     {
+        //         cout << tmp->nodes->at(j)->index<< " ";
+        //     }
+        //     cout << endl;
+        //     tmp = tmp->nextNet;
+        // }
+        // cout << "Cell: ";
+        // for(int i = 0; i < nodesForest.size(); i++)
+        // {
+        //     cout << nodesForest[i]->index << " ";
+        // }
+        // cout << endl << endl;
         cout << "Next" << endl;
     }
 }
