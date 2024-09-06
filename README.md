@@ -10,6 +10,6 @@ make
 '''
 
 ### Task list
-- [] 將 print 所有data structure 的function 寫出來
-- [] 寫好placement and routing 註解
-- [] 寫好 coarsen 的註解
+- [ ] 將 print 所有data structure 的function 寫出來
+- [ ] 寫好placement and routing 註解
+- [ ] 寫好 coarsen 的註解
