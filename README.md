@@ -3,10 +3,10 @@
 ### How to use
 ```
 make
-./a.out case1.txt
-./a.out case2.txt
-./a.out case3.txt
-./a.out case4.txt
+./a.out case1.txt or
+./a.out case2.txt or 
+./a.out case3.txt or 
+./a.out case4.txt 
 ```
 
 
