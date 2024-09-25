@@ -24,6 +24,7 @@ typedef struct _Libcell{
     double libCellSizeX;
     double libCellSizeY;
     int pinCount;
+    bool isMacro;
     vector <Pin> pinarray;
 }Libcell;
 
@@ -58,6 +59,7 @@ typedef struct _terminal{
     int sizeX;
     int sizeY;
     int spacing;   //between terminals and between terminal and boundary
+    int cost;
     vector <vector<int>> HBPlacementState;
 }Hybrid_terminal;
 
@@ -66,6 +68,9 @@ typedef struct _Instance{
     char instName[INSTANCE_NAME_SIZE];      //C1, C2, ...
     char libCellName[LIBCELL_NAME_SIZE];    //MC1, MC2, ...
     char libPinName[PIN_NAME_SIZE];
+
+    bool isMacro ;
+    int rotate;
 
     int instIndex = 0;
 
@@ -137,7 +142,7 @@ void printDieInfo(Die top_die, Die bottom_die);
 void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal);
 void printHybridTerminalInfo(Hybrid_terminal terminal);
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &InstanceArray, int *NumTechnologies, vector <Tech_menu> TechMenu );
+void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &InstanceArray, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <int> macros);
 void printInstanceInfo(int NumInstances, vector <Instance> InstanceArray);
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &InstanceArray);

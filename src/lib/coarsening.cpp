@@ -47,18 +47,6 @@ struct nodeNet *createNodeNet(int netIndex, int numPins)
     return newNodeNet;
 }
 
-// struct _eachLevel *creatNewLevel(int levelIndex)
-// {
-//     eachLevel *newLevel = (eachLevel*)malloc(sizeof(eachLevel));
-
-//     newLevel->levelIndex = levelIndex;
-
-//     newLevel->nextLevel = NULL;
-//     newLevel->previousLevel = NULL;
-
-//     return newLevel;
-// }
-
 void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <Instance> instances, vector <node*> &nodesForest)
 {   
     int numRawnet = rawNets.size();

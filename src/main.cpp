@@ -39,37 +39,39 @@ int main(int argc, char *argv[]){
  	// vector <Net> NetArray;													//NetArray store how many cell connects to this net and a list of cell which connects to this net
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
+	vector <int> macros;
+
 	/*			data preprocessing			 */
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminal);
-	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu);
+	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu, macros);
 	readNetInfo(input, &NumNets, rawnet, instances);
 	returnGridInfo(top_die, binInfo, NumInstances);
 
 	/* first placement and CG preprocessing */
 	
-	double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
-	double wireLength, newWireLength;
-	double lastCG[NumInstances * 3 ] = {0.0};
-	double nowCG[NumInstances * 3 ] = {0.0};
-	double lastGra[NumInstances * 3 ] = {0.0};
-	double nowGra[NumInstances * 3 ] = {0.0};
+	// double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+	// double wireLength, newWireLength;
+	// double lastCG[NumInstances * 3 ] = {0.0};
+	// double nowCG[NumInstances * 3 ] = {0.0};
+	// double lastGra[NumInstances * 3 ] = {0.0};
+	// double nowGra[NumInstances * 3 ] = {0.0};
 
-	firstPlacement(instances, binInfo);
-	gamma = 0.05 * binInfo.dieWidth;
+	// firstPlacement(instances, binInfo);
+	// gamma = 0.05 * binInfo.dieWidth;
 
-	penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+	// penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
 
 
-	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
+	// totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
 
-	CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
+	// CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 	/*				Coarsening					*/
 	// cout << "here" <<endl;
 
-	coarsen(rawnet, instances);
+	// coarsen(rawnet, instances);
 
 	/*				Refinement(CG)				*/
 
@@ -102,9 +104,6 @@ int main(int argc, char *argv[]){
 	// 	penaltyWeight *=2;
 	// }
 
-
-
-	
 	return 0;
 }
 

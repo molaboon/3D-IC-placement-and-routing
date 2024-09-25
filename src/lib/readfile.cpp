@@ -27,11 +27,17 @@ void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> &T
 
         //read libcell libcell count time
         for(int j = 0; j < temp.libcell_count; j++){
-            fscanf(input, "%*s %s %lf %lf %d", temp_libcell[j].libCellName, &(temp_libcell[j].libCellSizeX), &(temp_libcell[j].libCellSizeY), &(temp_libcell[j].pinCount));
-            vector <Pin> temp_pinarray(temp_libcell[j].pinCount);
+            char isMacro;
+            fscanf(input, "%*s %s %s %lf %lf %d", &isMacro, temp_libcell[j].libCellName, &(temp_libcell[j].libCellSizeX), &(temp_libcell[j].libCellSizeY), &(temp_libcell[j].pinCount));
+            
+            if(isMacro == 89)
+                temp_libcell[j].isMacro = true;
+            else
+                temp_libcell[j].isMacro = false;
 
             //read pinarray pinarray_count time
-            for(int k = 0; k < temp_libcell[j].pinCount; k++){
+            vector <Pin> temp_pinarray(temp_libcell[j].pinCount);   
+            for(int k = 0; k  < temp_libcell[j].pinCount; k++){
                 fscanf(input, "%*s %s %d %d", temp_pinarray[k].pinName, &(temp_pinarray[k].pinLocationX), &(temp_pinarray[k].pinLocationY));
             }
             temp_libcell[j].pinarray = temp_pinarray;
@@ -47,7 +53,7 @@ void printTechnologyInfo(int NumTechnologies, vector <Tech_menu> TechMenu){
     for(int i = 0; i < NumTechnologies; i++){
         printf("Tech <techName> <libCellCount>: %s %d:\n", TechMenu[i].tech, TechMenu[i].libcell_count);
         for(int j = 0; j < TechMenu[i].libcell_count; j++){
-            printf("\tLibCell <libCellName> <libCellSizeX> <libCellSizeY> <pinCount>: %s %lf %lf %d\n", TechMenu[i].libcell[j].libCellName, TechMenu[i].libcell[j].libCellSizeX, TechMenu[i].libcell[j].libCellSizeY, TechMenu[i].libcell[j].pinCount);
+            printf("\tLibCell <libCellName> <libCellSizeX> <libCellSizeY> <pinCount> <isMacro>: %s %lf %lf %d\n", TechMenu[i].libcell[j].libCellName, TechMenu[i].libcell[j].libCellSizeX, TechMenu[i].libcell[j].libCellSizeY, TechMenu[i].libcell[j].pinCount);
             for(int k = 0; k < TechMenu[i].libcell[j].pinCount; k++){
                 printf("\t\tPin <pinName> <pinLocationX> <pinLocationY>: %s %d %d\n", TechMenu[i].libcell[j].pinarray[k].pinName, TechMenu[i].libcell[j].pinarray[k].pinLocationX, TechMenu[i].libcell[j].pinarray[k].pinLocationY);
             }
@@ -94,7 +100,6 @@ void printDieInfo(Die top_die, Die bottom_die){
     printf("%d %d %d %d %d\n", top_die.startX, top_die.startY, top_die.rowLength, top_die.rowHeight, top_die.repeatCount);
     printf("TopDieTech <TechName>: %s\n\n", top_die.tech);
 
-
     printf("\nBottom Die Information:\n");
     printf("DieSize <lowerLeftX> <lowerLeftY> <upperRightX> <upperRightY>: %d %d %d %d\n", bottom_die.lowerLeftX, bottom_die.lowerLeftY, bottom_die.upperRightX, bottom_die.upperRightY);
     printf("BottomDieMaxUtil: %d\n", bottom_die.MaxUtil);
@@ -109,6 +114,7 @@ void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal){
     //read terminal size & spacing
     fscanf(input, "%*s %d %d",&(terminal->sizeX),&(terminal->sizeY));
     fscanf(input, "%*s %d",&(terminal->spacing));
+    fscanf(input, "%*s %d",&(terminal->cost));
     read_one_blank_line(input);
 }
 
@@ -118,14 +124,15 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu ){
+void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <int> macros)
+{
     assert(input);
     
     fscanf(input, "%*s %d", &(*NumInstances));
 
     for(int i = 0; i < *NumInstances; i++){
         Instance temp;
-        fscanf(input, "%*s %s %s", temp.instName, temp.libCellName);
+        fscanf(input, "%*s %s %s", temp.instName, temp.libCellName); 
 
         char current_libCellName[LIBCELL_NAME_SIZE];
 		memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
@@ -133,12 +140,18 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instanc
 
         temp.width = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
         temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY;
+        temp.isMacro = TechMenu[0].libcell[atoi(current_libCellName)-1].isMacro;
 		
         // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
         // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
         temp.instIndex = i;
         temp.area = temp.width * temp.height;
-        // temp.inf
+
+        if(temp.isMacro)
+        {
+            macros.emplace_back( temp.instIndex );
+            cout << temp.instIndex << endl;
+        }
 		
         instances.emplace_back(temp);
     }
