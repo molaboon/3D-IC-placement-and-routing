@@ -124,7 +124,7 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <int> macros)
+void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <int> &macros)
 {
     assert(input);
     
@@ -150,9 +150,8 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instanc
         if(temp.isMacro)
         {
             macros.emplace_back( temp.instIndex );
-            cout << temp.instIndex << endl;
         }
-		
+            
         instances.emplace_back(temp);
     }
     read_one_blank_line(input);
@@ -174,7 +173,7 @@ void printInstanceInfo(int NumInstances, vector <Instance> instances){
     printf("\n");
 }
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &instances)
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &instances, vector <int> &macros)
 {
     assert(input);
 
@@ -185,39 +184,39 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
     for(int index = 0; index < size; index++)
         instances[index].netsConnect = (bool *) calloc( *NumNets , sizeof(bool));
 
-
     for(int i = 0; i < *NumNets; i++)
     {
         RawNet temp;
-        fscanf(input, "%*s %s %d", temp.netName , &temp.numPins);
+        fscanf(input, "%*s %s %d", temp.netName, &temp.numPins);
 
         //allocate memory for the detail connection in the net
         vector <Instance*> temp_connection(temp.numPins);
 
-        for(int j = 0; j < temp.numPins; j++){
+        for(int pin = 0; pin < temp.numPins; pin++){
             char buffer[BUFFER_SIZE];
             memset(buffer, '\0', BUFFER_SIZE);
             fscanf(input, "%*s %s", buffer);
             //divide the string by using delimiter "/"
             char *token = strtok(buffer, "/");
-            // strcpy(temp_connection[j]->instName, token);
-            // token = strtok(NULL, " ");
-            // strcpy(temp_connection[j]->libPinName, token);
-
-            // save *instance in to net array
             char current_libCellName[LIBCELL_NAME_SIZE];
     		
             memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
 
-            // char tmpName[BUFFER_SIZE];
-
             strncpy(current_libCellName, token + 1, strlen(token)-1);
-            
-            // printf("%s, %p \n", current_libCellName, &instances[atoi(current_libCellName)-1]);
-            
-            temp_connection[j] = ( &instances[atoi(current_libCellName)-1]) ;
 
-            temp_connection[j]->netsConnect[i] = 1;
+            cout << current_libCellName << endl;
+
+            temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
+
+            for (int m = 0; m < macros.size(); m++)
+            {
+                if(macros[m] == atoi(current_libCellName))
+                {
+                       
+                }
+            }
+
+            temp_connection[pin]->netsConnect[i] = 1;
             
         }
         temp.Connection = temp_connection;

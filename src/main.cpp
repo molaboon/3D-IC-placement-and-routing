@@ -41,12 +41,12 @@ int main(int argc, char *argv[]){
 
 	vector <int> macros;
 
-	/*			data preprocessing			 */
+	/*			read data 			 */
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminal);
 	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu, macros);
-	readNetInfo(input, &NumNets, rawnet, instances);
+	readNetInfo(input, &NumNets, rawnet, instances, macros);
 	returnGridInfo(top_die, binInfo, NumInstances);
 
 	/* first placement and CG preprocessing */
