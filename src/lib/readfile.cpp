@@ -187,6 +187,10 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
     for(int i = 0; i < *NumNets; i++)
     {
         RawNet temp;
+
+        int firstMacro = 0;
+        bool aa = 0;
+        bool havenet = false;
         fscanf(input, "%*s %s %d", temp.netName, &temp.numPins);
 
         //allocate memory for the detail connection in the net
@@ -204,18 +208,30 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
 
             strncpy(current_libCellName, token + 1, strlen(token)-1);
 
-            cout << current_libCellName << endl;
-
             temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
 
             for (int m = 0; m < macros.size(); m++)
             {
                 if(macros[m] == atoi(current_libCellName))
                 {
-                       
+                    if(!havenet)
+                    {
+                        havenet = 1;
+                        firstMacro = atoi(current_libCellName);
+                        aa = 1;
+                    }
+                    else if (aa && havenet)
+                    {
+                        cout << "Net: " << i << endl <<firstMacro << endl;
+                        cout << current_libCellName << endl;
+                        aa = 0;
+                    }
+                    else if (!aa && havenet)
+                    {
+                        cout << current_libCellName << endl;
+                    }
                 }
             }
-
             temp_connection[pin]->netsConnect[i] = 1;
             
         }
