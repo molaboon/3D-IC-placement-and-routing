@@ -47,7 +47,7 @@ struct nodeNet *createNodeNet(int netIndex, int numPins)
     return newNodeNet;
 }
 
-void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <Instance> instances, vector <node*> &nodesForest)
+void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <instance> instances, vector <node*> &nodesForest)
 {   
     int numRawnet = rawNets.size();
     int numInstance = instances.size();
@@ -384,7 +384,7 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
 
 }
 
-void nodesToInstances(vector < node* > &nodesForest, vector <Instance> &newLevelInstance, int numNodes)
+void nodesToInstances(vector < node* > &nodesForest, vector <instance> &newLevelInstance, int numNodes)
 {
 
     /*
@@ -392,7 +392,7 @@ void nodesToInstances(vector < node* > &nodesForest, vector <Instance> &newLevel
     */
     for(int i = 0; i < numNodes; i++)
     {
-        Instance newInstance;
+        instance newInstance;
 
         newInstance.instIndex = nodesForest[i]->index;
 
@@ -402,7 +402,7 @@ void nodesToInstances(vector < node* > &nodesForest, vector <Instance> &newLevel
     }
 }
 
-void coarsen(vector <RawNet> rawNets, vector<Instance> &instances)
+void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 {
     nodeNets nodeNets;
     nodeNets.nets = NULL;

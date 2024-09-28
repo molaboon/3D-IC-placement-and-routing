@@ -124,14 +124,14 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <int> &macros)
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros)
 {
     assert(input);
     
     fscanf(input, "%*s %d", &(*NumInstances));
 
     for(int i = 0; i < *NumInstances; i++){
-        Instance temp;
+        instance temp;
         fscanf(input, "%*s %s %s", temp.instName, temp.libCellName); 
 
         char current_libCellName[LIBCELL_NAME_SIZE];
@@ -144,12 +144,12 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instanc
 		
         // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
         // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
-        temp.instIndex = i;
+        temp.instIndex = i + 1;
         temp.area = temp.width * temp.height;
 
         if(temp.isMacro)
         {
-            macros.emplace_back( temp.instIndex );
+            macros.emplace_back( temp );
         }
             
         instances.emplace_back(temp);
@@ -157,7 +157,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &instanc
     read_one_blank_line(input);
 }
 
-void printInstanceInfo(int NumInstances, vector <Instance> instances){
+void printInstanceInfo(int NumInstances, vector <instance> instances){
     printf("NumInstances <instanceCount>: %d\n", NumInstances);
     for(int i = 0; i < NumInstances; i++){
         printf("\tInst <Name> <lib> <w> <h> <x> <y>: %s %s %lf %lf %lf %lf %lf\n", 
@@ -173,7 +173,7 @@ void printInstanceInfo(int NumInstances, vector <Instance> instances){
     printf("\n");
 }
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &instances, vector <int> &macros)
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <instance*> &netsOfMacros)
 {
     assert(input);
 
@@ -194,7 +194,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
         fscanf(input, "%*s %s %d", temp.netName, &temp.numPins);
 
         //allocate memory for the detail connection in the net
-        vector <Instance*> temp_connection(temp.numPins);
+        vector <instance*> temp_connection(temp.numPins);
 
         for(int pin = 0; pin < temp.numPins; pin++){
             char buffer[BUFFER_SIZE];
@@ -212,7 +212,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
 
             for (int m = 0; m < macros.size(); m++)
             {
-                if(macros[m] == atoi(current_libCellName))
+                if(macros[m].instIndex == atoi(current_libCellName))
                 {
                     if(!havenet)
                     {
@@ -222,13 +222,16 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Ins
                     }
                     else if (aa && havenet)
                     {
-                        cout << "Net: " << i << endl <<firstMacro << endl;
+                        cout << "Net: " << i << endl << firstMacro << endl;
                         cout << current_libCellName << endl;
+                        netsOfMacros.emplace_back( &instances[firstMacro-1] );
+                        netsOfMacros.emplace_back( &instances[atoi(current_libCellName)-1] );
                         aa = 0;
                     }
                     else if (!aa && havenet)
                     {
                         cout << current_libCellName << endl;
+                        netsOfMacros.emplace_back( &instances[atoi(current_libCellName)-1] );
                     }
                 }
             }

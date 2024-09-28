@@ -29,7 +29,7 @@ void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance)
 
 }
 
-void firstPlacement(vector <Instance> &instances, gridInfo binInfo)
+void firstPlacement(vector <instance> &instances, gridInfo binInfo)
 {
     // give each cell initial solution
 
@@ -71,7 +71,7 @@ void firstPlacement(vector <Instance> &instances, gridInfo binInfo)
     }
 }
 
-double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <Instance> &instances, gridInfo binInfo)
+double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo)
 {
     double h = 0.00001;
     double penaltyWeight;

@@ -100,7 +100,7 @@ typedef struct _Instance{
 
     bool *netsConnect;
 
-}Instance;
+}instance;
 
 typedef struct _NetConnection{
     char instName[INSTANCE_NAME_SIZE];      //C1, C2, ...
@@ -112,7 +112,7 @@ typedef struct _RawNet{
     char netName[NET_NAME_SIZE];
     int numPins;
 
-    vector < Instance* > Connection;
+    vector < instance* > Connection;
 
 }RawNet;
 
@@ -142,10 +142,10 @@ void printDieInfo(Die top_die, Die bottom_die);
 void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal);
 void printHybridTerminalInfo(Hybrid_terminal terminal);
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <Instance> &InstanceArray, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <int> &macros);
-void printInstanceInfo(int NumInstances, vector <Instance> InstanceArray);
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros);
+void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <Instance> &InstanceArray, vector <int> &macros);
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <instance*> &netsOfMacros);
 void printNetInfo(int NumNets, vector <RawNet> rawnet);
 
 #endif

@@ -32,24 +32,38 @@ int main(int argc, char *argv[]){
 	// int NumTerminal;														//cut size calculated by shmetis
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
+	
 	int NumInstances;														//How many instances need to be placeed in the two dies
-	vector <Instance> instances;										    //The standard cell with its library
+	vector <instance> instances;										    //The standard cell with its library
+	
 	int NumNets;															//How many nets connect betweem Instances
 	vector <RawNet> rawnet;													//The rawnet data store in input
  	// vector <Net> NetArray;													//NetArray store how many cell connects to this net and a list of cell which connects to this net
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
-	vector <int> macros;
-
-	/*			read data 			 */
+	vector <instance> macros;
+	vector <instance*> netsOfMacros;
+ 
+	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminal);
 	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu, macros);
-	readNetInfo(input, &NumNets, rawnet, instances, macros);
+	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros);
 	returnGridInfo(top_die, binInfo, NumInstances);
 
-	/* first placement and CG preprocessing */
+
+	cout << "In array" << endl;
+
+	for(int m = 0; m < netsOfMacros.size(); m++)
+	{
+		cout << netsOfMacros[m]->instIndex << endl;
+	}
+
+
+	/*	macro partition and placement	*/
+
+	/*	first placement and CG preprocessing	*/
 	
 	// double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 	// double wireLength, newWireLength;
@@ -68,12 +82,12 @@ int main(int argc, char *argv[]){
 
 	// CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-	/*				Coarsening					*/
+	/*	std. cell Coarsening	*/
 	// cout << "here" <<endl;
 
 	// coarsen(rawnet, instances);
 
-	/*				Refinement(CG)				*/
+	/*	Refinement(CG)	*/
 
 	// int totalIter = NumInstances;
 
