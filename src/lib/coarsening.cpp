@@ -67,7 +67,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <i
     {
         int numPins = rawNets[netIndex].numPins;
 
-        nodeNet *newNodeNet = createNodeNet( netIndex, numPins);
+        nodeNet *newNodeNet = createNodeNet(netIndex, numPins);
 
         vector <node*> *tmpNodes = new vector <node*>();
 
@@ -95,6 +95,8 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <i
                 }
                 tmpPointer->connect = newConnect;
             }
+            cout << cellIndex << endl;
+
         }
 
         nodeNets.numNet += 1;
@@ -116,9 +118,9 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <i
             }
             newNodeNet->lastNet = position;
             position->nextNet = newNodeNet;
-
         }
     }
+
 }
 
 int returnDegree(nodeNets &nodeNets, int netIndex)
@@ -419,7 +421,6 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
         totalArea += instances[i].area;
 
     totalArea *= weight;
-
     coarsenPreprocessing(rawNets, nodeNets, instances, nodesForest);
 
     nodeNet *tmp = nodeNets.nets;
@@ -442,7 +443,7 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
     // cout << endl;
     // cout << "Next" << endl;
 
-    for(int i = 0; i < 200; i++)
+    for(int i = 0; i < 8; i++)
     {
         node *newNode = createNode(instIndex);
 

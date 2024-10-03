@@ -77,6 +77,7 @@ typedef struct _Instance{
     double x;
 	double y;
 	double z;
+    int layer;
 
     double tmpX;
     double tmpY;

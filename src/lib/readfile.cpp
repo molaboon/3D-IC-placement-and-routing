@@ -139,7 +139,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 		strncpy(current_libCellName, temp.libCellName + 2, strlen(temp.libCellName)-2);
 
         temp.width = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
-        temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY;
+        temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY; 
         temp.isMacro = TechMenu[0].libcell[atoi(current_libCellName)-1].isMacro;
 		
         // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
@@ -148,10 +148,8 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.area = temp.width * temp.height;
 
         if(temp.isMacro)
-        {
             macros.emplace_back( temp );
-        }
-            
+        
         instances.emplace_back(temp);
     }
     read_one_blank_line(input);
@@ -217,21 +215,21 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
                     if(!havenet)
                     {
                         havenet = 1;
-                        firstMacro = atoi(current_libCellName);
+                        firstMacro = m;
                         aa = 1;
                     }
                     else if (aa && havenet)
                     {
-                        cout << "Net: " << i << endl << firstMacro << endl;
-                        cout << current_libCellName << endl;
-                        netsOfMacros.emplace_back( &instances[firstMacro-1] );
-                        netsOfMacros.emplace_back( &instances[atoi(current_libCellName)-1] );
+                        // cout << "Net: " << i << endl << firstMacro << endl;
+                        // cout << current_libCellName << endl;
+                        netsOfMacros.emplace_back( &macros[firstMacro] );
+                        netsOfMacros.emplace_back( &macros[m] );
                         aa = 0;
                     }
                     else if (!aa && havenet)
                     {
-                        cout << current_libCellName << endl;
-                        netsOfMacros.emplace_back( &instances[atoi(current_libCellName)-1] );
+                        // cout << current_libCellName << endl;
+                        netsOfMacros.emplace_back( &macros[m] );
                     }
                 }
             }

@@ -10,6 +10,7 @@
 #include "lib/initial_placement.h"
 #include "lib/CG.h"
 #include "lib/coarsening.h"
+#include "lib/partition.h"
 
 // double start_time;
 
@@ -52,16 +53,15 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros);
 	returnGridInfo(top_die, binInfo, NumInstances);
 
-
-	cout << "In array" << endl;
-
-	for(int m = 0; m < netsOfMacros.size(); m++)
-	{
-		cout << netsOfMacros[m]->instIndex << endl;
-	}
-
-
 	/*	macro partition and placement	*/
+	
+	// macroPartition( macros, netsOfMacros);
+
+
+	/*	coarsening */
+	// cout << "h" << endl;
+
+	coarsen(rawnet, instances);
 
 	/*	first placement and CG preprocessing	*/
 	
