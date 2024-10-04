@@ -1,8 +1,9 @@
-#include "coarsening.h"
 #include <math.h>
 #include <iostream>
 #include <algorithm>
+#include <time.h>
 
+#include "coarsening.h"
 
 #define weight 5.0
 #define debugMode 1
@@ -36,6 +37,9 @@ struct netConnet* createNetConnect( int netIndex )
 
 struct nodeNet *createNodeNet(int netIndex, int numPins)
 {
+    /*
+        the nodeNet is store the 
+    */
     nodeNet *newNodeNet = (nodeNet*)malloc(sizeof(nodeNet));
 
     newNodeNet->netIndex = netIndex;
@@ -74,7 +78,7 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <i
         for(int cellIndex = 0; cellIndex < numPins ; cellIndex++)
         {
             int index = rawNets[netIndex].Connection[cellIndex]->instIndex;
-
+        
             netConnet *newConnect = createNetConnect( netIndex );
 
             netConnet *tmpPointer = nodesForest[index]->connection;
@@ -95,8 +99,6 @@ void coarsenPreprocessing(vector <RawNet> rawNets, nodeNets &nodeNets, vector <i
                 }
                 tmpPointer->connect = newConnect;
             }
-            cout << cellIndex << endl;
-
         }
 
         nodeNets.numNet += 1;
@@ -184,27 +186,50 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
     return score;
 }
 
-void popOutNode(vector < node* > &nodeForest, int firstNodeIndex, int secondNodeIndex, node *newNode)
+void popOutNode(vector <node*> &nodeForest, int firstNodeIndex, int secondNodeIndex, node *newNode)
 {
     int size = nodeForest.size();
 
-    node *tmp1 = nodeForest[size - 1];
-    node *tmp2 = nodeForest[size - 2];
-
-    for(int i = 0; i < size; i++)
+    // if(firstNodeIndex > secondNodeIndex)
+    // {
+    //     int tmp = secondNodeIndex;
+    //     secondNodeIndex = firstNodeIndex;
+    //     firstNodeIndex = tmp;
+    // }
+    for(int i = 0; i < size ; i++)
     {
         if(nodeForest[i]->index == firstNodeIndex)
-            nodeForest[i] = tmp1;
-        
-        else if(nodeForest[i]->index == secondNodeIndex)
-            nodeForest[i] = tmp2;
+        {
+            if(nodeForest[i+1]->index == secondNodeIndex)
+            {
+                for(int j = i; j < size - 2; j++)
+                {
+                    nodeForest[j] = nodeForest[j+2];
+                }
+            }
+            else
+            {
+                for(int j = i; j < size; j++)
+                {
+                    nodeForest[j] = nodeForest[j+1];
+
+                    if(nodeForest[j + 1]->index == secondNodeIndex)
+                    {
+                        nodeForest[j] = nodeForest[j+2];
+
+                        for(int k = j + 1; k < size - 1; k++)
+                        {
+                            nodeForest[k] = nodeForest[k+2];
+                        }
+                        break;
+                    }
+                }
+            }
+            break;
+        }
     }
-
     nodeForest.pop_back();
-    nodeForest.pop_back();
-
-    nodeForest.push_back(newNode);
-
+    nodeForest[size-2] = newNode;
 }
 
 void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode)
@@ -404,8 +429,31 @@ void nodesToInstances(vector < node* > &nodesForest, vector <instance> &newLevel
     }
 }
 
+
+void printWhichMerged()
+{
+    // for(int i = 0; i < nodeNets.numNet; i++)
+        // {
+        //     for (int j = 0 ; j < tmp->numPins; j++)
+        //     {
+        //         cout << tmp->nodes->at(j)->index<< " ";
+        //     }
+        //     cout << endl;
+        //     tmp = tmp->nextNet;
+        // }
+        // cout << "Cell: ";
+        // for(int i = 0; i < nodesForest.size(); i++)
+        // {
+        //     cout << nodesForest[i]->index << " ";
+        // }
+        // cout << endl << endl;
+}
+
 void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 {
+    double START, END; 
+    START = clock();
+    
     nodeNets nodeNets;
     nodeNets.nets = NULL;
     vector < node* > nodesForest;
@@ -425,25 +473,7 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 
     nodeNet *tmp = nodeNets.nets;
 
-    // for(int i = 0; i < nodeNets.numNet; i++)
-    // {
-    //     for (int j = 0 ; j < tmp->numPins; j++)
-    //     {
-    //         cout << tmp->nodes->at(j)->index<< " ";    
-    //     }
-    //     cout << endl;
-    //     tmp = tmp->nextNet;
-    // }
-    // cout << "Cell: ";
-    // for(int i = 0; i < nodesForest.size(); i++)
-    // {
-    //     cout << nodesForest[i]->index << " ";
-    // }
-    // cout << endl;
-    // cout << endl;
-    // cout << "Next" << endl;
-
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < numInstance/2 ; i++)
     {
         node *newNode = createNode(instIndex);
 
@@ -461,8 +491,7 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 
         nodeNet *tmp = nodeNets.nets;
 
-        cout << "Merge: "<<newNode->left->index << ", " << newNode->right->index << ", Area:" <<newNode->area << endl << endl;
-
+        // cout << "Merge: "<<newNode->left->index << ", " << newNode->right->index << ", Area:" <<newNode->area << endl << endl;
         // for(int i = 0; i < nodeNets.numNet; i++)
         // {
         //     for (int j = 0 ; j < tmp->numPins; j++)
@@ -478,7 +507,11 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
         //     cout << nodesForest[i]->index << " ";
         // }
         // cout << endl << endl;
-        cout << "Next" << endl;
+        cout << "iter: "<< i << endl;
     }
+
+    END = clock();
+    cout << (END - START) / CLOCKS_PER_SEC << endl;
+
 }
 

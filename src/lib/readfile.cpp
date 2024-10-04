@@ -144,7 +144,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 		
         // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
         // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
-        temp.instIndex = i + 1;
+        temp.instIndex = i;
         temp.area = temp.width * temp.height;
 
         if(temp.isMacro)
