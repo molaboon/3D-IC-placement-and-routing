@@ -19,7 +19,7 @@ $(BINS): src/main.cpp $(OBJS)
 	$(CC) $(CFLAGS) -fopenmp  $^ -o $@ -lm
 	
 debug:
-	$(CHECKCC) $(CHECKFLAGS) ./main Benchmark/case2.txt case2.out
+	$(CHECKCC) $(CHECKFLAGS) ./a.out python_file/100cell_case.txt
 	
 clean:
 	rm -rf src/lib/*.o main $(OUT)

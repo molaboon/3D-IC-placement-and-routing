@@ -308,7 +308,6 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
 {
     int size = nodeForest.size();
     node *newNode = nodeForest[size - 1];
-
     nodeNet *tmp = nets.nets;
 
     for(int i = 0; i < nets.numNet; i++)
@@ -429,7 +428,6 @@ void nodesToInstances(vector < node* > &nodesForest, vector <instance> &newLevel
     }
 }
 
-
 void printWhichMerged()
 {
     // for(int i = 0; i < nodeNets.numNet; i++)
@@ -491,22 +489,6 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 
         nodeNet *tmp = nodeNets.nets;
 
-        cout << "Merge: "<<newNode->left->index << ", " << newNode->right->index << ", Area:" <<newNode->area << endl << endl;
-        for(int i = 0; i < nodeNets.numNet; i++)
-        {
-            for (int j = 0 ; j < tmp->numPins; j++)
-            {
-                cout << tmp->nodes->at(j)->index<< " ";
-            }
-            cout << endl;
-            tmp = tmp->nextNet;
-        }
-        cout << "Cell: ";
-        for(int i = 0; i < nodesForest.size(); i++)
-        {
-            cout << nodesForest[i]->index << " ";
-        }
-        cout << endl << endl;
         cout << "iter: "<< i << endl;
     }
 
