@@ -304,21 +304,22 @@ void updateConnection(vector < node* > &nodeForest, nodeNets &nets, node*newNode
     }
 }
 
-void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
+void updateDataStucture(vector < node* > &nodeForest, nodeNets &ndNets)
 {
     int size = nodeForest.size();
+    int numNet = ndNets.numNet;
     node *newNode = nodeForest[size - 1];
-    nodeNet *tmp = nets.nets;
+    nodeNet *pOfNets = ndNets.nets;
 
-    for(int i = 0; i < nets.numNet; i++)
+    for(int i = 0; i <= numNet; i++)
     {
         bool nodeChanged = false;
         bool haveDual = false;
         int dual = 0;
 
-        for (int j = 0 ; j < tmp->numPins; j++)
+        for (int j = 0; j < pOfNets->numPins; j++)
         {
-            if( tmp->nodes->at(j)->index == newNode->left->index || tmp->nodes->at(j)->index == newNode->right->index)
+            if( pOfNets->nodes->at(j)->index == newNode->left->index || pOfNets->nodes->at(j)->index == newNode->right->index)
             {   
                 if(nodeChanged)
                 {
@@ -328,51 +329,49 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &nets)
                 else
                 {
                     nodeChanged = true;
-                    tmp->nodes->at(j) = newNode;
+                    pOfNets->nodes->at(j) = newNode;
                 }
             }
         }
 
         if(haveDual)
         {
-            tmp->nodes->erase(tmp->nodes->begin() + dual);
-            tmp->numPins = tmp->nodes->size();
+            pOfNets->nodes->erase(pOfNets->nodes->begin() + dual);
+            pOfNets->numPins = int( pOfNets->nodes->size() );
 
-            if(tmp->numPins == 1)
+            if(pOfNets->numPins == 1)
             {
-                nodeNet *freeNet = tmp;
-                nets.numNet--;
+                nodeNet *freeNet = pOfNets;
+                ndNets.numNet--;
+                numNet--;
 
-                if( tmp->lastNet == NULL)
+                if( pOfNets->lastNet == NULL)
                 {
-                    nets.nets = tmp->nextNet;
-                    tmp = nets.nets;
-                    tmp->lastNet = NULL;
-
+                    ndNets.nets = pOfNets->nextNet;
+                    pOfNets = ndNets.nets;
+                    pOfNets->lastNet = NULL;
                     free(freeNet);
                 }
-                else if (tmp->nextNet == NULL)
+                else if (pOfNets->nextNet == NULL)
                 {
-                    free(tmp);
+                    pOfNets->nextNet = NULL;
+                    free(pOfNets);
                 }
                 else
                 {
-                    nodeNet *tmpLastNet = tmp->lastNet;
+                    nodeNet *tmpLastNet = pOfNets->lastNet;
 
-                    tmpLastNet->nextNet = tmp->nextNet;
-                    tmp = tmp->lastNet;
+                    tmpLastNet->nextNet = pOfNets->nextNet;
+                    pOfNets = tmpLastNet->nextNet;
                     free(freeNet);
                 }
             }
         }
         else
-        {
-            tmp = tmp->nextNet;
-        }
-
+            pOfNets = pOfNets->nextNet;
     }
 
-    updateConnection(nodeForest, nets, newNode);
+    updateConnection(nodeForest, ndNets, newNode);
 }
 
 void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node *newNode)
@@ -412,7 +411,6 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
 
 void nodesToInstances(vector < node* > &nodesForest, vector <instance> &newLevelInstance, int numNodes)
 {
-
     /*
         3. write the function to nodes to instances
     */
@@ -471,7 +469,7 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 
     nodeNet *tmp = nodeNets.nets;
 
-    for(int i = 0; i < numInstance/2 ; i++)
+    for(int i = 0; i < 7 ; i++)
     {
         node *newNode = createNode(instIndex);
 
@@ -488,7 +486,23 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
         numInstance--;
 
         nodeNet *tmp = nodeNets.nets;
-
+        
+        // for(int i = 0; i < nodeNets.numNet; i++)
+        // {
+        //     for (int j = 0 ; j < tmp->numPins; j++)
+        //     {
+        //         cout << tmp->nodes->at(j)->index<< " ";
+        //     }
+        //     cout << endl;
+        //     tmp = tmp->nextNet;
+        // }
+        // cout << "Cell: ";
+        // for(int i = 0; i < nodesForest.size(); i++)
+        // {
+        //     cout << nodesForest[i]->index << " ";
+        // }
+        // cout << endl << endl;
+        // cout << "merge: " << newNode->left->index << ", " << newNode->right->index << " to "  << newNode->index << endl;
         cout << "iter: "<< i << endl;
     }
 
