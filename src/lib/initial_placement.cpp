@@ -43,8 +43,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
 
     for(int i = 0; i < instances.size(); i++)
     {
-
-        double minX = instances[i].width ;
+        double minX = instances[i].width;
 
         double maxX = binInfo.dieWidth - instances[i].width;
 

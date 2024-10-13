@@ -406,7 +406,9 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &in
 
 void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore)
 {
-    for(int i = 0; i < instances.size(); i++)
+    int size = instances.size();
+
+    for(int i = 0; i < size; i++)
     {
         double *firstLayer = createBins(binInfo);
 
@@ -414,13 +416,13 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &in
 
         double tmpy = instances[i].y;
 
-        double score, score2;
+        double score = 0.0, score2 = 0.0;
 
         instances[i].y += h;
 
         score = scoreOfY(rawNet, gamma);
 
-        for(int j = 0; j < instances.size(); j++)
+        for(int j = 0; j < size; j++)
             penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);

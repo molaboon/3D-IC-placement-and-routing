@@ -20,11 +20,10 @@ using std::vector;
 int main(int argc, char *argv[]){
 	
 	// start_time = omp_get_wtime();
-	
 	// srand(time(NULL));
+	// char *outputName = *(argv + 2);
 	
 	char *inputName = *(argv + 1);
-	char *outputName = *(argv + 2);
 	FILE *input = fopen(inputName, "r");
 	assert(input);
 
@@ -34,7 +33,7 @@ int main(int argc, char *argv[]){
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
 	
-	int NumInstances;														//How many instances need to be placeed in the two dies
+	int numInstances;														//How many instances need to be placeed in the two dies
 	vector <instance> instances;										    //The standard cell with its library
 	
 	int NumNets;															//How many nets connect betweem Instances
@@ -49,9 +48,9 @@ int main(int argc, char *argv[]){
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminal);
-	readInstanceInfo(input, &NumInstances, instances, &NumTechnologies, TechMenu, macros);
+	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros);
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros);
-	returnGridInfo(top_die, binInfo, NumInstances);
+	returnGridInfo(top_die, binInfo, numInstances);
 
 	/*	macro partition and placement	*/
 	
@@ -61,26 +60,25 @@ int main(int argc, char *argv[]){
 	/*	coarsening */
 	// cout << "h" << endl;
 
-	coarsen(rawnet, instances);
+	// coarsen(rawnet, instances);
 
 	/*	first placement and CG preprocessing	*/
 	
-	// double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
-	// double wireLength, newWireLength;
-	// double lastCG[NumInstances * 3 ] = {0.0};
-	// double nowCG[NumInstances * 3 ] = {0.0};
-	// double lastGra[NumInstances * 3 ] = {0.0};
-	// double nowGra[NumInstances * 3 ] = {0.0};
+	double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+	double wireLength, newWireLength;
+	double lastCG[numInstances * 3 ] = {0.0};
+	double nowCG[numInstances * 3 ] = {0.0};
+	double lastGra[numInstances * 3 ] = {0.0};
+	double nowGra[numInstances * 3 ] = {0.0};
 
-	// firstPlacement(instances, binInfo);
-	// gamma = 0.05 * binInfo.dieWidth;
+	firstPlacement(instances, binInfo);
+	gamma = 0.05 * binInfo.dieWidth;
 
-	// penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+	penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
 
+	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
 
-	// totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
-
-	// CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
+	CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 	/*	std. cell Coarsening	*/
 	// cout << "here" <<endl;
@@ -89,41 +87,41 @@ int main(int argc, char *argv[]){
 
 	/*	Refinement(CG)	*/
 
-	// int totalIter = NumInstances;
+	int totalIter = numInstances;
 
-	// for(int i = 0; i < totalIter; i++)
-	// {
-	// 	for(int j = 0; j < 30; j++)
-	// 	{
-	// 		conjugateGradient(nowGra, nowCG, lastCG, lastGra, NumInstances, i);
+	for(int i = 0; i < totalIter; i++)
+	{
+		for(int j = 0; j < 30; j++)
+		{
+			conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
 
-	// 		newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
+			newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 
-	// 		updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
+			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-	// 		cout << newScore << endl;
+			cout << newScore << endl;
 
-	// 		if( newScore < totalScore)
-	// 		{
-	// 			totalScore = newScore;
-	// 		}
-	// 		else
-	// 		{
-	// 			cout << "next iter\n\n";
+			if( newScore < totalScore)
+			{
+				totalScore = newScore;
+			}
+			else
+			{
+				cout << "next iter\n\n";
 		
-	// 			break;
-	// 		}
+				break;
+			}
 				
-	// 	}
-	// 	penaltyWeight *=2;
-	// }
+		}
+		penaltyWeight *=2;
+	}
 
 	return 0;
 }
 
 // printNetInfo(NumNets, rawnet);
-// printInstanceInfo(NumInstances, instances);
+// printInstanceInfo(numInstances, instances);
 // printTechnologyInfo(NumTechnologies, TechMenu);
 // printDieInfo(top_die, bottom_die);
 // printHybridTerminalInfo(terminal);
-// printInstanceInfo(NumInstances, instances);
+// printInstanceInfo(numInstances, instances);

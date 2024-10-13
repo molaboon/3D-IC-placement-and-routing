@@ -168,7 +168,7 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
             {
                 int tmp = returnDegree(nodeNests, firstNetConnect->netIndex);
 
-                if( tmp < 2)
+                if( tmp == 1)
                 {}
                 else
                 {
@@ -350,10 +350,12 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &ndNets)
                     ndNets.nets = pOfNets->nextNet;
                     pOfNets = ndNets.nets;
                     pOfNets->lastNet = NULL;
+                    free(freeNet);
                 }
-                else if ( pOfNets->nextNet == NULL)
+                else if (pOfNets->nextNet == NULL)
                 {
-                    pOfNets->lastNet->nextNet = NULL;
+                    pOfNets->nextNet = NULL;
+                    free(pOfNets);
                 }
                 else
                 {
@@ -361,16 +363,14 @@ void updateDataStucture(vector < node* > &nodeForest, nodeNets &ndNets)
 
                     tmpLastNet->nextNet = pOfNets->nextNet;
                     pOfNets = tmpLastNet->nextNet;
+                    free(freeNet);
                 }
-                free(freeNet);
             }
         }
         else
             pOfNets = pOfNets->nextNet;
     }
 
-
-    
     updateConnection(nodeForest, ndNets, newNode);
 }
 
@@ -378,7 +378,7 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
 {
     int numInstance = nodesForest.size();
     
-    double bestGrade = 0.0;
+    double  bestGrade = 0;
 
     double bestDegree = 0.0;
 
@@ -389,9 +389,7 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
         {  
             double degree = 0.0;
-            double tmpGrade = 0.0;
-            
-            tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nets, avgArea);
+            double tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nets, avgArea);
 
             if (tmpGrade > bestGrade)
             {
@@ -408,6 +406,7 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
     newNode->right = bestChoice2;
 
     newNode->area = bestChoice1->area + bestChoice2->area;
+
 }
 
 void nodesToInstances(vector < node* > &nodesForest, vector <instance> &newLevelInstance, int numNodes)
@@ -470,7 +469,7 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 
     nodeNet *tmp = nodeNets.nets;
 
-    for(int i = 0; i < 10 ; i++)
+    for(int i = 0; i < 7 ; i++)
     {
         node *newNode = createNode(instIndex);
 

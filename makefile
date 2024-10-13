@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g -Wall -O3
+CFLAGS = -g -Wall -O0
 BINS = a.out
 SRC_DIRS := src/lib
 OUT = test.svg placement.txt *.out cost.svg
