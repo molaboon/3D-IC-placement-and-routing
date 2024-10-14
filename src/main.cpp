@@ -107,6 +107,10 @@ int main(int argc, char *argv[]){
 			}
 			else
 			{
+				for(int k = 0; k < numInstances; k++)
+				{
+					cout << instances[k].instIndex << ": "<< instances[k].x <<" " << instances[k].y << " " << instances[k].z << endl;
+				}
 				cout << "next iter\n\n";
 		
 				break;

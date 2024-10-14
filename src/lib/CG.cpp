@@ -165,15 +165,13 @@ double returnPsi(double z)
 double TSVofNet( const vector <RawNet> rawNet)
 {
     double score = 0.0;
+    int size = rawNet.size();
 
-    for (int net = 0; net < rawNet.size(); net++)
+    for (int net = 0; net < size; net++)
     {
         double numerator_1 = 0.0;
-        
         double denominator_1 = 0.0;
-        
         double numerator_2 = 0.0;
-
         double denominator_2 = 0.0;
 
         for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
@@ -188,8 +186,8 @@ double TSVofNet( const vector <RawNet> rawNet)
             numerator_2 += tmpPsi * exp(-tmpPsi/ 0.05);
             
             denominator_2 += exp(-tmpPsi/ 0.05);
-        }
 
+        }
         score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
     }
 
@@ -198,7 +196,7 @@ double TSVofNet( const vector <RawNet> rawNet)
 
 double scoreOfz( vector <RawNet> rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged)
 {
-    double score = 0;
+    double score = 0.0;
     int size = instances.size();
 
     double *firstLayer = createBins(binInfo);
@@ -232,7 +230,7 @@ double *createBins(gridInfo binInfo)
 {
     double *bins;
 
-    bins = (double *)calloc( binInfo.binXnum * binInfo.binYnum, sizeof(double) );
+    bins = (double *)calloc( binInfo.binXnum * binInfo.binYnum, sizeof( double ) );
 
     return bins;
 }
