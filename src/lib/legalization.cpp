@@ -3,6 +3,8 @@
 #include <cmath>
 #include <string.h>
 #include <iostream>
+#include <cstdlib>
+#include <map>
 
 #include "readfile.h"
 
@@ -72,8 +74,15 @@ void place2BestRow( vector <instance> instances, int numInstances, Die topDie, D
     {
         int numInstInRow = btmDiePlacementState[count].size();
 
+        map<int, int> instMap;
+        vector <int> sortArray(numInstInRow);
+
         for(int inst = 0; inst < numInstInRow; inst++)
-        {}
+        {
+            int cellId = btmDiePlacementState[count][inst];
+            instMap[cellId] = (int) instances[cellId].x;
+            
+        }
     }
 
 }
