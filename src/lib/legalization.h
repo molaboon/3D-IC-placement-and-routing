@@ -1,7 +1,6 @@
+#include "readfile.h"
 
-#include "legalization.cpp"
-
-void cell2BestLayer( vector <instance> instances, int numInstances);
+void cell2BestLayer( vector <instance> instances, int numInstances, Die topDie, Die btmDie);
 
 void place2BestRow( vector <instance> instances, int numInstances, Die topDie, Die btmDie);
 

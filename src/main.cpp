@@ -11,6 +11,7 @@
 #include "lib/CG.h"
 #include "lib/coarsening.h"
 #include "lib/partition.h"
+#include "lib/legalization.h"
 
 // double start_time;
 
@@ -120,6 +121,8 @@ int main(int argc, char *argv[]){
 		penaltyWeight *=2;
 	}
 
+
+	cell2BestLayer(instances, numInstances, top_die, bottom_die);
 	return 0;
 }
 
