@@ -98,19 +98,17 @@ void place2BestRow( vector <instance> instances, int numInstances, Die topDie, D
 
     /* check which row is stuffed. If stuffed, place to near row*/
 
-    for(int row = 0; row < topDie.repeatCount; row++)
-    {
-        if( topDieCellsWidth[row] < (int) topDie.upperRightX)
-            cout << "top die is stuffed!" << endl;
-    }
+    // for(int row = 0; row < topDie.repeatCount; row++)
+    // {
+    //     if( topDieCellsWidth[row] < (int) topDie.upperRightX)
+    //         cout << "top die is stuffed!" << endl;
+    // }
 
-    for(int row = 0; row < btmDie.repeatCount; row++)
-    {
-        if( btmDieCellsWidth[row] < (int) btmDie.upperRightX)
-            cout << "bottom die is stuffed!" << endl;
-    }
-
-
+    // for(int row = 0; row < btmDie.repeatCount; row++)
+    // {
+    //     if( btmDieCellsWidth[row] < (int) btmDie.upperRightX)
+    //         cout << "bottom die is stuffed!" << endl;
+    // }
 
 
 
@@ -126,11 +124,10 @@ void place2BestRow( vector <instance> instances, int numInstances, Die topDie, D
         for(int inst = 0; inst < numInstInRow; inst++)
         {
             int cellId = btmDiePlacementState[count][inst];
-            instMap[cellId] = (int) instances[cellId].x;
-            
+            instMap[cellId] = (int) instances[cellId].x;  
+            cout << cellId << " "<<instMap[cellId] << endl;
         }
     }
-
 }
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet)

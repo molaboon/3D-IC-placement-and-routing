@@ -100,6 +100,7 @@ typedef struct _Instance{
     double gra_d = 0.0;
 
     bool *netsConnect;
+    int numNetConnection;
 
 }instance;
 
