@@ -14,7 +14,7 @@ using namespace std;
 #define btmLayer 0
 #define topLayer 1
 
-void cell2BestLayer( vector <instance> instances, int numInstances, Die topDie, Die btmDie)
+void cell2BestLayer( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie)
 {
     double topDieArea = 0.0;
     double btmDieArea = 0.0;
@@ -93,10 +93,10 @@ void cell2BestLayer( vector <instance> instances, int numInstances, Die topDie, 
 
         }while (overLayerUtl > overLayerMaxUtl);
     }
-
+    
 }
 
-void place2BestRow( vector <instance> instances, int numInstances, Die topDie, Die btmDie)
+void place2BestRow( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie)
 {
 
     /*  place to best row*/
@@ -138,27 +138,63 @@ void place2BestRow( vector <instance> instances, int numInstances, Die topDie, D
             btmDieCellsWidth[row] += instances[inst].width;
         }
     }
-
-
-
-
-
-
+    // for(int row = 0; row < topDie.repeatCount; row++)
+    //     cout << topDieCellsWidth[row] << endl;
+    
     /* check which row is stuffed. If stuffed, place to near row*/
 
-    // for(int row = 0; row < topDie.repeatCount; row++)
-    // {
-    //     if( topDieCellsWidth[row] < (int) topDie.upperRightX)
-    //         cout << "top die is stuffed!" << endl;
-    // }
+    for(int row = 0; row < topDie.repeatCount; row++)
+    {
+        while( topDieCellsWidth[row] > (int) topDie.upperRightX)
+        {
+            int size = topDiePlacementState[row].size();
+            int lastInstIndex = topDiePlacementState[row][size - 1];
+            int lastInstWidth = instances[lastInstIndex].width;
+            int tmpRow = row - 1;
 
-    // for(int row = 0; row < btmDie.repeatCount; row++)
-    // {
-    //     if( btmDieCellsWidth[row] < (int) btmDie.upperRightX)
-    //         cout << "bottom die is stuffed!" << endl;
-    // }
+            while (tmpRow >= 0)
+            {   
+                if (topDieCellsWidth[tmpRow] + lastInstWidth < (int) topDie.upperRightX)
+                {
+                    topDiePlacementState[tmpRow].push_back(lastInstIndex);
+                    topDiePlacementState[row].pop_back();
 
+                    topDieCellsWidth[tmpRow] += lastInstWidth;
+                    topDieCellsWidth[row] -= lastInstWidth;
+                    
+                } 
+                tmpRow -= 1;
+            }
+        }
+    }
 
+    for(int row = 0; row < btmDie.repeatCount; row++)
+    {
+        while( btmDieCellsWidth[row] > (int) btmDie.upperRightX)
+        {
+            int size = btmDiePlacementState[row].size();
+            int lastInstIndex = btmDiePlacementState[row][size - 1];
+            int lastInstWidth = instances[lastInstIndex].width;
+            int tmpRow = row - 1;
+
+            while (tmpRow >= 0)
+            {   
+                if (btmDieCellsWidth[tmpRow] + lastInstWidth < (int) btmDie.upperRightX)
+                {
+                    btmDiePlacementState[tmpRow].push_back(lastInstIndex);
+                    btmDiePlacementState[row].pop_back();
+                    btmDieCellsWidth[row] -= lastInstWidth;
+                    btmDieCellsWidth[tmpRow] += lastInstWidth;
+                }
+                tmpRow -= 1;
+            }
+        }
+    }
+    for(int row = 0; row < topDie.repeatCount; row++)
+        cout << topDieCellsWidth[row] << endl;
+
+    for(int row = 0; row < btmDie.repeatCount; row++)
+        cout << btmDieCellsWidth[row] << endl;
 
     /*  place to best X position*/
 
@@ -173,7 +209,7 @@ void place2BestRow( vector <instance> instances, int numInstances, Die topDie, D
         {
             int cellId = btmDiePlacementState[count][inst];
             instMap[cellId] = (int) instances[cellId].x;  
-            cout << cellId << " "<<instMap[cellId] << endl;
+            // cout << cellId << " "<<instMap[cellId] << endl;
         }
     }
 }
