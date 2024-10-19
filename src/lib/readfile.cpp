@@ -141,6 +141,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.width = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
         temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY; 
         temp.isMacro = TechMenu[0].libcell[atoi(current_libCellName)-1].isMacro;
+        temp.numNetConnection = 0;
 		
         // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
         // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
@@ -207,6 +208,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             strncpy(current_libCellName, token + 1, strlen(token)-1);
 
             temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
+            instances[atoi(current_libCellName)-1].numNetConnection += 1;
 
             for (int m = 0; m < macros.size(); m++)
             {

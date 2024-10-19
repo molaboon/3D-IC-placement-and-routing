@@ -70,8 +70,9 @@ typedef struct _Instance{
     char libPinName[PIN_NAME_SIZE];
 
     bool isMacro ;
+    
     int rotate;
-
+    int numNetConnection;
     int instIndex = 0;
 
     double x;
@@ -100,7 +101,6 @@ typedef struct _Instance{
     double gra_d = 0.0;
 
     bool *netsConnect;
-    int numNetConnection;
 
 }instance;
 

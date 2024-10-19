@@ -22,6 +22,13 @@ void cell2BestLayer( vector <instance> instances, int numInstances, Die topDie, 
     double btmDieUtl = 0.0;
     double topDieMaxUtl = 0.0;
     double btmDieMaxUtl = 0.0;
+    double overLayerUtl = 0.0;
+    double overLayerMaxUtl = 0.0;
+    double overDieArea = 0.0;
+    double overDieTotalArea = 0.0;
+
+    int overLayer = 0;
+    bool over = false;
 
     for(int i = 0; i < numInstances; i++)
     {
@@ -43,8 +50,49 @@ void cell2BestLayer( vector <instance> instances, int numInstances, Die topDie, 
     topDieMaxUtl = (double) topDie.MaxUtil / 100.0;
     btmDieMaxUtl = (double) btmDie.MaxUtil / 100.0;
 
+    /* if any die exceed the  max utilizaiton*/
+
     if(topDieUtl > topDieMaxUtl)
-        cout << "aaa" << endl;
+    {
+        overLayer = topLayer;
+        overLayerUtl = topDieUtl;
+        overLayerMaxUtl = topDieMaxUtl;
+        overDieArea = topDieArea;
+        overDieTotalArea = topDie.upperRightX * topDie.upperRightY;
+        over = true;
+    }
+    else if ( btmDieUtl > btmDieMaxUtl)
+    {
+        overLayer = btmLayer;
+        overLayerUtl = btmDieUtl;
+        overLayerMaxUtl = btmDieMaxUtl;
+        overDieArea = btmDieArea;
+        overDieTotalArea = btmDie.upperRightX * btmDie.upperRightY;
+        over = true;
+    }
+
+    if(over)
+    {
+        int minNumNetConnet = 1;
+
+        do{
+            for(int inst = 0; inst < numInstances; inst++)
+            {
+                if(instances[inst].numNetConnection == minNumNetConnet && instances[inst].layer == overLayer)
+                {
+                    instances[inst].layer = 1 - overLayer;
+                    overDieArea -= instances[inst].area;
+                    overLayerUtl = overDieArea / overDieTotalArea;
+
+                    if(overLayerUtl < overLayerMaxUtl)
+                        break;
+                }
+            }
+
+            minNumNetConnet += 1;
+
+        }while (overLayerUtl > overLayerMaxUtl);
+    }
 
 }
 
