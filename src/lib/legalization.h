@@ -6,3 +6,4 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet);
 
+void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet);

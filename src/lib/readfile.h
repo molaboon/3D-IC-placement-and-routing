@@ -51,8 +51,12 @@ typedef struct _die{
     int rowLength;
     int rowHeight;
 
+    int numInstance;
+
     char tech[TECH_NAME_SIZE];
     vector <vector <int>> PlacementState;
+
+    
 }Die;
 
 typedef struct _terminal{
@@ -70,7 +74,7 @@ typedef struct _Instance{
     char libPinName[PIN_NAME_SIZE];
 
     bool isMacro ;
-    
+
     int rotate;
     int numNetConnection;
     int instIndex = 0;

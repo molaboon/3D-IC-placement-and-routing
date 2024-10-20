@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <map>
+#include <algorithm>
 
 #include "readfile.h"
 #include "legalization.h"
@@ -138,8 +139,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
             btmDieCellsWidth[row] += instances[inst].width;
         }
     }
-    // for(int row = 0; row < topDie.repeatCount; row++)
-    //     cout << topDieCellsWidth[row] << endl;
+
     
     /* check which row is stuffed. If stuffed, place to near row*/
 
@@ -160,8 +160,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
                     topDiePlacementState[row].pop_back();
 
                     topDieCellsWidth[tmpRow] += lastInstWidth;
-                    topDieCellsWidth[row] -= lastInstWidth;
-                    
+                    topDieCellsWidth[row] -= lastInstWidth;                       
                 } 
                 tmpRow -= 1;
             }
@@ -190,28 +189,106 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
             }
         }
     }
-    for(int row = 0; row < topDie.repeatCount; row++)
-        cout << topDieCellsWidth[row] << endl;
 
-    for(int row = 0; row < btmDie.repeatCount; row++)
-        cout << btmDieCellsWidth[row] << endl;
 
-    /*  place to best X position*/
+
+
+
+    /*  place instances to best X position*/
+
+    for(int count = 0; count < topDie.repeatCount; count++)
+    {
+        int numInstInRow = topDiePlacementState[count].size();
+        double startX = 0.0;
+
+        if( numInstInRow == 0)
+            continue;
+
+        map<int, int> instMap;
+        vector <int> sortArray(numInstInRow);
+        
+        for(int inst = 0; inst < numInstInRow; inst++)
+        {
+            int cellId = topDiePlacementState[count][inst];
+            int cellX = (int) instances[cellId].x;
+
+            while ( instMap.find( cellX ) != instMap.end() )
+            {
+                instances[cellId].x += 1.0;
+                cellX = (int) instances[cellId].x;
+            }
+            
+            instMap[cellX] = cellId; 
+            sortArray[inst] = cellX;
+        }
+   
+        sort(sortArray.begin(), sortArray.end()); 
+
+        startX = instances[ instMap[ sortArray[0] ]].x;
+
+        if( startX +  (double) topDieCellsWidth[count] > topDie.upperRightX)
+            startX = topDie.upperRightX - (double) topDieCellsWidth[count];
+        
+        for(int inst = 0; inst < numInstInRow; inst++)
+        {
+            int cellID = instMap[ sortArray[inst] ];
+
+            instances[cellID].x = startX;
+            startX += instances[cellID].width;
+        }
+    }
+
 
     for(int count = 0; count < btmDie.repeatCount; count++)
     {
         int numInstInRow = btmDiePlacementState[count].size();
+        double startX = 0.0;
+
+        if( numInstInRow == 0)
+            continue;
 
         map<int, int> instMap;
         vector <int> sortArray(numInstInRow);
-
+        
         for(int inst = 0; inst < numInstInRow; inst++)
         {
             int cellId = btmDiePlacementState[count][inst];
-            instMap[cellId] = (int) instances[cellId].x;  
-            // cout << cellId << " "<<instMap[cellId] << endl;
+            int cellX = (int) instances[cellId].x;
+
+            while ( instMap.find( cellX ) != instMap.end() )
+            {
+                instances[cellId].x += 1.0;
+                cellX = (int) instances[cellId].x;
+            }
+            
+            instMap[cellX] = cellId; 
+            sortArray[inst] = cellX;
+        }
+   
+        sort(sortArray.begin(), sortArray.end()); 
+
+        startX = instances[ instMap[ sortArray[0] ]].x;
+
+        if( startX +  (double) btmDieCellsWidth[count] > btmDie.upperRightX)
+            startX = btmDie.upperRightX - (double)btmDieCellsWidth[count];
+        
+        for(int inst = 0; inst < numInstInRow; inst++)
+        {
+            int cellID = instMap[ sortArray[inst] ];
+
+            instances[cellID].x = startX;
+            startX += instances[cellID].width;
         }
     }
+}
+
+void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet)
+{
+    FILE *output;
+
+    
+
+
 }
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet)
