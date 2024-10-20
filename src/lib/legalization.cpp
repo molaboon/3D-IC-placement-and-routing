@@ -238,7 +238,6 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
         }
     }
 
-
     for(int count = 0; count < btmDie.repeatCount; count++)
     {
         int numInstInRow = btmDiePlacementState[count].size();
@@ -282,12 +281,83 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
     }
 }
 
-void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet)
+void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances)
 {
     FILE *output;
 
-    
+    output = fopen(outputFile, "w");
 
+    int numInstOnTopDie = 0;
+    int numInstOnBtmDie = 0;
+    int numTerminal = 0;
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == topLayer )
+            numInstOnTopDie +=1;
+        else
+            numInstOnBtmDie +=1;
+    }
+
+    fprintf(output, "TopDiePlacement %d\n", numInstOnTopDie);
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == topLayer )
+            fprintf(output, "Inst C%d %d %d R%d\n", 
+            instances[inst].instIndex, 
+            (int) instances[inst].x, 
+            (int) instances[inst].y,
+            (int) instances[inst].rotate);
+    }
+
+    fprintf(output, "BottomDiePlacement %d\n", numInstOnTopDie);
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == btmLayer )
+            fprintf(output, "Inst C%d %d %d R%d\n", 
+            instances[inst].instIndex, 
+            (int) instances[inst].x, 
+            (int) instances[inst].y,
+            (int) instances[inst].rotate);
+    }
+
+    fprintf(output, "NumTerminals %d\n", numTerminal);
+
+
+
+    fclose(output);
+
+}
+
+void insertTerminal(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
+{
+    int numNet = rawNet.size();
+    int numTerminal = 0;
+
+    for(int net = 0; net < numNet; net++)
+    {
+        int firstInstLater = rawNet[net].Connection[0]->layer;
+
+        for(int inst = 1 ; inst < rawNet[net].numPins; inst++)
+        {
+            if( rawNet[net].Connection[inst]->layer != firstInstLater )
+            {
+                numTerminal++;
+
+                terminal newTerminal;
+
+                newTerminal.netID = net;
+                newTerminal.x = 0;
+                newTerminal.y = 0;
+
+                terminals.push_back(newTerminal);
+
+                break;
+            }
+        }
+    }
 
 }
 

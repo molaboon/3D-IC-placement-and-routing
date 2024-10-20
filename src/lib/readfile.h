@@ -59,12 +59,11 @@ typedef struct _die{
     
 }Die;
 
-typedef struct _terminal{
+typedef struct _termina{
     int sizeX;
     int sizeY;
     int spacing;   //between terminals and between terminal and boundary
     int cost;
-    vector <vector<int>> HBPlacementState;
 }Hybrid_terminal;
 
 typedef struct _Instance{

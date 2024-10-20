@@ -103,9 +103,8 @@ int main(int argc, char *argv[]){
 			cout << newScore << endl;
 
 			if( newScore < totalScore)
-			{
 				totalScore = newScore;
-			}
+
 			else
 			{
 				// for(int k = 0; k < numInstances; k++)
@@ -124,6 +123,7 @@ int main(int argc, char *argv[]){
 
 	cell2BestLayer(instances, numInstances, top_die, bottom_die);
 	place2BestRow(instances, numInstances, top_die, bottom_die);
+	// writeFile()
 	return 0;
 }
 
