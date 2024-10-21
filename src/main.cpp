@@ -22,14 +22,15 @@ int main(int argc, char *argv[]){
 	
 	// start_time = omp_get_wtime();
 	// srand(time(NULL));
-	// char *outputName = *(argv + 2);
 	
 	char *inputName = *(argv + 1);
+	char *outputName = *(argv + 2);
+
 	FILE *input = fopen(inputName, "r");
 	assert(input);
 
 	Die top_die, bottom_die;												//store the die information
-	Hybrid_terminal terminal;												//store the size of the hybrid bond terminal connect between two dies
+	Hybrid_terminal terminalTech;												//store the size of the hybrid bond terminal connect between two dies
 	// int NumTerminal;														//cut size calculated by shmetis
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
@@ -44,11 +45,12 @@ int main(int argc, char *argv[]){
 
 	vector <instance> macros;
 	vector <instance*> netsOfMacros;
+	vector <terminal> terminals;
  
 	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
-	readHybridTerminalInfo(input, &terminal);
+	readHybridTerminalInfo(input, &terminalTech);
 	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros);
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros);
 	returnGridInfo(top_die, binInfo, numInstances);
@@ -120,10 +122,11 @@ int main(int argc, char *argv[]){
 		penaltyWeight *=2;
 	}
 
-
 	cell2BestLayer(instances, numInstances, top_die, bottom_die);
 	place2BestRow(instances, numInstances, top_die, bottom_die);
-	// writeFile()
+	insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
+	writeFile(instances, outputName, rawnet, numInstances, terminals);
+
 	return 0;
 }
 

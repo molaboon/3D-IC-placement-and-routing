@@ -97,49 +97,94 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
     
 }
 
-void place2BestRow( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie)
+void place2BestRow( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie, vector <instance> &macros)
 {
-
-    /*  place to best row*/
-
     vector < vector<int> >  topDiePlacementState( topDie.repeatCount );
     vector < vector<int> >  btmDiePlacementState( btmDie.repeatCount );
 
     int topDieCellsWidth[topDie.repeatCount] = {0};
     int btmDieCellsWidth[btmDie.repeatCount] = {0};
+    int numMacro = macros.size();
 
+    /* place macro first */
+    
+    for(int m = 0; m < numMacro; m++)
+    {   
+        int uperX = (int) (macros[m].x + (macros[m].width/2.0) );
+        int uperY = (int) (macros[m].y + (macros[m].height/2.0) );
+        int lowerX = (int) (macros[m].x - (macros[m].width/2.0) );
+        int lowerY = (int) (macros[m].y - (macros[m].height/2.0) );
+
+        int uperRow, lowerRow;
+
+        if( macros[m].layer == topLayer)
+        {
+            uperRow = uperY % topDie.repeatCount + 1;
+            lowerRow = lowerY % topDie.repeatCount;
+
+            if(uperRow >= topDie.repeatCount)
+                uperRow = topDie.repeatCount-1;
+
+            for(int row = lowerRow; row < uperRow; row++)
+            {
+                topDieCellsWidth[row] += macros[m].width;
+                topDiePlacementState[row].push_back(macros[m].instIndex);
+            }   
+        }   
+        else
+        {
+            uperRow = uperY % btmDie.repeatCount + 1;
+            lowerRow = lowerY % btmDie.repeatCount;
+
+            if(uperRow >= topDie.repeatCount)
+                uperRow = topDie.repeatCount-1;
+
+            for(int row = lowerRow; row < uperRow; row++)
+            {
+                btmDieCellsWidth[row] += macros[m].width;
+                btmDiePlacementState[row].push_back(macros[m].instIndex);
+            }
+        }
+    }
+
+    
+    /*  place standard cell to best row */
+
+    
     for(int inst = 0; inst < numInstances; inst++)
     {
         int row = 0;
         double upOrdown = instances[inst].y ;
  
-        if( instances[inst].layer == topLayer)
+        if( !instances[inst].isMacro )
         {
-            upOrdown = fmod( upOrdown, (double) topDie.rowHeight);
-            row = (int) ( instances[inst].y / (double) topDie.rowHeight );
+            if( instances[inst].layer == topLayer)
+            {
+                upOrdown = fmod( upOrdown, (double) topDie.rowHeight);
+                row = (int) ( (instances[inst].y - (instances[inst].height/2.0) ) / (double) topDie.rowHeight );
 
-            if( upOrdown > (double) topDie.rowHeight / 2.0 )
-                row += 1;
+                if( upOrdown > (double) topDie.rowHeight / 2.0 )
+                    row += 1;
+                    
+                topDiePlacementState[row].push_back(instances[inst].instIndex);
+                instances[inst].y = topDie.rowHeight * row;
+                topDieCellsWidth[row] += instances[inst].width;
                 
-            topDiePlacementState[row].push_back(instances[inst].instIndex);
-            instances[inst].y = topDie.rowHeight * row;
-            topDieCellsWidth[row] += instances[inst].width;
-            
-        }
-        else
-        {
-            upOrdown = fmod( upOrdown, (double) btmDie.rowHeight);
-            row = (int) ( instances[inst].y / (double) btmDie.rowHeight );
+            }
+            else
+            {
+                upOrdown = fmod( upOrdown, (double) btmDie.rowHeight);
+                row = (int) ( (instances[inst].y - (instances[inst].height/2.0) ) / (double) btmDie.rowHeight );
 
-            if( upOrdown > (double) btmDie.rowHeight / 2.0 )
-                row += 1;
+                if( upOrdown > (double) btmDie.rowHeight / 2.0 )
+                    row += 1;
 
-            btmDiePlacementState[row].push_back(instances[inst].instIndex);
-            instances[inst].y = btmDie.rowHeight * row;
-            btmDieCellsWidth[row] += instances[inst].width;
+                btmDiePlacementState[row].push_back(instances[inst].instIndex);
+                instances[inst].y = btmDie.rowHeight * row;
+                btmDieCellsWidth[row] += instances[inst].width;
+            }
         }
     }
-
     
     /* check which row is stuffed. If stuffed, place to near row*/
 
@@ -189,8 +234,6 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
             }
         }
     }
-
-
 
 
 
@@ -281,7 +324,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, const 
     }
 }
 
-void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances)
+void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
 {
     FILE *output;
 
@@ -289,7 +332,7 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
 
     int numInstOnTopDie = 0;
     int numInstOnBtmDie = 0;
-    int numTerminal = 0;
+    int numTerminal = (int) terminals.size();
 
     for(int inst = 0; inst < numInstances; inst++)
     {
@@ -305,27 +348,35 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
     {
         if( instances[inst].layer == topLayer )
             fprintf(output, "Inst C%d %d %d R%d\n", 
-            instances[inst].instIndex, 
+            instances[inst].instIndex + 1, 
             (int) instances[inst].x, 
             (int) instances[inst].y,
             (int) instances[inst].rotate);
     }
 
-    fprintf(output, "BottomDiePlacement %d\n", numInstOnTopDie);
+    fprintf(output, "BottomDiePlacement %d\n", numInstOnBtmDie);
 
     for(int inst = 0; inst < numInstances; inst++)
     {
         if( instances[inst].layer == btmLayer )
             fprintf(output, "Inst C%d %d %d R%d\n", 
-            instances[inst].instIndex, 
+            instances[inst].instIndex + 1, 
             (int) instances[inst].x, 
             (int) instances[inst].y,
-            (int) instances[inst].rotate);
+            (int) instances[inst].rotate
+            );
     }
 
     fprintf(output, "NumTerminals %d\n", numTerminal);
 
-
+    for(int t = 0; t < numTerminal; t++)
+    {   
+        fprintf(output, "Terminal N%d %d %d\n", 
+            terminals[t].netID + 1,
+            terminals[t].x,
+            terminals[t].y
+            );
+    }
 
     fclose(output);
 
@@ -335,6 +386,11 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
 {
     int numNet = rawNet.size();
     int numTerminal = 0;
+    int dieWidth = (int) topDie.upperRightX;
+    int dieHight = (int) topDie.upperRightY;
+
+    int terminalX = terminalTech.spacing;
+    int terminalY = terminalTech.spacing;
 
     for(int net = 0; net < numNet; net++)
     {
@@ -359,6 +415,26 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
         }
     }
 
+
+    for (int t = 0; t < numTerminal; t++)
+    {
+        terminals[t].x = terminalX;
+        terminals[t].y = terminalY;
+
+        terminalX += terminalTech.sizeX + terminalTech.spacing;
+
+        if (terminalX + terminalTech.sizeX + terminalTech.spacing > dieWidth)
+        {
+            terminalX = terminalTech.spacing;
+            terminalY += terminalTech.sizeY + terminalTech.spacing;
+        }
+    }
+
+    // for (int t = 0; t < numTerminal; t++)
+    // {
+    //     printf("terminal: %d, %d\n", terminals[t].x, terminals[t].y);
+    // }
+    
 }
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet)
