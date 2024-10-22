@@ -1,0 +1,15 @@
+
+DieSize 0 0 23000 19000 
+
+TopDieMaxUtil 80 
+BottomDieMaxUtil 80 
+
+TopDieRows 0 0 23000 33 573 
+BottomDieRows 0 0 23000 33 573 
+
+TopDieTech TA 
+BottomDieTech TA 
+
+TerminalSize 92 92 
+TerminalSpacing 92 
+TerminalCost 10 

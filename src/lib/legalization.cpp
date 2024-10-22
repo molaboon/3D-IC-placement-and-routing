@@ -108,6 +108,12 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     int topDieCellsWidth[topDie.repeatCount] = {0};
     int btmDieCellsWidth[btmDie.repeatCount] = {0};
     int numMacro = macros.size();
+    int topW = (int) topDie.upperRightX;
+    int btmW = (int) btmDie.upperRightX;
+
+    int topDieArray [topDie.repeatCount][topW] = {0};
+    int btmDieArray [btmDie.repeatCount][btmW] = {0};
+
 
     /* place macro first */
     
@@ -130,9 +136,18 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
             for(int row = lowerRow; row < uperRow; row++)
             {
-                topDieCellsWidth[row] += macros[m].width;
+                int macroWidth = (int) macros[m].width;
+                int macroX = (int) macros[m].x;
+
+                topDieCellsWidth[row] += macroWidth;
                 topDieMacrosPlacement[row].push_back(macros[m].instIndex);
-            }   
+
+                for(int i = macroX - macroWidth/2; i < macroX + macroWidth/2; i++)
+                    topDieArray[row][i] = macros[m].instIndex;
+                
+            } 
+
+            
         }   
         else
         {
@@ -144,8 +159,15 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
             for(int row = lowerRow; row < uperRow; row++)
             {
-                btmDieCellsWidth[row] += macros[m].width;
+                int macroWidth = (int) macros[m].width;
+                int macroX = (int) macros[m].x;
+
+                btmDieCellsWidth[row] += macroWidth;
                 topDieMacrosPlacement[row].push_back(macros[m].instIndex);
+
+                for(int i = macroX - macroWidth/2; i < macroX + macroWidth/2; i++)
+                    btmDieArray[row][i] = macros[m].instIndex;
+
             }
         }
     }
@@ -239,11 +261,9 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     }
 
 
-
     /*  place instances to best X position*/
 
         /*find the gap beteen macros*/
-
 
 
     for(int count = 0; count < topDie.repeatCount; count++)
@@ -290,6 +310,11 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
         sort(macroSortArray.begin(), macroSortArray.end()); 
         sort(sortArray.begin(), sortArray.end()); 
 
+        for(int i = 0; i < numMacroInRow ; i++ )
+        {
+            
+        }
+
         firstCell = instMap[ sortArray[0] ];
         startX = instances[ firstCell ].x - instances[ firstCell ].width / 2.0 ;
 
@@ -331,7 +356,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             sortArray[inst] = cellX;
         }
    
-        sort(sortArray.begin(), sortArray.end()); 
+        sort(sortArray.begin(), sortArray.end());
 
         startX = instances[ instMap[ sortArray[0] ]].x;
 

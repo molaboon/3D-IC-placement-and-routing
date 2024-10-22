@@ -9,6 +9,15 @@ make
 ./a.out case4.txt 
 ```
 
+```
+coarsening->
+initial placement(random 給一個x, y, z 座標)->
+CG (x, y, z 方向的 placement)-> (還有問題，penalty的部分需優化)
+legalization->
+write file
+
+```
+
 
 ### Task list
 - [ ] 將 print 所有data structure 的function 寫出來

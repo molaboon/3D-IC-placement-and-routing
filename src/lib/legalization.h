@@ -10,7 +10,7 @@ typedef struct _terminal{
 
 void cell2BestLayer( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie);
 
-void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> macros);
+void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> &macros);
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet);
 

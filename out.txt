@@ -1,0 +1,8 @@
+TopDiePlacement 1
+Inst C2 0 0 R0
+
+BottomDiePlacement 1
+Inst C1 0 15 R0
+
+NumTerminals 1
+Terminal N1 10 10
