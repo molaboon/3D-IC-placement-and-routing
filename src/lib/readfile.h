@@ -81,7 +81,12 @@ typedef struct _Instance{
     double x;
 	double y;
 	double z;
+    
     int layer;
+    int finalX;
+    int finalY;
+    int finalWidth;
+  nt finalHㄍ;
 
     double tmpX;
     double tmpY;
