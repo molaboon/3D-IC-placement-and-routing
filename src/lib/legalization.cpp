@@ -199,6 +199,9 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
                 btmDieCellsWidth[row] += instances[inst].width;
             }
         }
+
+        instances[inst].finalWidth = (int) instances[inst].width;
+        instances[inst].finalHeight = (int) instances[inst].height;
     }
     
     /* check which row is stuffed. If stuffed, place to near row*/
@@ -314,8 +317,6 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
         firstCell = instMap[ sortArray[0] ];
 
         
-
-
         for(int inst = 0; inst < numInstInRow; inst++)
         {
             int cellID = instMap[ sortArray[inst] ];
@@ -481,5 +482,5 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     
 }
 
-void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet)
-{   }
+void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
+{}

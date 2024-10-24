@@ -86,7 +86,7 @@ typedef struct _Instance{
     int finalX;
     int finalY;
     int finalWidth;
-  nt finalHㄍ;
+    int finalHeight;
 
     double tmpX;
     double tmpY;
@@ -121,6 +121,10 @@ typedef struct _NetConnection{
 typedef struct _RawNet{
     char netName[NET_NAME_SIZE];
     int numPins;
+    
+    bool hasTerminal;
+    int terminalX;
+    int terminalY;
 
     vector < instance* > Connection;
 

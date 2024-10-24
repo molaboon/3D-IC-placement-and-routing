@@ -238,6 +238,9 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             temp_connection[pin]->netsConnect[i] = 1;
             
         }
+        temp.hasTerminal = false;
+        temp.terminalX = 0;
+        temp.terminalY = 0;
         temp.Connection = temp_connection;
 
         rawnet.emplace_back(temp);
