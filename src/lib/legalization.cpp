@@ -43,8 +43,6 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
             instances[i].layer = topLayer;
             topDieArea += instances[i].area;
         }
-
-        instances[i].finalX = (int) instances[i].x
     }
 
     topDieUtl = topDieArea / (topDie.upperRightX * topDie.upperRightY);
@@ -200,173 +198,20 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             }
         }
 
+        instances[inst].finalX = (int) instances[inst].x;
         instances[inst].finalWidth = (int) instances[inst].width;
         instances[inst].finalHeight = (int) instances[inst].height;
     }
     
     /* check which row is stuffed. If stuffed, place to near row*/
 
-    for(int row = 0; row < topDie.repeatCount; row++)
-    {
-        while( topDieCellsWidth[row] > (int) topDie.upperRightX)
-        {
-            int size = topDiePlacementState[row].size();
-            int lastInstIndex = topDiePlacementState[row][size - 1];
-            int lastInstWidth = instances[lastInstIndex].width;
-            int tmpRow = row - 1;
-
-            while (tmpRow >= 0)
-            {   
-                if (topDieCellsWidth[tmpRow] + lastInstWidth < (int) topDie.upperRightX)
-                {
-                    topDiePlacementState[tmpRow].push_back(lastInstIndex);
-                    topDiePlacementState[row].pop_back();
-
-                    topDieCellsWidth[tmpRow] += lastInstWidth;
-                    topDieCellsWidth[row] -= lastInstWidth;                       
-                } 
-                tmpRow -= 1;
-            }
-        }
-    }
-
-    for(int row = 0; row < btmDie.repeatCount; row++)
-    {
-        while( btmDieCellsWidth[row] > (int) btmDie.upperRightX)
-        {
-            int size = btmDiePlacementState[row].size();
-            int lastInstIndex = btmDiePlacementState[row][size - 1];
-            int lastInstWidth = instances[lastInstIndex].width;
-            int tmpRow = row - 1;
-
-            while (tmpRow >= 0)
-            {   
-                if (btmDieCellsWidth[tmpRow] + lastInstWidth < (int) btmDie.upperRightX)
-                {
-                    btmDiePlacementState[tmpRow].push_back(lastInstIndex);
-                    btmDiePlacementState[row].pop_back();
-                    btmDieCellsWidth[row] -= lastInstWidth;
-                    btmDieCellsWidth[tmpRow] += lastInstWidth;
-                }
-                tmpRow -= 1;
-            }
-        }
-    }
-
+    place2nearRow(topDie, topDiePlacementState, instances, topDieCellsWidth);
+    place2nearRow(btmDie, btmDiePlacementState, instances, btmDieCellsWidth);
 
     /*  place instances to best X position*/
 
-        /*find the gap beteen macros*/
-
-
-    for(int count = 0; count < topDie.repeatCount; count++)
-    {
-        int numInstInRow = topDiePlacementState[count].size();
-        int numMacroInRow = topDieMacrosPlacement[count].size();
-        int cellCnt = 0;
-        int firstCell = 0;
-        int startX = 0;
-        int gap = 0;
-        
-        map<int, int> instMap;
-
-        vector <int> sortArray(numInstInRow);
-        vector <int> macroSortArray(numMacroInRow);
-        vector <int> gapOfmacros;
-        
-        if( numInstInRow == 0)
-            continue;
-
-        for(int i = 0; i < numMacroInRow; i++)
-        {
-            int cellId = topDieMacrosPlacement[count][i];
-            int cellX = (int) (instances[cellId].x - instances[cellId].width/2.0);
-
-            instMap[cellX] = cellId; 
-            macroSortArray[i] = cellX;
-        }
-
-        for(int inst = 0; inst < numInstInRow; inst++)
-        {
-            int cellId = topDiePlacementState[count][inst];
-            int cellX = (int) instances[cellId].x;
-
-            while ( instMap.find( cellX ) != instMap.end() )
-            {
-                instances[cellId].x += 1.0;
-                cellX = (int) instances[cellId].x;
-            }
-            
-            instMap[cellX] = cellId;
-            sortArray[inst] = cellX;
-        }
-
-        sort(sortArray.begin(), sortArray.end());
-        sort(macroSortArray.begin(), macroSortArray.end()); 
-
-        for(int i = 0; i < numMacroInRow; i++)
-        {
-            int cell = instMap[ macroSortArray[i] ];
-            int start = (int) (instances[ cell ].x - instances[ cell ].width / 2.0);
-            int end = (int) (instances[ cell ].x + instances[ cell ].width / 2.0) + 1;
-            
-            gapOfmacros.push_back(start);
-            gapOfmacros.push_back(end);
-        }
-
-        firstCell = instMap[ sortArray[0] ];
-
-        
-        for(int inst = 0; inst < numInstInRow; inst++)
-        {
-            int cellID = instMap[ sortArray[inst] ];
-
-            instances[cellID].x = startX;
-            startX += instances[cellID].width;
-        }
-    }
-
-    for(int count = 0; count < btmDie.repeatCount; count++)
-    {
-        int numInstInRow = btmDiePlacementState[count].size();
-        double startX = 0.0;
-
-        if( numInstInRow == 0)
-            continue;
-
-        map<int, int> instMap;
-        vector <int> sortArray(numInstInRow);
-        
-        for(int inst = 0; inst < numInstInRow; inst++)
-        {
-            int cellId = btmDiePlacementState[count][inst];
-            int cellX = (int) instances[cellId].x;
-
-            while ( instMap.find( cellX ) != instMap.end() )
-            {
-                instances[cellId].x += 1.0;
-                cellX = (int) instances[cellId].x;
-            }
-            
-            instMap[cellX] = cellId; 
-            sortArray[inst] = cellX;
-        }
-   
-        sort(sortArray.begin(), sortArray.end());
-
-        startX = instances[ instMap[ sortArray[0] ]].x;
-
-        if( startX +  (double) btmDieCellsWidth[count] > btmDie.upperRightX)
-            startX = btmDie.upperRightX - (double)btmDieCellsWidth[count];
-        
-        for(int inst = 0; inst < numInstInRow; inst++)
-        {
-            int cellID = instMap[ sortArray[inst] ];
-
-            instances[cellID].x = startX;
-            startX += instances[cellID].width;
-        }
-    }
+    placeInst2BestX(topDie, topDiePlacementState, instances);
+    placeInst2BestX(btmDie, btmDiePlacementState, instances);
 }
 
 void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
@@ -394,8 +239,8 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
         if( instances[inst].layer == topLayer )
             fprintf(output, "Inst C%d %d %d R%d\n", 
             instances[inst].instIndex + 1, 
-            (int) instances[inst].x, 
-            (int) instances[inst].y,
+            instances[inst].finalX, 
+            instances[inst].finalY,
             (int) instances[inst].rotate);
     }
 
@@ -406,8 +251,8 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
         if( instances[inst].layer == btmLayer )
             fprintf(output, "Inst C%d %d %d R%d\n", 
             instances[inst].instIndex + 1, 
-            (int) instances[inst].x, 
-            (int) instances[inst].y,
+            instances[inst].finalX, 
+            instances[inst].finalY,
             (int) instances[inst].rotate
             );
     }
@@ -480,6 +325,116 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     //     printf("terminal: %d, %d\n", terminals[t].x, terminals[t].y);
     // }
     
+}
+
+void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <instance> &instances)
+{
+    for(int count = 0; count < die.repeatCount; count++)
+    {
+        int numInstInRow = diePlacementState[count].size();
+        int numMacroInRow = diePlacementState[count].size();
+        
+        map<int, int> instMap;
+
+        vector <int> sortArray(numInstInRow);
+        vector <int> macroSortArray(numMacroInRow);
+        vector <int> gapOfmacros;
+        
+        if( numInstInRow == 0)
+            continue;
+
+        for(int i = 0; i < numMacroInRow; i++)
+        {
+            int cellId = diePlacementState[count][i];
+            int cellX = ( instances[cellId].finalX - instances[cellId].finalWidth/2 );
+
+            instMap[cellX] = cellId; 
+            macroSortArray[i] = cellX;
+        }
+
+        for(int inst = 0; inst < numInstInRow; inst++)
+        {
+            int cellId = diePlacementState[count][inst];
+            int cellX = instances[cellId].finalX - instances[cellId].finalWidth/2;
+
+            while ( instMap.find( cellX ) != instMap.end() )
+            {
+                instances[cellId].finalX += 1.0;
+                cellX = instances[cellId].finalX - instances[cellId].finalWidth/2;
+            }
+            
+            instMap[cellX] = cellId;
+            sortArray[inst] = cellX;
+        }
+
+        sort(sortArray.begin(), sortArray.end());
+        sort(macroSortArray.begin(), macroSortArray.end()); 
+
+        for(int i = 0; i < numMacroInRow; i++)
+        {
+            int cell = instMap[ macroSortArray[i] ];
+            int start =  ( instances[cell].finalX - instances[cell].finalWidth/2 );
+            int end = ( instances[cell].finalX + instances[cell].finalWidth/2 );
+            
+            gapOfmacros.push_back(start);
+        }
+        
+        /*  place to best X*/
+
+        int firstCell = instMap[ sortArray[0] ];
+        int startX = instances[ firstCell ].finalX;
+        int macroCnt = 0;
+        int nowMacroID = instMap[ macroSortArray[macroCnt] ];
+        int macroX = instances[nowMacroID].finalX;
+        
+        
+        for(int inst = 1; inst < numInstInRow; inst++)
+        {
+            int cellID = instMap[ sortArray[inst] ];
+            int lastCellWidth = instances[ instMap[ sortArray[inst-1] ] ].finalWidth;
+            int nowCellFinalX = instances[cellID].finalX;
+            int nowCellWidth = instances[cellID].width;
+
+            if( nowCellFinalX + nowCellWidth > macroX)
+            {
+                startX += instances[cellID].width;
+            }    
+            else
+            {
+                if(nowCellFinalX < startX + lastCellWidth)
+                    instances[cellID].finalX = startX + lastCellWidth;
+                
+                startX = instances[cellID].finalX;
+            }
+        }
+    }
+}
+
+void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vector <instance> &instances, int *dieCellWidth)
+{
+    for(int row = 0; row < die.repeatCount; row++)
+    {
+        while( dieCellWidth[row] > (int) die.upperRightX)
+        {
+            int size = diePlacementState[row].size();
+            int lastInstIndex = diePlacementState[row][size - 1];
+            int lastInstWidth = instances[lastInstIndex].width;
+            int tmpRow = row - 1;
+
+            while (tmpRow >= 0)
+            {   
+                if (dieCellWidth[tmpRow] + lastInstWidth < (int) die.upperRightX)
+                {
+                    diePlacementState[tmpRow].push_back(lastInstIndex);
+                    diePlacementState[row].pop_back();
+                    dieCellWidth[row] -= lastInstWidth;
+                    dieCellWidth[tmpRow] += lastInstWidth;
+                }
+                tmpRow -= 1;
+            }
+        }
+    }
+
 }
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)

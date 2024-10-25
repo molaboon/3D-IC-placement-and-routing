@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
 	
 	int numInstances;														//How many instances need to be placeed in the two dies
-	vector <instance> instances;										    //The standard cell with its library
+	vector <instance> instances;							    //The standard cell with its library
 	
 	int NumNets;															//How many nets connect betweem Instances
 	vector <RawNet> rawnet;													//The rawnet data store in input
@@ -122,10 +122,10 @@ int main(int argc, char *argv[]){
 		penaltyWeight *=2;
 	}
 
-	cell2BestLayer(instances, numInstances, top_die, bottom_die);
-	place2BestRow(instances, numInstances, top_die, bottom_die, macros);
-	insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-	writeFile(instances, outputName, rawnet, numInstances, terminals);
+	// cell2BestLayer(instances, numInstances, top_die, bottom_die);
+	// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
+	// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
+	// writeFile(instances, outputName, rawnet, numInstances, terminals);
 
 	return 0;
 }

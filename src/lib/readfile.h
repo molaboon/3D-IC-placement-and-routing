@@ -56,7 +56,6 @@ typedef struct _die{
     char tech[TECH_NAME_SIZE];
     vector <vector <int>> PlacementState;
 
-    
 }Die;
 
 typedef struct _termina{

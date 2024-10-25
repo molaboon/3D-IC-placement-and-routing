@@ -93,19 +93,19 @@ void readDieInfo(FILE *input, Die *top_die, Die *bottom_die){
 
 //print the detail die information
 void printDieInfo(Die top_die, Die bottom_die){
-    printf("\nTop Die Information:\n");
-    printf("DieSize <lowerLeftX> <lowerLeftY> <upperRightX> <upperRightY>: %d %d %d %d\n", top_die.lowerLeftX, top_die.lowerLeftY, top_die.upperRightX, top_die.upperRightY);
-    printf("TopDieMaxUtil: %d\n", top_die.MaxUtil);
-    printf("TopDieRows <startX> <startY> <rowLength> <rowHeight> <repeatCount>:");
-    printf("%d %d %d %d %d\n", top_die.startX, top_die.startY, top_die.rowLength, top_die.rowHeight, top_die.repeatCount);
-    printf("TopDieTech <TechName>: %s\n\n", top_die.tech);
+    // printf("\nTop Die Information:\n");
+    // printf("DieSize <lowerLeftX> <lowerLeftY> <upperRightX> <upperRightY>: %d %d %d %d\n", top_die.lowerLeftX, top_die.lowerLeftY, top_die.upperRightX, top_die.upperRightY);
+    // printf("TopDieMaxUtil: %d\n", top_die.MaxUtil);
+    // printf("TopDieRows <startX> <startY> <rowLength> <rowHeight> <repeatCount>:");
+    // printf("%d %d %d %d %d\n", top_die.startX, top_die.startY, top_die.rowLength, top_die.rowHeight, top_die.repeatCount);
+    // printf("TopDieTech <TechName>: %s\n\n", top_die.tech);
 
-    printf("\nBottom Die Information:\n");
-    printf("DieSize <lowerLeftX> <lowerLeftY> <upperRightX> <upperRightY>: %d %d %d %d\n", bottom_die.lowerLeftX, bottom_die.lowerLeftY, bottom_die.upperRightX, bottom_die.upperRightY);
-    printf("BottomDieMaxUtil: %d\n", bottom_die.MaxUtil);
-    printf("BottomDieRows <startX> <startY> <rowLength> <rowHeight> <repeatCount>:");
-    printf("%d %d %d %d %d\n", bottom_die.startX, bottom_die.startY, bottom_die.rowLength, bottom_die.rowHeight, bottom_die.repeatCount);
-    printf("BottomDieTech <TechName>: %s\n\n", bottom_die.tech);
+    // printf("\nBottom Die Information:\n");
+    // printf("DieSize <lowerLeftX> <lowerLeftY> <upperRightX> <upperRightY>: %d %d %d %d\n", bottom_die.lowerLeftX, bottom_die.lowerLeftY, bottom_die.upperRightX, bottom_die.upperRightY);
+    // printf("BottomDieMaxUtil: %d\n", bottom_die.MaxUtil);
+    // printf("BottomDieRows <startX> <startY> <rowLength> <rowHeight> <repeatCount>:");
+    // printf("%d %d %d %d %d\n", bottom_die.startX, bottom_die.startY, bottom_die.rowLength, bottom_die.rowHeight, bottom_die.repeatCount);
+    // printf("BottomDieTech <TechName>: %s\n\n", bottom_die.tech);
 }
 
 void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal){
@@ -138,20 +138,30 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 		memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
 		strncpy(current_libCellName, temp.libCellName + 2, strlen(temp.libCellName)-2);
 
+
+        temp.instIndex = i;
         temp.width = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
         temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY; 
         temp.isMacro = TechMenu[0].libcell[atoi(current_libCellName)-1].isMacro;
+        
+        temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
+        temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
+
         temp.numNetConnection = 0;
-		
-        // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
-        // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
-        temp.instIndex = i;
+        temp.x = 0.0;
+        temp.y = 0.0;
+        temp.z = 0.0;
+        temp.finalX = 0;
+        temp.finalY = 0;
+        temp.finalWidth = 0;
+        temp.finalHeight = 0;
         temp.area = temp.width * temp.height;
 
         if(temp.isMacro)
             macros.emplace_back( temp );
         
         instances.emplace_back(temp);
+
     }
     read_one_blank_line(input);
 }
