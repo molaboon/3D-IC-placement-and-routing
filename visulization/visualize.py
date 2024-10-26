@@ -7,7 +7,7 @@ class Instance:
         self.name = name
         self.x = 0
         self.y = 0
-        self.z = 0.5
+        self.z = 0
 
         self.width = 0
         self.height = 0
@@ -24,11 +24,11 @@ def plot_rectangle(ax, x1, y1, x2, y2, c, style, if_fill):
          (y2),
          fill = if_fill,
          color = c,
-         linestyle = style
+        #  linestyle = style
       )
    )
 
-def  plot_result(instances, iter, die_width, die_height, grid_info, info, plot_block_area):
+def  plot_result(instances, iter, die_width, die_height, plot_block_area):
 
     width = die_width
     height = die_height
@@ -39,27 +39,14 @@ def  plot_result(instances, iter, die_width, die_height, grid_info, info, plot_b
     ax[1].plot( width, height, 'g.')
     ax[1].plot(0, 0, 'g.')
 
-    if plot_block_area:
-        for y in range(grid_info[5]):
-        
-            for x in range(grid_info[4]):
-                blok = [15, 18, 26, 31, 38, 42, 47, 50, 58, 64, 69, 72 ,79 , 83, 87, 92, 96]
-                a = y*grid_info[4] + x
-                
-                if a in blok:
-                    plot_rectangle(ax[0], x * grid_info[2] , (grid_info[1]-grid_info[3]) - y * grid_info[3], grid_info[2], grid_info[3],'r', '-.', 1)
-                    plot_rectangle(ax[1], x * grid_info[2] , (grid_info[1]-grid_info[3]) - y * grid_info[3], grid_info[2], grid_info[3],'r', '-.', 1)    
-
     for instance in instances:
         if instance.z == 1:
-            plot_rectangle(ax[1], (instance.x - 0.5*instance.width), (grid_info[1])-(instance.y + 0.5*instance.height), instance.width, instance.height, 'k', '-', 0)
-            
-            ax[1].annotate("{}".format(instance.name), xy=(instance.x, grid_info[1]-instance.y),fontsize=12, ha='center', va='center_baseline')
+            plot_rectangle(ax[1], (instance.x - 0.5*instance.width), (instance.y - 0.5*instance.height), instance.width, instance.height, 'k', '-', 0)
+            ax[1].annotate("{}".format(instance.name), xy=(instance.x, instance.y),fontsize=12, ha='center', va='center_baseline')
 
         else:
-            plot_rectangle(ax[0], (instance.x - 0.5*instance.width), (grid_info[1])-(instance.y + 0.5*instance.height), instance.width, instance.height, 'k', '-', 0)
-            
-            ax[0].annotate("{}".format(instance.name ), xy=(instance.x, grid_info[1]-instance.y),fontsize=12, ha='center', va='center_baseline')
+            plot_rectangle(ax[0], (instance.x - 0.5*instance.width), instance.y - 0.5*instance.height, instance.width, instance.height, 'k', '-', 0)
+            ax[0].annotate("{}".format(instance.name ), xy=(instance.x, instance.y),fontsize=12, ha='center', va='center_baseline')
 
     ax[0].grid(True, alpha = 0.3)
     ax[1].grid(True, alpha = 0.3)
@@ -127,7 +114,7 @@ def write_cell_coordinate(instances, path, plcmt_info):
 def read_data(filename):
     die_width = 0
     die_height = 0
-    instances = [[], []]
+    instances = []
 
     with open(filename, 'r') as file:
         tech = 0
@@ -140,22 +127,22 @@ def read_data(filename):
                 tech = 1
             
             elif parts[0] == 'DieInfo':
-                die_width = parts[1]
-                die_height = parts[2]
+                die_width = int( parts[1] )
+                die_height = int( parts[2] )
             
             elif parts[0] == 'Inst':
-                instances[tech].append(Instance(parts[1]))
-                instances[tech][-1].x = int( parts[2] )
-                instances[tech][-1].y = int( parts[3] )
-                instances[tech][-1].z = tech
-                instances[tech][-1].width = int( parts[4] )
-                instances[tech][-1].height = int( parts[5] )
+                instances.append(Instance(parts[1]))
+                instances[-1].x = int( parts[2] )
+                instances[-1].y = int( parts[3] )
+                instances[-1].z = tech
+                instances[-1].width = int( parts[4] )
+                instances[-1].height = int( parts[5] )
     
     return instances, die_width, die_height
 
 def main():    
-    inatances, die_width, die_height = read_data("data/0.txt")
-    
+    instances, die_width, die_height = read_data("data/0.txt")
+    plot_result(instances, 0, die_width, die_height, 0)
 
 main()
 
