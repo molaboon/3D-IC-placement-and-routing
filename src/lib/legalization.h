@@ -21,3 +21,5 @@ void calculateActualHPWL(const vector <instance> instances, const vector <RawNet
 void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <instance> &instances);
 
 void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vector <instance> &instances, int *dieCellWidth);
+
+void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances);

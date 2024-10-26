@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "cmath": "cpp",
+        "optional": "cpp",
+        "type_traits": "cpp",
+        "ostream": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "new": "cpp",
+        "iostream": "cpp",
+        "*.tcc": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "limits": "cpp",
+        "deque": "cpp",
+        "string": "cpp"
+    }
+}

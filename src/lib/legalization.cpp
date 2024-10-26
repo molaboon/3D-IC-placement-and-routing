@@ -201,12 +201,13 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
         instances[inst].finalX = (int) instances[inst].x;
         instances[inst].finalWidth = (int) instances[inst].width;
         instances[inst].finalHeight = (int) instances[inst].height;
+        instances[inst].rotate = 0;
     }
     
     /* check which row is stuffed. If stuffed, place to near row*/
 
-    place2nearRow(topDie, topDiePlacementState, instances, topDieCellsWidth);
-    place2nearRow(btmDie, btmDiePlacementState, instances, btmDieCellsWidth);
+    // place2nearRow(topDie, topDiePlacementState, instances, topDieCellsWidth);
+    // place2nearRow(btmDie, btmDiePlacementState, instances, btmDieCellsWidth);
 
     /*  place instances to best X position*/
 
@@ -279,8 +280,8 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     int dieWidth = (int) topDie.upperRightX;
     int dieHight = (int) topDie.upperRightY;
 
-    int terminalX = terminalTech.spacing;
-    int terminalY = terminalTech.spacing;
+    int terminalX = terminalTech.spacing > terminalTech.sizeX ? terminalTech.spacing : terminalTech.sizeX;
+    int terminalY = terminalTech.spacing > terminalTech.sizeY ? terminalTech.spacing : terminalTech.sizeY;
 
     for(int net = 0; net < numNet; net++)
     {
@@ -439,3 +440,51 @@ void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vecto
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
 {}
+
+void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances)
+{
+    FILE *output;
+
+    output = fopen(outputFile, "w");
+
+    int numInstOnTopDie = 0;
+    int numInstOnBtmDie = 0;
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == topLayer )
+            numInstOnTopDie +=1;
+        else
+            numInstOnBtmDie +=1;
+    }
+
+    fprintf(output, "TopDiePlacement %d\n", numInstOnTopDie);
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == topLayer )
+            fprintf(output, "Inst C%d %d %d R%d\n", 
+            instances[inst].instIndex + 1, 
+            (int) instances[inst].x, 
+            (int) instances[inst].y,
+            (int) instances[inst].width,
+            (int) instances[inst].height);
+    }
+
+    fprintf(output, "BottomDiePlacement %d\n", numInstOnBtmDie);
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == btmLayer )
+            fprintf(output, "Inst C%d %d %d R%d\n", 
+            instances[inst].instIndex + 1, 
+            (int) instances[inst].x, 
+            (int) instances[inst].y,
+            (int) instances[inst].width,
+            (int) instances[inst].height);
+    }
+
+    
+    fclose(output);
+
+}

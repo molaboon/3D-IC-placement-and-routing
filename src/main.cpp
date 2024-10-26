@@ -25,6 +25,7 @@ int main(int argc, char *argv[]){
 	
 	char *inputName = *(argv + 1);
 	char *outputName = *(argv + 2);
+	char *visualFile = *(argv + 3);
 
 	FILE *input = fopen(inputName, "r");
 	assert(input);
@@ -109,14 +110,12 @@ int main(int argc, char *argv[]){
 
 			else
 			{
-				// for(int k = 0; k < numInstances; k++)
-				// {
-				// 	cout << instances[k].instIndex << ": "<< instances[k].x <<" " << instances[k].y << " " << instances[k].z << endl;
-				// }
 				cout << "next iter\n\n";
 		
 				break;
 			}
+
+
 				
 		}
 		penaltyWeight *=2;
