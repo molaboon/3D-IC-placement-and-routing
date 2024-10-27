@@ -18,17 +18,17 @@ double scoreOfz( vector <RawNet> rawNets, vector <instance> &instances, gridInfo
 
 double *createBins(gridInfo binInfo);
 
-void penaltyInfoOfinstance(const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer);
+void penaltyInfoOfinstance(const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool needMinus);
 
-void calculatePenaltyArea(double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, instance instance, gridInfo binInfo);
+void calculatePenaltyArea(double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, instance instance, gridInfo binInfo, bool needMinus);
 
 double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo);
 
-void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore);
+void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer);
 
-void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore);
+void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer);
 
-void gradientZ(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore);
+void gradientZ(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer);
 
 double returnTotalScore(vector<RawNet> rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances);
 
@@ -42,10 +42,7 @@ void glodenSearch(instance &inst, gridInfo binInfo);
 
 double newSolution(vector <RawNet> rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo);
 
-void updateGra(vector <RawNet> rawNets, double gamma, vector<instance> &instances, grid_info binInfo, double *lastGra, double *nowGra, double penaltyWeight);
-
-
-// double infaltionRatio(instance instance, double routingOverflow);
+void updateGra(vector <RawNet> rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double &penaltyWeight);
 
 // double infaltionRatio(instance instance, double routingOverflow);
 

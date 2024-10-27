@@ -156,11 +156,17 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
     penaltyWeight = (grax + gray + graz) / grad;
 
 
-    gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
-    
-    gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore);
+    double *originFirstLayer = createBins(binInfo);
+    double *originSecondLayer = createBins(binInfo);
 
-    gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore);
+    for(int j = 0; j < size; j++)
+        penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, originFirstLayer, originSecondLayer);
+
+    gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
+    
+    gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
+
+    gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originFirstLayer, originSecondLayer);
 
     return penaltyWeight;
 }

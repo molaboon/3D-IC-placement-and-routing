@@ -19,13 +19,6 @@
 
 using namespace std;
 
-/*
-    check list
-
-    need to optimize the speed of calculating gradient
-
-
-*/
 
 double scoreOfX( const vector <RawNet> rawNet, const double gamma)
 {
@@ -34,30 +27,21 @@ double scoreOfX( const vector <RawNet> rawNet, const double gamma)
     for (int net = 0; net < rawNet.size(); net++)
     {
         double numerator_1 = 0.0;
-
         double denominator_1 = 0.0;
-
         double numerator_2 = 0.0;
-
         double denominator_2 = 0.0;
-
 
         for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
         {
-
             double tmp = rawNet[net].Connection[instance]->x;
 
             numerator_1 += tmp * exp(tmp / gamma);
-            
             denominator_1 += exp(tmp / gamma);
-
             numerator_2 += tmp * exp(-tmp/ gamma);
-            
             denominator_2 += exp(-tmp/ gamma);
         }
 
         score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
-
     }
 
     return score;
@@ -71,11 +55,8 @@ double scoreOfY( const vector <RawNet> rawNet, const double gamma)
     for (int net = 0; net < (int) rawNet.size(); net++)
     {
         double numerator_1 = 0.0;
-        
         double denominator_1 = 0.0;
-        
         double numerator_2 = 0.0;
-
         double denominator_2 = 0.0;
 
 
@@ -235,10 +216,11 @@ double *createBins(gridInfo binInfo)
     return bins;
 }
 
-void penaltyInfoOfinstance( const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer)
+void penaltyInfoOfinstance( const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool needMinus)
 {
-    int row = 0;
     int leftXnum, rightXnum, topYnum, btmYnum;
+    int row = (int) binInfo.binXnum;
+    
     double coordinate[4] = { 0.0 };
     int length[4] = {0};
     
@@ -246,14 +228,9 @@ void penaltyInfoOfinstance( const instance instance, const double density, const
     // int inflateCoordinate[4] = { 0 };
     // int inflateLength[4] = {0};
 
-    row = (int) binInfo.binXnum;
-
     double leftX = instance.x - (instance.width * 0.5);
-
     double rightX = instance.x + (instance.width * 0.5);
-
     double topY = instance.y - (instance.height * 0.5);
-
     double btmY = instance.y + (instance.height * 0.5);
 
     // double inflateLeftX = instance.x - (instance.inflateWidth * 0.5);
@@ -262,32 +239,23 @@ void penaltyInfoOfinstance( const instance instance, const double density, const
     // double inflateBtmY = instance.y + (instance.inflateHeight * 0.5);
 
     leftXnum = (int) (leftX / binInfo.binWidth);
-
     rightXnum = (int) (rightX / binInfo.binWidth) ; 
-
     topYnum = (int) (topY / binInfo.binHeight);
-
     btmYnum =  (int) (btmY / binInfo.binHeight);
 
     coordinate[0] = leftX;
-    
     coordinate[1] = rightX;
-    
     coordinate[2] = topY;
-    
     coordinate[3] = btmY;
 
     length[0] = leftXnum;
-
     length[1] = rightXnum;
-
     length[2] = topYnum;
-
     length[3] = btmYnum;
 
     // printf("%d %d %d %d\n", length[0], length[1], length[2], length[3]);
 
-    calculatePenaltyArea( coordinate, length, firstLayer, secondLayer, instance.density, row, instance, binInfo);
+    calculatePenaltyArea( coordinate, length, firstLayer, secondLayer, instance.density, row, instance, binInfo, needMinus);
 
     // if_left_x_num = int( if_left_x // grid_info[2] )
     // if_right_x_num = int( if_right_x // grid_info[2])
@@ -298,14 +266,13 @@ void penaltyInfoOfinstance( const instance instance, const double density, const
 
 }
 
-void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, instance instance, gridInfo binInfo)
+void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, instance instance, gridInfo binInfo, bool needMinus)
 {   
     // double routing_overflow;
 
-    for (int y = 0; y <= length[3] - length[2]; ++y) {
-
+    for (int y = 0; y <= length[3] - length[2]; ++y) 
+    {
         double y_length, x_length;
-        
         if (length[3] == length[2]) 
             y_length = coordinate[3] - coordinate[2];
 
@@ -318,31 +285,34 @@ void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer,
         else
             y_length = binInfo.binHeight;
 
-        for (int x = 0; x <= length[1] - length[0]; ++x) {
-    
+        for (int x = 0; x <= length[1] - length[0]; ++x) 
+        {
             if (length[1] == length[0]) {
-    
                 x_length = coordinate[1] - coordinate[0];
     
             } else if (x == 0) { // left bin
-    
                 x_length = binInfo.binWidth - fmod(coordinate[0], binInfo.binWidth);
     
             } else if (x == length[1] - length[0]) { // right bin
-    
                 x_length = fmod(coordinate[1], binInfo.binWidth);
     
             } else { // other bins
-    
                 x_length = binInfo.binWidth;
             }
 
             int bin_index = (length[0] + x) + (row * (length[2] + y));
 
-            // printf("length0:%d x:%d row:%d y:%d length:%d yl:%lf xl:%lf\n", length[0], x,  row, y, length[2], y_length, x_length);
-            firstLayer[bin_index] += y_length * x_length * density ;
+            if(needMinus)
+            {
+                firstLayer[bin_index] -= y_length * x_length * density ;
+                secondLayer[bin_index] -= y_length * x_length * (1.0 - density) ;
+            }
+            else
+            {
+                firstLayer[bin_index] += y_length * x_length * density ;
+                secondLayer[bin_index] += y_length * x_length * (1.0 - density) ;
+            }
 
-            secondLayer[bin_index] += y_length * x_length * (1.0 - density) ;
             
             // routing_overflow = ((x_length + y_length) / 2.0) * y_length * x_length;
         }
@@ -365,18 +335,15 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
         return score;    
 }
 
-void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore)
+void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
 {
     int size = instances.size();
-
-    // double *originFirstLayer = createBins(binInfo);
-    // double *originSecondLayer = createBins(binInfo);
 
     for(int i = 0; i < size; i++)
     {
         double *firstLayer = createBins(binInfo);
-
         double *secondLayer = createBins(binInfo);
+        bool needMinus = false;
 
         // memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
@@ -388,7 +355,7 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &in
         score = scoreOfX(rawNet, gamma);
 
         for(int j = 0; j < size; j++)
-            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
+            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer, needMinus);
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -402,26 +369,23 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &in
 
 }
 
-void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore)
+void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
 {
     int size = instances.size();
 
     for(int i = 0; i < size; i++)
     {
         double *firstLayer = createBins(binInfo);
-
         double *secondLayer = createBins(binInfo);
-
+        bool needMinus = false;
         double tmpy = instances[i].y;
-
         double score = 0.0, score2 = 0.0;
 
         instances[i].y += h;
-
         score = scoreOfY(rawNet, gamma);
 
         for(int j = 0; j < size; j++)
-            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer);
+            penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, firstLayer, secondLayer, needMinus);
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -434,14 +398,14 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &in
     }
 }
 
-void gradientZ(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore)
+void gradientZ(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
 {
     for(int i = 0; i < instances.size(); i++)
     {
         double tmpz = instances[i].z;
         double tmpd = instances[i].density;
         double score , score2;
-
+        bool needMinus = false;
         instances[i].z += h;
 
         score2 = scoreOfz(rawNet, instances, binInfo, zChanged); 
@@ -492,27 +456,19 @@ void CGandGraPreprocessing( vector <instance> instances, double *nowGra, double 
     for(int i = 0; i < size; i++)
     {
         nowGra[i*3] = instances[i].gra_x;
-
         nowGra[i*3 + 1] = instances[i].gra_y;
-
         nowGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
 
         lastGra[i*3] = instances[i].gra_x;
-
         lastGra[i*3 + 1] = instances[i].gra_y;
-
         lastGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
 
         nowCG[i*3] = -instances[i].gra_x;
-
         nowCG[i*3 + 1] = -instances[i].gra_y;
-
         nowCG[i*3 + 2] = -(instances[i].gra_z + instances[i].gra_d);
 
         lastCG[i*3] = -instances[i].gra_x;
-
         lastCG[i*3 + 1] = -instances[i].gra_y;
-
         lastCG[i*3 + 2] = -(instances[i].gra_z + instances[i].gra_d);
 
         // printf("%lf, %lf, %lf, %lf, %lf, %lf\n", nowGra[i*3], nowGra[i*3 + 1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);
@@ -526,13 +482,11 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     for(int index = 0; index < Numinstance * Dimensions; index++)
     {
         norm += lastGra[index];
-
         beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
         // cout << lastGra[index]<<endl;
     }
 
     norm = norm * norm;
-
     beta = beta/norm;
 
     for(int index = 0; index < Numinstance * Dimensions; index ++)
@@ -540,7 +494,6 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
         nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
         // cout << nowCG[index] << endl;
     }
-    
 }
 
 double returnAlpha(double nowCG[])
@@ -551,7 +504,6 @@ double returnAlpha(double nowCG[])
         Alpha += nowCG[i] * nowCG[i];
 
     Alpha = sqrt(Alpha);
-
     Alpha = weight / Alpha;
 
     return Alpha;
@@ -606,30 +558,32 @@ double newSolution(vector <RawNet> rawNets, vector<instance> &instances, double 
 
 }
 
-void updateGra(vector <RawNet> rawNets, double gamma, vector<instance> &instances, grid_info binInfo, double *lastGra, double *nowGra, double penaltyWeight)
+void updateGra(vector <RawNet> rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double &penaltyWeight)
 {
     double xScore, yScore, zScore, penaltyScore;
+    double *originFirstLayer = createBins(binInfo);
+    double *originSecondLayer = createBins(binInfo);
+    double numInstances = instances.size();
+    bool needMinus = false;
+    
+    for(int j = 0; j < numInstances; j++)
+        penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, originFirstLayer, originSecondLayer, needMinus);
 
     xScore = scoreOfX(rawNets, gamma);
-
     yScore = scoreOfY(rawNets, gamma);
-
     zScore = scoreOfz(rawNets, instances, binInfo, 1);
+    penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);
 
-    gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore);
-
-    gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore);
-
-    gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore);
+    gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
+    gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
+    gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer);
 
     memcpy( lastGra, nowGra, Dimensions * binInfo.Numinstance * sizeof(double) );
 
     for(int i = 0; i < binInfo.Numinstance; i++)
     {
         nowGra[i*3] = instances[i].gra_x;
-
         nowGra[i*3 + 1] = instances[i].gra_y;
-
         nowGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
 
         // printf("%lf, %lf, %lf, %lf, %lf, %lf\n", nowGra[i*3], nowGra[i*3 + 1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);

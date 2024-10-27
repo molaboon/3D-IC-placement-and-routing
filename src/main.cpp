@@ -13,19 +13,24 @@
 #include "lib/partition.h"
 #include "lib/legalization.h"
 
-// double start_time;
 
 using namespace std;
 using std::vector;
+
+#define dimention 3
 
 int main(int argc, char *argv[]){
 	
 	// start_time = omp_get_wtime();
 	// srand(time(NULL));
+
+	clock_t startTime, endTime;
+
+	startTime = clock();
 	
 	char *inputName = *(argv + 1);
-	char *outputName = *(argv + 2);
-	char *visualFile = *(argv + 3);
+	// char *outputName = *(argv + 2);
+	// char *visualFile = *(argv + 3);
 
 	FILE *input = fopen(inputName, "r");
 	assert(input);
@@ -91,11 +96,13 @@ int main(int argc, char *argv[]){
 
 	/*	Refinement(CG)	*/
 
-	int totalIter = numInstances;
+	startTime = clock();
+
+	int totalIter = 1;
 
 	for(int i = 0; i < totalIter; i++)
 	{
-		for(int j = 0; j < 30; j++)
+		for(int j = 0; j < 1; j++)
 		{
 			conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
 
@@ -103,23 +110,25 @@ int main(int argc, char *argv[]){
 
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-			cout << newScore << endl;
-
 			if( newScore < totalScore)
 				totalScore = newScore;
 
 			else
 			{
+				
 				cout << "next iter\n\n";
 		
 				break;
-			}
-
-
-				
+			}	
 		}
-		penaltyWeight *=2;
+		penaltyWeight *= 2;
 	}
+
+	endTime = clock();
+
+	cout <<"Time " << endTime - startTime <<endl;
+
+	
 
 	// cell2BestLayer(instances, numInstances, top_die, bottom_die);
 	// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
