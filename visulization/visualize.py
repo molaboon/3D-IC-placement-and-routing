@@ -54,7 +54,7 @@ def  plot_result(instances, iter, die_width, die_height, plot_block_area):
     ax[0].set_title("Top Die Placement", fontsize = 24)
     ax[1].set_title("Bottom Die Placement", fontsize = 24)
 
-    path = 'graph\\iter ' + str(iter) 
+    path = 'iter ' + str(iter) 
     plt.savefig(path + '.jpg')
     plt.close()
 

@@ -1,11 +1,11 @@
 DieInfo 40 40
 TopDiePlacement 5
-Inst 2 0 0 10 10 
+Inst 2 10 10 10 10 
 Inst 4 22 12 10 12 
-Inst 5 17 0 10 10
+Inst 5 17 20 10 10
 Inst 6 23 16 10 12
 Inst 7 24 20 10 10
 BottomDiePlacement 3
 Inst 1 16 12 10 15
-Inst 3 21 0 10 15
+Inst 3 21 10 10 15
 Inst 8 6 20 10 15
