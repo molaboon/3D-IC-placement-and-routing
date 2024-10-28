@@ -103,7 +103,6 @@ double RSum( const double z){
     for (int i = 0 ; i < total_layer; i++)
     {
         double l = (double) i;
-        
         double tmp = bellShapeFunc(z, l);
 
         rsum += exp( tmp / eta);
@@ -193,7 +192,7 @@ double scoreOfz( vector <RawNet> rawNets, vector <instance> &instances, gridInfo
 
             instances[i].density = tmpD;
         }
-        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer);
+        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer, false);
     }
     score += scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -220,7 +219,7 @@ void penaltyInfoOfinstance( const instance instance, const double density, const
 {
     int leftXnum, rightXnum, topYnum, btmYnum;
     int row = (int) binInfo.binXnum;
-    
+
     double coordinate[4] = { 0.0 };
     int length[4] = {0};
     

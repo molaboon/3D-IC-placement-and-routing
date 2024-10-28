@@ -14,15 +14,12 @@
 void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance)
 {   
     binInfo.dieWidth = die.upperRightX ; 
-
     binInfo.dieHeight = die.upperRightY ;
 
     binInfo.binWidth = 10.0;
-
     binInfo.binHeight = 10.0;
 
     binInfo.binXnum = (binInfo.dieWidth / binInfo.binWidth);
-
     binInfo.binYnum = binInfo.dieHeight / binInfo.binHeight;
 
     binInfo.Numinstance = Numinstance;
@@ -35,38 +32,36 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
 
     srand( time(NULL) );
 
-    // double x[] = {10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0};
-
-    // double y[] = {10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0};
-
-    // double z[] = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
+    double x[] = {1.0, 20.0, 0, 100.0, 12000.0, 500.0};
+    double y[] = {1.0, 0.0, 0, 100.0, 100.0, 12000.0};
+    double z[] = { 0.8, 0.8, 0.2, 0.2, 0.2, 0.2};
+    int cnt = 0;
 
     for(int i = 0; i < instances.size(); i++)
     {
         double minX = instances[i].width;
-
         double maxX = binInfo.dieWidth - instances[i].width;
-
         double minY = instances[i].height ;
-
         double maxY = binInfo.dieHeight - instances[i].height;
 
-        double x = (maxX - minX) * rand() / (RAND_MAX +1.0) + minX;
+        double X = (maxX - minX) * rand() / (RAND_MAX +1.0) + minX;
+        double Y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
+        double Z = rand() / (RAND_MAX + 1.0);
 
-        double y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
-
-        instances[i].x = x;
-
-        instances[i].y = y;
-
-        instances[i].z = 0.5;
-
-        // instances[i].x = x[i];
-
-        // instances[i].y = y[i];
-
-        // instances[i].z = z[i];
-
+        if(instances[i].isMacro)
+        {
+            instances[i].x = x[cnt];
+            instances[i].y = y[cnt];
+            instances[i].z = z[cnt];
+            cnt++;
+        }
+        else
+        {
+            instances[i].x = X;
+            instances[i].y = Y;
+            instances[i].z = Z;
+        }
+        
     }
 }
 
@@ -80,13 +75,8 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
     int size = instances.size();
 
     xScore = scoreOfX(rawNet, gamma);
-
     yScore = scoreOfY(rawNet, gamma);
-
-    // printf("Xscore : %lf\n", xScore);
-    
     tsvScore = TSVofNet(rawNet);
-
     penaltyScore = scoreOfz(rawNet, instances, binInfo, 1);
 
     penaltyScore -= tsvScore;
@@ -100,18 +90,15 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
         
         double *fl = createBins(binInfo);
         double *sl = createBins(binInfo);
+
         // part of x
         instances[i].x += h;
 
         tmpXscore = scoreOfX(rawNet, gamma);
-
         tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
 
         grax += fabs( (tmpXscore - xScore) / h) ;
-       
         grad += fabs( (tmpDen - tsvScore - penaltyScore) / h );
-
-        // printf("%lf \n", ((tmpXscore - xScore) / h) + 0.000404* (tmpDen - tsvScore - penaltyScore) / h);
 
         instances[i].x = tmpx;
 
@@ -160,7 +147,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
     double *originSecondLayer = createBins(binInfo);
 
     for(int j = 0; j < size; j++)
-        penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, originFirstLayer, originSecondLayer);
+        penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, originFirstLayer, originSecondLayer, false);
 
     gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
     

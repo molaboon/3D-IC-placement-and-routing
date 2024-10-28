@@ -28,7 +28,7 @@ def plot_rectangle(ax, x1, y1, x2, y2, c, style, if_fill):
       )
    )
 
-def  plot_result(instances, iter, die_width, die_height, plot_block_area):
+def plot_result(instances, iter, die_width, die_height, plot_block_area):
 
     width = die_width
     height = die_height
@@ -41,12 +41,12 @@ def  plot_result(instances, iter, die_width, die_height, plot_block_area):
 
     for instance in instances:
         if instance.z == 1:
-            plot_rectangle(ax[1], (instance.x - 0.5*instance.width), (instance.y - 0.5*instance.height), instance.width, instance.height, 'k', '-', 0)
-            ax[1].annotate("{}".format(instance.name), xy=(instance.x, instance.y),fontsize=12, ha='center', va='center_baseline')
+            plot_rectangle(ax[1], (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
+            ax[1].annotate("{}".format(instance.name), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
 
         else:
-            plot_rectangle(ax[0], (instance.x - 0.5*instance.width), instance.y - 0.5*instance.height, instance.width, instance.height, 'k', '-', 0)
-            ax[0].annotate("{}".format(instance.name ), xy=(instance.x, instance.y),fontsize=12, ha='center', va='center_baseline')
+            plot_rectangle(ax[0], (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
+            ax[0].annotate("{}".format(instance.name ), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
 
     ax[0].grid(True, alpha = 0.3)
     ax[1].grid(True, alpha = 0.3)
@@ -54,10 +54,9 @@ def  plot_result(instances, iter, die_width, die_height, plot_block_area):
     ax[0].set_title("Top Die Placement", fontsize = 24)
     ax[1].set_title("Bottom Die Placement", fontsize = 24)
 
-    path = 'iter ' + str(iter) 
-    plt.savefig(path + '.jpg')
+    path = 'iter' + str(iter) 
+    plt.savefig( path + '.jpg')
     plt.close()
-
     
     #write_cell_coordinate(instances, path + '.txt', info)
     #write_cell_info(instances, path + ' info.txt')

@@ -36,11 +36,15 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
         if( instances[i].z < 0.5)
         {
             instances[i].layer = btmLayer;
-            btmDieArea += instances[i].area;
+            instances[i].finalWidth = (int) instances[i].inflateWidth;
+            instances[i].finalHeight = (int) instances[i].inflateHeight;
+            btmDieArea += instances[i].inflateArea;
         }
         else
         {
             instances[i].layer = topLayer;
+            instances[i].finalWidth = (int) instances[i].width;
+            instances[i].finalHeight = (int) instances[i].height;
             topDieArea += instances[i].area;
         }
     }
@@ -82,7 +86,19 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
                 if(instances[inst].numNetConnection == minNumNetConnet && instances[inst].layer == overLayer)
                 {
                     instances[inst].layer = 1 - overLayer;
-                    overDieArea -= instances[inst].area;
+                    if ( overLayer == btmLayer)
+                    {
+                        overDieArea -= instances[inst].inflateArea;
+                        instances[inst].finalWidth = (int) instances[inst].width;
+                        instances[inst].finalHeight = (int) instances[inst].height;
+                    }
+                    else
+                    {
+                        overDieArea -= instances[inst].area;
+                        instances[inst].finalWidth = (int) instances[inst].inflateWidth;
+                        instances[inst].finalHeight = (int) instances[inst].inflateHeight;
+                    }
+                    
                     overLayerUtl = overDieArea / overDieTotalArea;
 
                     if(overLayerUtl < overLayerMaxUtl)
@@ -94,7 +110,7 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
 
         }while (overLayerUtl > overLayerMaxUtl);
     }
-    
+
 }
 
 void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> &macros)
@@ -117,11 +133,10 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     
     for(int m = 0; m < numMacro; m++)
     {   
-        int uperX = (int) (macros[m].x + (macros[m].width/2.0) );
-        int uperY = (int) (macros[m].y + (macros[m].height/2.0) );
-        int lowerX = (int) (macros[m].x - (macros[m].width/2.0) );
-        int lowerY = (int) (macros[m].y - (macros[m].height/2.0) );
-
+        int uperX = (int) (macros[m].x + (macros[m].finalWidth/2.0) );
+        int uperY = (int) (macros[m].y + (macros[m].finalHeight/2.0) );
+        int lowerX = (int) (macros[m].x - (macros[m].finalWidth/2.0) );
+        int lowerY = (int) (macros[m].y - (macros[m].finalHeight/2.0) );
         int uperRow, lowerRow;
 
         if( macros[m].layer == topLayer)
@@ -134,7 +149,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
             for(int row = lowerRow; row < uperRow; row++)
             {
-                int macroWidth = (int) macros[m].width;
+                int macroWidth = (int) macros[m].finalWidth;
                 int macroX = (int) macros[m].x;
 
                 topDieCellsWidth[row] += macroWidth;
@@ -151,7 +166,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
             for(int row = lowerRow; row < uperRow; row++)
             {
-                int macroWidth = (int) macros[m].width;
+                int macroWidth = (int) macros[m].finalWidth;
                 int macroX = (int) macros[m].x;
 
                 btmDieCellsWidth[row] += macroWidth;
@@ -159,6 +174,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             }
         }
     }
+
 
     
     /*  place standard cell to best row */
@@ -181,7 +197,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
                     
                 topDiePlacementState[row].push_back(instances[inst].instIndex);
                 instances[inst].finalY = topDie.rowHeight * row;
-                topDieCellsWidth[row] += instances[inst].width;
+                topDieCellsWidth[row] += instances[inst].finalWidth;
                 
             }
             else
@@ -194,83 +210,23 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
                 btmDiePlacementState[row].push_back(instances[inst].instIndex);
                 instances[inst].finalY = btmDie.rowHeight * row;
-                btmDieCellsWidth[row] += instances[inst].width;
+                btmDieCellsWidth[row] += instances[inst].finalWidth;
             }
         }
 
         instances[inst].finalX = (int) instances[inst].x;
-        instances[inst].finalWidth = (int) instances[inst].width;
-        instances[inst].finalHeight = (int) instances[inst].height;
         instances[inst].rotate = 0;
     }
     
     /* check which row is stuffed. If stuffed, place to near row*/
 
-    // place2nearRow(topDie, topDiePlacementState, instances, topDieCellsWidth);
-    // place2nearRow(btmDie, btmDiePlacementState, instances, btmDieCellsWidth);
+    place2nearRow(topDie, topDiePlacementState, instances, topDieCellsWidth);
+    place2nearRow(btmDie, btmDiePlacementState, instances, btmDieCellsWidth);
 
     /*  place instances to best X position*/
 
-    placeInst2BestX(topDie, topDiePlacementState, instances);
-    placeInst2BestX(btmDie, btmDiePlacementState, instances);
-}
-
-void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
-{
-    FILE *output;
-
-    output = fopen(outputFile, "w");
-
-    int numInstOnTopDie = 0;
-    int numInstOnBtmDie = 0;
-    int numTerminal = (int) terminals.size();
-
-    for(int inst = 0; inst < numInstances; inst++)
-    {
-        if( instances[inst].layer == topLayer )
-            numInstOnTopDie +=1;
-        else
-            numInstOnBtmDie +=1;
-    }
-
-    fprintf(output, "TopDiePlacement %d\n", numInstOnTopDie);
-
-    for(int inst = 0; inst < numInstances; inst++)
-    {
-        if( instances[inst].layer == topLayer )
-            fprintf(output, "Inst C%d %d %d R%d\n", 
-            instances[inst].instIndex + 1, 
-            instances[inst].finalX, 
-            instances[inst].finalY,
-            (int) instances[inst].rotate);
-    }
-
-    fprintf(output, "BottomDiePlacement %d\n", numInstOnBtmDie);
-
-    for(int inst = 0; inst < numInstances; inst++)
-    {
-        if( instances[inst].layer == btmLayer )
-            fprintf(output, "Inst C%d %d %d R%d\n", 
-            instances[inst].instIndex + 1, 
-            instances[inst].finalX, 
-            instances[inst].finalY,
-            (int) instances[inst].rotate
-            );
-    }
-
-    fprintf(output, "NumTerminals %d\n", numTerminal);
-
-    for(int t = 0; t < numTerminal; t++)
-    {   
-        fprintf(output, "Terminal N%d %d %d\n", 
-            terminals[t].netID + 1,
-            terminals[t].x,
-            terminals[t].y
-            );
-    }
-
-    fclose(output);
-
+    placeInst2BestX(topDie, topDiePlacementState, topDieMacrosPlacement, instances);
+    placeInst2BestX(btmDie, btmDiePlacementState, BtmDieMacrosPlacement,instances);
 }
 
 void insertTerminal(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
@@ -328,14 +284,15 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     
 }
 
-void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <instance> &instances)
+void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <vector<int>> &dieMacroPlacementState, vector <instance> &instances)
 {
     for(int count = 0; count < die.repeatCount; count++)
     {
         int numInstInRow = diePlacementState[count].size();
-        int numMacroInRow = diePlacementState[count].size();
+        int numMacroInRow = dieMacroPlacementState[count].size();
         
         map<int, int> instMap;
+        map<int, int> macroMap;
 
         vector <int> sortArray(numInstInRow);
         vector <int> macroSortArray(numMacroInRow);
@@ -346,10 +303,10 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
 
         for(int i = 0; i < numMacroInRow; i++)
         {
-            int cellId = diePlacementState[count][i];
+            int cellId = dieMacroPlacementState[count][i];
             int cellX = ( instances[cellId].finalX - instances[cellId].finalWidth/2 );
 
-            instMap[cellX] = cellId; 
+            macroMap[cellX] = cellId; 
             macroSortArray[i] = cellX;
         }
 
@@ -373,7 +330,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
 
         for(int i = 0; i < numMacroInRow; i++)
         {
-            int cell = instMap[ macroSortArray[i] ];
+            int cell = macroMap[ macroSortArray[i] ];
             int start =  ( instances[cell].finalX - instances[cell].finalWidth/2 );
             int end = ( instances[cell].finalX + instances[cell].finalWidth/2 );
             
@@ -415,23 +372,50 @@ void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vecto
 {
     for(int row = 0; row < die.repeatCount; row++)
     {
+        cout << row << " "<<dieCellWidth[row] << endl; 
         while( dieCellWidth[row] > (int) die.upperRightX)
         {
             int size = diePlacementState[row].size();
-            int lastInstIndex = diePlacementState[row][size - 1];
-            int lastInstWidth = instances[lastInstIndex].width;
-            int tmpRow = row - 1;
+            int lastInstIndex = 0;
+            int lastInstWidth = 0;
+            int lookUp = row - 1;
+            int lookDown = row + 1;
+            bool haveChanged = false;
 
-            while (tmpRow >= 0)
-            {   
-                if (dieCellWidth[tmpRow] + lastInstWidth < (int) die.upperRightX)
+            for(int i = 0; i < size; i++)
+            {
+                lastInstIndex = diePlacementState[row][i];
+                if( !instances[lastInstIndex].isMacro )
                 {
-                    diePlacementState[tmpRow].push_back(lastInstIndex);
+                    lastInstWidth = instances[lastInstIndex].finalWidth;
+                    break;
+                }
+            }
+            
+            while (lookUp >= 0 && !haveChanged)
+            {   
+                if (dieCellWidth[lookUp] + lastInstWidth < (int) die.upperRightX)
+                {
+                    diePlacementState[lookUp].push_back(lastInstIndex);
                     diePlacementState[row].pop_back();
                     dieCellWidth[row] -= lastInstWidth;
-                    dieCellWidth[tmpRow] += lastInstWidth;
+                    dieCellWidth[lookUp] += lastInstWidth;
+                    haveChanged = true;
                 }
-                tmpRow -= 1;
+                lookUp -= 1;
+            }
+
+            while (lookDown <= die.repeatCount && !haveChanged)
+            {   
+                if (dieCellWidth[lookDown] + lastInstWidth < (int) die.upperRightX)
+                {
+                    diePlacementState[lookDown].push_back(lastInstIndex);
+                    diePlacementState[row].pop_back();
+                    dieCellWidth[row] -= lastInstWidth;
+                    dieCellWidth[lookDown] += lastInstWidth;
+                    haveChanged = true;
+                }
+                lookUp += 1;
             }
         }
     }
@@ -441,7 +425,7 @@ void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vecto
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
 {}
 
-void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances)
+void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances, Die &topDie)
 {
     FILE *output;
 
@@ -449,6 +433,50 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
 
     int numInstOnTopDie = 0;
     int numInstOnBtmDie = 0;
+
+
+    fprintf(output, "DieInfo %d %d\n", (int)topDie.upperRightX, (int)topDie.upperRightY);
+
+    fprintf(output, "TopDiePlacement %d\n", numInstOnTopDie);
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == topLayer )
+            fprintf(output, "Inst %d %d %d %d %d\n", 
+            instances[inst].instIndex + 1, 
+            (int) instances[inst].finalX, 
+            (int) instances[inst].finalY,
+            (int) instances[inst].finalWidth,
+            (int) instances[inst].finalHeight);
+    }
+
+    fprintf(output, "BottomDiePlacement %d\n", numInstOnBtmDie);
+
+    for(int inst = 0; inst < numInstances; inst++)
+    {
+        if( instances[inst].layer == btmLayer ) 
+            fprintf(output, "Inst %d %d %d %d %d\n", 
+            instances[inst].instIndex + 1, 
+            (int) instances[inst].finalX, 
+            (int) instances[inst].finalY,
+            (int) instances[inst].finalWidth,
+            (int) instances[inst].finalHeight);
+    }
+
+    
+    fclose(output);
+
+}
+
+void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
+{
+    FILE *output;
+
+    output = fopen(outputFile, "w");
+
+    int numInstOnTopDie = 0;
+    int numInstOnBtmDie = 0;
+    int numTerminal = (int) terminals.size();
 
     for(int inst = 0; inst < numInstances; inst++)
     {
@@ -465,10 +493,9 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
         if( instances[inst].layer == topLayer )
             fprintf(output, "Inst C%d %d %d R%d\n", 
             instances[inst].instIndex + 1, 
-            (int) instances[inst].x, 
-            (int) instances[inst].y,
-            (int) instances[inst].width,
-            (int) instances[inst].height);
+            instances[inst].finalX, 
+            instances[inst].finalY,
+            (int) instances[inst].rotate);
     }
 
     fprintf(output, "BottomDiePlacement %d\n", numInstOnBtmDie);
@@ -478,13 +505,21 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
         if( instances[inst].layer == btmLayer )
             fprintf(output, "Inst C%d %d %d R%d\n", 
             instances[inst].instIndex + 1, 
-            (int) instances[inst].x, 
-            (int) instances[inst].y,
-            (int) instances[inst].width,
-            (int) instances[inst].height);
+            instances[inst].finalX, 
+            instances[inst].finalY,
+            (int) instances[inst].rotate
+            );
     }
 
-    
-    fclose(output);
+    fprintf(output, "NumTerminals %d\n", numTerminal);
 
+    for(int t = 0; t < numTerminal; t++)
+    {   
+        fprintf(output, "Terminal N%d %d %d\n", 
+            terminals[t].netID + 1,
+            terminals[t].x,
+            terminals[t].y
+            );
+    }
+    fclose(output);
 }

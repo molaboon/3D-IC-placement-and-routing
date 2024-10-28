@@ -127,7 +127,8 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
 void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros)
 {
     assert(input);
-    
+    int numOfTech = TechMenu.size();
+
     fscanf(input, "%*s %d", &(*NumInstances));
 
     for(int i = 0; i < *NumInstances; i++){
@@ -144,9 +145,17 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY; 
         temp.isMacro = TechMenu[0].libcell[atoi(current_libCellName)-1].isMacro;
         
-        // temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
-        // temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
-
+        if(numOfTech == 2)
+        {
+            temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
+            temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
+        }
+        else
+        {
+            temp.inflateWidth = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
+            temp.inflateHeight = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY;
+        }
+        
         temp.numNetConnection = 0;
         temp.x = 0.0;
         temp.y = 0.0;
@@ -155,8 +164,10 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.finalY = 0;
         temp.finalWidth = 0;
         temp.finalHeight = 0;
+        
         temp.area = temp.width * temp.height;
-
+        temp.inflateArea = temp.inflateWidth * temp.inflateHeight;
+        
         if(temp.isMacro)
             macros.emplace_back( temp );
         

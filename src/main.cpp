@@ -29,8 +29,8 @@ int main(int argc, char *argv[]){
 	startTime = clock();
 	
 	char *inputName = *(argv + 1);
-	// char *outputName = *(argv + 2);
-	// char *visualFile = *(argv + 3);
+	char *outputName = *(argv + 2);
+	char *visualFile = *(argv + 3);
 
 	FILE *input = fopen(inputName, "r");
 	assert(input);
@@ -73,68 +73,76 @@ int main(int argc, char *argv[]){
 
 	/*	first placement and CG preprocessing	*/
 	
-	double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
-	double wireLength, newWireLength;
-	double lastCG[numInstances * 3 ] = {0.0};
-	double nowCG[numInstances * 3 ] = {0.0};
-	double lastGra[numInstances * 3 ] = {0.0};
-	double nowGra[numInstances * 3 ] = {0.0};
+	if (false){
 
-	firstPlacement(instances, binInfo);
-	gamma = 0.05 * binInfo.dieWidth;
+		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+		double wireLength, newWireLength;
+		double lastCG[numInstances * 3 ] = {0.0};
+		double nowCG[numInstances * 3 ] = {0.0};
+		double lastGra[numInstances * 3 ] = {0.0};
+		double nowGra[numInstances * 3 ] = {0.0};
 
-	penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+		firstPlacement(instances, binInfo);
+		gamma = 0.05 * binInfo.dieWidth;
 
-	totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
+		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
 
-	CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
+		totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
 
-	/*	std. cell Coarsening	*/
-	// cout << "here" <<endl;
+		CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-	// coarsen(rawnet, instances);
+		/*	std. cell Coarsening	*/
+		// cout << "here" <<endl;
 
-	/*	Refinement(CG)	*/
+		// coarsen(rawnet, instances);
 
-	startTime = clock();
+		/*	Refinement(CG)	*/
 
-	int totalIter = 1;
+		startTime = clock();
 
-	for(int i = 0; i < totalIter; i++)
-	{
-		for(int j = 0; j < 1; j++)
+		int totalIter = 1;
+
+		for(int i = 0; i < totalIter; i++)
 		{
-			conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
-
-			newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
-
-			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
-
-			if( newScore < totalScore)
-				totalScore = newScore;
-
-			else
+			for(int j = 0; j < 1; j++)
 			{
-				
-				cout << "next iter\n\n";
-		
-				break;
-			}	
+				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
+
+				newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
+
+				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
+
+				if( newScore < totalScore)
+					totalScore = newScore;
+
+				else
+				{
+					cout << "next iter\n\n";
+					break;
+				}	
+			}
+			penaltyWeight *= 2;
 		}
-		penaltyWeight *= 2;
+
+		endTime = clock();
+
+		cout <<"Time " << endTime - startTime <<endl;
+
 	}
 
-	endTime = clock();
-
-	cout <<"Time " << endTime - startTime <<endl;
+	if(true)
+	{	
+		firstPlacement(instances, binInfo);
+		cell2BestLayer(instances, numInstances, top_die, bottom_die);
+		cout << instances[0].finalY << endl;
+		place2BestRow(instances, numInstances, top_die, bottom_die, macros);
+		cout << instances[0].finalY << endl;
+		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
+		writeVisualFile(instances, visualFile, numInstances, top_die);
+		// writeFile(instances, outputName, rawnet, numInstances, terminals);
+	}
 
 	
-
-	// cell2BestLayer(instances, numInstances, top_die, bottom_die);
-	// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
-	// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-	// writeFile(instances, outputName, rawnet, numInstances, terminals);
-
 	return 0;
 }
 
