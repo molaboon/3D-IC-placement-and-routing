@@ -32,9 +32,9 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
 
     srand( time(NULL) );
 
-    double x[] = {1.0, 20.0, 0, 100.0, 12000.0, 500.0};
-    double y[] = {1.0, 0.0, 0, 100.0, 100.0, 12000.0};
-    double z[] = { 0.8, 0.8, 0.2, 0.2, 0.2, 0.2};
+    double x[] = {24.0, 1.0, 20.0, 25.0, 23.0,0.0, 37, 17, };
+    double y[] = {15.0, 1.0, 0.0, 0.0, 20.0, 0.0, 20.0, 15.0};
+    double z[] = { 0.2, 0.8, 0.8, 0.8, 0.8, 0.2, 0.8, 0.8, 0.2};
     int cnt = 0;
 
     for(int i = 0; i < instances.size(); i++)
@@ -48,19 +48,14 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
         double Y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
         double Z = rand() / (RAND_MAX + 1.0);
 
-        if(instances[i].isMacro)
-        {
-            instances[i].x = x[cnt];
-            instances[i].y = y[cnt];
-            instances[i].z = z[cnt];
-            cnt++;
-        }
-        else
-        {
-            instances[i].x = X;
-            instances[i].y = Y;
-            instances[i].z = Z;
-        }
+        instances[i].x = x[cnt];
+        instances[i].y = y[cnt];
+        instances[i].z = z[cnt];
+        cnt++;
+        // instances[i].x = X;
+        // instances[i].y = Y;
+        // instances[i].z = Z;
+    
         
     }
 }
