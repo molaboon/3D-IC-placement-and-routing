@@ -125,72 +125,62 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     int btmDieCellsWidth[btmDie.repeatCount] = {0};
     int numMacro = macros.size();
 
-    int topDieArray [topDie.repeatCount][numMacro * 2] = {0};
-    int btmDieArray [btmDie.repeatCount][numMacro * 2] = {0};
-
-
-    /* place macro first */
-    
-    for(int m = 0; m < numMacro; m++)
-    {   
-        int uperX = (int) (macros[m].x + (macros[m].finalWidth/2.0) );
-        int uperY = (int) (macros[m].y + (macros[m].finalHeight/2.0) );
-        int lowerX = (int) (macros[m].x - (macros[m].finalWidth/2.0) );
-        int lowerY = (int) (macros[m].y - (macros[m].finalHeight/2.0) );
-        int uperRow, lowerRow;
-
-        if( macros[m].layer == topLayer)
-        {
-            uperRow = uperY % topDie.repeatCount + 1;
-            lowerRow = lowerY % topDie.repeatCount;
-
-            if(uperRow >= topDie.repeatCount)
-                uperRow = topDie.repeatCount-1;
-
-            for(int row = lowerRow; row < uperRow; row++)
-            {
-                int macroWidth = (int) macros[m].finalWidth;
-                int macroX = (int) macros[m].x;
-
-                topDieCellsWidth[row] += macroWidth;
-                topDieMacrosPlacement[row].push_back(macros[m].instIndex);
-            } 
-        }   
-        else
-        {
-            uperRow = uperY % btmDie.repeatCount + 1;
-            lowerRow = lowerY % btmDie.repeatCount;
-
-            if(uperRow >= topDie.repeatCount)
-                uperRow = topDie.repeatCount-1;
-
-            for(int row = lowerRow; row < uperRow; row++)
-            {
-                int macroWidth = (int) macros[m].finalWidth;
-                int macroX = (int) macros[m].x;
-
-                btmDieCellsWidth[row] += macroWidth;
-                topDieMacrosPlacement[row].push_back(macros[m].instIndex);
-            }
-        }
-    }
-
-
     
     /*  place standard cell to best row */
 
-    
     for(int inst = 0; inst < numInstances; inst++)
     {
         int row = 0;
         double upOrdown = instances[inst].y ;
  
-        if( !instances[inst].isMacro )
+        if(instances[inst].isMacro )
+        {
+            int uperX = (int) instances[inst].x + (instances[inst].finalWidth/2.0) ;
+            int uperY = (int) instances[inst].y + (instances[inst].finalHeight/2.0) ;
+            int lowerX = (int) instances[inst].x;
+            int lowerY = (int) instances[inst].y;
+            int uperRow, lowerRow;
+
+            printf("%d %lf\n", instances[1].instIndex, instances[1].z);
+
+            if( instances[inst].layer == topLayer)
+            {
+                uperRow = (uperY % topDie.rowHeight) + 1;
+                lowerRow = (lowerY % topDie.rowHeight);
+
+                if(uperRow >= topDie.repeatCount)
+                    uperRow = topDie.repeatCount - 1;
+
+                for(int row = lowerRow; row < uperRow; row++)
+                {
+                    int macroWidth = (int) instances[inst].finalWidth;
+
+                    topDieCellsWidth[row] += macroWidth;
+                    topDieMacrosPlacement[row].push_back(instances[inst].instIndex);
+                } 
+            }   
+            else
+            {
+                uperRow = uperY % btmDie.rowHeight + 1;
+                lowerRow = lowerY % btmDie.rowHeight;
+
+                if(uperRow >= btmDie.repeatCount)
+                    uperRow = btmDie.repeatCount-1;
+                for(int row = lowerRow; row < uperRow; row++)
+                {
+                    int macroWidth = (int) instances[inst].finalWidth;
+
+                    btmDieCellsWidth[row] += macroWidth;
+                    BtmDieMacrosPlacement[row].push_back(instances[inst].instIndex);
+                }
+            }
+        }
+        else
         {
             if( instances[inst].layer == topLayer)
             {
                 upOrdown = fmod( upOrdown, (double) topDie.rowHeight);
-                row = (int) ( (instances[inst].y - (instances[inst].height/2.0) ) / (double) topDie.rowHeight );
+                row = ( (int) instances[inst].y - (instances[inst].finalHeight/2) ) / (double) topDie.rowHeight ;
 
                 if( upOrdown > (double) topDie.rowHeight / 2.0 )
                     row += 1;
@@ -203,7 +193,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             else
             {
                 upOrdown = fmod( upOrdown, (double) btmDie.rowHeight);
-                row = (int) ( (instances[inst].y - (instances[inst].height/2.0) ) / (double) btmDie.rowHeight );
+                row = ((int) instances[inst].y - (instances[inst].finalHeight/2) ) / (double) btmDie.rowHeight ;
 
                 if( upOrdown > (double) btmDie.rowHeight / 2.0 )
                     row += 1;
@@ -226,7 +216,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     /*  place instances to best X position*/
 
     placeInst2BestX(topDie, topDiePlacementState, topDieMacrosPlacement, instances);
-    placeInst2BestX(btmDie, btmDiePlacementState, BtmDieMacrosPlacement,instances);
+    placeInst2BestX(btmDie, btmDiePlacementState, BtmDieMacrosPlacement, instances);
 }
 
 void insertTerminal(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
@@ -290,6 +280,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
     {
         int numInstInRow = diePlacementState[count].size();
         int numMacroInRow = dieMacroPlacementState[count].size();
+
         
         map<int, int> instMap;
         map<int, int> macroMap;
@@ -298,16 +289,26 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
         vector <int> macroSortArray(numMacroInRow);
         vector <int> gapOfmacros;
         
-        if( numInstInRow == 0)
+        if( numInstInRow == 0 )
             continue;
 
-        for(int i = 0; i < numMacroInRow; i++)
+        if( numMacroInRow > 0 )
         {
-            int cellId = dieMacroPlacementState[count][i];
-            int cellX = ( instances[cellId].finalX - instances[cellId].finalWidth/2 );
+            for(int i = 0; i < numMacroInRow; i++)
+            {
+                int cellId = dieMacroPlacementState[count][i];
+                int cellX = ( instances[cellId].finalX - instances[cellId].finalWidth/2 );
 
-            macroMap[cellX] = cellId; 
-            macroSortArray[i] = cellX;
+                while ( instMap.find( cellX ) != instMap.end() )
+                {
+                    instances[cellId].finalX += 1.0;
+                    cellX = instances[cellId].finalX - instances[cellId].finalWidth/2;
+                }
+
+                macroMap[cellX] = cellId; 
+                macroSortArray[i] = cellX;
+            }
+            sort(macroSortArray.begin(), macroSortArray.end()); 
         }
 
         for(int inst = 0; inst < numInstInRow; inst++)
@@ -326,44 +327,46 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
         }
 
         sort(sortArray.begin(), sortArray.end());
-        sort(macroSortArray.begin(), macroSortArray.end()); 
 
-        for(int i = 0; i < numMacroInRow; i++)
-        {
-            int cell = macroMap[ macroSortArray[i] ];
-            int start =  ( instances[cell].finalX - instances[cell].finalWidth/2 );
-            int end = ( instances[cell].finalX + instances[cell].finalWidth/2 );
-            
-            gapOfmacros.push_back(start);
-        }
-        
         /*  place to best X*/
 
         int firstCell = instMap[ sortArray[0] ];
         int startX = instances[ firstCell ].finalX;
-        int macroCnt = 0;
-        int nowMacroID = instMap[ macroSortArray[macroCnt] ];
-        int macroX = instances[nowMacroID].finalX;
-        
+        int macroCnt, nowMacroID, macroX = 999999, macroWidth;
+
+        if( numMacroInRow > 0)
+        {
+            macroCnt = 0;
+            nowMacroID = macroMap[ macroSortArray[macroCnt] ];
+            macroX = instances[nowMacroID].finalX;
+            macroWidth = instances[nowMacroID].finalWidth;
+        }
         
         for(int inst = 1; inst < numInstInRow; inst++)
         {
             int cellID = instMap[ sortArray[inst] ];
             int lastCellWidth = instances[ instMap[ sortArray[inst-1] ] ].finalWidth;
             int nowCellFinalX = instances[cellID].finalX;
-            int nowCellWidth = instances[cellID].width;
+            int nowCellWidth = instances[cellID].finalWidth;
 
-            if( nowCellFinalX + nowCellWidth > macroX)
+            if( startX + nowCellWidth < macroX)
             {
-                startX += instances[cellID].width;
-            }    
-            else
-            {
-                if(nowCellFinalX < startX + lastCellWidth)
-                    instances[cellID].finalX = startX + lastCellWidth;
-                
-                startX = instances[cellID].finalX;
+                startX += lastCellWidth;
+                instances[cellID].finalX = startX; 
             }
+            else 
+            {
+                startX = macroX + macroWidth;
+                instances[cellID].finalX = startX;
+
+                macroCnt += 1;
+                nowMacroID = macroMap[ macroSortArray[macroCnt] ];
+                macroX = instances[nowMacroID].finalX;
+                macroWidth = instances[nowMacroID].finalWidth;
+            }
+
+            if (macroCnt == (int) macroSortArray.size() - 1)
+                macroWidth = 999999;
         }
     }
 }
@@ -372,7 +375,7 @@ void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vecto
 {
     for(int row = 0; row < die.repeatCount; row++)
     {
-        cout << row << " "<<dieCellWidth[row] << endl; 
+        cout << row << ": cell width "<<dieCellWidth[row] << endl; 
         while( dieCellWidth[row] > (int) die.upperRightX)
         {
             int size = diePlacementState[row].size();
@@ -400,6 +403,7 @@ void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vecto
                     diePlacementState[row].pop_back();
                     dieCellWidth[row] -= lastInstWidth;
                     dieCellWidth[lookUp] += lastInstWidth;
+                    instances[lastInstIndex].finalY += die.rowHeight * (row - lookUp);
                     haveChanged = true;
                 }
                 lookUp -= 1;
@@ -413,6 +417,7 @@ void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vecto
                     diePlacementState[row].pop_back();
                     dieCellWidth[row] -= lastInstWidth;
                     dieCellWidth[lookDown] += lastInstWidth;
+                    instances[lastInstIndex].finalY -= die.rowHeight * ( lookDown - row );
                     haveChanged = true;
                 }
                 lookUp += 1;
@@ -433,7 +438,6 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
 
     int numInstOnTopDie = 0;
     int numInstOnBtmDie = 0;
-
 
     fprintf(output, "DieInfo %d %d\n", (int)topDie.upperRightX, (int)topDie.upperRightY);
 
@@ -463,7 +467,6 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
             (int) instances[inst].finalHeight);
     }
 
-    
     fclose(output);
 
 }

@@ -134,9 +134,7 @@ int main(int argc, char *argv[]){
 	{	
 		firstPlacement(instances, binInfo);
 		cell2BestLayer(instances, numInstances, top_die, bottom_die);
-		cout << instances[0].finalY << endl;
 		place2BestRow(instances, numInstances, top_die, bottom_die, macros);
-		cout << instances[0].finalY << endl;
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		writeVisualFile(instances, visualFile, numInstances, top_die);
 		// writeFile(instances, outputName, rawnet, numInstances, terminals);
