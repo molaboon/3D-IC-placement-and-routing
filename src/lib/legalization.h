@@ -20,6 +20,8 @@ void calculateActualHPWL(const vector <instance> instances, const vector <RawNet
 
 void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <vector<int>> &dieMacroPlacementState, vector <instance> &instances, int *cellWidth);
 
-void place2nearRow(const Die die, vector <vector<int>> &diePlacementState, vector <instance> &instances, int *dieCellWidth);
+void place2nearRow(const Die die, const Die theOtherDie,vector <vector<int>> &diePlacementState, vector <vector<int>> &theOtherDiePlacementState, vector <instance> &instances, int *dieCellWidth, int *theOtherDieCellWidth);
+
+void checkLegalRow(Die die,int row, const int upperRightX, int *dieCellWidth, vector< vector<int> > &diePlacementState, vector<instance> instances, bool legalTwice));
 
 void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances, Die &topDie);

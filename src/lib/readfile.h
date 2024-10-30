@@ -52,8 +52,7 @@ typedef struct _die{
     int rowHeight;
 
     int numInstance;
-
-    char tech[TECH_NAME_SIZE];
+    int index;
     vector <vector <int>> PlacementState;
 
 }Die;
