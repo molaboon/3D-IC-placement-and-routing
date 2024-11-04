@@ -208,8 +208,8 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     
     /* check which row is stuffed. If stuffed, place to near row*/
 
-    // place2nearRow(topDie, topDiePlacementState, instances, topDieCellsWidth);
-    // place2nearRow(btmDie, btmDiePlacementState, instances, btmDieCellsWidth);
+    place2nearRow(topDie, btmDie, topDiePlacementState, btmDiePlacementState, instances, topDieCellsWidth, btmDieCellsWidth);
+    place2nearRow(btmDie, topDie, btmDiePlacementState, topDiePlacementState, instances, btmDieCellsWidth, topDieCellsWidth);
 
     /*  place instances to best X position*/
 
@@ -223,6 +223,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
     {
         int numInstInRow = diePlacementState[row].size();
         int numMacroInRow = dieMacroPlacementState[row].size();
+        int numNoInst = 0;
         
         map<int, int> instMap;
         map<int, int> macroMap;
@@ -320,90 +321,109 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
     }
 }
 
-void place2nearRow(const Die die, const Die theOtherDie,vector <vector<int>> &diePlacementState, vector <vector<int>> &theOtherDiePlacementState, vector <instance> &instances, int *dieCellWidth, int *theOtherDieCellWidth)
+void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &diePlacementState, vector <vector<int>> &theOtherDiePlacementState, vector <instance> &instances, int *dieCellWidth, int *theOtherDieCellWidth)
 {
-    int upperRightX = die.upperRightX;
-
     for(int row = 0; row < die.repeatCount; row++)
     {
-        int noLegalAreaInDie = false;
+        int upperRightX = die.upperRightX;
 
-        if(dieCellWidth[row] > upperRightX)
+        while(dieCellWidth[row] > upperRightX)
         {
-            checkLegalRow(die, row, upperRightX, dieCellWidth, diePlacementState, instances, false);
-            
-            if(dieCellWidth[row] > upperRightX)
-                noLegalAreaInDie = true;
-        }
+            int size = diePlacementState[row].size();
+            int lastInstIndex = 0, lastInstWidth = 0;
+            int lookUp = row - 1, lookDown = row + 1;
+            int chooseCellCoor = 0;
+            bool haveChanged = false;
 
-        if(noLegalAreaInDie)
-        {
-            checkLegalRow(theOtherDie, row, upperRightX, theOtherDieCellWidth, theOtherDiePlacementState, instances, true);
-            
-            if(dieCellWidth[row] > upperRightX)
-                cout << "no legal Placement State" << endl;
-        }
-    }
-}
-
-void checkLegalRow(Die die, int row, const int upperRightX, int *dieCellWidth, vector< vector<int> > &diePlacementState, vector<instance> instances, bool legalTwice)
-{
-    int size = diePlacementState[row].size();
-    int lastInstIndex = 0;
-    int lastInstWidth = 0;
-    int lookUp = row - 1;
-    int lookDown = row + 1;
-    int chooseCellCoor = 0;
-    bool haveChanged = false;
-
-    for(int i = 0; i < size; i++)
-    {
-        lastInstIndex = diePlacementState[row][i];
-
-        if( !instances[lastInstIndex].isMacro && lastInstIndex != -1)
-        {
-            if(die.index == topLayer)
-                lastInstWidth = (int) instances[lastInstIndex].width;
-
-            else
-                lastInstWidth = (int) instances[lastInstIndex].inflateWidth;
-            chooseCellCoor = i;
-        }
-        else
-            continue;
-        
-        while ( !haveChanged && (lookUp >= 0 || lookDown < die.repeatCount) )
-        {   
-            if(dieCellWidth[lookUp] + lastInstWidth < upperRightX && lookUp >= 0)
+            for(int i = 0; i < size; i++)
             {
-                diePlacementState[lookUp].push_back(lastInstIndex);
-                diePlacementState[row][chooseCellCoor] = -1;
-                dieCellWidth[row] -= lastInstWidth;
-                dieCellWidth[lookUp] += lastInstWidth;
-                instances[lastInstIndex].finalY = die.rowHeight * lookUp;
-                haveChanged = true;
+                lastInstIndex = diePlacementState[row][i];
+
+                if( !instances[lastInstIndex].isMacro && lastInstIndex != -1)
+                {
+                    if(die.index == topLayer)
+                        lastInstWidth = (int) instances[lastInstIndex].width;
+
+                    else
+                        lastInstWidth = (int) instances[lastInstIndex].inflateWidth;
+                
+                    chooseCellCoor = i;
+                }
+                else
+                    continue;
+            
+                
+                while ( !haveChanged && (lookUp >= 0 || lookDown < die.repeatCount) )
+                {   
+                    if(dieCellWidth[lookUp] + lastInstWidth < upperRightX && lookUp >= 0)
+                    {
+                        diePlacementState[lookUp].push_back(lastInstIndex);
+                        diePlacementState[row].erase(diePlacementState[row].begin() + chooseCellCoor);
+                        dieCellWidth[row] -= lastInstWidth;
+                        dieCellWidth[lookUp] += lastInstWidth;
+                        instances[lastInstIndex].finalY = die.rowHeight * lookUp;
+                        haveChanged = true;
+                    }
+                    else if (dieCellWidth[lookDown] + lastInstWidth < upperRightX && lookDown < die.repeatCount)
+                    {
+                        diePlacementState[lookDown].push_back(lastInstIndex);
+                        diePlacementState[row].erase(diePlacementState[row].begin() + chooseCellCoor);
+                        dieCellWidth[row] -= lastInstWidth;
+                        dieCellWidth[lookDown] += lastInstWidth;
+                        instances[lastInstIndex].finalY = die.rowHeight * lookDown ;
+                        haveChanged = true;
+                    }
+                    lookDown++;
+                    lookUp--;
+                }
+
+                if(!haveChanged)
+                {   
+                    lookUp = row - 1;
+                    lookDown = row + 1;
+                    upperRightX = (int) theOtherDie.upperRightX;
+
+                    if(theOtherDie.index == topLayer)
+                    {
+                        lastInstWidth = (int) instances[lastInstIndex].width;
+                        instances[lastInstIndex].finalWidth = lastInstWidth;
+                        instances[lastInstIndex].layer = topLayer;
+                    }
+                    else
+                    {
+                        lastInstWidth = (int) instances[lastInstIndex].inflateWidth;
+                        instances[lastInstIndex].finalWidth = lastInstWidth;
+                        instances[lastInstIndex].layer = btmLayer;
+                    }
+                    
+                    while ( !haveChanged && (lookUp >= 0 || lookDown < die.repeatCount) )
+                    {   
+                        if(theOtherDieCellWidth[lookUp] + lastInstWidth < upperRightX && lookUp >= 0)
+                        {
+                            theOtherDiePlacementState[lookUp].push_back(lastInstIndex);
+                            diePlacementState[row].erase(diePlacementState[row].begin() + chooseCellCoor);
+                            dieCellWidth[row] -= lastInstWidth;
+                            theOtherDieCellWidth[lookUp] += lastInstWidth;
+                            instances[lastInstIndex].finalY = theOtherDie.rowHeight * lookUp;
+                            haveChanged = true;
+                        }
+                        else if (theOtherDieCellWidth[lookDown] + lastInstWidth < upperRightX && lookDown < theOtherDie.repeatCount)
+                        {
+                            theOtherDiePlacementState[lookDown].push_back(lastInstIndex);
+                            diePlacementState[row].erase(diePlacementState[row].begin() + chooseCellCoor);
+                            dieCellWidth[row] -= lastInstWidth;
+                            theOtherDieCellWidth[lookDown] += lastInstWidth;
+                            instances[lastInstIndex].finalY = theOtherDie.rowHeight * lookDown ;
+                            haveChanged = true;
+                        }
+                        lookDown++;
+                        lookUp--;
+                    }
+                }
+                if(haveChanged)
+                    break;
             }
-            else if (dieCellWidth[lookDown] + lastInstWidth < upperRightX && lookDown < die.repeatCount)
-            {
-                diePlacementState[lookDown].push_back(lastInstIndex);
-                diePlacementState[row][chooseCellCoor] = -1;
-                dieCellWidth[row] -= lastInstWidth;
-                dieCellWidth[lookDown] += lastInstWidth;
-                instances[lastInstIndex].finalY = die.rowHeight * lookDown ;
-                haveChanged = true;
-            }
-            lookDown++;
-            lookUp--;
         }
-    }
-
-    if(legalTwice)
-    {
-        if(die.index == topLayer)
-            instances[lastInstIndex].finalWidth = (int) instances[lastInstIndex].width; 
-
-        else
-            instances[lastInstIndex].finalWidth = (int) instances[lastInstIndex].inflateWidth; 
     }
 }
 

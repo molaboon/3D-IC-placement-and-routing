@@ -88,8 +88,8 @@ void readDieInfo(FILE *input, Die *top_die, Die *bottom_die){
     //read DieTech
     char a[10];
     char b[10];
-    fscanf(input,"%*s %s", &a);
-    fscanf(input,"%*s %s", &b);
+    fscanf(input,"%*s %s", a);
+    fscanf(input,"%*s %s", b);
     top_die->index = 1;
     bottom_die->index = 0 ;
     read_one_blank_line(input);
