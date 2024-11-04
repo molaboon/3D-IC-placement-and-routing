@@ -140,6 +140,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             int lowerX = (int) instances[inst].x;
             int lowerY = (int) instances[inst].y;
             int uperRow, lowerRow;
+            instances[inst].finalY = lowerY;  
             
             if( instances[inst].layer == topLayer)
             {
@@ -227,16 +228,16 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
         int numMacroInRow = dieMacroPlacementState[row].size();
         int numStdcellInRow = (numInstInRow - numMacroInRow);
         int numNoInst = 0;
+        int upperRightX = (int) die.upperRightX;
 
-        if(numInstInRow == 0 || numMacroInRow == numInstInRow )
+        if(numInstInRow == 0 || numStdcellInRow == 0)
             continue;
 
         map<int, int> instMap;
         map<int, int> macroMap;
 
         vector <int> macroSortArray(numMacroInRow);
-        vector <int> sortArray(numInstInRow);
-        vector <int> gapOfmacros;
+        vector <int> sortArray(numStdcellInRow);
         
         /* macro first */
         if( numMacroInRow > 0 )
@@ -259,24 +260,29 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
             int cellX = instances[cellId].finalX - instances[cellId].finalWidth/2;
 
             if(instances[cellId].isMacro)
-                continue;
-
-            while( instMap.find( cellX ) != instMap.end() )
             {
-                instances[cellId].finalX += 1.0;
-                cellX = instances[cellId].finalX - instances[cellId].finalWidth/2;
+                numNoInst ++;
+                continue;
             }
+            else
+            {
+                while( instMap.find( cellX ) != instMap.end() )
+                {
+                    instances[cellId].finalX += 1.0;
+                    cellX = instances[cellId].finalX - instances[cellId].finalWidth/2;
+                }
 
-            instMap[cellX] = cellId;
-            sortArray[inst] = cellX;
+                instMap[cellX] = cellId;
+                sortArray[inst - numNoInst] = cellX;
+                instances[cellId].finalX = cellX;
+            }
+            
         }
         sort(sortArray.begin(), sortArray.end());
 
         /*  place to best X*/
 
-        int firstCell = instMap[ sortArray[0] ];
-        int startX = 0;
-        int macroCnt, nowMacroID, macroWidth;
+        int startX = 0, macroCnt = 0, nowMacroID = 0, macroWidth = 0;
         int macroX = (int) die.upperRightX;
         int nowRowCellWidth = cellWidth[row];
 
@@ -294,16 +300,16 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
             int nowCellFinalX = instances[cellID].finalX;
             int nowCellWidth = instances[cellID].finalWidth;
             
-            if(startX < nowCellFinalX)
+            if(startX < nowCellFinalX && nowCellFinalX + nowCellWidth < macroX)
             {
-                if(startX + nowRowCellWidth > (int) die.upperRightX)
-                    startX = (int) die.upperRightX - cellWidth[row];
+                if( nowCellFinalX + nowRowCellWidth > upperRightX)
+                    startX = upperRightX - nowRowCellWidth;
                 
                 else
                     startX = nowCellFinalX;
             }
 
-            if( startX + nowCellWidth < macroX)
+            if( startX + nowCellWidth <= macroX)
             {
                 instances[cellID].finalX = startX;
                 startX += nowCellWidth;
@@ -312,20 +318,23 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
             {
                 instances[cellID].finalX = macroX + macroWidth;
                 startX = macroX + macroWidth + nowCellWidth;
-
                 macroCnt += 1;
                 
-                if(macroCnt < numMacroInRow)
+                if( macroCnt < numMacroInRow )
                 {
                     nowMacroID = macroMap[ macroSortArray[macroCnt] ];
                     macroX = instances[nowMacroID].finalX;
+                    nowRowCellWidth -= macroWidth;
                     macroWidth = instances[nowMacroID].finalWidth;
                 }
                 else
                 {
-                    macroX = (int) die.upperRightX;
+                    macroX = upperRightX;
+                    nowRowCellWidth -= macroWidth;
                 }
             }
+
+            nowRowCellWidth -= nowCellWidth;
         }
     }
 }
@@ -396,12 +405,14 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
                     {
                         lastInstWidth = (int) instances[lastInstIndex].width;
                         instances[lastInstIndex].finalWidth = lastInstWidth;
+                        instances[lastInstIndex].finalHeight = (int) instances[lastInstIndex].height;
                         instances[lastInstIndex].layer = topLayer;
                     }
                     else
                     {
                         lastInstWidth = (int) instances[lastInstIndex].inflateWidth;
                         instances[lastInstIndex].finalWidth = lastInstWidth;
+                        instances[lastInstIndex].finalHeight = (int) instances[lastInstIndex].inflateHeight;
                         instances[lastInstIndex].layer = btmLayer;
                     }
                     
@@ -443,8 +454,8 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     int dieWidth = (int) topDie.upperRightX;
     int dieHight = (int) topDie.upperRightY;
 
-    int terminalX = terminalTech.spacing > terminalTech.sizeX ? terminalTech.spacing : terminalTech.sizeX;
-    int terminalY = terminalTech.spacing > terminalTech.sizeY ? terminalTech.spacing : terminalTech.sizeY;
+    int terminalX = terminalTech.spacing + terminalTech.sizeX / 2;
+    int terminalY = terminalTech.spacing + terminalTech.sizeY / 2;
 
     for(int net = 0; net < numNet; net++)
     {
@@ -477,7 +488,7 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
 
         if (terminalX + terminalTech.sizeX + terminalTech.spacing > dieWidth)
         {
-            terminalX = terminalTech.spacing;
+            terminalX = terminalTech.spacing + terminalTech.sizeX / 2;
             terminalY += terminalTech.sizeY + terminalTech.spacing;
         }
     }
