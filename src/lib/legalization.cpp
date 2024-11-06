@@ -125,6 +125,17 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     int btmDieCellsWidth[btmDie.repeatCount] = {0};
     int numMacro = macros.size();
 
+    for(int row = 0; row < topDie.repeatCount; row++)
+    {
+        topDiePlacementState[row].reserve(numInstances);
+        topDieMacrosPlacement[row].reserve(numMacro);
+    }
+    
+    for(int row = 0; row < btmDie.repeatCount; row++)
+    {
+        btmDiePlacementState[row].reserve(numInstances);
+        btmDieMacrosPlacement[row].reserve(numMacro);
+    }
     
     /*  place standard cell to best row */
 
@@ -208,7 +219,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
         instances[inst].rotate = 0;
     }
     
-    
+
     /* check which row is stuffed. If stuffed, place to near row*/
 
     place2nearRow(topDie, btmDie, topDiePlacementState, btmDiePlacementState, instances, topDieCellsWidth, btmDieCellsWidth);
