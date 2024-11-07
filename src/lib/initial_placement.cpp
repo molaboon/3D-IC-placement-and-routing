@@ -33,18 +33,18 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
     srand( time(NULL) );
 
     double x[] = {1.0, 1.0, 12000.0, 12000.0, 10000.0, 10000.0};
-    double y[] = {1.0, 1.0, 1.0, 1.0, 5000.0, 5000.0};
+    double y[] = {1.0, 1.0, 1.0, 1.0, 9000.0, 9000.0};
     double z[] = {0.8, 0.2, 0.8, 0.2, 0.8, 0.2};
     int cnt = 0;
 
     for(int i = 0; i < instances.size(); i++)
     {
-        double minX = instances[i].width;
-        double maxX = binInfo.dieWidth - instances[i].width;
-        double minY = instances[i].height ;
-        double maxY = binInfo.dieHeight - instances[i].height;
+        double minX = instances[i].inflateWidth;
+        double maxX = binInfo.dieWidth - instances[i].inflateWidth;
+        double minY = instances[i].inflateHeight;
+        double maxY = binInfo.dieHeight - instances[i].inflateHeight;
 
-        double X = (maxX - minX) * rand() / (RAND_MAX +1.0) + minX;
+        double X = (maxX - minX) * rand() / (RAND_MAX + 1.0) + minX;
         double Y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
         double Z = rand() / (RAND_MAX + 1.0);
 

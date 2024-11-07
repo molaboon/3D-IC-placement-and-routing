@@ -189,7 +189,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             if( instances[inst].layer == topLayer)
             {
                 upOrdown = fmod( upOrdown, (double) topDie.rowHeight);
-                row = ( (int) instances[inst].y - (instances[inst].finalHeight/2) ) / topDie.rowHeight ;
+                row = ( (int) instances[inst].y) / topDie.rowHeight ;
 
                 if( upOrdown > (double) topDie.rowHeight / 2.0 )
                     row += 1;
@@ -205,11 +205,14 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             else
             {
                 upOrdown = fmod( upOrdown, (double) btmDie.rowHeight);
-                row = ((int) instances[inst].y - (instances[inst].finalHeight/2) ) / btmDie.rowHeight ;
+                row = ((int) instances[inst].y )  / btmDie.rowHeight ;
 
                 if( upOrdown > (double) btmDie.rowHeight / 2.0 )
                     row += 1;
-
+                
+                if( row >= btmDie.repeatCount)
+                    row = btmDie.repeatCount - 1;
+                
                 btmDiePlacementState[row].push_back(instances[inst].instIndex);
                 instances[inst].finalY = btmDie.rowHeight * row;
                 btmDieCellsWidth[row] += instances[inst].finalWidth;
@@ -368,7 +371,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
             {
                 lastInstIndex = diePlacementState[row][i];
 
-                if( !instances[lastInstIndex].isMacro && lastInstIndex != -1)
+                if( !instances[lastInstIndex].isMacro)
                 {
                     if(die.index == topLayer)
                         lastInstWidth = (int) instances[lastInstIndex].width;
@@ -380,8 +383,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
                 }
                 else
                     continue;
-            
-                
+                        
                 while ( !haveChanged && (lookUp >= 0 || lookDown < die.repeatCount) )
                 {   
                     if(dieCellWidth[lookUp] + lastInstWidth < upperRightX && lookUp >= 0)
