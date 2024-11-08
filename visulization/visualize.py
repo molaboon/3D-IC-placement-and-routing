@@ -42,11 +42,11 @@ def plot_result(instances, iter, die_width, die_height, plot_block_area):
     for instance in instances:
         if instance.z == 1:
             plot_rectangle(ax[1], (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
-            ax[1].annotate("{}".format(instance.name), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
+            # ax[1].annotate("{}".format(instance.name), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
 
         else:
             plot_rectangle(ax[0], (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
-            ax[0].annotate("{}".format(instance.name ), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
+            # ax[0].annotate("{}".format(instance.name ), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
 
     ax[0].grid(True, alpha = 0.3)
     ax[1].grid(True, alpha = 0.3)

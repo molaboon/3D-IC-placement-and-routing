@@ -36,15 +36,34 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
         if( instances[i].z < 0.5)
         {
             instances[i].layer = btmLayer;
-            instances[i].finalWidth = (int) instances[i].inflateWidth;
-            instances[i].finalHeight = (int) instances[i].inflateHeight;
+
+            if(instances[i].rotate == 90 || instances[i].rotate == 270)
+            {
+                instances[i].finalWidth = (int) instances[i].inflateHeight;
+                instances[i].finalHeight = (int) instances[i].inflateWidth;
+            }
+            else
+            {
+                instances[i].finalWidth = (int) instances[i].inflateWidth;
+                instances[i].finalHeight = (int) instances[i].inflateHeight;
+            }
+
             btmDieArea += instances[i].inflateArea;
         }
         else
         {
             instances[i].layer = topLayer;
-            instances[i].finalWidth = (int) instances[i].width;
-            instances[i].finalHeight = (int) instances[i].height;
+            if(instances[i].rotate == 90 || instances[i].rotate == 270)
+            {
+                instances[i].finalWidth = (int) instances[i].height;
+                instances[i].finalHeight = (int) instances[i].width;
+            }
+            else
+            {
+                instances[i].finalWidth = (int) instances[i].width;
+                instances[i].finalHeight = (int) instances[i].height;
+            }
+            
             topDieArea += instances[i].area;
         }
     }
@@ -217,9 +236,10 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
                 instances[inst].finalY = btmDie.rowHeight * row;
                 btmDieCellsWidth[row] += instances[inst].finalWidth;
             }
+            
+            instances[inst].rotate = 0;
         }
         instances[inst].finalX = (int) instances[inst].x;
-        instances[inst].rotate = 0;
     }
     
 
@@ -313,41 +333,65 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
             int cellID = instMap[ sortArray[inst] ];
             int nowCellFinalX = instances[cellID].finalX;
             int nowCellWidth = instances[cellID].finalWidth;
-            
-            if(startX < nowCellFinalX && nowCellFinalX + nowCellWidth < macroX)
-            {
-                if( nowCellFinalX + nowRowCellWidth > upperRightX)
-                    startX = upperRightX - nowRowCellWidth;
-                
-                else
-                    startX = nowCellFinalX;
-            }
 
-            if( startX + nowCellWidth <= macroX)
+            if( startX + nowCellWidth > upperRightX )
             {
-                instances[cellID].finalX = startX;
-                startX += nowCellWidth;
-            }
-            else 
-            {
-                instances[cellID].finalX = macroX + macroWidth;
-                startX = macroX + macroWidth + nowCellWidth;
-                macroCnt += 1;
-                
-                if( macroCnt < numMacroInRow )
-                {
-                    nowMacroID = macroMap[ macroSortArray[macroCnt] ];
-                    macroX = instances[nowMacroID].finalX;
-                    nowRowCellWidth -= macroWidth;
-                    macroWidth = instances[nowMacroID].finalWidth;
-                }
-                else
-                {
-                    macroX = upperRightX;
-                    nowRowCellWidth -= macroWidth;
+                int lookDown = row + 1;
+                int size = diePlacementState[lookDown].size();
+                bool haveChanged = false;
+                        
+                while ( !haveChanged && lookDown < die.repeatCount )
+                {   
+                    if( cellWidth[lookDown] + nowCellWidth < upperRightX )
+                    {
+                        int cellCoor = find( diePlacementState[row].begin(), diePlacementState[row].end(), cellID) - diePlacementState[row].begin();
+
+                        diePlacementState[lookDown].push_back(cellID);
+                        diePlacementState[row].erase(diePlacementState[row].begin() + cellCoor);
+                        cellWidth[row] -= nowCellWidth;
+                        cellWidth[lookDown] += nowCellWidth;
+                        instances[cellID].finalY = die.rowHeight * lookDown;
+                        haveChanged = true;
+                    }
+                    lookDown++;
                 }
             }
+            else
+            {
+                if(startX < nowCellFinalX && nowCellFinalX + nowCellWidth < macroX)
+                {
+                    if( nowCellFinalX + nowRowCellWidth > upperRightX)
+                        startX = upperRightX - nowRowCellWidth;
+                    
+                    else
+                        startX = nowCellFinalX;
+                }
 
+                if( startX + nowCellWidth <= macroX)
+                {
+                    instances[cellID].finalX = startX;
+                    startX += nowCellWidth;
+                }
+                else 
+                {
+                    instances[cellID].finalX = macroX + macroWidth;
+                    startX = macroX + macroWidth + nowCellWidth;
+                    macroCnt += 1;
+                    
+                    if( macroCnt < numMacroInRow )
+                    {
+                        nowMacroID = macroMap[ macroSortArray[macroCnt] ];
+                        macroX = instances[nowMacroID].finalX;
+                        nowRowCellWidth -= macroWidth;
+                        macroWidth = instances[nowMacroID].finalWidth;
+                    }
+                    else
+                    {
+                        macroX = upperRightX;
+                        nowRowCellWidth -= macroWidth;
+                    }
+                }
+            }
             nowRowCellWidth -= nowCellWidth;
         }
     }
@@ -584,7 +628,7 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
             instances[inst].instIndex + 1, 
             instances[inst].finalX, 
             instances[inst].finalY,
-            (int) instances[inst].rotate);
+            instances[inst].rotate);
     }
 
     fprintf(output, "BottomDiePlacement %d\n", numInstOnBtmDie);
@@ -596,7 +640,7 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
             instances[inst].instIndex + 1, 
             instances[inst].finalX, 
             instances[inst].finalY,
-            (int) instances[inst].rotate
+            instances[inst].rotate
             );
     }
 
