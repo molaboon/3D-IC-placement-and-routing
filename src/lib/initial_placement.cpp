@@ -32,9 +32,9 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
 
     srand( time(NULL) );
 
-    double x[] = {1.0, 1.0, 12000.0, 12000.0, 1.0, 1.0};
-    double y[] = {1.0, 1.0, 1.0, 1.0, 9000.0, 9000.0};
-    double z[] = {0.8, 0.2, 0.8, 0.2, 0.8, 0.2};
+    double x[] = {0.0, 6402.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478, 0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000, 24000};
+    double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 25000, 25000, 0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000, 24000};
+    double z[] = {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.8, 0.8, 0.8, 0.8, 0.2, 0.8, 0.8, 0.8, 0.8, 0.2, 0.8, 0.8, 0.8, 0.8, 0.2, 0.8, 0.8, 0.8, 0.8, 0.2,};
     int cnt = 0;
 
     for(int i = 0; i < instances.size(); i++)
@@ -53,12 +53,13 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
             instances[i].x = x[cnt];
             instances[i].y = y[cnt];
             instances[i].z = z[cnt];
-
-            if(cnt == 2 || cnt == 3)
-                instances[i].rotate = 90;
             
-            else
-                instances[i].rotate = 0;
+            instances[i].rotate = 0;
+            // if(cnt == 2 || cnt == 3)
+            //     instances[i].rotate = 90;
+            
+            // else
+            //     instances[i].rotate = 0;
 
             cnt++;
         }

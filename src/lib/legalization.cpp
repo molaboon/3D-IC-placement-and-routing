@@ -23,13 +23,6 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
     double btmDieUtl = 0.0;
     double topDieMaxUtl = 0.0;
     double btmDieMaxUtl = 0.0;
-    double overLayerUtl = 0.0;
-    double overLayerMaxUtl = 0.0;
-    double overDieArea = 0.0;
-    double overDieTotalArea = 0.0;
-
-    int overLayer = 0;
-    bool over = false;
 
     for(int i = 0; i < numInstances; i++)
     {
@@ -78,58 +71,60 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
 
     if(topDieUtl > topDieMaxUtl)
     {
-        overLayer = topLayer;
-        overLayerUtl = topDieUtl;
-        overLayerMaxUtl = topDieMaxUtl;
-        overDieArea = topDieArea;
-        overDieTotalArea = topDie.upperRightX * topDie.upperRightY;
-        over = true;
-    }
-    else if ( btmDieUtl > btmDieMaxUtl)
-    {
-        overLayer = btmLayer;
-        overLayerUtl = btmDieUtl;
-        overLayerMaxUtl = btmDieMaxUtl;
-        overDieArea = btmDieArea;
-        overDieTotalArea = btmDie.upperRightX * btmDie.upperRightY;
-        over = true;
-    }
-
-    if(over)
-    {
         int minNumNetConnet = 1;
 
         do{
             for(int inst = 0; inst < numInstances; inst++)
             {
-                if(instances[inst].numNetConnection == minNumNetConnet && instances[inst].layer == overLayer)
+                if(instances[inst].numNetConnection == minNumNetConnet )
                 {
-                    instances[inst].layer = 1 - overLayer;
-                    if ( overLayer == btmLayer)
-                    {
-                        overDieArea -= instances[inst].inflateArea;
-                        instances[inst].finalWidth = (int) instances[inst].width;
-                        instances[inst].finalHeight = (int) instances[inst].height;
-                    }
-                    else
-                    {
-                        overDieArea -= instances[inst].area;
-                        instances[inst].finalWidth = (int) instances[inst].inflateWidth;
-                        instances[inst].finalHeight = (int) instances[inst].inflateHeight;
-                    }
-                    
-                    overLayerUtl = overDieArea / overDieTotalArea;
+                    instances[inst].layer = btmLayer;
 
-                    if(overLayerUtl < overLayerMaxUtl)
+                    topDieArea -= instances[inst].area;
+                    btmDieArea += instances[inst].inflateArea;
+
+                    instances[inst].finalWidth = (int) instances[inst].inflateWidth;
+                    instances[inst].finalHeight = (int) instances[inst].inflateHeight;
+                
+                    topDieUtl = topDieArea / (topDie.upperRightX * topDie.upperRightY);
+
+                    if(topDieUtl < topDieMaxUtl)
                         break;
                 }
             }
 
             minNumNetConnet += 1;
 
-        }while (overLayerUtl > overLayerMaxUtl);
+        }while (topDieUtl > topDieMaxUtl);
     }
+    else if ( btmDieUtl > btmDieMaxUtl)
+    {
+       int minNumNetConnet = 1;
 
+        do{
+            for(int inst = 0; inst < numInstances; inst++)
+            {
+                if(instances[inst].numNetConnection == minNumNetConnet )
+                {
+                    instances[inst].layer = topLayer;
+
+                    topDieArea += instances[inst].area;
+                    btmDieArea -= instances[inst].inflateArea;
+
+                    instances[inst].finalWidth = (int) instances[inst].width;
+                    instances[inst].finalHeight = (int) instances[inst].height;
+                
+                    btmDieUtl = btmDieArea / (btmDie.upperRightX * btmDie.upperRightY);
+
+                    if(btmDieUtl < btmDieMaxUtl)
+                        break;
+                }
+            }
+
+            minNumNetConnet += 1;
+
+        }while (btmDieUtl > btmDieMaxUtl);
+    }
 }
 
 void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> &macros)
@@ -355,6 +350,10 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
                     }
                     lookDown++;
                 }
+                if( !haveChanged && lookDown >= die.repeatCount )
+                {
+                    cout << "error" << endl;
+                }
             }
             else
             {
@@ -367,7 +366,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
                         startX = nowCellFinalX;
                 }
 
-                if( startX + nowCellWidth <= macroX)
+                if( startX + nowCellWidth < macroX)
                 {
                     instances[cellID].finalX = startX;
                     startX += nowCellWidth;
@@ -505,7 +504,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
 }
 
 void insertTerminal(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
-{
+{ 
     int numNet = rawNet.size();
     int numTerminal = 0;
     int dieWidth = (int) topDie.upperRightX;
@@ -549,12 +548,6 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
             terminalY += terminalTech.sizeY + terminalTech.spacing;
         }
     }
-
-    // for (int t = 0; t < numTerminal; t++)
-    // {
-    //     printf("terminal: %d, %d\n", terminals[t].x, terminals[t].y);
-    // }
-    
 }
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
