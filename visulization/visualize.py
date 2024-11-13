@@ -28,31 +28,29 @@ def plot_rectangle(ax, x1, y1, x2, y2, c, style, if_fill):
       )
    )
 
-def plot_result(instances, iter, die_width, die_height, plot_block_area):
+def plot_result(instances, iter, die_width, die_height, plot_block_area, die):
 
     width = die_width
     height = die_height
-    fig, ax = plt.subplots(2,1, figsize = (20,20))
-    ax[0].plot( width, height, 'g.')
-    ax[0].plot(0, 0, 'g.')
+    fig, ax = plt.subplots(1,1, figsize = (20,20))
+    ax.plot( width, height, 'g.')
+    ax.plot(0, 0, 'g.')
 
-    ax[1].plot( width, height, 'g.')
-    ax[1].plot(0, 0, 'g.')
+    # ax[1].plot( width, height, 'g.')
+    # ax[1].plot(0, 0, 'g.')
 
     for instance in instances:
-        if instance.z == 1:
-            plot_rectangle(ax[1], (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
-            # ax[1].annotate("{}".format(instance.name), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
+        if instance.z == die:
+            plot_rectangle(ax, (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
+            # ax.annotate("{}".format(instance.name), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
 
-        else:
-            plot_rectangle(ax[0], (instance.x), (instance.y), instance.width, instance.height, 'k', '-', 0)
-            # ax[0].annotate("{}".format(instance.name ), xy=(instance.x + 0.5*instance.width, instance.y + 0.5*instance.height),fontsize=12, ha='center', va='center_baseline')
+    ax.grid(True, alpha = 0.3)
+    # ax[1].grid(True, alpha = 0.3)
 
-    ax[0].grid(True, alpha = 0.3)
-    ax[1].grid(True, alpha = 0.3)
-
-    ax[0].set_title("Top Die Placement", fontsize = 24)
-    ax[1].set_title("Bottom Die Placement", fontsize = 24)
+    if die == 1:
+        ax.set_title("Top Die Placement", fontsize = 24)
+    else:
+        ax.set_title("Bottom Die Placement", fontsize = 24)
 
     path = 'iter' + str(iter) 
     plt.savefig( path + '.jpg')
@@ -141,7 +139,8 @@ def read_data(filename):
 
 def main():    
     instances, die_width, die_height = read_data("data/0.txt")
-    plot_result(instances, 0, die_width, die_height, 0)
+    plot_result(instances, " btm", die_width, die_height, 0, 0)
+    plot_result(instances, " top", die_width, die_height, 0, 1)
 
 main()
 

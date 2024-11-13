@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
 		double lastGra[numInstances * 3 ] = {0.0};
 		double nowGra[numInstances * 3 ] = {0.0};
 
-		firstPlacement(instances, binInfo);
+		firstPlacement(instances, binInfo, top_die);
 		gamma = 0.05 * binInfo.dieWidth;
 
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
@@ -132,7 +132,7 @@ int main(int argc, char *argv[]){
 
 	if(true)
 	{	
-		firstPlacement(instances, binInfo);
+		firstPlacement(instances, binInfo, top_die);
 		cell2BestLayer(instances, numInstances, top_die, bottom_die);
 		place2BestRow(instances, numInstances, top_die, bottom_die, macros);
 		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);

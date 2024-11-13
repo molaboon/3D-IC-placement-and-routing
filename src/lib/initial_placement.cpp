@@ -26,7 +26,7 @@ void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance)
 
 }
 
-void firstPlacement(vector <instance> &instances, gridInfo binInfo)
+void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 {
     // give each cell initial solution
 
@@ -53,13 +53,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo)
             instances[i].x = x[cnt];
             instances[i].y = y[cnt];
             instances[i].z = z[cnt];
-            
             instances[i].rotate = 0;
-            // if(cnt == 2 || cnt == 3)
-            //     instances[i].rotate = 90;
-            
-            // else
-            //     instances[i].rotate = 0;
 
             cnt++;
         }
