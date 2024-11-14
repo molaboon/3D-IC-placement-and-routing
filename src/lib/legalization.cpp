@@ -168,6 +168,10 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
                             instances[j].finalWidth = (int) instances[j].width;
                             instances[j].finalHeight = (int) instances[j].height;
 
+                            topDieUtl = topDieArea / maxArea;
+                            btmDieUtl = btmDieArea / maxArea;
+                            
+
                             chan = true;
                             break;
                         }
@@ -404,42 +408,46 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
                         diePlacementState[row].erase(diePlacementState[row].begin() + cellCoor);
                         cellWidth[row] -= nowCellWidth;
                         cellWidth[lookDown] += nowCellWidth;
-                        numStdcellInRow -= 1;
                         instances[cellID].finalY = die.rowHeight * lookDown;
                         haveChanged = true;
                     }
                     lookDown++;
                 }
                 
-                // if( !haveChanged )
-                // {
-                //     int cellCoor = find( diePlacementState[row].begin(), diePlacementState[row].end(), cellID) - diePlacementState[row].begin();
-                //     while ( !haveChanged && lookUp > 0 )
-                //     {   
-                //         if( cellWidth[lookUp] + nowCellWidth*2 < upperRightX )
-                //         {
-                //             int s = (int) diePlacementState[lookUp].size();
-                //             for(int k = 1; k < s; k++)
-                //             {
-                //                 if( instances[diePlacementState[lookUp][k]].finalX - instances[diePlacementState[lookUp][k-1]].finalX - instances[diePlacementState[lookUp][k-1]].finalX > nowCellWidth)
-                //                 {
-                //                     int lastCellID = diePlacementState[lookUp][k]; 
-                //                     diePlacementState[lookUp].insert(diePlacementState[lookUp].begin() + (k-1), cellID);
-                //                     diePlacementState[row].erase(diePlacementState[row].begin() + cellCoor);
-                //                     cellWidth[row] -= nowCellWidth;
-                //                     cellWidth[lookUp] += nowCellWidth;
-                //                     instances[cellID].finalX = instances[lastCellID].finalX + instances[lastCellID].finalWidth;
-                //                     instances[cellID].finalY = die.rowHeight * lookUp;
-                //                     haveChanged = true;
-                //                 }
+                if( !haveChanged )
+                {
+                    int cellCoor = find( diePlacementState[row].begin(), diePlacementState[row].end(), cellID) - diePlacementState[row].begin();
+                    // if (cellID = 10206)
+                    // {
+                    //     cout << row << endl;
+                    // }
 
-                //                 if(haveChanged)
-                //                     break;
-                //             }
-                //         }
-                //         lookUp++;
-                //     }
-                // }
+                    while ( !haveChanged && lookUp > 0 )
+                    {   
+                        if( cellWidth[lookUp] + nowCellWidth*2 < upperRightX )
+                        {
+                            int s = (int) diePlacementState[lookUp].size();
+                            for(int k = 1; k < s; k++)
+                            {
+                                if( instances[diePlacementState[lookUp][k]].finalX - instances[diePlacementState[lookUp][k-1]].finalX - instances[diePlacementState[lookUp][k-1]].finalWidth > nowCellWidth)
+                                {
+                                    int lastCellID = diePlacementState[lookUp][k-1]; 
+                                    diePlacementState[lookUp].insert(diePlacementState[lookUp].begin() + k, cellID);
+                                    diePlacementState[row].erase(diePlacementState[row].begin() + cellCoor);
+                                    cellWidth[row] -= nowCellWidth;
+                                    cellWidth[lookUp] += nowCellWidth;
+                                    instances[cellID].finalX = instances[lastCellID].finalX + instances[lastCellID].finalWidth;
+                                    instances[cellID].finalY = die.rowHeight * lookUp;
+                                    haveChanged = true;
+                                }
+
+                                if(haveChanged)
+                                    break;
+                            }
+                        }
+                        lookUp--;
+                    }
+                }
             }
             else
             {
@@ -505,7 +513,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
     {
         int upperRightX = die.upperRightX;
 
-        while(dieCellWidth[row] + 100 > upperRightX)
+        while(dieCellWidth[row] > upperRightX)
         {
             int size = diePlacementState[row].size();
             int lastInstIndex = 0, lastInstWidth = 0;
@@ -532,7 +540,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
                         
                 while ( !haveChanged && (lookUp >= 0 || lookDown < die.repeatCount) )
                 {   
-                    if(dieCellWidth[lookUp] + lastInstWidth + 100 < upperRightX && lookUp >= 0)
+                    if(dieCellWidth[lookUp] + lastInstWidth < upperRightX && lookUp >= 0)
                     {
                         diePlacementState[lookUp].push_back(lastInstIndex);
                         diePlacementState[row].erase(diePlacementState[row].begin() + chooseCellCoor);
@@ -541,7 +549,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
                         instances[lastInstIndex].finalY = die.rowHeight * lookUp;
                         haveChanged = true;
                     }
-                    else if (dieCellWidth[lookDown] + lastInstWidth + 100 < upperRightX && lookDown < die.repeatCount && !haveChanged)
+                    else if (dieCellWidth[lookDown] + lastInstWidth < upperRightX && lookDown < die.repeatCount && !haveChanged)
                     {
                         diePlacementState[lookDown].push_back(lastInstIndex);
                         diePlacementState[row].erase(diePlacementState[row].begin() + chooseCellCoor);
