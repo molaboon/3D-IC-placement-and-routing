@@ -157,7 +157,7 @@ void printHybridTerminalInfo(Hybrid_terminal terminal);
 void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros);
 void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <instance*> &netsOfMacros);
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <RawNet> &netsOfMacros);
 void printNetInfo(int NumNets, vector <RawNet> rawnet);
 
 #endif

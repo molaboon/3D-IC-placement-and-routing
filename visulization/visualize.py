@@ -118,10 +118,10 @@ def read_data(filename):
         for line in file:
             parts = line.split()
             if parts[0] == 'TopDiePlacement':
-                tech = 0
+                tech = 1
                 
             elif parts[0] == 'BottomDiePlacement':
-                tech = 1
+                tech = 0
             
             elif parts[0] == 'DieInfo':
                 die_width = int( parts[1] )

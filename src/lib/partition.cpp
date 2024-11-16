@@ -9,45 +9,34 @@ void macroPartition( vector <instance> &macros, vector <instance*> &netsOfMacros
 {
     srand( time(NULL) );
 
-    int macrosSize = int ( macros.size() );
+    int numMacros = int ( macros.size() );
     int netsOfMacroSize = int( netsOfMacros.size() );
-    int firstCut = 0;
+    int cut = 0;
+
+    double topDieArea = 0;
+    double btmDieArea = 0;
     
-    for(int i = 0; i < macrosSize; i++)
+    for(int i = 0; i < numMacros; i++)
     {
-        int x = rand() % 2;   
+        int x = rand() % 2;
         macros[i].layer = x;
-        cout << macros[i].layer << endl;
-    }
-    cout << endl;
+
+        if(x)
+            topDieArea += macros[i].area;
+        
+        else
+            btmDieArea += macros[i].inflateArea;
+    }  
 
     for(int i = 0; i < netsOfMacroSize ; i +=2 )
     {
-        // cout << netsOfMacros[i]->layer << " " << netsOfMacros[i + 1]->layer << endl;
         if(netsOfMacros[i]->layer != netsOfMacros[i + 1]->layer)
-            firstCut++;
+            cut++;
     }
+    
 
-    for(int m = 0; m < macrosSize; m++)
-    {
-        int tmpCut = 0;
-        int originLayer = macros[m].layer;  
-        
-        macros[m].layer = (macros[m].layer + 1) % 2;
-        
-        for(int n = 0 ; n < netsOfMacroSize; n+=2)
-        {
-            if(netsOfMacros[n]->layer != netsOfMacros[n + 1]->layer)
-                tmpCut++;
-        }
-        cout << m <<": tmpCut : " << tmpCut << " "<< firstCut <<endl;
+    // calculate the area and the best cut 
 
-        if(tmpCut >= firstCut)
-            macros[m].layer = originLayer;
-        else
-            firstCut = tmpCut;
-        
-    }
+   
 
-    cout << firstCut << endl;
 }

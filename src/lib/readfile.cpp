@@ -197,7 +197,7 @@ void printInstanceInfo(int NumInstances, vector <instance> instances){
     printf("\n");
 }
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <instance*> &netsOfMacros)
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet*> &netsOfMacros)
 {
     assert(input);
 
@@ -211,6 +211,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
     for(int i = 0; i < *NumNets; i++)
     {
         RawNet temp;
+        RawNet macroTmp;
 
         int firstMacro = 0;
         bool aa = 0;
@@ -219,6 +220,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
         //allocate memory for the detail connection in the net
         vector <instance*> temp_connection(temp.numPins);
+        vector <instance*> macros_connection;
 
         for(int pin = 0; pin < temp.numPins; pin++){
             char buffer[BUFFER_SIZE];
@@ -234,33 +236,10 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
             temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
             instances[atoi(current_libCellName)-1].numNetConnection += 1;
-
-            for (int m = 0; m < macros.size(); m++)
-            {
-                if(macros[m].instIndex == atoi(current_libCellName))
-                {
-                    if(!havenet)
-                    {
-                        havenet = 1;
-                        firstMacro = m;
-                        aa = 1;
-                    }
-                    else if (aa && havenet)
-                    {
-                        // cout << "Net: " << i << endl << firstMacro << endl;
-                        // cout << current_libCellName << endl;
-                        netsOfMacros.emplace_back( &macros[firstMacro] );
-                        netsOfMacros.emplace_back( &macros[m] );
-                        aa = 0;
-                    }
-                    else if (!aa && havenet)
-                    {
-                        // cout << current_libCellName << endl;
-                        netsOfMacros.emplace_back( &macros[m] );
-                    }
-                }
-            }
             temp_connection[pin]->netsConnect[i] = 1;
+
+            if(instances[atoi(current_libCellName)-1].isMacro)
+                macros_connection.push_back(&instances[atoi(current_libCellName)-1]);
             
         }
         temp.hasTerminal = false;
@@ -268,7 +247,13 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         temp.terminalY = 0;
         temp.Connection = temp_connection;
 
+        macroTmp.hasTerminal = false;
+        macroTmp.terminalX = 0;
+        macroTmp.terminalY = 0;
+        macroTmp.Connection = macros_connection;
+
         rawnet.emplace_back(temp);
+        netsOfMacros.emplace_back(macroTmp);
     }
 
     fclose(input);

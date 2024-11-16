@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
 	vector <instance> macros;
-	vector <instance*> netsOfMacros;
+	vector <RawNet> netsOfMacros;
 	vector <terminal> terminals;
  
 	/*	read data	*/
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 
 	/*	macro partition and placement	*/
 	
-	// macroPartition( macros, netsOfMacros);
+	macroPartition( macros, netsOfMacros);
 
 
 	/*	coarsening */
