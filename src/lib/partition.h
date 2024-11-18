@@ -1,5 +1,5 @@
 #include "readfile.h"
 
-void macroPartition( vector <instance> &macros, vector <instance*> &netsOfMacros);
+void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie);
 
-int returnBestMacroLayer(double topDieArea, double btmDieArea, int cut, vector <instance> &macros, vector <instance*> &netsOfMacros, int index);
+int returnCut(vector <RawNet> &netsOfMacros);

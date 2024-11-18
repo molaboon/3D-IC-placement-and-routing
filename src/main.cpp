@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
 
 		cout <<"Time " << endTime - startTime <<endl;
 
-	}
+	
 
 	if(true)
 	{	
@@ -140,6 +140,7 @@ int main(int argc, char *argv[]){
 		writeFile(instances, outputName, rawnet, numInstances, terminals);
 	}
 
+	}
 	
 	return 0;
 }
