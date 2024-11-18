@@ -86,9 +86,9 @@ typedef struct _Instance{
     int finalWidth;
     int finalHeight;
 
-    // double tmpX;
-    // double tmpY;
-    // double tmpZ;
+    double tmpX;
+    double tmpY;
+    double tmpZ;
 
     double width;
     double height;
@@ -99,12 +99,12 @@ typedef struct _Instance{
 
     double density = 0.0;
 
-    // double inflationRatio = 1.0;
+    double inflationRatio = 1.0;
 
-    // double gra_x = 0.0;
-    // double gra_y = 0.0;
-    // double gra_z = 0.0;
-    // double gra_d = 0.0;
+    double gra_x = 0.0;
+    double gra_y = 0.0;
+    double gra_z = 0.0;
+    double gra_d = 0.0;
 
     bool *netsConnect;
 

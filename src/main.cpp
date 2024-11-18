@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 
 	/*	macro partition and placement	*/
 	
-	macroPartition( macros, netsOfMacros);
+	macroPartition( macros, netsOfMacros, top_die);
 
 
 	/*	coarsening */
@@ -128,9 +128,9 @@ int main(int argc, char *argv[]){
 
 		cout <<"Time " << endTime - startTime <<endl;
 
-	
+	}
 
-	if(true)
+	if(false)
 	{	
 		firstPlacement(instances, binInfo, top_die);
 		cell2BestLayer(instances, numInstances, top_die, bottom_die);
@@ -140,7 +140,7 @@ int main(int argc, char *argv[]){
 		writeFile(instances, outputName, rawnet, numInstances, terminals);
 	}
 
-	}
+	
 	
 	return 0;
 }

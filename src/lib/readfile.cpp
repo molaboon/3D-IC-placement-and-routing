@@ -197,7 +197,7 @@ void printInstanceInfo(int NumInstances, vector <instance> instances){
     printf("\n");
 }
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet*> &netsOfMacros)
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros)
 {
     assert(input);
 
@@ -216,13 +216,15 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         int firstMacro = 0;
         bool aa = 0;
         bool havenet = false;
+        bool haveMacro = false;
         fscanf(input, "%*s %s %d", temp.netName, &temp.numPins);
 
         //allocate memory for the detail connection in the net
         vector <instance*> temp_connection(temp.numPins);
         vector <instance*> macros_connection;
 
-        for(int pin = 0; pin < temp.numPins; pin++){
+        for(int pin = 0; pin < temp.numPins; pin++)
+        {
             char buffer[BUFFER_SIZE];
             memset(buffer, '\0', BUFFER_SIZE);
             fscanf(input, "%*s %s", buffer);
@@ -239,21 +241,27 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             temp_connection[pin]->netsConnect[i] = 1;
 
             if(instances[atoi(current_libCellName)-1].isMacro)
+            {
+                haveMacro = true;
                 macros_connection.push_back(&instances[atoi(current_libCellName)-1]);
+            }
+                
             
         }
         temp.hasTerminal = false;
         temp.terminalX = 0;
         temp.terminalY = 0;
         temp.Connection = temp_connection;
-
-        macroTmp.hasTerminal = false;
-        macroTmp.terminalX = 0;
-        macroTmp.terminalY = 0;
-        macroTmp.Connection = macros_connection;
-
         rawnet.emplace_back(temp);
-        netsOfMacros.emplace_back(macroTmp);
+
+        if(haveMacro)
+        {
+            macroTmp.hasTerminal = false;
+            macroTmp.terminalX = 0;
+            macroTmp.terminalY = 0;
+            macroTmp.Connection = macros_connection;
+            netsOfMacros.emplace_back(macroTmp);
+        }
     }
 
     fclose(input);
