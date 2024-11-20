@@ -1,8 +1,8 @@
 #include "readfile.h"
 
-double scoreOfX(const vector <RawNet> rawNet, const double gamma);
+double scoreOfX(const vector <RawNet> rawNet, const double gamma, const bool isGra);
 
-double scoreOfY(const vector <RawNet> rawNet, const double gamma);
+double scoreOfY(const vector <RawNet> rawNet, const double gamma, const bool isGra);
 
 double TSVofNet(const vector <RawNet> rawNet);
 

@@ -51,6 +51,7 @@ int main(int argc, char *argv[]){
 
 	vector <instance> macros;
 	vector <RawNet> netsOfMacros;
+	vector <int> numStdCellConncetMacro;
 	vector <terminal> terminals;
  
 	/*	read data	*/
@@ -58,12 +59,12 @@ int main(int argc, char *argv[]){
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminalTech);
 	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros);
-	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros);
+	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro);
 	returnGridInfo(top_die, binInfo, numInstances);
 
 	/*	macro partition and placement	*/
 	
-	macroPartition( macros, netsOfMacros, top_die);
+	// macroPartition( macros, netsOfMacros, top_die);
 
 
 	/*	coarsening */
@@ -73,14 +74,14 @@ int main(int argc, char *argv[]){
 
 	/*	first placement and CG preprocessing	*/
 	
-	if (false){
+	if (true){
 
 		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 		double wireLength, newWireLength;
-		double lastCG[numInstances * 3 ] = {0.0};
-		double nowCG[numInstances * 3 ] = {0.0};
-		double lastGra[numInstances * 3 ] = {0.0};
-		double nowGra[numInstances * 3 ] = {0.0};
+		double lastCG[ numInstances * 3 ] = {0.0};
+		double nowCG[ numInstances * 3 ] = {0.0};
+		double lastGra[ numInstances * 3 ] = {0.0};
+		double nowGra[ numInstances * 3 ] = {0.0};
 
 		firstPlacement(instances, binInfo, top_die);
 		gamma = 0.05 * binInfo.dieWidth;

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <assert.h>
 #include <iostream>
+#include <map>
 
 #include "readfile.h"
 
@@ -89,7 +90,7 @@ void readDieInfo(FILE *input, Die *top_die, Die *bottom_die){
     char a[10];
     char b[10];
     fscanf(input,"%*s %s", a);
-    fscanf(input,"%*s %s", b);
+    fscanf(input,"%*s %s", b); 
     top_die->index = 1;
     bottom_die->index = 0 ;
     read_one_blank_line(input);
@@ -197,17 +198,26 @@ void printInstanceInfo(int NumInstances, vector <instance> instances){
     printf("\n");
 }
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros)
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro)
 {
     assert(input);
-
     int size = instances.size();
+    int numMacro = macros.size();
     
+    map<int, int> macrosMap;
+
     fscanf(input, "%*s %d", &(*NumNets));
     
     for(int index = 0; index < size; index++)
         instances[index].netsConnect = (bool *) calloc( *NumNets , sizeof(bool));
-
+    
+    for(int i = 0; i < numMacro; i++)
+    {
+        macrosMap[ macros[i].instIndex ] = i; 
+        numStdCellConnectMacro.push_back(0);
+    }
+        
+    
     for(int i = 0; i < *NumNets; i++)
     {
         RawNet temp;
@@ -244,10 +254,10 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             {
                 haveMacro = true;
                 macros_connection.push_back(&instances[atoi(current_libCellName)-1]);
+                numStdCellConnectMacro[ macrosMap[atoi(current_libCellName)-1] ] += temp.numPins;
             }
-                
-            
         }
+
         temp.hasTerminal = false;
         temp.terminalX = 0;
         temp.terminalY = 0;

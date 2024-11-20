@@ -32,9 +32,9 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
     srand( time(NULL) );
 
-    double x[] = {0.0, 6402.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478,   0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000,      0};
-    double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 20000, 20000,   0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000,  31000};
-    double z[] = {0.2,    0.8,    0.2,    0.8,     0.2,     0.8,   0.2,   0.8, 0.2,  0.8,   0.2,   0.8,   0.2,   0.8,   0.8,   0.2,   0.2,   0.8,   0.2,   0.8,   0.2,   0.8,   0.2,   0.2,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2};
+    // double x[] = {0.0, 0.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478,   0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000,      0};
+    // double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 20000, 20000,   0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000,  31000};
+    // double z[] = {0.2,    0.8,    0.2,    0.8,     0.2,     0.8,   0.2,   0.8, 0.2,  0.8,   0.2,   0.8,   0.2,   0.8,   0.8,   0.2,   0.2,   0.8,   0.2,   0.8,   0.2,   0.8,   0.2,   0.2,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2};
     int cnt = 0;
 
     for(int i = 0; i < instances.size(); i++)
@@ -48,21 +48,23 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         double Y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
         double Z = rand() / (RAND_MAX + 1.0);
 
-        if(instances[i].isMacro)
-        {
-            instances[i].x = x[cnt];
-            instances[i].y = y[cnt];
-            instances[i].z = z[cnt];
-            instances[i].rotate = 0;
+        // if(instances[i].isMacro)
+        // {
+        //     instances[i].x = x[cnt];
+        //     instances[i].y = y[cnt];
+        //     instances[i].z = z[cnt];
+        //     instances[i].rotate = 0;
 
-            cnt++;
-        }
-        else
-        {
-            instances[i].x = X;
-            instances[i].y = Y;
-            instances[i].z = Z;
-        }            
+        //     cnt++;
+        // }
+        // else
+        
+        instances[i].x = X;
+        instances[i].y = Y;
+        instances[i].z = Z;
+        instances[i].tmpX = X;
+        instances[i].tmpY = Y;
+        instances[i].tmpZ = Z;
     }
 }
 
@@ -80,8 +82,8 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
 
     int size = instances.size();
 
-    xScore = scoreOfX(rawNet, gamma);
-    yScore = scoreOfY(rawNet, gamma);
+    xScore = scoreOfX(rawNet, gamma, false);
+    yScore = scoreOfY(rawNet, gamma, false);
     tsvScore = TSVofNet(rawNet);
     penaltyScore = scoreOfz(rawNet, instances, binInfo, 1);
 
@@ -100,7 +102,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
         // part of x
         instances[i].x += h;
 
-        tmpXscore = scoreOfX(rawNet, gamma);
+        tmpXscore = scoreOfX(rawNet, gamma, false);
         tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
 
         grax += fabs( (tmpXscore - xScore) / h) ;
@@ -115,7 +117,7 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
 
         instances[i].y += h;
 
-        tmpYscore = scoreOfY(rawNet, gamma);
+        tmpYscore = scoreOfY(rawNet, gamma, false);
 
         tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
 
