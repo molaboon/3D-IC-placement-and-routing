@@ -18,7 +18,7 @@ double scoreOfz( vector <RawNet> rawNets, vector <instance> &instances, gridInfo
 
 double *createBins(gridInfo binInfo);
 
-void penaltyInfoOfinstance(const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool needMinus);
+void penaltyInfoOfinstance(const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool isGra, bool needMinus);
 
 void calculatePenaltyArea(double coordinate[], int *length, double *firstLayer, double *secondLayer, double density, int row, instance instance, gridInfo binInfo, bool needMinus);
 
