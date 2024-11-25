@@ -84,12 +84,10 @@ int main(int argc, char *argv[]){
 		double nowGra[ numInstances * 3 ] = {0.0};
 
 		firstPlacement(instances, binInfo, top_die);
+
 		gamma = 0.05 * binInfo.dieWidth;
-
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
-
 		totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
-
 		CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 		/*	std. cell Coarsening	*/
@@ -105,7 +103,7 @@ int main(int argc, char *argv[]){
 
 		for(int i = 0; i < totalIter; i++)
 		{
-			for(int j = 0; j < 1; j++)
+			for(int j = 0; j < 10; j++)
 			{
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
 
@@ -127,13 +125,13 @@ int main(int argc, char *argv[]){
 
 		endTime = clock();
 
-		cout <<"Time " << endTime - startTime <<endl;
+		cout << "Time " << endTime - startTime <<endl;
 
 	}
 
-	if(false)
+	if(true)
 	{	
-		firstPlacement(instances, binInfo, top_die);
+		// firstPlacement(instances, binInfo, top_die);
 		cell2BestLayer(instances, numInstances, top_die, bottom_die);
 		place2BestRow(instances, numInstances, top_die, bottom_die, macros);
 		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
@@ -141,8 +139,6 @@ int main(int argc, char *argv[]){
 		writeFile(instances, outputName, rawnet, numInstances, terminals);
 	}
 
-	
-	
 	return 0;
 }
 

@@ -59,7 +59,6 @@ def plot_result(instances, iter, die_width, die_height, plot_block_area, die):
     #write_cell_coordinate(instances, path + '.txt', info)
     #write_cell_info(instances, path + ' info.txt')
 
-
 def plot_penalty(bins, grid_info, iteration):
    width = grid_info[0]
    height = grid_info[1]

@@ -36,9 +36,9 @@ double scoreOfX( const vector <RawNet> rawNet, const double gamma, const bool is
             double tmp = 0.0;
 
             if(isGra)
-                rawNet[net].Connection[instance]->tmpX;
+                tmp = rawNet[net].Connection[instance]->tmpX;
             else
-                rawNet[net].Connection[instance]->x;
+                tmp = rawNet[net].Connection[instance]->x;
 
             numerator_1 += tmp * exp(tmp / gamma);
             denominator_1 += exp(tmp / gamma);
@@ -69,9 +69,9 @@ double scoreOfY( const vector <RawNet> rawNet, const double gamma, const bool is
             double tmp = 0.0;
 
             if(isGra)
-                rawNet[net].Connection[instance]->tmpY;
+                tmp = rawNet[net].Connection[instance]->tmpY;
             else
-                rawNet[net].Connection[instance]->y;
+                tmp = rawNet[net].Connection[instance]->y;
 
             numerator_1 += tmp * exp(tmp / gamma);
             denominator_1 += exp(tmp / gamma);
@@ -386,15 +386,15 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &in
     {
         double *firstLayer = createBins(binInfo);
         double *secondLayer = createBins(binInfo);
+
         bool needMinus = false, isGra = false;
-        double tmpy = instances[i].y;
         double score = 0.0, score2 = 0.0;
 
         memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
         memcpy(secondLayer, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
         instances[i].tmpY = instances[i].y;
-        instances[i].tmpY += 1;
+        instances[i].tmpY += h;
 
         score = scoreOfY(rawNet, gamma, true);
 

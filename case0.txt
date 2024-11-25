@@ -24,8 +24,13 @@ TerminalCost 10
 NumInstances 2
 Inst C1 MC1
 Inst C2 MC1
+Inst C3 MC1
+Inst C4 MC1
 
 NumNets 1
 Net N1 2
 Pin C1/P1
-Pin C2/P2
+Pin C2/P1
+Net N2 2
+Pin C3/P1
+Pin C4/P1
