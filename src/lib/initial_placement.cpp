@@ -52,16 +52,16 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         double Z = 0.5;
 
         // if(instances[i].isMacro)
-        // {
-        instances[i].x = x[cnt];
-        instances[i].y = y[cnt];
+        // // {
+        // instances[i].x = x[cnt];
+        // instances[i].y = y[cnt];
         // instances[i].z = z[cnt];
         instances[i].rotate = 0;
 
         cnt++;
         
-        // instances[i].x = X;
-        // instances[i].y = Y;
+        instances[i].x = X;
+        instances[i].y = Y;
         instances[i].z = Z;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;

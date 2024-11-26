@@ -1,0 +1,915 @@
+NumTechnologies 2 
+Tech TA 543 
+LibCell N MC1 292 92 5 
+Pin P1 222 23 
+Pin P2 249 64 
+Pin P3 252 33 
+Pin P4 135 33 
+Pin P5 41 30 
+LibCell N MC2 198 92 2 
+Pin P1 16 43 
+Pin P2 71 13 
+LibCell N MC3 338 92 5 
+Pin P1 54 23 
+Pin P2 28 64 
+Pin P3 22 33 
+Pin P4 314 43 
+Pin P5 231 33 
+LibCell N MC4 426 92 6 
+Pin P1 47 23 
+Pin P2 23 27 
+Pin P3 59 43 
+Pin P4 25 53 
+Pin P5 318 56 
+Pin P6 378 16 
+LibCell N MC5 41 92 2 
+Pin P1 3 43 
+Pin P2 15 27 
+LibCell N MC6 59 92 3 
+Pin P1 23 43 
+Pin P2 0 43 
+Pin P3 22 26 
+LibCell N MC7 57 92 3 
+Pin P1 30 43 
+Pin P2 6 43 
+Pin P3 31 18 
+LibCell N MC8 88 92 3 
+Pin P1 8 43 
+Pin P2 21 43 
+Pin P3 45 22 
+LibCell N MC9 85 92 5 
+Pin P1 54 40 
+Pin P2 56 34 
+Pin P3 9 43 
+Pin P4 19 34 
+Pin P5 19 24 
+LibCell N MC10 123 92 5 
+Pin P1 74 43 
+Pin P2 46 43 
+Pin P3 0 51 
+Pin P4 22 51 
+Pin P5 55 22 
+LibCell N MC11 124 92 6 
+Pin P1 35 43 
+Pin P2 24 43 
+Pin P3 14 43 
+Pin P4 62 43 
+Pin P5 76 43 
+Pin P6 59 12 
+LibCell N MC12 106 92 5 
+Pin P1 28 43 
+Pin P2 17 43 
+Pin P3 0 43 
+Pin P4 56 43 
+Pin P5 48 13 
+LibCell N MC13 89 92 5 
+Pin P1 68 43 
+Pin P2 39 52 
+Pin P3 20 43 
+Pin P4 8 51 
+Pin P5 64 20 
+LibCell N MC14 106 92 5 
+Pin P1 72 43 
+Pin P2 42 43 
+Pin P3 18 43 
+Pin P4 1 43 
+Pin P5 82 17 
+LibCell N MC15 85 92 4 
+Pin P1 46 43 
+Pin P2 21 43 
+Pin P3 0 43 
+Pin P4 17 12 
+LibCell N MC16 91 92 4 
+Pin P1 28 43 
+Pin P2 50 43 
+Pin P3 11 43 
+Pin P4 28 27 
+LibCell N MC17 104 92 5 
+Pin P1 25 43 
+Pin P2 7 44 
+Pin P3 48 43 
+Pin P4 45 44 
+Pin P5 57 13 
+LibCell N MC18 105 92 5 
+Pin P1 11 42 
+Pin P2 36 43 
+Pin P3 39 43 
+Pin P4 62 43 
+Pin P5 83 58 
+LibCell N MC19 101 92 5 
+Pin P1 33 34 
+Pin P2 27 60 
+Pin P3 52 42 
+Pin P4 9 50 
+Pin P5 86 19 
+LibCell N MC20 166 92 7 
+Pin P1 30 42 
+Pin P2 16 38 
+Pin P3 43 35 
+Pin P4 49 37 
+Pin P5 87 51 
+Pin P6 95 42 
+Pin P7 110 23 
+LibCell N MC21 114 92 4 
+Pin P1 12 43 
+Pin P2 52 43 
+Pin P3 81 43 
+Pin P4 69 12 
+LibCell N MC22 135 92 4 
+Pin P1 39 36 
+Pin P2 10 34 
+Pin P3 76 43 
+Pin P4 110 27 
+LibCell N MC23 92 92 5 
+Pin P1 39 47 
+Pin P2 16 36 
+Pin P3 47 37 
+Pin P4 63 53 
+Pin P5 43 23 
+LibCell N MC24 78 92 2 
+Pin P1 1 43 
+Pin P2 32 17 
+LibCell N MC25 74 92 2 
+Pin P1 15 43 
+Pin P2 32 12 
+LibCell N MC26 395 92 6 
+Pin P1 57 33 
+Pin P2 27 43 
+Pin P3 95 64 
+Pin P4 23 53 
+Pin P5 300 53 
+Pin P6 342 21 
+LibCell N MC27 95 92 4 
+Pin P1 23 42 
+Pin P2 7 43 
+Pin P3 54 43 
+Pin P4 45 23 
+LibCell N MC28 93 92 4 
+Pin P1 50 43 
+Pin P2 21 43 
+Pin P3 4 43 
+Pin P4 61 14 
+LibCell N MC29 93 92 4 
+Pin P1 16 44 
+Pin P2 16 43 
+Pin P3 74 43 
+Pin P4 54 24 
+LibCell N MC30 117 92 6 
+Pin P1 42 43 
+Pin P2 26 43 
+Pin P3 10 43 
+Pin P4 65 43 
+Pin P5 66 45 
+Pin P6 68 12 
+LibCell N MC31 126 92 6 
+Pin P1 39 43 
+Pin P2 0 43 
+Pin P3 86 43 
+Pin P4 61 42 
+Pin P5 41 44 
+Pin P6 71 15 
+LibCell N MC32 101 92 5 
+Pin P1 29 43 
+Pin P2 26 43 
+Pin P3 0 43 
+Pin P4 61 43 
+Pin P5 71 18 
+LibCell N MC33 106 92 5 
+Pin P1 37 43 
+Pin P2 46 43 
+Pin P3 24 43 
+Pin P4 19 45 
+Pin P5 47 28 
+LibCell N MC34 381 92 6 
+Pin P1 39 33 
+Pin P2 34 43 
+Pin P3 93 64 
+Pin P4 24 53 
+Pin P5 288 53 
+Pin P6 352 21 
+LibCell N MC35 77 92 3 
+Pin P1 1 43 
+Pin P2 64 43 
+Pin P3 50 27 
+LibCell N MC36 117 92 6 
+Pin P1 27 43 
+Pin P2 6 45 
+Pin P3 65 43 
+Pin P4 76 45 
+Pin P5 52 43 
+Pin P6 46 26 
+LibCell N MC37 85 92 3 
+Pin P1 1 43 
+Pin P2 52 43 
+Pin P3 50 18 
+LibCell N MC38 119 92 5 
+Pin P1 46 45 
+Pin P2 68 45 
+Pin P3 29 45 
+Pin P4 15 45 
+Pin P5 98 24 
+LibCell N MC39 111 92 5 
+Pin P1 51 42 
+Pin P2 47 42 
+Pin P3 24 42 
+Pin P4 21 42 
+Pin P5 86 24 
+LibCell N MC40 87 92 3 
+Pin P1 11 43 
+Pin P2 28 43 
+Pin P3 36 22 
+LibCell N MC41 100 92 4 
+Pin P1 18 56 
+Pin P2 16 33 
+Pin P3 39 42 
+Pin P4 70 24 
+LibCell N MC42 108 92 4 
+Pin P1 20 43 
+Pin P2 19 34 
+Pin P3 26 43 
+Pin P4 51 23 
+LibCell N MC43 113 92 3 
+Pin P1 87 42 
+Pin P2 14 42 
+Pin P3 29 17 
+LibCell N MC44 127 92 3 
+Pin P1 33 43 
+Pin P2 65 43 
+Pin P3 24 24 
+LibCell N MC45 117 92 6 
+Pin P1 72 43 
+Pin P2 87 42 
+Pin P3 40 43 
+Pin P4 3 42 
+Pin P5 48 43 
+Pin P6 27 12 
+LibCell N MC46 103 92 5 
+Pin P1 3 45 
+Pin P2 20 43 
+Pin P3 30 43 
+Pin P4 57 43 
+Pin P5 83 23 
+LibCell N MC47 121 92 5 
+Pin P1 37 51 
+Pin P2 0 41 
+Pin P3 36 38 
+Pin P4 64 43 
+Pin P5 78 13 
+LibCell N MC48 394 92 7 
+Pin P1 74 53 
+Pin P2 50 33 
+Pin P3 26 23 
+Pin P4 30 43 
+Pin P5 238 33 
+Pin P6 338 17 
+Pin P7 299 33 
+LibCell N MC49 400 92 6 
+Pin P1 48 33 
+Pin P2 34 43 
+Pin P3 81 64 
+Pin P4 26 53 
+Pin P5 307 53 
+Pin P6 330 12 
+LibCell N MC50 382 92 7 
+Pin P1 60 64 
+Pin P2 59 43 
+Pin P3 105 23 
+Pin P4 76 33 
+Pin P5 297 53 
+Pin P6 357 26 
+Pin P7 332 16 
+LibCell N MC51 191 92 9 
+Pin P1 52 43 
+Pin P2 78 43 
+Pin P3 35 43 
+Pin P4 18 42 
+Pin P5 131 42 
+Pin P6 116 43 
+Pin P7 147 42 
+Pin P8 149 43 
+Pin P9 53 12 
+LibCell N MC52 99 92 5 
+Pin P1 64 43 
+Pin P2 27 43 
+Pin P3 25 43 
+Pin P4 19 43 
+Pin P5 26 12 
+LibCell N MC53 151 92 7 
+Pin P1 90 42 
+Pin P2 109 42 
+Pin P3 42 43 
+Pin P4 66 43 
+Pin P5 31 43 
+Pin P6 9 43 
+Pin P7 23 12 
+LibCell N MC54 117 92 5 
+Pin P1 42 54 
+Pin P2 17 33 
+Pin P3 5 48 
+Pin P4 96 43 
+Pin P5 67 21 
+LibCell N MC55 112 92 4 
+Pin P1 27 43 
+Pin P2 6 43 
+Pin P3 56 43 
+Pin P4 38 12 
+LibCell N MC56 152 92 7 
+Pin P1 45 43 
+Pin P2 26 43 
+Pin P3 12 43 
+Pin P4 67 43 
+Pin P5 89 43 
+Pin P6 101 43 
+Pin P7 59 17 
+LibCell N MC57 101 92 5 
+Pin P1 34 43 
+Pin P2 9 42 
+Pin P3 48 43 
+Pin P4 44 42 
+Pin P5 65 12 
+LibCell N MC58 150 92 7 
+Pin P1 32 43 
+Pin P2 16 43 
+Pin P3 46 43 
+Pin P4 53 43 
+Pin P5 89 45 
+Pin P6 119 45 
+Pin P7 99 13 
+LibCell N MC59 116 92 5 
+Pin P1 45 35 
+Pin P2 61 43 
+Pin P3 17 42 
+Pin P4 8 50 
+Pin P5 85 30 
+LibCell N MC60 95 92 4 
+Pin P1 35 50 
+Pin P2 9 44 
+Pin P3 74 43 
+Pin P4 44 12 
+LibCell N MC61 99 92 4 
+Pin P1 18 43 
+Pin P2 56 43 
+Pin P3 62 44 
+Pin P4 31 12 
+LibCell N MC62 158 92 5 
+Pin P1 139 42 
+Pin P2 39 42 
+Pin P3 11 42 
+Pin P4 115 44 
+Pin P5 106 23 
+LibCell N MC63 118 92 3 
+Pin P1 18 43 
+Pin P2 79 43 
+Pin P3 76 12 
+LibCell N MC64 90 92 3 
+Pin P1 27 42 
+Pin P2 6 43 
+Pin P3 28 28 
+LibCell N MC65 113 92 4 
+Pin P1 15 43 
+Pin P2 26 52 
+Pin P3 41 43 
+Pin P4 71 23 
+LibCell N MC66 390 92 6 
+Pin P1 55 33 
+Pin P2 37 43 
+Pin P3 93 64 
+Pin P4 73 50 
+Pin P5 298 53 
+Pin P6 364 29 
+LibCell N MC67 102 92 4 
+Pin P1 14 43 
+Pin P2 28 52 
+Pin P3 37 43 
+Pin P4 80 57 
+LibCell N MC68 93 92 3 
+Pin P1 28 43 
+Pin P2 64 45 
+Pin P3 4 23 
+LibCell N MC69 132 92 4 
+Pin P1 71 43 
+Pin P2 26 61 
+Pin P3 10 35 
+Pin P4 91 28 
+LibCell N MC70 156 92 5 
+Pin P1 118 44 
+Pin P2 78 44 
+Pin P3 36 42 
+Pin P4 4 43 
+Pin P5 124 26 
+LibCell N MC71 119 92 5 
+Pin P1 80 43 
+Pin P2 33 43 
+Pin P3 26 43 
+Pin P4 12 43 
+Pin P5 24 12 
+LibCell N MC72 321 92 5 
+Pin P1 53 23 
+Pin P2 35 64 
+Pin P3 32 33 
+Pin P4 103 53 
+Pin P5 295 21 
+LibCell N MC73 116 92 2 
+Pin P1 23 43 
+Pin P2 52 12 
+LibCell N MC74 105 92 4 
+Pin P1 23 43 
+Pin P2 0 52 
+Pin P3 41 43 
+Pin P4 74 23 
+LibCell N MC75 60 92 2 
+Pin P1 6 43 
+Pin P2 17 12 
+LibCell N MC76 323 92 5 
+Pin P1 42 43 
+Pin P2 86 64 
+Pin P3 63 23 
+Pin P4 86 53 
+Pin P5 272 13 
+LibCell N MC77 116 92 5 
+Pin P1 33 36 
+Pin P2 31 36 
+Pin P3 8 43 
+Pin P4 91 43 
+Pin P5 71 28 
+LibCell N MC78 437 92 6 
+Pin P1 62 23 
+Pin P2 17 27 
+Pin P3 77 43 
+Pin P4 18 53 
+Pin P5 326 56 
+Pin P6 415 12 
+LibCell N MC79 397 92 6 
+Pin P1 66 23 
+Pin P2 17 27 
+Pin P3 73 43 
+Pin P4 21 53 
+Pin P5 317 56 
+Pin P6 368 27 
+LibCell N MC80 64 92 2 
+Pin P1 30 43 
+Pin P2 24 12 
+LibCell N MC1 365 115 5 
+Pin P1 278 28 
+Pin P2 311 80 
+Pin P3 315 41 
+Pin P4 169 41 
+Pin P5 52 38 
+LibCell N MC2 248 115 2 
+Pin P1 20 54 
+Pin P2 89 16 
+LibCell N MC3 423 115 5 
+Pin P1 67 28 
+Pin P2 35 80 
+Pin P3 27 41 
+Pin P4 393 54 
+Pin P5 289 41 
+LibCell N MC4 532 115 6 
+Pin P1 59 28 
+Pin P2 28 33 
+Pin P3 74 54 
+Pin P4 31 67 
+Pin P5 398 70 
+Pin P6 472 20 
+LibCell N MC5 51 115 2 
+Pin P1 4 54 
+Pin P2 19 34 
+LibCell N MC6 74 115 3 
+Pin P1 29 54 
+Pin P2 0 54 
+Pin P3 27 32 
+LibCell N MC7 71 115 3 
+Pin P1 37 54 
+Pin P2 8 54 
+Pin P3 39 22 
+LibCell N MC8 110 115 3 
+Pin P1 10 54 
+Pin P2 27 54 
+Pin P3 56 28 
+LibCell N MC9 107 115 5 
+Pin P1 68 50 
+Pin P2 70 43 
+Pin P3 11 54 
+Pin P4 23 43 
+Pin P5 24 30 
+LibCell N MC10 154 115 5 
+Pin P1 93 54 
+Pin P2 57 54 
+Pin P3 0 64 
+Pin P4 28 64 
+Pin P5 69 28 
+LibCell N MC11 155 115 6 
+Pin P1 43 54 
+Pin P2 30 54 
+Pin P3 17 54 
+Pin P4 78 54 
+Pin P5 95 54 
+Pin P6 74 16 
+LibCell N MC12 133 115 5 
+Pin P1 36 54 
+Pin P2 21 54 
+Pin P3 1 54 
+Pin P4 70 54 
+Pin P5 60 17 
+LibCell N MC13 111 115 5 
+Pin P1 85 54 
+Pin P2 49 65 
+Pin P3 26 54 
+Pin P4 10 64 
+Pin P5 80 25 
+LibCell N MC14 133 115 5 
+Pin P1 90 54 
+Pin P2 53 54 
+Pin P3 22 54 
+Pin P4 1 54 
+Pin P5 103 21 
+LibCell N MC15 107 115 4 
+Pin P1 57 54 
+Pin P2 26 54 
+Pin P3 0 54 
+Pin P4 22 16 
+LibCell N MC16 114 115 4 
+Pin P1 35 54 
+Pin P2 63 54 
+Pin P3 14 54 
+Pin P4 35 34 
+LibCell N MC17 130 115 5 
+Pin P1 31 54 
+Pin P2 9 56 
+Pin P3 61 54 
+Pin P4 56 56 
+Pin P5 71 17 
+LibCell N MC18 131 115 5 
+Pin P1 14 52 
+Pin P2 45 54 
+Pin P3 49 54 
+Pin P4 78 54 
+Pin P5 104 73 
+LibCell N MC19 126 115 5 
+Pin P1 41 42 
+Pin P2 34 75 
+Pin P3 65 52 
+Pin P4 12 63 
+Pin P5 108 24 
+LibCell N MC20 207 115 7 
+Pin P1 37 53 
+Pin P2 20 48 
+Pin P3 54 44 
+Pin P4 61 46 
+Pin P5 108 64 
+Pin P6 118 52 
+Pin P7 138 28 
+LibCell N MC21 143 115 4 
+Pin P1 16 54 
+Pin P2 65 54 
+Pin P3 101 54 
+Pin P4 86 15 
+LibCell N MC22 169 115 4 
+Pin P1 49 45 
+Pin P2 13 42 
+Pin P3 96 54 
+Pin P4 138 34 
+LibCell N MC23 116 115 5 
+Pin P1 49 58 
+Pin P2 20 45 
+Pin P3 58 46 
+Pin P4 79 67 
+Pin P5 54 28 
+LibCell N MC24 98 115 2 
+Pin P1 1 54 
+Pin P2 40 21 
+LibCell N MC25 92 115 2 
+Pin P1 19 54 
+Pin P2 40 15 
+LibCell N MC26 493 115 6 
+Pin P1 71 41 
+Pin P2 34 54 
+Pin P3 118 80 
+Pin P4 29 67 
+Pin P5 375 67 
+Pin P6 428 26 
+LibCell N MC27 119 115 4 
+Pin P1 29 52 
+Pin P2 9 54 
+Pin P3 67 54 
+Pin P4 56 28 
+LibCell N MC28 116 115 4 
+Pin P1 63 54 
+Pin P2 26 54 
+Pin P3 5 54 
+Pin P4 77 18 
+LibCell N MC29 116 115 4 
+Pin P1 20 55 
+Pin P2 20 54 
+Pin P3 92 54 
+Pin P4 67 30 
+LibCell N MC30 147 115 6 
+Pin P1 52 54 
+Pin P2 33 54 
+Pin P3 13 54 
+Pin P4 82 54 
+Pin P5 83 56 
+Pin P6 85 16 
+LibCell N MC31 157 115 6 
+Pin P1 49 54 
+Pin P2 0 54 
+Pin P3 107 54 
+Pin P4 76 52 
+Pin P5 52 56 
+Pin P6 89 19 
+LibCell N MC32 126 115 5 
+Pin P1 36 54 
+Pin P2 32 54 
+Pin P3 0 54 
+Pin P4 77 54 
+Pin P5 88 22 
+LibCell N MC33 133 115 5 
+Pin P1 47 54 
+Pin P2 58 54 
+Pin P3 30 54 
+Pin P4 24 56 
+Pin P5 59 35 
+LibCell N MC34 476 115 6 
+Pin P1 48 41 
+Pin P2 42 54 
+Pin P3 117 80 
+Pin P4 30 67 
+Pin P5 360 67 
+Pin P6 440 26 
+LibCell N MC35 96 115 3 
+Pin P1 2 54 
+Pin P2 81 54 
+Pin P3 63 33 
+LibCell N MC36 147 115 6 
+Pin P1 34 54 
+Pin P2 8 56 
+Pin P3 81 54 
+Pin P4 96 56 
+Pin P5 65 54 
+Pin P6 58 33 
+LibCell N MC37 106 115 3 
+Pin P1 1 54 
+Pin P2 65 54 
+Pin P3 62 23 
+LibCell N MC38 149 115 5 
+Pin P1 58 56 
+Pin P2 86 56 
+Pin P3 37 56 
+Pin P4 19 56 
+Pin P5 123 31 
+LibCell N MC39 139 115 5 
+Pin P1 64 52 
+Pin P2 58 52 
+Pin P3 30 52 
+Pin P4 26 52 
+Pin P5 108 30 
+LibCell N MC40 109 115 3 
+Pin P1 14 54 
+Pin P2 35 54 
+Pin P3 45 28 
+LibCell N MC41 125 115 4 
+Pin P1 23 70 
+Pin P2 21 41 
+Pin P3 48 53 
+Pin P4 87 30 
+LibCell N MC42 135 115 4 
+Pin P1 25 54 
+Pin P2 24 43 
+Pin P3 33 54 
+Pin P4 64 29 
+LibCell N MC43 141 115 3 
+Pin P1 108 53 
+Pin P2 18 52 
+Pin P3 36 21 
+LibCell N MC44 159 115 3 
+Pin P1 42 54 
+Pin P2 81 54 
+Pin P3 30 30 
+LibCell N MC45 146 115 6 
+Pin P1 90 54 
+Pin P2 109 52 
+Pin P3 50 54 
+Pin P4 4 52 
+Pin P5 60 54 
+Pin P6 34 16 
+LibCell N MC46 129 115 5 
+Pin P1 3 56 
+Pin P2 25 54 
+Pin P3 38 54 
+Pin P4 72 54 
+Pin P5 104 29 
+LibCell N MC47 151 115 5 
+Pin P1 46 64 
+Pin P2 0 52 
+Pin P3 45 48 
+Pin P4 80 54 
+Pin P5 97 17 
+LibCell N MC48 492 115 7 
+Pin P1 93 67 
+Pin P2 63 41 
+Pin P3 32 28 
+Pin P4 37 54 
+Pin P5 297 41 
+Pin P6 423 21 
+Pin P7 373 41 
+LibCell N MC49 500 115 6 
+Pin P1 60 41 
+Pin P2 43 54 
+Pin P3 101 80 
+Pin P4 33 67 
+Pin P5 384 67 
+Pin P6 413 15 
+LibCell N MC50 477 115 7 
+Pin P1 75 80 
+Pin P2 74 54 
+Pin P3 131 28 
+Pin P4 95 41 
+Pin P5 371 67 
+Pin P6 447 32 
+Pin P7 415 21 
+LibCell N MC51 239 115 9 
+Pin P1 65 54 
+Pin P2 98 54 
+Pin P3 44 54 
+Pin P4 23 52 
+Pin P5 164 52 
+Pin P6 146 54 
+Pin P7 184 52 
+Pin P8 186 54 
+Pin P9 66 15 
+LibCell N MC52 124 115 5 
+Pin P1 81 54 
+Pin P2 34 54 
+Pin P3 32 54 
+Pin P4 24 54 
+Pin P5 33 15 
+LibCell N MC53 188 115 7 
+Pin P1 112 52 
+Pin P2 137 52 
+Pin P3 53 54 
+Pin P4 83 54 
+Pin P5 39 54 
+Pin P6 11 54 
+Pin P7 28 16 
+LibCell N MC54 146 115 5 
+Pin P1 53 67 
+Pin P2 22 42 
+Pin P3 6 60 
+Pin P4 120 54 
+Pin P5 83 26 
+LibCell N MC55 141 115 4 
+Pin P1 33 54 
+Pin P2 7 54 
+Pin P3 70 54 
+Pin P4 47 16 
+LibCell N MC56 190 115 7 
+Pin P1 56 54 
+Pin P2 33 54 
+Pin P3 15 54 
+Pin P4 84 54 
+Pin P5 111 54 
+Pin P6 127 54 
+Pin P7 74 22 
+LibCell N MC57 126 115 5 
+Pin P1 43 54 
+Pin P2 11 52 
+Pin P3 60 54 
+Pin P4 55 52 
+Pin P5 81 15 
+LibCell N MC58 188 115 7 
+Pin P1 40 54 
+Pin P2 20 54 
+Pin P3 58 54 
+Pin P4 66 54 
+Pin P5 112 56 
+Pin P6 149 56 
+Pin P7 124 17 
+LibCell N MC59 145 115 5 
+Pin P1 56 44 
+Pin P2 77 54 
+Pin P3 22 53 
+Pin P4 10 62 
+Pin P5 106 37 
+LibCell N MC60 119 115 4 
+Pin P1 44 63 
+Pin P2 11 55 
+Pin P3 92 54 
+Pin P4 56 16 
+LibCell N MC61 124 115 4 
+Pin P1 22 54 
+Pin P2 70 54 
+Pin P3 77 55 
+Pin P4 39 16 
+LibCell N MC62 197 115 5 
+Pin P1 174 52 
+Pin P2 48 53 
+Pin P3 13 52 
+Pin P4 144 56 
+Pin P5 132 28 
+LibCell N MC63 148 115 3 
+Pin P1 23 54 
+Pin P2 98 54 
+Pin P3 95 16 
+LibCell N MC64 112 115 3 
+Pin P1 34 53 
+Pin P2 8 54 
+Pin P3 35 36 
+LibCell N MC65 141 115 4 
+Pin P1 19 54 
+Pin P2 32 65 
+Pin P3 51 54 
+Pin P4 88 28 
+LibCell N MC66 488 115 6 
+Pin P1 69 41 
+Pin P2 46 54 
+Pin P3 116 80 
+Pin P4 92 63 
+Pin P5 373 67 
+Pin P6 455 37 
+LibCell N MC67 128 115 4 
+Pin P1 18 54 
+Pin P2 36 65 
+Pin P3 46 54 
+Pin P4 100 72 
+LibCell N MC68 117 115 3 
+Pin P1 36 54 
+Pin P2 80 56 
+Pin P3 6 29 
+LibCell N MC69 165 115 4 
+Pin P1 89 54 
+Pin P2 33 76 
+Pin P3 12 44 
+Pin P4 114 35 
+LibCell N MC70 195 115 5 
+Pin P1 148 55 
+Pin P2 98 55 
+Pin P3 45 53 
+Pin P4 5 54 
+Pin P5 155 33 
+LibCell N MC71 149 115 5 
+Pin P1 101 54 
+Pin P2 41 54 
+Pin P3 33 54 
+Pin P4 15 54 
+Pin P5 30 15 
+LibCell N MC72 401 115 5 
+Pin P1 66 28 
+Pin P2 44 80 
+Pin P3 41 41 
+Pin P4 129 67 
+Pin P5 369 26 
+LibCell N MC73 145 115 2 
+Pin P1 29 54 
+Pin P2 65 16 
+LibCell N MC74 132 115 4 
+Pin P1 29 54 
+Pin P2 0 65 
+Pin P3 51 54 
+Pin P4 93 29 
+LibCell N MC75 75 115 2 
+Pin P1 7 54 
+Pin P2 21 16 
+LibCell N MC76 404 115 5 
+Pin P1 53 54 
+Pin P2 107 80 
+Pin P3 79 28 
+Pin P4 108 67 
+Pin P5 340 16 
+LibCell N MC77 145 115 5 
+Pin P1 41 45 
+Pin P2 39 45 
+Pin P3 10 54 
+Pin P4 114 54 
+Pin P5 89 36 
+LibCell N MC78 546 115 6 
+Pin P1 78 28 
+Pin P2 21 33 
+Pin P3 96 54 
+Pin P4 22 67 
+Pin P5 408 70 
+Pin P6 519 16 
+LibCell N MC79 497 115 6 
+Pin P1 82 28 
+Pin P2 21 33 
+Pin P3 91 54 
+Pin P4 26 67 
+Pin P5 396 70 
+Pin P6 460 34 
+LibCell N MC80 81 115 2 
+Pin P1 37 54 
+Pin P2 30 16
+
+DieSize 0 0 23000 19000 
+
+TopDieMaxUtil 80 
+BottomDieMaxUtil 80 
+
+TopDieRows 0 0 23000 33 573 
+BottomDieRows 0 0 23000 33 573 
+
+TopDieTech TA 
+BottomDieTech TA 
+
+TerminalSize 92 92 
+TerminalSpacing 92 
+TerminalCost 10

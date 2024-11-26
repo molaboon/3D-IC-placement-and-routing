@@ -1,4 +1,4 @@
-NumTechnologies 1 
+NumTechnologies 1
 Tech TA 221 
 LibCell N MC1 382 33 3 
 Pin P1 46 0 

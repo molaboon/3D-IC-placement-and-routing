@@ -68,7 +68,7 @@ int main(int argc, char *argv[]){
 
 
 	/*	coarsening */
-	// cout << "h" << endl;
+	cout << "step1" << endl;
 
 	// coarsen(rawnet, instances);
 
@@ -87,8 +87,14 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+				cout << "step2" << endl;
+
 		totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
+				cout << "step3" << endl;
+
 		CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
+		cout << "step4" << endl;
+
 
 		/*	std. cell Coarsening	*/
 		// cout << "here" <<endl;
