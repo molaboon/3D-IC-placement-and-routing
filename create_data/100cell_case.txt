@@ -1272,13 +1272,13 @@ Pin P58 10759 0
 Pin P59 11299 1339 
 Pin P60 4298 0 
 
-DieSize 0 0 23000 19000 
+DieSize 0 0 5000 5000
 
 TopDieMaxUtil 80 
 BottomDieMaxUtil 80 
 
-TopDieRows 0 0 23000 33 573 
-BottomDieRows 0 0 23000 33 573 
+TopDieRows 0 0 5000 33 151 
+BottomDieRows 0 0 5000 33 151 
 
 TopDieTech TA 
 BottomDieTech TA 

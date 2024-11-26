@@ -11,7 +11,7 @@
 
 
 
-void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance)
+void returnGridInfo(Die die, gridInfo binInfo, int Numinstance)
 {   
     binInfo.dieWidth = die.upperRightX ; 
     binInfo.dieHeight = die.upperRightY ;
@@ -30,13 +30,13 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 {
     // give each cell initial solution
 
-    // srand( time(NULL) );
+    srand( time(NULL) );
 
     // double x[] = {0.0, 0.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478,   0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000,      0};
     // double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 20000, 20000,   0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000,  31000};
     // double z[] = {0.2,    0.8,    0.2,    0.8,     0.2,     0.8,   0.2,   0.8, 0.2,  0.8,   0.2,   0.8,   0.2,   0.8,   0.8,   0.2,   0.2,   0.8,   0.2,   0.8,   0.2,   0.8,   0.2,   0.2,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2};
-    double x[] = {15.0, 16.0, 17.0, 18.0, 15.0, 16.0, 17.0, 18.0};
-    double y[] = {15.0, 16.0, 17.0, 18.0, 15.0, 16.0, 17.0, 18.0};
+    // double x[] = {15.0, 16.0, 17.0, 18.0, 15.0, 16.0, 17.0, 18.0};
+    // double y[] = {15.0, 16.0, 17.0, 18.0, 15.0, 16.0, 17.0, 18.0};
     
     int cnt = 0;
 
@@ -47,8 +47,8 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         double minY = instances[i].inflateHeight;
         double maxY = binInfo.dieHeight - instances[i].inflateHeight;
 
-        double X = (maxX - minX) * rand() / (RAND_MAX + 1.0) + minX;
-        double Y = (maxY - minY) * rand() / (RAND_MAX +1.0) + minY;
+        double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
+        double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
         double Z = 0.5;
 
         // if(instances[i].isMacro)
@@ -58,7 +58,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         // instances[i].z = z[cnt];
         instances[i].rotate = 0;
 
-        cnt++;
+        // cnt++;
         
         instances[i].x = X;
         instances[i].y = Y;

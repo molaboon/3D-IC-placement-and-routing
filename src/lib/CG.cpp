@@ -40,6 +40,7 @@ double scoreOfX( const vector <RawNet> rawNet, const double gamma, const bool is
             else
                 tmp = rawNet[net].Connection[instance]->x;
 
+
             numerator_1 += tmp * exp(tmp / gamma);
             denominator_1 += exp(tmp / gamma);
             numerator_2 += tmp * exp(-tmp/ gamma);
@@ -147,7 +148,7 @@ double returnPsi(double z)
     return psi;
 }
 
-double TSVofNet( const vector <RawNet> rawNet)
+double TSVofNet( vector <RawNet> rawNet)
 {
     double score = 0.0;
     int size = rawNet.size();

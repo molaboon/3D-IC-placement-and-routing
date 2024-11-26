@@ -20,7 +20,7 @@ typedef struct grid_info
 }gridInfo;
 
 
-void returnGridInfo(Die &die, gridInfo &binInfo, int Numinstance);
+void returnGridInfo(Die die, gridInfo binInfo, int Numinstance);
 
 void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie);
 
