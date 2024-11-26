@@ -60,15 +60,13 @@ int main(int argc, char *argv[]){
 	readHybridTerminalInfo(input, &terminalTech);
 	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros);
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro);
-	returnGridInfo(top_die, binInfo, numInstances);
+	returnGridInfo(&top_die, &binInfo, numInstances);
 
 	/*	macro partition and placement	*/
 	
 	// macroPartition( macros, netsOfMacros, top_die);
 
-
 	/*	coarsening */
-	cout << "step1" << endl;
 
 	// coarsen(rawnet, instances);
 
@@ -87,14 +85,10 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
-				cout << "step2" << endl;
 
 		totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
-				cout << "step3" << endl;
 
 		CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
-		cout << "step4" << endl;
-
 
 		/*	std. cell Coarsening	*/
 		// cout << "here" <<endl;
@@ -105,11 +99,11 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		int totalIter = 1;
+		int totalIter = 100;
 
 		for(int i = 0; i < totalIter; i++)
 		{
-			for(int j = 0; j < 10; j++)
+			for(int j = 0; j < 20; j++)
 			{
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
 
@@ -122,7 +116,7 @@ int main(int argc, char *argv[]){
 
 				else
 				{
-					cout << "next iter\n\n";
+					// cout << "next iter\n\n";
 					break;
 				}	
 			}
@@ -131,7 +125,7 @@ int main(int argc, char *argv[]){
 
 		endTime = clock();
 
-		cout << "Time " << endTime - startTime <<endl;
+		printf("Time: %fs\n", (endTime - startTime) / CLOCKS_PER_SEC );
 
 	}
 

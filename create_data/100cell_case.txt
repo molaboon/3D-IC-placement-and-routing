@@ -1,5 +1,5 @@
 NumTechnologies 1
-Tech TA 221 
+Tech TA 220 
 LibCell N MC1 382 33 3 
 Pin P1 46 0 
 Pin P2 145 0 
@@ -1272,13 +1272,13 @@ Pin P58 10759 0
 Pin P59 11299 1339 
 Pin P60 4298 0 
 
-DieSize 0 0 5000 5000
+DieSize 0 0 1650 1650
 
 TopDieMaxUtil 80 
 BottomDieMaxUtil 80 
 
-TopDieRows 0 0 5000 33 151 
-BottomDieRows 0 0 5000 33 151 
+TopDieRows 0 0 1650 33 50 
+BottomDieRows 0 0 1650 33 50 
 
 TopDieTech TA 
 BottomDieTech TA 

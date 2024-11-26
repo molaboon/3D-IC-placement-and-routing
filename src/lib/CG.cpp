@@ -496,17 +496,14 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     {
         norm += lastGra[index];
         beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
-        // cout << lastGra[index]<<endl;
     }
 
     norm = norm * norm;
     beta = beta/norm;
 
     for(int index = 0; index < Numinstance * Dimensions; index ++)
-    {
         nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
-        // cout << nowCG[index] << endl;
-    }
+
 }
 
 double returnAlpha(double nowCG[])
@@ -599,6 +596,5 @@ void updateGra(vector <RawNet> rawNets, double gamma, vector<instance> &instance
         nowGra[i*3 + 1] = instances[i].gra_y;
         nowGra[i*3 + 2] = instances[i].gra_z + instances[i].gra_d;
 
-        // printf("%lf, %lf, %lf, %lf, %lf, %lf\n", nowGra[i*3], nowGra[i*3 + 1], nowGra[i*3+2], nowCG[i*3], nowCG[i*3+1], nowCG[i*3+2]);
     }
 }

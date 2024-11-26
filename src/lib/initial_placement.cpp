@@ -11,18 +11,20 @@
 
 
 
-void returnGridInfo(Die die, gridInfo binInfo, int Numinstance)
+void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance)
 {   
-    binInfo.dieWidth = die.upperRightX ; 
-    binInfo.dieHeight = die.upperRightY ;
+    binInfo->dieWidth = die->upperRightX ; 
+    binInfo->dieHeight = die->upperRightY ;
 
-    binInfo.binWidth = 10.0;
-    binInfo.binHeight = 10.0;
+    // binXnum * binYnum ~= Numinstance
+    binInfo->binXnum = floor( sqrt( (double) Numinstance ));
+    binInfo->binYnum = floor( sqrt( (double) Numinstance ));
 
-    binInfo.binXnum = (binInfo.dieWidth / binInfo.binWidth);
-    binInfo.binYnum = binInfo.dieHeight / binInfo.binHeight;
+    binInfo->binWidth = floor(die->upperRightX / binInfo->binXnum);
+    binInfo->binHeight = floor(die->upperRightX / binInfo->binYnum);
 
-    binInfo.Numinstance = Numinstance;
+    
+    binInfo->Numinstance = Numinstance;
 
 }
 
