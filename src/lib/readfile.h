@@ -153,7 +153,7 @@ void printDieInfo(Die top_die, Die bottom_die);
 void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal);
 void printHybridTerminalInfo(Hybrid_terminal terminal);
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros);
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros, vector <instance> &stdCells);
 void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro);

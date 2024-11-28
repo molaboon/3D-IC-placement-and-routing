@@ -4,6 +4,7 @@
 
 #include "partition.h"
 #include "readfile.h"
+#include "initial_placement.h"
 
 void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
 {
@@ -59,7 +60,7 @@ void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, D
 
         cut = returnCut(netsOfMacros);
         cnt++;
-        printf("%lf, %lf, %d\n", topDieArea, btmDieArea, cut);
+        // printf("%lf, %lf, %d\n", topDieArea, btmDieArea, cut);
 
         if(cut < bestCut)
         {
@@ -92,4 +93,20 @@ int returnCut(vector <RawNet> &netsOfMacros)
     }
 
     return cut;
+}
+
+void macroRotation(vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
+{
+
+}
+
+void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
+{
+    gridInfo macroBinInfo;
+
+}
+
+void macroLegalization(vector <instance> &macros)
+{
+
 }

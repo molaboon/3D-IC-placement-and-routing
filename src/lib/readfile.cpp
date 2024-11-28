@@ -129,7 +129,7 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros)
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros, vector <instance> &stdCells)
 {
     assert(input);
     int numOfTech = TechMenu.size();

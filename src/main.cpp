@@ -37,7 +37,6 @@ int main(int argc, char *argv[]){
 
 	Die top_die, bottom_die;												//store the die information
 	Hybrid_terminal terminalTech;												//store the size of the hybrid bond terminal connect between two dies
-	// int NumTerminal;														//cut size calculated by shmetis
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
 	
@@ -46,10 +45,10 @@ int main(int argc, char *argv[]){
 	
 	int NumNets;															//How many nets connect betweem Instances
 	vector <RawNet> rawnet;													//The rawnet data store in input
- 	// vector <Net> NetArray;													//NetArray store how many cell connects to this net and a list of cell which connects to this net
-	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
+ 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
 
 	vector <instance> macros;
+	vector <instance> stdCells;
 	vector <RawNet> netsOfMacros;
 	vector <int> numStdCellConncetMacro;
 	vector <terminal> terminals;
@@ -58,11 +57,11 @@ int main(int argc, char *argv[]){
 	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminalTech);
-	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros);
+	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros, stdCells);
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro);
 	returnGridInfo(&top_die, &binInfo, numInstances);
 
-	/*	macro partition and placement	*/
+	/*	macro gradient and placement	*/
 	
 	// macroPartition( macros, netsOfMacros, top_die);
 
@@ -99,7 +98,7 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		int totalIter = 100;
+		int totalIter = numInstances;
 
 		for(int i = 0; i < totalIter; i++)
 		{
