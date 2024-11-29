@@ -40,7 +40,6 @@ double scoreOfX( const vector <RawNet> rawNet, const double gamma, const bool is
             else
                 tmp = rawNet[net].Connection[instance]->x;
 
-
             numerator_1 += tmp * exp(tmp / gamma);
             denominator_1 += exp(tmp / gamma);
             numerator_2 += tmp * exp(-tmp/ gamma);
@@ -162,17 +161,12 @@ double TSVofNet( vector <RawNet> rawNet)
 
         for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
         {
-
             double tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
 
             numerator_1 += tmpPsi * exp(tmpPsi / 0.05);
-            
             denominator_1 += exp(tmpPsi / 0.05);
-
             numerator_2 += tmpPsi * exp(-tmpPsi/ 0.05);
-            
             denominator_2 += exp(-tmpPsi/ 0.05);
-
         }
         score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
     }
@@ -198,7 +192,7 @@ double scoreOfz( vector <RawNet> rawNets, vector <instance> &instances, gridInfo
 
             instances[i].density = tmpD;
         }
-        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer, false, false);
+        penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false);
     }
     score += scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -221,7 +215,7 @@ double *createBins(gridInfo binInfo)
     return bins;
 }
 
-void penaltyInfoOfinstance( const instance instance, const double density, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool isGra, bool needMinus)
+void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool isGra, bool needMinus)
 {
     int leftXnum, rightXnum, topYnum, btmYnum;
     int row = (int) binInfo.binXnum;
@@ -367,8 +361,8 @@ void gradientX(vector <RawNet> rawNet, const double gamma, vector <instance> &in
 
         // Dedecut the original block(needMinus = ture) first and the add the gra one(isGra = true).
 
-        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer, isGra = false, needMinus = true);
-        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer, isGra = true, needMinus = false);
+        penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true);
+        penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false);
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -399,8 +393,8 @@ void gradientY(vector <RawNet> rawNet, const double gamma, vector <instance> &in
 
         score = scoreOfY(rawNet, gamma, true);
 
-        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer, isGra = false, needMinus = true);
-        penaltyInfoOfinstance(instances[i], instances[i].density, binInfo, firstLayer, secondLayer, isGra = true, needMinus = false);
+        penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true);
+        penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false);
             
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -419,21 +413,30 @@ void gradientZ(vector <RawNet> rawNet, const double gamma, vector <instance> &in
         double tmpd = instances[i].density;
         double score , score2;
         bool needMinus = false;
-        instances[i].z += h;
+        double *fl = createBins(binInfo);
+        double *sl = createBins(binInfo);
 
-        score2 = scoreOfz(rawNet, instances, binInfo, zChanged); 
+        instances[i].z += h;
+        instances[i].density = returnDensity(instances[i].z, 0.0);
 
         score = TSVofNet(rawNet);
-        
-        score2 -= score;
+
+        memcpy(fl, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        memcpy(sl, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
+
+        score2 = scoreOfPenalty(fl, sl, binInfo);
 
         instances[i].gra_z = (score - zScore) / h;
-
         instances[i].gra_d = penaltyWeight * ( score2 - penaltyScore) / h;
 
         instances[i].z = tmpz;
-
         instances[i].density = tmpd;
+
+        free(fl);
+        free(sl);
     }
 
 }
@@ -574,14 +577,19 @@ void updateGra(vector <RawNet> rawNets, double gamma, vector<instance> &instance
     double *originFirstLayer = createBins(binInfo);
     double *originSecondLayer = createBins(binInfo);
     double numInstances = instances.size();
-    bool needMinus = false;
     
-    for(int j = 0; j < numInstances; j++)
-        penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, originFirstLayer, originSecondLayer, false, needMinus);
-
+    
+        
     xScore = scoreOfX(rawNets, gamma, false);
     yScore = scoreOfY(rawNets, gamma, false);
     zScore = scoreOfz(rawNets, instances, binInfo, 1);
+    
+    for(int j = 0; j < numInstances; j++)
+    {
+        // instances[j].density = returnDensity(instances[j].z, 0.0);
+        penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false);    
+    }
+    
     penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);
 
     gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);

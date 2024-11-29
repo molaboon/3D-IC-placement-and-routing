@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 	// start_time = omp_get_wtime();
 	// srand(time(NULL));
 
-	clock_t startTime, endTime;
+	double startTime, endTime;
 
 	startTime = clock();
 	
@@ -119,12 +119,12 @@ int main(int argc, char *argv[]){
 					break;
 				}	
 			}
-			penaltyWeight *= 2;
+			// penaltyWeight *= 2;
 		}
 
 		endTime = clock();
 
-		printf("Time: %fs\n", (endTime - startTime) / CLOCKS_PER_SEC );
+		printf("Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
 
 	}
 
@@ -132,7 +132,7 @@ int main(int argc, char *argv[]){
 	{	
 		// firstPlacement(instances, binInfo, top_die);
 		cell2BestLayer(instances, numInstances, top_die, bottom_die);
-		place2BestRow(instances, numInstances, top_die, bottom_die, macros);
+		// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
 		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		writeVisualFile(instances, visualFile, numInstances, top_die);
 		writeFile(instances, outputName, rawnet, numInstances, terminals);

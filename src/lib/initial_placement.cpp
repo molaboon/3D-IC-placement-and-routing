@@ -4,6 +4,7 @@
 #include <time.h>
 #include <math.h>
 #include <iostream>
+#include <string.h>
 
 #include "initial_placement.h"
 #include "CG.h"
@@ -32,7 +33,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 {
     // give each cell initial solution
 
-    srand( time(NULL) );
+    // srand( time(NULL) );
 
     // double x[] = {0.0, 0.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478,   0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000,      0};
     // double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 20000, 20000,   0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000,  31000};
@@ -82,15 +83,28 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
     double penaltyWeight;
     double xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, penaltyScore = 0.0;
     double grax = 0.0, gray = 0.0, graz = 0.0, grad = 0.0;
+    double *originfl = createBins(binInfo);
+    double *originsl = createBins(binInfo);
+    double *fl = createBins(binInfo);
+    double *sl = createBins(binInfo);
 
     int size = instances.size();
 
     xScore = scoreOfX(rawNet, gamma, false);
     yScore = scoreOfY(rawNet, gamma, false);
     tsvScore = TSVofNet(rawNet);
-    penaltyScore = scoreOfz(rawNet, instances, binInfo, 1);
+
+    for(int i = 0; i < size; i++)
+    {
+        instances[i].density = returnDensity(instances[i].z, 0.0);
+        penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false);
+    }
+
+    penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
 
     penaltyScore -= tsvScore;
+
+    double startTime = clock();
 
     for(int i = 0; i < size; i++)
     {        
@@ -98,72 +112,79 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
         double tmpy = instances[i].y;
         double tmpDen = 0.0;
         double tmpXscore = 0.0, tmpYscore = 0.0;
-        
-        double *fl = createBins(binInfo);
-        double *sl = createBins(binInfo);
 
         // part of x
-        instances[i].x += h;
+        instances[i].tmpX = instances[i].x;
+        instances[i].tmpX += h;
+        
+        memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-        tmpXscore = scoreOfX(rawNet, gamma, false);
-        tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
+        tmpXscore = scoreOfX(rawNet, gamma, true);
+
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
+
+        tmpDen = scoreOfPenalty(fl, sl, binInfo);
 
         grax += fabs( (tmpXscore - xScore) / h) ;
-        grad += fabs( (tmpDen - tsvScore - penaltyScore) / h );
+        grad += fabs( (tmpDen - penaltyScore) / h );
 
-        instances[i].x = tmpx;
+        // part of y /////////////////////////////////////////////////////////////
 
-        free(fl);
-        free(sl);
+        memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-        // part of y
+        instances[i].tmpY = instances[i].y;
+        instances[i].tmpY += h;
 
-        instances[i].y += h;
+        tmpYscore = scoreOfY(rawNet, gamma, true);
 
-        tmpYscore = scoreOfY(rawNet, gamma, false);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
 
-        tmpDen = scoreOfz(rawNet, instances, binInfo, 0);
+        tmpDen = scoreOfPenalty(fl, sl, binInfo);
 
         gray += fabs( (tmpYscore - yScore) / h);
+        grad += fabs( (tmpDen - penaltyScore) / h );
 
-        grad += fabs( (tmpDen - tsvScore - penaltyScore) / h );
-                    
-        instances[i].y = tmpy;
-    }
-
-    for(int i = 0; i < size ; i++)
-    {
+        // part of z /////////////////////////////////////////////////////////////
+                       
         double tmpz = instances[i].z;
-        double tmpTSV = 0.0, tmpDen = 0.0;
+        double tmpTSV = 0.0;
 
         instances[i].z += h;
+        instances[i].density = returnDensity(instances[i].z, 0.0);
 
         tmpTSV = TSVofNet(rawNet);
 
-        tmpDen = scoreOfz(rawNet, instances, binInfo, 1);
+        memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-        tmpDen -= tmpTSV;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
+
+        tmpDen = scoreOfPenalty(fl, sl, binInfo);
 
         graz += fabs( (tmpTSV - tsvScore) / h);
-
         grad += fabs( (tmpDen - penaltyScore) / h);
 
         instances[i].z = tmpz;
+        instances[i].density = returnDensity(instances[i].z, 0.0);        
     } 
+
+    free(fl);
+    free(sl);
 
     penaltyWeight = (grax + gray + graz) / grad;
 
-    double *originFirstLayer = createBins(binInfo);
-    double *originSecondLayer = createBins(binInfo);
+    gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originfl, originsl);
+    gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originfl, originsl);
+    gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originfl, originsl);
 
-    for(int j = 0; j < size; j++)
-        penaltyInfoOfinstance(instances[j], instances[j].density, binInfo, originFirstLayer, originSecondLayer, false, false);
+    double endTime = clock();
 
-    gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
-    
-    gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
-
-    gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originFirstLayer, originSecondLayer);
+    printf("penalty Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
 
     return penaltyWeight;
 }

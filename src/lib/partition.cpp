@@ -97,7 +97,7 @@ int returnCut(vector <RawNet> &netsOfMacros)
 
 void macroRotation(vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
 {
-
+    
 }
 
 void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
