@@ -8,7 +8,7 @@ typedef struct _terminal{
 
 }terminal;
 
-void cell2BestLayer( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie);
+void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie);
 
 void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> &macros);
 
@@ -22,4 +22,4 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
 
 void place2nearRow(const Die die, const Die theOtherDie,vector <vector<int>> &diePlacementState, vector <vector<int>> &theOtherDiePlacementState, vector <instance> &instances, int *dieCellWidth, int *theOtherDieCellWidth);
 
-void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances, Die &topDie);
+void writeVisualFile(const vector <instance> instances, char *outputFile, Die &topDie);

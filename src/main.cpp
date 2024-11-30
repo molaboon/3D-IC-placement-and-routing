@@ -13,7 +13,6 @@
 #include "lib/partition.h"
 #include "lib/legalization.h"
 
-
 using namespace std;
 using std::vector;
 
@@ -63,6 +62,8 @@ int main(int argc, char *argv[]){
 
 	/*	macro gradient and placement	*/
 	
+	macroGradient( macros, netsOfMacros, top_die);
+	macroLegalization(macros);
 	// macroPartition( macros, netsOfMacros, top_die);
 
 	/*	coarsening */
@@ -71,7 +72,7 @@ int main(int argc, char *argv[]){
 
 	/*	first placement and CG preprocessing	*/
 	
-	if (true){
+	if (false){
 
 		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 		double wireLength, newWireLength;
@@ -98,7 +99,7 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		int totalIter = numInstances;
+		int totalIter = numInstances ;
 
 		for(int i = 0; i < totalIter; i++)
 		{
@@ -131,11 +132,11 @@ int main(int argc, char *argv[]){
 	if(true)
 	{	
 		// firstPlacement(instances, binInfo, top_die);
-		cell2BestLayer(instances, numInstances, top_die, bottom_die);
+		cell2BestLayer(macros, top_die, bottom_die);
 		// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
-		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-		writeVisualFile(instances, visualFile, numInstances, top_die);
-		writeFile(instances, outputName, rawnet, numInstances, terminals);
+		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
+		writeVisualFile(macros, visualFile, top_die);
+		// writeFile(instances, outputName, rawnet, numInstances, terminals);
 	}
 
 	return 0;

@@ -175,6 +175,8 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         
         if(temp.isMacro)
             macros.emplace_back( temp );
+        else
+            stdCells.emplace_back( temp );
         
         instances.emplace_back(temp);
 
@@ -224,6 +226,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         RawNet macroTmp;
 
         int firstMacro = 0;
+        int numMacro = 0;
         bool aa = 0;
         bool havenet = false;
         bool haveMacro = false;
@@ -231,7 +234,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
         //allocate memory for the detail connection in the net
         vector <instance*> temp_connection(temp.numPins);
-        vector <instance*> macros_connection;
+        vector <instance*> macros_connection(numMacro);
 
         for(int pin = 0; pin < temp.numPins; pin++)
         {
@@ -252,9 +255,18 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
             if(instances[atoi(current_libCellName)-1].isMacro)
             {
-                haveMacro = true;
-                macros_connection.push_back(&instances[atoi(current_libCellName)-1]);
+                numMacro++;
+
+                for(int j = 0; j < (int )macros.size(); j++)
+                {
+                    if(macros[j].instIndex == (atoi(current_libCellName)-1))
+                        macros_connection.push_back( &macros[j] );
+                }
+
                 numStdCellConnectMacro[ macrosMap[atoi(current_libCellName)-1] ] += temp.numPins;
+
+                if(numMacro > 1)
+                    haveMacro = true;
             }
         }
 
@@ -270,6 +282,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             macroTmp.terminalX = 0;
             macroTmp.terminalY = 0;
             macroTmp.Connection = macros_connection;
+            macroTmp.numPins = (int) macros_connection.size();
             netsOfMacros.emplace_back(macroTmp);
         }
     }

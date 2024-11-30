@@ -15,7 +15,7 @@ using namespace std;
 #define btmLayer 0
 #define topLayer 1
 
-void cell2BestLayer( vector <instance> &instances, const int numInstances, const Die topDie, const Die btmDie)
+void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie)
 {
     double topDieArea = 0.0;
     double btmDieArea = 0.0;
@@ -24,6 +24,8 @@ void cell2BestLayer( vector <instance> &instances, const int numInstances, const
     double topDieMaxUtl = 0.0;
     double btmDieMaxUtl = 0.0;
     double maxArea = (topDie.upperRightX * topDie.upperRightY);
+
+    int numInstances = instances.size();
 
     for(int i = 0; i < numInstances; i++)
     {
@@ -666,7 +668,7 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
 {}
 
-void writeVisualFile(const vector <instance> instances, char *outputFile, const int numInstances, Die &topDie)
+void writeVisualFile(const vector <instance> instances, char *outputFile, Die &topDie)
 {
     FILE *output;
 
@@ -674,6 +676,7 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
 
     int numInstOnTopDie = 0;
     int numInstOnBtmDie = 0;
+    int numInstances = instances.size();
 
     fprintf(output, "DieInfo %d %d\n", (int)topDie.upperRightX, (int)topDie.upperRightY);
 
@@ -681,7 +684,7 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].layer == topLayer )
+        if( instances[inst].layer == topLayer || instances[inst].z > 0.5)
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) instances[inst].finalX, 
@@ -694,7 +697,7 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, const 
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].layer == btmLayer ) 
+        if( instances[inst].layer == btmLayer || instances[inst].z < 0.5) 
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) instances[inst].finalX, 

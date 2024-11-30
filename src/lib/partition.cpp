@@ -5,6 +5,8 @@
 #include "partition.h"
 #include "readfile.h"
 #include "initial_placement.h"
+#include "CG.h"
+
 
 void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
 {
@@ -104,9 +106,66 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 {
     gridInfo macroBinInfo;
 
+    int numMacro = macros.size();
+    double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+    double wireLength, newWireLength;
+    double lastCG[ numMacro * 3 ] = {0.0};
+    double nowCG[ numMacro * 3 ] = {0.0};
+    double lastGra[ numMacro * 3 ] = {0.0};
+    double nowGra[ numMacro * 3 ] = {0.0};
+
+    gamma = 0.05 * topDie.upperRightX;
+    
+
+    returnGridInfo(&topDie, &macroBinInfo, numMacro);
+    firstPlacement(macros, macroBinInfo, topDie);
+    penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
+    totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
+    CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
+
+    penaltyWeight = 1.0;
+
+    int totalIter = 20;
+
+    for(int i = 0; i < totalIter; i++)
+    {
+        for(int j = 0; j < 50; j++)
+        {
+            conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, i);
+
+            if(j == 0)
+                totalScore = newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
+
+            else
+                newScore = newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
+
+            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
+
+            if( newScore * 0.8 < totalScore)
+                totalScore = newScore;
+
+            else
+                break;	
+        }
+
+        cout << i << endl;
+        penaltyWeight *= 2;
+    }
+
 }
 
 void macroLegalization(vector <instance> &macros)
 {
+    int numMacro = macros.size();
 
+    for (int i = 0; i < numMacro; i++)
+    {
+        macros[i].finalX = macros[i].x - macros[i].width/2;
+        macros[i].finalY = macros[i].y - macros[i].height/2;
+        if(macros[i].z < 0.5)
+            macros[i].layer = 0;
+        
+        else
+            macros[i].layer = 1;
+    }
 }
