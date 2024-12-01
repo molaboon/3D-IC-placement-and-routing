@@ -24,6 +24,6 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance);
 
 void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie);
 
-double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo);
+double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo);
 
 

@@ -141,11 +141,11 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
 
-            if( newScore * 0.8 < totalScore)
-                totalScore = newScore;
+            // if( newScore * 0.8 < totalScore)
+            //     totalScore = newScore;
 
-            else
-                break;	
+            // else
+            //     break;	
         }
 
         cout << i << endl;

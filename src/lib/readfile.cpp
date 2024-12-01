@@ -230,7 +230,8 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         bool aa = 0;
         bool havenet = false;
         bool haveMacro = false;
-        fscanf(input, "%*s %s %d", temp.netName, &temp.numPins);
+        fscanf(input, "%*s %*s %d", &temp.numPins);
+        temp.netIndex = i;
 
         //allocate memory for the detail connection in the net
         vector <instance*> temp_connection(temp.numPins);
@@ -293,7 +294,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 void printNetInfo(int NumNets, vector <RawNet> rawnet){
     printf("\nNumNets <netCount>: %d\n", NumNets);
     for(int i = 0; i < NumNets; i++){
-        printf("\tNet <netName> <numPins>: %s %d\n", rawnet[i].netName, rawnet[i].numPins);
+        // printf("\tNet <netName> <numPins>: %s %d\n", rawnet[i].netName, rawnet[i].numPins);
         for(int j = 0; j < rawnet[i].numPins; j++){
             printf("\t\t<instance>: %lf %lf %lf \n",  rawnet[i].Connection[j]->x, rawnet[i].Connection[j]->y, rawnet[i].Connection[j]->z);
         }

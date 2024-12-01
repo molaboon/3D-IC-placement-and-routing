@@ -116,7 +116,8 @@ typedef struct _NetConnection{
 }NetConnection;
 
 typedef struct _RawNet{
-    char netName[NET_NAME_SIZE];
+    // char netName[NET_NAME_SIZE];
+    int netIndex;
     int numPins;
     
     bool hasTerminal;

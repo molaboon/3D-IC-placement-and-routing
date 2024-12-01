@@ -77,7 +77,7 @@ void macroFirstPlacement( vector <instance> &macros, vector <instance*> &netOfma
 
 }
 
-double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo)
+double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo)
 {
     double h = 0.00001;
     double penaltyWeight;
@@ -183,6 +183,9 @@ double returnPenaltyWeight(vector <RawNet> rawNet, const double gamma, vector <i
     gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originfl, originsl);
 
     double endTime = clock();
+
+    free(originfl);
+    free(originsl);
 
     printf("penalty Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
 
