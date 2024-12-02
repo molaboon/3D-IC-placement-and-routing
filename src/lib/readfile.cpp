@@ -14,11 +14,12 @@ void read_one_blank_line(FILE *input){
     fgetc(input);
 }
 
-void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> &TechMenu){
+void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> *TechMenu){
     assert(input);
 
     //read number of technologies
     fscanf(input, "%*s %d", &(*NumTechnologies));
+    TechMenu->resize( *NumTechnologies );
 
     for(int i = 0; i < *NumTechnologies; i++){
         Tech_menu temp;
@@ -44,7 +45,7 @@ void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> &T
             temp_libcell[j].pinarray = temp_pinarray;
         }
         temp.libcell = temp_libcell;
-        TechMenu.emplace_back(temp);
+        TechMenu->at(i) = temp;
     }
     read_one_blank_line(input);
 } 
@@ -129,10 +130,10 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros, vector <instance> &stdCells)
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells)
 {
     assert(input);
-    int numOfTech = TechMenu.size();
+    int numOfTech = TechMenu->size();
 
     fscanf(input, "%*s %d", &(*NumInstances));
 
@@ -146,19 +147,19 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 
 
         temp.instIndex = i;
-        temp.width = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
-        temp.height = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY; 
-        temp.isMacro = TechMenu[0].libcell[atoi(current_libCellName)-1].isMacro;
+        temp.width = TechMenu->at(0).libcell[atoi(current_libCellName)-1].libCellSizeX;
+        temp.height = TechMenu->at(0).libcell[atoi(current_libCellName)-1].libCellSizeY; 
+        temp.isMacro = TechMenu->at(0).libcell[atoi(current_libCellName)-1].isMacro;
         
         if(numOfTech == 2)
         {
-            temp.inflateWidth = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeX;
-            temp.inflateHeight = TechMenu[1].libcell[atoi(current_libCellName)-1].libCellSizeY;
+            temp.inflateWidth = TechMenu->at(1).libcell[atoi(current_libCellName)-1].libCellSizeX;
+            temp.inflateHeight = TechMenu->at(1).libcell[atoi(current_libCellName)-1].libCellSizeY;
         }
         else
         {
-            temp.inflateWidth = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeX;
-            temp.inflateHeight = TechMenu[0].libcell[atoi(current_libCellName)-1].libCellSizeY;
+            temp.inflateWidth = TechMenu->at(0).libcell[atoi(current_libCellName)-1].libCellSizeX;
+            temp.inflateHeight = TechMenu->at(0).libcell[atoi(current_libCellName)-1].libCellSizeY;
         }
         
         temp.numNetConnection = 0;
@@ -210,8 +211,8 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
     fscanf(input, "%*s %d", &(*NumNets));
     
-    for(int index = 0; index < size; index++)
-        instances[index].netsConnect = (bool *) calloc( *NumNets , sizeof(bool));
+    // for(int index = 0; index < size; index++)
+    //     instances[index].netsConnect = (bool *) calloc( *NumNets , sizeof(bool));
     
     for(int i = 0; i < numMacro; i++)
     {
@@ -252,7 +253,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
             temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
             instances[atoi(current_libCellName)-1].numNetConnection += 1;
-            temp_connection[pin]->netsConnect[i] = 1;
+            // temp_connection[pin]->netsConnect[i] = 1;
 
             if(instances[atoi(current_libCellName)-1].isMacro)
             {

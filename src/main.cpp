@@ -36,9 +36,10 @@ int main(int argc, char *argv[]){
 
 	Die top_die, bottom_die;												//store the die information
 	Hybrid_terminal terminalTech;												//store the size of the hybrid bond terminal connect between two dies
-	int NumTechnologies;													//TA and TB
-	vector <Tech_menu> TechMenu;											//The detail of the library of the standardcell by different technology
 	
+	int NumTechnologies;													//TA and TB
+	vector <Tech_menu> *techMenuPtr = new vector<Tech_menu>;				//The detail of the library of the standardcell by different technology
+
 	int numInstances;														//How many instances need to be placeed in the two dies
 	vector <instance> instances;							    //The standard cell with its library
 	
@@ -53,17 +54,19 @@ int main(int argc, char *argv[]){
 	vector <terminal> terminals;
  
 	/*	read data	*/
-	readTechnologyInfo(input, &NumTechnologies, TechMenu);	
+	readTechnologyInfo(input, &NumTechnologies, techMenuPtr);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminalTech);
-	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, TechMenu, macros, stdCells);
+	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, techMenuPtr, macros, stdCells);
+	delete techMenuPtr;
+	
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro);
 	returnGridInfo(&top_die, &binInfo, numInstances);
 
-	/*	macro gradient and placement	*/
+	// /*	macro gradient and placement	*/
 	
-	macroGradient( macros, netsOfMacros, top_die);
-	macroLegalization(macros);
+	// macroGradient( macros, netsOfMacros, top_die);
+	// macroLegalization(macros);
 	// macroPartition( macros, netsOfMacros, top_die);
 
 	/*	coarsening */

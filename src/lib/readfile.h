@@ -7,10 +7,10 @@ using std::vector;
 #ifndef _READFILE_H_
 #define _READFILE_H_
 
-#define TECH_NAME_SIZE 20
+#define TECH_NAME_SIZE 10
 #define PIN_NAME_SIZE 20
-#define LIBCELL_NAME_SIZE 20
-#define INSTANCE_NAME_SIZE 20
+#define LIBCELL_NAME_SIZE 10
+#define INSTANCE_NAME_SIZE 10
 #define NET_NAME_SIZE 20
 
 typedef struct _pin{
@@ -145,7 +145,7 @@ typedef struct  _levelNets
 
 }levelNets;
 
-void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> &TechMenu);
+void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> *TechMenu);
 void printTechnologyInfo(int NumTechnologies, vector <Tech_menu> TechMenu);
 
 void readDieInfo(FILE *input, Die *top_die, Die *bottom_die);
@@ -154,7 +154,7 @@ void printDieInfo(Die top_die, Die bottom_die);
 void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal);
 void printHybridTerminalInfo(Hybrid_terminal terminal);
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> TechMenu, vector <instance> &macros, vector <instance> &stdCells);
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells);
 void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro);
