@@ -4,7 +4,7 @@ void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, D
 
 int returnCut(vector <RawNet> &netsOfMacros);
 
-void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie);
+void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter);
 
 void macroLegalization(vector <instance> &macros);
 

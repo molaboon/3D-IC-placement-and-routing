@@ -139,11 +139,12 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 
     for(int i = 0; i < *NumInstances; i++){
         instance temp;
-        fscanf(input, "%*s %s %s", temp.instName, temp.libCellName); 
+        char libCellName[LIBCELL_NAME_SIZE];
+        fscanf(input, "%*s %*s %s", libCellName); 
 
         char current_libCellName[LIBCELL_NAME_SIZE];
 		memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
-		strncpy(current_libCellName, temp.libCellName + 2, strlen(temp.libCellName)-2);
+		strncpy(current_libCellName, libCellName + 2, strlen(libCellName)-2);
 
 
         temp.instIndex = i;
@@ -186,19 +187,19 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 }
 
 void printInstanceInfo(int NumInstances, vector <instance> instances){
-    printf("NumInstances <instanceCount>: %d\n", NumInstances);
-    for(int i = 0; i < NumInstances; i++){
-        printf("\tInst <Name> <lib> <w> <h> <x> <y>: %s %s %lf %lf %lf %lf %lf\n", 
-        instances[i].instName, 
-        instances[i].libCellName, 
-        instances[i].width, 
-        instances[i].height,
-        instances[i].x,
-        instances[i].y,
-        instances[i].z
-        );
-    }
-    printf("\n");
+    // printf("NumInstances <instanceCount>: %d\n", NumInstances);
+    // for(int i = 0; i < NumInstances; i++){
+    //     printf("\tInst <Name> <lib> <w> <h> <x> <y>: %s %s %lf %lf %lf %lf %lf\n", 
+    //     instances[i].instName, 
+    //     instances[i].libCellName, 
+    //     instances[i].width, 
+    //     instances[i].height,
+    //     instances[i].x,
+    //     instances[i].y,
+    //     instances[i].z
+    //     );
+    // }
+    // printf("\n");
 }
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro)
@@ -220,7 +221,6 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         numStdCellConnectMacro.push_back(0);
     }
         
-    
     for(int i = 0; i < *NumNets; i++)
     {
         RawNet temp;
@@ -278,7 +278,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         temp.Connection = temp_connection;
         rawnet.emplace_back(temp);
 
-        if(haveMacro)
+        if(haveMacro && macros_connection[0]->instIndex != macros_connection[1]->instIndex)
         {
             macroTmp.hasTerminal = false;
             macroTmp.terminalX = 0;

@@ -220,7 +220,6 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, dou
     
     double leftX = 0, rightX = 0, topY = 0, btmY = 0;
 
-
     if(isGra)
     {
         leftX = instance.tmpX - (instance.width * 0.5);

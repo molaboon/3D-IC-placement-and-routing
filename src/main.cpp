@@ -30,6 +30,7 @@ int main(int argc, char *argv[]){
 	char *inputName = *(argv + 1);
 	char *outputName = *(argv + 2);
 	char *visualFile = *(argv + 3);
+	int totalIter = atoi(*(argv + 4));
 
 	FILE *input = fopen(inputName, "r");
 	assert(input);
@@ -63,10 +64,10 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro);
 	returnGridInfo(&top_die, &binInfo, numInstances);
 
-	// /*	macro gradient and placement	*/
+	/*	macro gradient and placement	*/
 	
-	// macroGradient( macros, netsOfMacros, top_die);
-	// macroLegalization(macros);
+	macroGradient( macros, netsOfMacros, top_die, totalIter);
+	macroLegalization(macros);
 	// macroPartition( macros, netsOfMacros, top_die);
 
 	/*	coarsening */

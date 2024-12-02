@@ -19,11 +19,17 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance)
 
     // binXnum * binYnum ~= Numinstance
     binInfo->binXnum = floor( sqrt( (double) Numinstance ));
-    binInfo->binYnum = floor( sqrt( (double) Numinstance ));
-
     binInfo->binWidth = floor(die->upperRightX / binInfo->binXnum);
-    binInfo->binHeight = floor(die->upperRightX / binInfo->binYnum);
 
+    if(binInfo->binWidth * binInfo->binXnum < binInfo->dieWidth)
+        binInfo->binXnum += 1;
+        
+    binInfo->binYnum = floor( sqrt( (double) Numinstance ));
+    binInfo->binHeight = floor(die->upperRightY / binInfo->binYnum);
+
+    if(binInfo->binHeight * binInfo->binYnum < binInfo->dieHeight)
+        binInfo->binYnum += 1;
+        
     
     binInfo->Numinstance = Numinstance;
 
@@ -63,8 +69,10 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
         // cnt++;
         
-        instances[i].x = topDie.upperRightX / 2.0 + i*10;
-        instances[i].y = topDie.upperRightY / 2.0 + i*10 ;
+        // instances[i].x = topDie.upperRightX / 2.0 + i*10;
+        // instances[i].y = topDie.upperRightY / 2.0 + i*10 ;
+        instances[i].x = X;
+        instances[i].y = Y + (double) i;
         instances[i].z = 0.5 ;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;
@@ -102,16 +110,11 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
 
-    penaltyScore -= tsvScore;
-
     double startTime = clock();
 
     for(int i = 0; i < size; i++)
     {        
-        double tmpx = instances[i].x;
-        double tmpy = instances[i].y;
-        double tmpDen = 0.0;
-        double tmpXscore = 0.0, tmpYscore = 0.0;
+        double tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
 
         // part of x
         instances[i].tmpX = instances[i].x;

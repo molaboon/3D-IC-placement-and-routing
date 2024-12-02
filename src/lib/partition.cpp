@@ -102,7 +102,7 @@ void macroRotation(vector <instance> &macros, vector <RawNet> &netsOfMacros, Die
     
 }
 
-void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
+void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter)
 {
     gridInfo macroBinInfo;
 
@@ -116,7 +116,6 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
     gamma = 0.05 * topDie.upperRightX;
     
-
     returnGridInfo(&topDie, &macroBinInfo, numMacro);
     firstPlacement(macros, macroBinInfo, topDie);
     penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
@@ -125,11 +124,9 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
     penaltyWeight = 1.0;
 
-    int totalIter = 20;
-
     for(int i = 0; i < totalIter; i++)
     {
-        for(int j = 0; j < 50; j++)
+        for(int j = 0; j < 20; j++)
         {
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, i);
 
@@ -141,11 +138,11 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
 
-            // if( newScore * 0.8 < totalScore)
-            //     totalScore = newScore;
+            if( newScore * 0.8 < totalScore)
+                totalScore = newScore;
 
-            // else
-            //     break;	
+            else
+                break;	
         }
 
         cout << i << endl;

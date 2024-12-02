@@ -52,7 +52,7 @@ def plot_result(instances, iter, die_width, die_height, plot_block_area, die):
     else:
         ax.set_title("Bottom Die Placement", fontsize = 24)
 
-    path = 'iter' + str(iter) 
+    path = 'visulization/iter' + str(iter) 
     plt.savefig( path + '.jpg')
     plt.close()
     
@@ -137,7 +137,7 @@ def read_data(filename):
     return instances, die_width, die_height
 
 def main():    
-    instances, die_width, die_height = read_data("data/0.txt")
+    instances, die_width, die_height = read_data('visulization/0.txt')
     plot_result(instances, " btm", die_width, die_height, 0, 0)
     plot_result(instances, " top", die_width, die_height, 0, 1)
 
