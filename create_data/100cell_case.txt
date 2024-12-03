@@ -1,63 +1,63 @@
 NumTechnologies 1
 Tech TA 220 
-LibCell N MC1 382 33 3 
+LibCell Y MC1 382 33 3 
 Pin P1 46 0 
 Pin P2 145 0 
 Pin P3 49 0 
-LibCell N MC2 88 33 5 
+LibCell Y MC2 88 33 5 
 Pin P1 4 18 
 Pin P2 46 18 
 Pin P3 17 12 
 Pin P4 3 18 
 Pin P5 33 12 
-LibCell N MC3 142 33 4 
+LibCell Y MC3 142 33 4 
 Pin P1 101 0 
 Pin P2 57 0 
 Pin P3 25 0 
 Pin P4 62 0 
-LibCell N MC4 109 33 5 
+LibCell Y MC4 109 33 5 
 Pin P1 13 12 
 Pin P2 5 18 
 Pin P3 30 12 
 Pin P4 47 18 
 Pin P5 43 7 
-LibCell N MC5 118 33 5 
+LibCell Y MC5 118 33 5 
 Pin P1 6 12 
 Pin P2 32 18 
 Pin P3 79 18 
 Pin P4 68 12 
 Pin P5 53 7 
-LibCell N MC6 90 33 4 
+LibCell Y MC6 90 33 4 
 Pin P1 20 18 
 Pin P2 32 12 
 Pin P3 18 18 
 Pin P4 32 7 
-LibCell N MC7 384 33 5 
+LibCell Y MC7 384 33 5 
 Pin P1 87 0 
 Pin P2 125 0 
 Pin P3 177 0 
 Pin P4 254 0 
 Pin P5 251 0 
-LibCell N MC8 63 33 3 
+LibCell Y MC8 63 33 3 
 Pin P1 9 18 
 Pin P2 16 18 
 Pin P3 42 7 
-LibCell N MC9 142 33 3 
+LibCell Y MC9 142 33 3 
 Pin P1 50 0 
 Pin P2 79 0 
 Pin P3 106 0 
-LibCell N MC10 308 33 5 
+LibCell Y MC10 308 33 5 
 Pin P1 213 0 
 Pin P2 233 0 
 Pin P3 27 0 
 Pin P4 37 0 
 Pin P5 120 0 
-LibCell N MC11 234 33 4 
+LibCell Y MC11 234 33 4 
 Pin P1 77 0 
 Pin P2 14 0 
 Pin P3 0 0 
 Pin P4 148 0 
-LibCell N MC12 119 33 7 
+LibCell Y MC12 119 33 7 
 Pin P1 65 12 
 Pin P2 52 12 
 Pin P3 11 12 
@@ -65,228 +65,228 @@ Pin P4 30 12
 Pin P5 14 18 
 Pin P6 18 12 
 Pin P7 57 7 
-LibCell N MC13 252 33 4 
+LibCell Y MC13 252 33 4 
 Pin P1 98 0 
 Pin P2 14 0 
 Pin P3 20 0 
 Pin P4 162 0 
-LibCell N MC14 264 33 4 
+LibCell Y MC14 264 33 4 
 Pin P1 141 0 
 Pin P2 216 0 
 Pin P3 21 0 
 Pin P4 76 0 
-LibCell N MC15 96 33 5 
+LibCell Y MC15 96 33 5 
 Pin P1 19 18 
 Pin P2 4 12 
 Pin P3 16 18 
 Pin P4 35 12 
 Pin P5 49 7 
-LibCell N MC16 109 33 4 
+LibCell Y MC16 109 33 4 
 Pin P1 41 12 
 Pin P2 7 18 
 Pin P3 13 12 
 Pin P4 49 12 
-LibCell N MC17 111 33 3 
+LibCell Y MC17 111 33 3 
 Pin P1 13 18 
 Pin P2 8 12 
 Pin P3 44 7 
-LibCell N MC18 88 33 5 
+LibCell Y MC18 88 33 5 
 Pin P1 37 12 
 Pin P2 49 12 
 Pin P3 11 18 
 Pin P4 1 12 
 Pin P5 42 7 
-LibCell N MC19 152 33 2 
+LibCell Y MC19 152 33 2 
 Pin P1 4 12 
 Pin P2 56 7 
-LibCell N MC20 91 33 4 
+LibCell Y MC20 91 33 4 
 Pin P1 16 18 
 Pin P2 5 12 
 Pin P3 14 18 
 Pin P4 48 7 
-LibCell N MC21 238 33 4 
+LibCell Y MC21 238 33 4 
 Pin P1 84 0 
 Pin P2 3 0 
 Pin P3 35 0 
 Pin P4 142 0 
-LibCell N MC22 59 33 2 
+LibCell Y MC22 59 33 2 
 Pin P1 8 18 
 Pin P2 30 7 
-LibCell N MC23 94 33 5 
+LibCell Y MC23 94 33 5 
 Pin P1 21 12 
 Pin P2 9 12 
 Pin P3 26 18 
 Pin P4 37 12 
 Pin P5 61 12 
-LibCell N MC24 128 33 3 
+LibCell Y MC24 128 33 3 
 Pin P1 60 0 
 Pin P2 74 0 
 Pin P3 0 0 
-LibCell N MC25 152 33 3 
+LibCell Y MC25 152 33 3 
 Pin P1 44 0 
 Pin P2 63 0 
 Pin P3 38 0 
-LibCell N MC26 143 33 4 
+LibCell Y MC26 143 33 4 
 Pin P1 97 18 
 Pin P2 62 12 
 Pin P3 52 18 
 Pin P4 40 12 
-LibCell N MC27 152 33 3 
+LibCell Y MC27 152 33 3 
 Pin P1 64 0 
 Pin P2 2 0 
 Pin P3 102 0 
-LibCell N MC28 90 33 5 
+LibCell Y MC28 90 33 5 
 Pin P1 0 18 
 Pin P2 8 12 
 Pin P3 26 18 
 Pin P4 36 12 
 Pin P5 52 7 
-LibCell N MC29 112 33 4 
+LibCell Y MC29 112 33 4 
 Pin P1 43 18 
 Pin P2 71 12 
 Pin P3 0 12 
 Pin P4 19 7 
-LibCell N MC30 71 33 4 
+LibCell Y MC30 71 33 4 
 Pin P1 16 18 
 Pin P2 8 12 
 Pin P3 21 18 
 Pin P4 31 7 
-LibCell N MC31 82 33 5 
+LibCell Y MC31 82 33 5 
 Pin P1 23 12 
 Pin P2 16 18 
 Pin P3 17 12 
 Pin P4 0 18 
 Pin P5 37 7 
-LibCell N MC32 114 33 4 
+LibCell Y MC32 114 33 4 
 Pin P1 42 12 
 Pin P2 60 18 
 Pin P3 1 18 
 Pin P4 16 12 
-LibCell N MC33 93 33 5 
+LibCell Y MC33 93 33 5 
 Pin P1 37 18 
 Pin P2 5 18 
 Pin P3 31 12 
 Pin P4 46 18 
 Pin P5 62 7 
-LibCell N MC34 86 33 4 
+LibCell Y MC34 86 33 4 
 Pin P1 14 18 
 Pin P2 7 12 
 Pin P3 1 18 
 Pin P4 41 7 
-LibCell N MC35 170 33 4 
+LibCell Y MC35 170 33 4 
 Pin P1 66 12 
 Pin P2 54 18 
 Pin P3 2 18 
 Pin P4 96 7 
-LibCell N MC36 110 33 3 
+LibCell Y MC36 110 33 3 
 Pin P1 42 12 
 Pin P2 6 12 
 Pin P3 49 7 
-LibCell N MC37 89 33 2 
+LibCell Y MC37 89 33 2 
 Pin P1 1 18 
 Pin P2 38 7 
-LibCell N MC38 89 33 5 
+LibCell Y MC38 89 33 5 
 Pin P1 27 12 
 Pin P2 22 18 
 Pin P3 23 12 
 Pin P4 61 18 
 Pin P5 43 7 
-LibCell N MC39 125 33 3 
+LibCell Y MC39 125 33 3 
 Pin P1 43 18 
 Pin P2 10 12 
 Pin P3 72 18 
-LibCell N MC40 224 33 4 
+LibCell Y MC40 224 33 4 
 Pin P1 88 0 
 Pin P2 168 0 
 Pin P3 27 0 
 Pin P4 0 0 
-LibCell N MC41 228 33 4 
+LibCell Y MC41 228 33 4 
 Pin P1 97 0 
 Pin P2 53 0 
 Pin P3 25 0 
 Pin P4 168 0 
-LibCell N MC42 170 33 3 
+LibCell Y MC42 170 33 3 
 Pin P1 97 0 
 Pin P2 36 0 
 Pin P3 81 0 
-LibCell N MC43 159 33 3 
+LibCell Y MC43 159 33 3 
 Pin P1 36 18 
 Pin P2 21 12 
 Pin P3 106 7 
-LibCell N MC44 188 33 5 
+LibCell Y MC44 188 33 5 
 Pin P1 36 12 
 Pin P2 51 18 
 Pin P3 129 18 
 Pin P4 110 12 
 Pin P5 88 12 
-LibCell N MC45 86 33 5 
+LibCell Y MC45 86 33 5 
 Pin P1 46 12 
 Pin P2 33 18 
 Pin P3 23 12 
 Pin P4 14 18 
 Pin P5 29 7 
-LibCell N MC46 192 33 5 
+LibCell Y MC46 192 33 5 
 Pin P1 0 12 
 Pin P2 61 18 
 Pin P3 59 12 
 Pin P4 101 18 
 Pin P5 107 18 
-LibCell N MC47 344 33 5 
+LibCell Y MC47 344 33 5 
 Pin P1 58 0 
 Pin P2 105 0 
 Pin P3 200 0 
 Pin P4 209 0 
 Pin P5 258 0 
-LibCell N MC48 280 33 5 
+LibCell Y MC48 280 33 5 
 Pin P1 8 0 
 Pin P2 10 0 
 Pin P3 209 0 
 Pin P4 209 0 
 Pin P5 136 0 
-LibCell N MC49 150 33 3 
+LibCell Y MC49 150 33 3 
 Pin P1 45 18 
 Pin P2 0 12 
 Pin P3 41 18 
-LibCell N MC50 55 33 5 
+LibCell Y MC50 55 33 5 
 Pin P1 31 12 
 Pin P2 32 18 
 Pin P3 29 12 
 Pin P4 14 18 
 Pin P5 28 7 
-LibCell N MC51 78 33 3 
+LibCell Y MC51 78 33 3 
 Pin P1 0 18 
 Pin P2 27 18 
 Pin P3 31 7 
-LibCell N MC52 105 33 4 
+LibCell Y MC52 105 33 4 
 Pin P1 46 18 
 Pin P2 70 12 
 Pin P3 6 12 
 Pin P4 22 7 
-LibCell N MC53 105 33 3 
+LibCell Y MC53 105 33 3 
 Pin P1 31 18 
 Pin P2 33 12 
 Pin P3 72 7 
-LibCell N MC54 158 33 4 
+LibCell Y MC54 158 33 4 
 Pin P1 38 0 
 Pin P2 0 0 
 Pin P3 86 0 
 Pin P4 117 0 
-LibCell N MC55 85 33 4 
+LibCell Y MC55 85 33 4 
 Pin P1 2 18 
 Pin P2 14 12 
 Pin P3 24 18 
 Pin P4 37 7 
-LibCell N MC56 176 33 5 
+LibCell Y MC56 176 33 5 
 Pin P1 33 12 
 Pin P2 60 18 
 Pin P3 114 12 
 Pin P4 145 18 
 Pin P5 96 7 
-LibCell N MC57 167 33 3 
+LibCell Y MC57 167 33 3 
 Pin P1 47 12 
 Pin P2 70 18 
 Pin P3 12 7 
-LibCell N MC58 115 33 7 
+LibCell Y MC58 115 33 7 
 Pin P1 52 12 
 Pin P2 71 12 
 Pin P3 31 12 
@@ -294,196 +294,196 @@ Pin P4 35 12
 Pin P5 12 18 
 Pin P6 16 12 
 Pin P7 57 7 
-LibCell N MC59 96 33 3 
+LibCell Y MC59 96 33 3 
 Pin P1 0 18 
 Pin P2 42 18 
 Pin P3 45 7 
-LibCell N MC60 560 33 3 
+LibCell Y MC60 560 33 3 
 Pin P1 157 0 
 Pin P2 288 0 
 Pin P3 344 0 
-LibCell N MC61 66 33 4 
+LibCell Y MC61 66 33 4 
 Pin P1 13 18 
 Pin P2 4 18 
 Pin P3 23 12 
 Pin P4 59 7 
-LibCell N MC62 77 33 5 
+LibCell Y MC62 77 33 5 
 Pin P1 30 12 
 Pin P2 9 18 
 Pin P3 9 12 
 Pin P4 4 18 
 Pin P5 55 7 
-LibCell N MC63 144 33 4 
+LibCell Y MC63 144 33 4 
 Pin P1 8 12 
 Pin P2 39 18 
 Pin P3 91 12 
 Pin P4 30 18 
-LibCell N MC64 80 33 4 
+LibCell Y MC64 80 33 4 
 Pin P1 8 18 
 Pin P2 11 12 
 Pin P3 12 18 
 Pin P4 38 7 
-LibCell N MC65 230 33 4 
+LibCell Y MC65 230 33 4 
 Pin P1 63 0 
 Pin P2 46 0 
 Pin P3 101 0 
 Pin P4 148 0 
-LibCell N MC66 99 33 4 
+LibCell Y MC66 99 33 4 
 Pin P1 20 12 
 Pin P2 31 18 
 Pin P3 19 12 
 Pin P4 1 7 
-LibCell N MC67 130 33 4 
+LibCell Y MC67 130 33 4 
 Pin P1 27 0 
 Pin P2 17 0 
 Pin P3 75 0 
 Pin P4 58 0 
-LibCell N MC68 214 33 4 
+LibCell Y MC68 214 33 4 
 Pin P1 87 0 
 Pin P2 165 0 
 Pin P3 0 0 
 Pin P4 49 0 
-LibCell N MC69 184 33 5 
+LibCell Y MC69 184 33 5 
 Pin P1 19 12 
 Pin P2 45 18 
 Pin P3 60 12 
 Pin P4 86 18 
 Pin P5 110 18 
-LibCell N MC70 88 33 5 
+LibCell Y MC70 88 33 5 
 Pin P1 10 18 
 Pin P2 23 12 
 Pin P3 22 18 
 Pin P4 34 12 
 Pin P5 40 7 
-LibCell N MC71 200 33 5 
+LibCell Y MC71 200 33 5 
 Pin P1 4 12 
 Pin P2 44 18 
 Pin P3 75 12 
 Pin P4 100 18 
 Pin P5 138 18 
-LibCell N MC72 123 33 5 
+LibCell Y MC72 123 33 5 
 Pin P1 5 12 
 Pin P2 24 18 
 Pin P3 98 18 
 Pin P4 76 12 
 Pin P5 29 7 
-LibCell N MC73 87 33 3 
+LibCell Y MC73 87 33 3 
 Pin P1 3 18 
 Pin P2 40 18 
 Pin P3 40 7 
-LibCell N MC74 102 33 5 
+LibCell Y MC74 102 33 5 
 Pin P1 27 12 
 Pin P2 17 12 
 Pin P3 16 18 
 Pin P4 37 12 
 Pin P5 61 12 
-LibCell N MC75 172 33 3 
+LibCell Y MC75 172 33 3 
 Pin P1 50 12 
 Pin P2 98 18 
 Pin P3 41 7 
-LibCell N MC76 74 33 3 
+LibCell Y MC76 74 33 3 
 Pin P1 3 18 
 Pin P2 46 18 
 Pin P3 44 7 
-LibCell N MC77 140 33 5 
+LibCell Y MC77 140 33 5 
 Pin P1 13 12 
 Pin P2 25 18 
 Pin P3 68 12 
 Pin P4 98 18 
 Pin P5 12 12 
-LibCell N MC78 162 33 4 
+LibCell Y MC78 162 33 4 
 Pin P1 28 0 
 Pin P2 82 0 
 Pin P3 15 0 
 Pin P4 49 0 
-LibCell N MC79 66 33 4 
+LibCell Y MC79 66 33 4 
 Pin P1 12 18 
 Pin P2 9 12 
 Pin P3 16 18 
 Pin P4 35 7 
-LibCell N MC80 175 33 3 
+LibCell Y MC80 175 33 3 
 Pin P1 20 18 
 Pin P2 35 12 
 Pin P3 86 7 
-LibCell N MC81 72 33 5 
+LibCell Y MC81 72 33 5 
 Pin P1 30 12 
 Pin P2 14 18 
 Pin P3 10 12 
 Pin P4 0 18 
 Pin P5 42 7 
-LibCell N MC82 128 33 3 
+LibCell Y MC82 128 33 3 
 Pin P1 19 12 
 Pin P2 75 12 
 Pin P3 50 7 
-LibCell N MC83 90 33 5 
+LibCell Y MC83 90 33 5 
 Pin P1 30 18 
 Pin P2 36 18 
 Pin P3 16 12 
 Pin P4 15 18 
 Pin P5 48 12 
-LibCell N MC84 187 33 5 
+LibCell Y MC84 187 33 5 
 Pin P1 12 12 
 Pin P2 58 18 
 Pin P3 131 12 
 Pin P4 149 18 
 Pin P5 84 7 
-LibCell N MC85 116 33 4 
+LibCell Y MC85 116 33 4 
 Pin P1 55 18 
 Pin P2 68 12 
 Pin P3 20 12 
 Pin P4 27 7 
-LibCell N MC86 262 33 5 
+LibCell Y MC86 262 33 5 
 Pin P1 21 0 
 Pin P2 21 0 
 Pin P3 203 0 
 Pin P4 187 0 
 Pin P5 68 0 
-LibCell N MC87 66 33 4 
+LibCell Y MC87 66 33 4 
 Pin P1 26 12 
 Pin P2 2 18 
 Pin P3 13 12 
 Pin P4 22 7 
-LibCell N MC88 336 33 4 
+LibCell Y MC88 336 33 4 
 Pin P1 259 0 
 Pin P2 4 0 
 Pin P3 36 0 
 Pin P4 131 0 
-LibCell N MC89 236 33 5 
+LibCell Y MC89 236 33 5 
 Pin P1 24 0 
 Pin P2 88 0 
 Pin P3 38 0 
 Pin P4 142 0 
 Pin P5 99 0 
-LibCell N MC90 290 33 5 
+LibCell Y MC90 290 33 5 
 Pin P1 59 0 
 Pin P2 4 0 
 Pin P3 174 0 
 Pin P4 204 0 
 Pin P5 139 0 
-LibCell N MC91 190 33 3 
+LibCell Y MC91 190 33 3 
 Pin P1 30 18 
 Pin P2 0 18 
 Pin P3 81 7 
-LibCell N MC92 94 33 5 
+LibCell Y MC92 94 33 5 
 Pin P1 23 12 
 Pin P2 12 18 
 Pin P3 21 12 
 Pin P4 52 18 
 Pin P5 55 7 
-LibCell N MC93 166 33 3 
+LibCell Y MC93 166 33 3 
 Pin P1 97 18 
 Pin P2 60 12 
 Pin P3 69 7 
-LibCell N MC94 66 33 3 
+LibCell Y MC94 66 33 3 
 Pin P1 20 18 
 Pin P2 21 18 
 Pin P3 34 7 
-LibCell N MC95 83 33 4 
+LibCell Y MC95 83 33 4 
 Pin P1 9 18 
 Pin P2 28 12 
 Pin P3 33 18 
 Pin P4 46 7 
-LibCell N MC96 112 33 7 
+LibCell Y MC96 112 33 7 
 Pin P1 51 12 
 Pin P2 78 12 
 Pin P3 17 12 
@@ -491,143 +491,143 @@ Pin P4 37 12
 Pin P5 5 18 
 Pin P6 4 12 
 Pin P7 62 7 
-LibCell N MC97 222 33 4 
+LibCell Y MC97 222 33 4 
 Pin P1 8 0 
 Pin P2 51 0 
 Pin P3 36 0 
 Pin P4 176 0 
-LibCell N MC98 144 33 3 
+LibCell Y MC98 144 33 3 
 Pin P1 116 0 
 Pin P2 70 0 
 Pin P3 0 0 
-LibCell N MC99 93 33 3 
+LibCell Y MC99 93 33 3 
 Pin P1 9 12 
 Pin P2 43 12 
 Pin P3 40 7 
-LibCell N MC100 322 33 4 
+LibCell Y MC100 322 33 4 
 Pin P1 242 0 
 Pin P2 39 0 
 Pin P3 36 0 
 Pin P4 107 0 
-LibCell N MC101 241 33 3 
+LibCell Y MC101 241 33 3 
 Pin P1 110 18 
 Pin P2 15 12 
 Pin P3 46 7 
-LibCell N MC102 76 33 3 
+LibCell Y MC102 76 33 3 
 Pin P1 0 18 
 Pin P2 16 12 
 Pin P3 35 7 
-LibCell N MC103 235 33 3 
+LibCell Y MC103 235 33 3 
 Pin P1 128 18 
 Pin P2 27 12 
 Pin P3 36 7 
-LibCell N MC104 190 33 5 
+LibCell Y MC104 190 33 5 
 Pin P1 114 0 
 Pin P2 104 0 
 Pin P3 90 0 
 Pin P4 13 0 
 Pin P5 32 0 
-LibCell N MC105 120 33 5 
+LibCell Y MC105 120 33 5 
 Pin P1 0 12 
 Pin P2 38 18 
 Pin P3 50 12 
 Pin P4 108 18 
 Pin P5 12 12 
-LibCell N MC106 89 33 5 
+LibCell Y MC106 89 33 5 
 Pin P1 31 18 
 Pin P2 47 18 
 Pin P3 12 12 
 Pin P4 12 18 
 Pin P5 50 12 
-LibCell N MC107 75 33 3 
+LibCell Y MC107 75 33 3 
 Pin P1 16 18 
 Pin P2 29 18 
 Pin P3 30 7 
-LibCell N MC108 67 33 5 
+LibCell Y MC108 67 33 5 
 Pin P1 31 12 
 Pin P2 14 18 
 Pin P3 2 12 
 Pin P4 10 18 
 Pin P5 21 7 
-LibCell N MC109 69 33 4 
+LibCell Y MC109 69 33 4 
 Pin P1 35 12 
 Pin P2 9 18 
 Pin P3 11 12 
 Pin P4 37 7 
-LibCell N MC110 77 33 2 
+LibCell Y MC110 77 33 2 
 Pin P1 25 18 
 Pin P2 34 7 
-LibCell N MC111 346 33 4 
+LibCell Y MC111 346 33 4 
 Pin P1 225 0 
 Pin P2 75 0 
 Pin P3 23 0 
 Pin P4 127 0 
-LibCell N MC112 78 33 5 
+LibCell Y MC112 78 33 5 
 Pin P1 18 18 
 Pin P2 37 18 
 Pin P3 0 12 
 Pin P4 3 18 
 Pin P5 34 12 
-LibCell N MC113 147 33 3 
+LibCell Y MC113 147 33 3 
 Pin P1 29 12 
 Pin P2 13 18 
 Pin P3 79 7 
-LibCell N MC114 222 33 4 
+LibCell Y MC114 222 33 4 
 Pin P1 46 0 
 Pin P2 151 0 
 Pin P3 42 0 
 Pin P4 7 0 
-LibCell N MC115 86 33 5 
+LibCell Y MC115 86 33 5 
 Pin P1 7 18 
 Pin P2 24 12 
 Pin P3 23 18 
 Pin P4 21 12 
 Pin P5 55 7 
-LibCell N MC116 148 33 3 
+LibCell Y MC116 148 33 3 
 Pin P1 35 0 
 Pin P2 36 0 
 Pin P3 82 0 
-LibCell N MC117 96 33 4 
+LibCell Y MC117 96 33 4 
 Pin P1 30 7 
 Pin P2 31 12 
 Pin P3 35 18 
 Pin P4 6 12 
-LibCell N MC118 74 33 5 
+LibCell Y MC118 74 33 5 
 Pin P1 29 12 
 Pin P2 19 18 
 Pin P3 22 12 
 Pin P4 2 18 
 Pin P5 36 7 
-LibCell N MC119 97 33 4 
+LibCell Y MC119 97 33 4 
 Pin P1 8 18 
 Pin P2 13 12 
 Pin P3 21 18 
 Pin P4 50 7 
-LibCell N MC120 113 33 4 
+LibCell Y MC120 113 33 4 
 Pin P1 44 12 
 Pin P2 69 18 
 Pin P3 8 18 
 Pin P4 32 12 
-LibCell N MC121 203 33 3 
+LibCell Y MC121 203 33 3 
 Pin P1 18 18 
 Pin P2 60 12 
 Pin P3 99 7 
-LibCell N MC122 173 33 3 
+LibCell Y MC122 173 33 3 
 Pin P1 39 18 
 Pin P2 23 12 
 Pin P3 86 7 
-LibCell N MC123 260 33 5 
+LibCell Y MC123 260 33 5 
 Pin P1 40 0 
 Pin P2 13 0 
 Pin P3 198 0 
 Pin P4 158 0 
 Pin P5 113 0 
-LibCell N MC124 88 33 4 
+LibCell Y MC124 88 33 4 
 Pin P1 17 18 
 Pin P2 7 12 
 Pin P3 52 18 
 Pin P4 36 12 
-LibCell N MC125 111 33 7 
+LibCell Y MC125 111 33 7 
 Pin P1 67 12 
 Pin P2 70 12 
 Pin P3 24 12 
@@ -635,456 +635,456 @@ Pin P4 36 12
 Pin P5 17 18 
 Pin P6 23 12 
 Pin P7 70 7 
-LibCell N MC126 115 33 3 
+LibCell Y MC126 115 33 3 
 Pin P1 15 12 
 Pin P2 71 12 
 Pin P3 50 7 
-LibCell N MC127 132 33 4 
+LibCell Y MC127 132 33 4 
 Pin P1 108 18 
 Pin P2 80 12 
 Pin P3 36 18 
 Pin P4 43 12 
-LibCell N MC128 94 33 5 
+LibCell Y MC128 94 33 5 
 Pin P1 34 12 
 Pin P2 45 18 
 Pin P3 25 12 
 Pin P4 23 18 
 Pin P5 30 7 
-LibCell N MC129 115 33 3 
+LibCell Y MC129 115 33 3 
 Pin P1 73 18 
 Pin P2 13 18 
 Pin P3 37 7 
-LibCell N MC130 90 33 4 
+LibCell Y MC130 90 33 4 
 Pin P1 40 12 
 Pin P2 28 18 
 Pin P3 0 12 
 Pin P4 55 12 
-LibCell N MC131 232 33 4 
+LibCell Y MC131 232 33 4 
 Pin P1 30 0 
 Pin P2 51 0 
 Pin P3 67 0 
 Pin P4 139 0 
-LibCell N MC132 284 33 5 
+LibCell Y MC132 284 33 5 
 Pin P1 234 0 
 Pin P2 253 0 
 Pin P3 33 0 
 Pin P4 40 0 
 Pin P5 144 0 
-LibCell N MC133 137 33 4 
+LibCell Y MC133 137 33 4 
 Pin P1 9 12 
 Pin P2 57 18 
 Pin P3 71 12 
 Pin P4 102 7 
-LibCell N MC134 380 33 3 
+LibCell Y MC134 380 33 3 
 Pin P1 42 0 
 Pin P2 123 0 
 Pin P3 48 0 
-LibCell N MC135 204 33 4 
+LibCell Y MC135 204 33 4 
 Pin P1 73 0 
 Pin P2 154 0 
 Pin P3 5 0 
 Pin P4 31 0 
-LibCell N MC136 286 33 5 
+LibCell Y MC136 286 33 5 
 Pin P1 57 0 
 Pin P2 0 0 
 Pin P3 182 0 
 Pin P4 219 0 
 Pin P5 129 0 
-LibCell N MC137 149 33 4 
+LibCell Y MC137 149 33 4 
 Pin P1 75 18 
 Pin P2 70 12 
 Pin P3 35 18 
 Pin P4 59 12 
-LibCell N MC138 113 33 4 
+LibCell Y MC138 113 33 4 
 Pin P1 51 18 
 Pin P2 43 12 
 Pin P3 0 18 
 Pin P4 86 7 
-LibCell N MC139 92 33 5 
+LibCell Y MC139 92 33 5 
 Pin P1 47 12 
 Pin P2 39 18 
 Pin P3 9 12 
 Pin P4 2 18 
 Pin P5 30 7 
-LibCell N MC140 134 33 5 
+LibCell Y MC140 134 33 5 
 Pin P1 21 12 
 Pin P2 21 18 
 Pin P3 99 18 
 Pin P4 74 12 
 Pin P5 52 7 
-LibCell N MC141 85 33 5 
+LibCell Y MC141 85 33 5 
 Pin P1 20 12 
 Pin P2 23 18 
 Pin P3 42 12 
 Pin P4 52 18 
 Pin P5 43 7 
-LibCell N MC142 77 33 5 
+LibCell Y MC142 77 33 5 
 Pin P1 16 12 
 Pin P2 33 18 
 Pin P3 3 12 
 Pin P4 23 18 
 Pin P5 34 7 
-LibCell N MC143 75 33 5 
+LibCell Y MC143 75 33 5 
 Pin P1 23 18 
 Pin P2 43 18 
 Pin P3 17 12 
 Pin P4 7 18 
 Pin P5 58 12 
-LibCell N MC144 135 33 4 
+LibCell Y MC144 135 33 4 
 Pin P1 53 12 
 Pin P2 19 18 
 Pin P3 74 18 
 Pin P4 90 7 
-LibCell N MC145 61 33 4 
+LibCell Y MC145 61 33 4 
 Pin P1 38 12 
 Pin P2 11 18 
 Pin P3 12 12 
 Pin P4 40 7 
-LibCell N MC146 208 33 5 
+LibCell Y MC146 208 33 5 
 Pin P1 39 12 
 Pin P2 45 18 
 Pin P3 140 18 
 Pin P4 127 12 
 Pin P5 67 12 
-LibCell N MC147 81 33 3 
+LibCell Y MC147 81 33 3 
 Pin P1 5 18 
 Pin P2 43 18 
 Pin P3 22 7 
-LibCell N MC148 89 33 5 
+LibCell Y MC148 89 33 5 
 Pin P1 19 18 
 Pin P2 63 18 
 Pin P3 25 12 
 Pin P4 12 18 
 Pin P5 19 12 
-LibCell N MC149 79 33 5 
+LibCell Y MC149 79 33 5 
 Pin P1 38 12 
 Pin P2 48 18 
 Pin P3 11 12 
 Pin P4 10 18 
 Pin P5 35 7 
-LibCell N MC150 127 33 3 
+LibCell Y MC150 127 33 3 
 Pin P1 10 12 
 Pin P2 51 12 
 Pin P3 50 7 
-LibCell N MC151 270 33 4 
+LibCell Y MC151 270 33 4 
 Pin P1 152 0 
 Pin P2 8 0 
 Pin P3 47 0 
 Pin P4 182 0 
-LibCell N MC152 86 33 5 
+LibCell Y MC152 86 33 5 
 Pin P1 44 12 
 Pin P2 36 18 
 Pin P3 12 12 
 Pin P4 0 18 
 Pin P5 31 7 
-LibCell N MC153 97 33 2 
+LibCell Y MC153 97 33 2 
 Pin P1 35 18 
 Pin P2 53 7 
-LibCell N MC154 93 33 4 
+LibCell Y MC154 93 33 4 
 Pin P1 30 18 
 Pin P2 7 18 
 Pin P3 39 12 
 Pin P4 52 7 
-LibCell N MC155 176 33 2 
+LibCell Y MC155 176 33 2 
 Pin P1 12 18 
 Pin P2 75 7 
-LibCell N MC156 140 33 3 
+LibCell Y MC156 140 33 3 
 Pin P1 75 18 
 Pin P2 37 12 
 Pin P3 65 7 
-LibCell N MC157 88 33 5 
+LibCell Y MC157 88 33 5 
 Pin P1 14 12 
 Pin P2 13 12 
 Pin P3 22 18 
 Pin P4 31 12 
 Pin P5 66 12 
-LibCell N MC158 65 33 3 
+LibCell Y MC158 65 33 3 
 Pin P1 10 18 
 Pin P2 24 18 
 Pin P3 38 7 
-LibCell N MC159 166 33 3 
+LibCell Y MC159 166 33 3 
 Pin P1 46 0 
 Pin P2 43 0 
 Pin P3 82 0 
-LibCell N MC160 121 33 3 
+LibCell Y MC160 121 33 3 
 Pin P1 25 12 
 Pin P2 8 18 
 Pin P3 29 7 
-LibCell N MC161 107 33 5 
+LibCell Y MC161 107 33 5 
 Pin P1 11 12 
 Pin P2 15 18 
 Pin P3 39 12 
 Pin P4 45 18 
 Pin P5 56 7 
-LibCell N MC162 84 33 5 
+LibCell Y MC162 84 33 5 
 Pin P1 22 18 
 Pin P2 21 12 
 Pin P3 29 18 
 Pin P4 21 12 
 Pin P5 60 7 
-LibCell N MC163 242 33 5 
+LibCell Y MC163 242 33 5 
 Pin P1 30 0 
 Pin P2 0 0 
 Pin P3 185 0 
 Pin P4 160 0 
 Pin P5 79 0 
-LibCell N MC164 74 33 5 
+LibCell Y MC164 74 33 5 
 Pin P1 56 12 
 Pin P2 33 18 
 Pin P3 12 12 
 Pin P4 12 18 
 Pin P5 44 7 
-LibCell N MC165 74 33 4 
+LibCell Y MC165 74 33 4 
 Pin P1 35 12 
 Pin P2 5 18 
 Pin P3 17 12 
 Pin P4 14 7 
-LibCell N MC166 166 33 4 
+LibCell Y MC166 166 33 4 
 Pin P1 39 0 
 Pin P2 28 0 
 Pin P3 59 0 
 Pin P4 109 0 
-LibCell N MC167 84 33 5 
+LibCell Y MC167 84 33 5 
 Pin P1 31 12 
 Pin P2 36 18 
 Pin P3 18 12 
 Pin P4 25 18 
 Pin P5 30 7 
-LibCell N MC168 68 33 3 
+LibCell Y MC168 68 33 3 
 Pin P1 25 12 
 Pin P2 23 12 
 Pin P3 51 7 
-LibCell N MC169 94 33 5 
+LibCell Y MC169 94 33 5 
 Pin P1 21 12 
 Pin P2 6 12 
 Pin P3 31 18 
 Pin P4 35 12 
 Pin P5 58 12 
-LibCell N MC170 186 33 5 
+LibCell Y MC170 186 33 5 
 Pin P1 32 12 
 Pin P2 61 18 
 Pin P3 135 12 
 Pin P4 147 18 
 Pin P5 89 7 
-LibCell N MC171 89 33 4 
+LibCell Y MC171 89 33 4 
 Pin P1 16 12 
 Pin P2 3 12 
 Pin P3 39 18 
 Pin P4 34 12 
-LibCell N MC172 91 33 3 
+LibCell Y MC172 91 33 3 
 Pin P1 27 18 
 Pin P2 15 12 
 Pin P3 53 7 
-LibCell N MC173 78 33 5 
+LibCell Y MC173 78 33 5 
 Pin P1 23 18 
 Pin P2 47 18 
 Pin P3 22 12 
 Pin P4 3 18 
 Pin P5 52 12 
-LibCell N MC174 132 33 3 
+LibCell Y MC174 132 33 3 
 Pin P1 44 0 
 Pin P2 36 0 
 Pin P3 14 0 
-LibCell N MC175 78 33 3 
+LibCell Y MC175 78 33 3 
 Pin P1 11 18 
 Pin P2 17 12 
 Pin P3 49 7 
-LibCell N MC176 101 33 5 
+LibCell Y MC176 101 33 5 
 Pin P1 26 12 
 Pin P2 6 12 
 Pin P3 26 18 
 Pin P4 47 12 
 Pin P5 78 12 
-LibCell N MC177 96 33 5 
+LibCell Y MC177 96 33 5 
 Pin P1 18 18 
 Pin P2 20 18 
 Pin P3 25 12 
 Pin P4 28 18 
 Pin P5 42 7 
-LibCell N MC178 142 33 4 
+LibCell Y MC178 142 33 4 
 Pin P1 73 12 
 Pin P2 50 18 
 Pin P3 91 18 
 Pin P4 89 7 
-LibCell N MC179 88 33 3 
+LibCell Y MC179 88 33 3 
 Pin P1 43 18 
 Pin P2 26 12 
 Pin P3 57 7 
-LibCell N MC180 84 33 5 
+LibCell Y MC180 84 33 5 
 Pin P1 43 18 
 Pin P2 63 18 
 Pin P3 17 18 
 Pin P4 26 18 
 Pin P5 37 12 
-LibCell N MC181 180 33 4 
+LibCell Y MC181 180 33 4 
 Pin P1 89 0 
 Pin P2 50 0 
 Pin P3 13 0 
 Pin P4 56 0 
-LibCell N MC182 82 33 4 
+LibCell Y MC182 82 33 4 
 Pin P1 0 18 
 Pin P2 22 12 
 Pin P3 25 18 
 Pin P4 34 7 
-LibCell N MC183 75 33 4 
+LibCell Y MC183 75 33 4 
 Pin P1 0 18 
 Pin P2 6 12 
 Pin P3 17 18 
 Pin P4 28 12 
-LibCell N MC184 141 33 3 
+LibCell Y MC184 141 33 3 
 Pin P1 15 18 
 Pin P2 47 12 
 Pin P3 83 7 
-LibCell N MC185 99 33 5 
+LibCell Y MC185 99 33 5 
 Pin P1 21 18 
 Pin P2 23 18 
 Pin P3 49 12 
 Pin P4 30 18 
 Pin P5 66 7 
-LibCell N MC186 89 33 5 
+LibCell Y MC186 89 33 5 
 Pin P1 57 12 
 Pin P2 54 18 
 Pin P3 8 12 
 Pin P4 5 18 
 Pin P5 27 7 
-LibCell N MC187 218 33 4 
+LibCell Y MC187 218 33 4 
 Pin P1 65 0 
 Pin P2 139 0 
 Pin P3 11 0 
 Pin P4 39 0 
-LibCell N MC188 121 33 3 
+LibCell Y MC188 121 33 3 
 Pin P1 25 18 
 Pin P2 17 12 
 Pin P3 35 7 
-LibCell N MC189 307 33 2 
+LibCell Y MC189 307 33 2 
 Pin P1 17 18 
 Pin P2 212 7 
-LibCell N MC190 85 33 4 
+LibCell Y MC190 85 33 4 
 Pin P1 3 18 
 Pin P2 6 12 
 Pin P3 33 18 
 Pin P4 43 7 
-LibCell N MC191 102 33 2 
+LibCell Y MC191 102 33 2 
 Pin P1 27 12 
 Pin P2 37 7 
-LibCell N MC192 222 33 5 
+LibCell Y MC192 222 33 5 
 Pin P1 9 0 
 Pin P2 37 0 
 Pin P3 164 0 
 Pin P4 127 0 
 Pin P5 62 0 
-LibCell N MC193 93 33 5 
+LibCell Y MC193 93 33 5 
 Pin P1 34 12 
 Pin P2 58 12 
 Pin P3 13 12 
 Pin P4 22 12 
 Pin P5 57 7 
-LibCell N MC194 278 33 5 
+LibCell Y MC194 278 33 5 
 Pin P1 176 0 
 Pin P2 230 0 
 Pin P3 7 0 
 Pin P4 64 0 
 Pin P5 128 0 
-LibCell N MC195 81 33 4 
+LibCell Y MC195 81 33 4 
 Pin P1 4 18 
 Pin P2 19 12 
 Pin P3 20 18 
 Pin P4 54 7 
-LibCell N MC196 274 33 4 
+LibCell Y MC196 274 33 4 
 Pin P1 168 0 
 Pin P2 0 0 
 Pin P3 17 0 
 Pin P4 176 0 
-LibCell N MC197 230 33 4 
+LibCell Y MC197 230 33 4 
 Pin P1 179 0 
 Pin P2 31 0 
 Pin P3 3 0 
 Pin P4 178 0 
-LibCell N MC198 134 33 4 
+LibCell Y MC198 134 33 4 
 Pin P1 50 0 
 Pin P2 67 0 
 Pin P3 24 0 
 Pin P4 79 0 
-LibCell N MC199 96 33 5 
+LibCell Y MC199 96 33 5 
 Pin P1 25 18 
 Pin P2 3 18 
 Pin P3 22 12 
 Pin P4 23 18 
 Pin P5 67 7 
-LibCell N MC200 98 33 5 
+LibCell Y MC200 98 33 5 
 Pin P1 59 12 
 Pin P2 41 18 
 Pin P3 16 12 
 Pin P4 7 18 
 Pin P5 22 7 
-LibCell N MC201 250 33 4 
+LibCell Y MC201 250 33 4 
 Pin P1 121 0 
 Pin P2 183 0 
 Pin P3 32 0 
 Pin P4 61 0 
-LibCell N MC202 208 33 4 
+LibCell Y MC202 208 33 4 
 Pin P1 92 0 
 Pin P2 145 0 
 Pin P3 17 0 
 Pin P4 26 0 
-LibCell N MC203 286 33 4 
+LibCell Y MC203 286 33 4 
 Pin P1 155 0 
 Pin P2 188 0 
 Pin P3 19 0 
 Pin P4 92 0 
-LibCell N MC204 134 33 3 
+LibCell Y MC204 134 33 3 
 Pin P1 44 18 
 Pin P2 7 12 
 Pin P3 47 18 
-LibCell N MC205 164 33 3 
+LibCell Y MC205 164 33 3 
 Pin P1 44 18 
 Pin P2 16 12 
 Pin P3 105 7 
-LibCell N MC206 158 33 3 
+LibCell Y MC206 158 33 3 
 Pin P1 53 12 
 Pin P2 96 18 
 Pin P3 16 7 
-LibCell N MC207 149 33 3 
+LibCell Y MC207 149 33 3 
 Pin P1 54 18 
 Pin P2 8 12 
 Pin P3 57 18 
-LibCell N MC208 85 33 3 
+LibCell Y MC208 85 33 3 
 Pin P1 19 18 
 Pin P2 31 18 
 Pin P3 31 7 
-LibCell N MC209 147 33 3 
+LibCell Y MC209 147 33 3 
 Pin P1 17 18 
 Pin P2 25 12 
 Pin P3 76 7 
-LibCell N MC210 67 33 3 
+LibCell Y MC210 67 33 3 
 Pin P1 14 18 
 Pin P2 28 18 
 Pin P3 19 7 
-LibCell N MC211 94 33 3 
+LibCell Y MC211 94 33 3 
 Pin P1 78 18 
 Pin P2 8 18 
 Pin P3 35 7 
-LibCell N MC212 140 33 3 
+LibCell Y MC212 140 33 3 
 Pin P1 26 12 
 Pin P2 19 18 
 Pin P3 71 7 
-LibCell N MC213 46 33 3 
+LibCell Y MC213 46 33 3 
 Pin P1 0 12 
 Pin P2 11 18 
 Pin P3 34 7 
-LibCell N MC214 242 33 3 
+LibCell Y MC214 242 33 3 
 Pin P1 87 18 
 Pin P2 12 12 
 Pin P3 44 7 
-LibCell N MC215 92 33 3 
+LibCell Y MC215 92 33 3 
 Pin P1 6 12 
 Pin P2 47 18 
 Pin P3 22 18 
-LibCell N MC216 157 33 3 
+LibCell Y MC216 157 33 3 
 Pin P1 23 18 
 Pin P2 31 12 
 Pin P3 84 7 
-LibCell N MC217 98 33 3 
+LibCell Y MC217 98 33 3 
 Pin P1 32 18 
 Pin P2 25 12 
 Pin P3 52 7 
@@ -1272,13 +1272,13 @@ Pin P58 10759 0
 Pin P59 11299 1339 
 Pin P60 4298 0 
 
-DieSize 0 0 1650 1650
+DieSize 0 0 990 990
 
 TopDieMaxUtil 80 
 BottomDieMaxUtil 80 
 
-TopDieRows 0 0 1650 33 50 
-BottomDieRows 0 0 1650 33 50 
+TopDieRows 0 0 990 33 30 
+BottomDieRows 0 0 990 33 30 
 
 TopDieTech TA 
 BottomDieTech TA 

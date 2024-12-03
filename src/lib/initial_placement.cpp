@@ -72,7 +72,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         // instances[i].x = topDie.upperRightX / 2.0 + i*10;
         // instances[i].y = topDie.upperRightY / 2.0 + i*10 ;
         instances[i].x = X;
-        instances[i].y = Y + (double) i;
+        instances[i].y = Y;
         instances[i].z = 0.5 ;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;

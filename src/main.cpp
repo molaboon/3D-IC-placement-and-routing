@@ -66,8 +66,8 @@ int main(int argc, char *argv[]){
 
 	/*	macro gradient and placement	*/
 	
-	macroGradient( macros, netsOfMacros, top_die, totalIter);
-	macroLegalization(macros);
+	// macroGradient( macros, netsOfMacros, top_die, totalIter);
+	// macroLegalization(macros);
 	// macroPartition( macros, netsOfMacros, top_die);
 
 	/*	coarsening */
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]){
 
 	/*	first placement and CG preprocessing	*/
 	
-	if (false){
+	if (true){
 
 		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 		double wireLength, newWireLength;
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]){
 
 		for(int i = 0; i < totalIter; i++)
 		{
-			for(int j = 0; j < 20; j++)
+			for(int j = 0; j < 40; j++)
 			{
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
 
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]){
 	if(true)
 	{	
 		// firstPlacement(instances, binInfo, top_die);
-		cell2BestLayer(macros, top_die, bottom_die);
+		// cell2BestLayer(macros, top_die, bottom_die);
 		// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		writeVisualFile(macros, visualFile, top_die);

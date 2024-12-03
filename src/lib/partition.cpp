@@ -122,11 +122,11 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
     CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
 
-    penaltyWeight = 1.0;
+    // penaltyWeight = 1.0;
 
     for(int i = 0; i < totalIter; i++)
     {
-        for(int j = 0; j < 20; j++)
+        for(int j = 0; j < 40; j++)
         {
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, i);
 
@@ -138,7 +138,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
 
-            if( newScore * 0.8 < totalScore)
+            if( newScore < totalScore * 1.1)
                 totalScore = newScore;
 
             else
@@ -159,6 +159,9 @@ void macroLegalization(vector <instance> &macros)
     {
         macros[i].finalX = macros[i].x - macros[i].width/2;
         macros[i].finalY = macros[i].y - macros[i].height/2;
+
+        macros[i].finalWidth = macros[i].width;
+        macros[i].finalHeight = macros[i].height;
         if(macros[i].z < 0.5)
             macros[i].layer = 0;
         

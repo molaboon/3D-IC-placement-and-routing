@@ -324,13 +324,52 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
 {
     double score = 0.0;
     double area = binInfo.binWidth * binInfo.binHeight;
-    int binSize = (int) binInfo.binXnum * binInfo.binYnum;
+    
+    int binXnum = (int) binInfo.binXnum;
+    int binYnum = (int) binInfo.binYnum;
 
-    for(int b = 0; b < binSize; b++)
+    // if bin area > die area
+    double overAreaOfX = 0.0;
+    double overAreaOfY = 0.0;
+    double overAreaOfXY = 0.0;
+
+    if( binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth )
+        overAreaOfX = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * binInfo.binHeight;
+    else
+        overAreaOfX = area;
+    
+    if( binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight )
+        overAreaOfY = (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) ) * binInfo.binWidth;
+    else
+        overAreaOfY = area;
+    
+    if(binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight && binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth)
+        overAreaOfXY = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) );
+    else 
+        overAreaOfXY = area;
+
+    for(int i = 0; i < binYnum; i++)
     {
-        score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);
+        for(int j = 0; j < binXnum; j++)
+        {
+            int b = j + i*binXnum;
+            
+            if(j == binXnum - 1 && i == binYnum - 1)
+                score += (firstLayer[b] - overAreaOfXY) * (firstLayer[b] - overAreaOfXY) + (secondLayer[b] - overAreaOfXY) * (secondLayer[b] - overAreaOfXY);
+
+            else if(j == binXnum - 1)
+                score +=  (firstLayer[b] - overAreaOfX) * (firstLayer[b] - overAreaOfX) + (secondLayer[b] - overAreaOfX) * (secondLayer[b] - overAreaOfX);
+            
+            else if (i == binYnum - 1)
+                score +=  (firstLayer[b] - overAreaOfY) * (firstLayer[b] - overAreaOfY) + (secondLayer[b] - overAreaOfY) * (secondLayer[b] - overAreaOfY);
+
+            else
+                score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);                
+        }
     }
-        return score;    
+
+    
+    return score;    
 }
 
 void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
@@ -518,16 +557,16 @@ double returnAlpha(double nowCG[])
 void glodenSearch(instance &inst, const gridInfo binInfo)
 {   
     if( inst.x + inst.width/2 > binInfo.dieWidth)
-        inst.x = binInfo.dieWidth - inst.width/2 ;
+        inst.x = binInfo.dieWidth - inst.width/2 - 1.0 ;
 
     else if (inst.x - inst.width/2 < 0.0)
-        inst.x = 0.0 + inst.width/2;
+        inst.x = 0.0 + inst.width/2 + 1.0;
 
     if(inst.y + inst.height/2> binInfo.dieHeight)
-        inst.y = binInfo.dieHeight - inst.height/2;
+        inst.y = binInfo.dieHeight - inst.height/2 - 1.0;
 
     else if (inst.y - inst.height/2 < 0.0)
-        inst.y = 0.0 + inst.height/2;
+        inst.y = 0.0 + inst.height/2 + 1.0;
 
     if(inst.z > 1.0)
         inst.z = 1.0;
