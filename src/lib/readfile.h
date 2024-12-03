@@ -105,7 +105,7 @@ typedef struct _Instance{
     double gra_z = 0.0;
     double gra_d = 0.0;
 
-    bool *netsConnect;
+    vector<int> connectedNet;
 
 }instance;
 

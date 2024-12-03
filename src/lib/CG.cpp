@@ -20,67 +20,125 @@
 using namespace std;
 
 
-double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool isGra)
+double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore)
 {
     double score = 0.0;
 
-    for (int net = 0; net < rawNet.size(); net++)
+    if(isGra)
     {
-        double numerator_1 = 0.0;
-        double denominator_1 = 0.0;
-        double numerator_2 = 0.0;
-        double denominator_2 = 0.0;
-
-        for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
+        for(int net = 0; net < graInstance.numNetConnection; net++)
         {
-            double tmp = 0.0;
+            double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
+            double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
-            if(isGra)
-                tmp = rawNet[net].Connection[instance]->tmpX;
-            else
-                tmp = rawNet[net].Connection[instance]->x;
+            for (int ins = 0 ; ins < rawNet[net].numPins; ins++)
+            {
+                double tmpGra = 0.0, tmpOri = 0.0;
 
-            numerator_1 += tmp * exp(tmp / gamma);
-            denominator_1 += exp(tmp / gamma);
-            numerator_2 += tmp * exp(-tmp/ gamma);
-            denominator_2 += exp(-tmp/ gamma);
+                tmpGra = rawNet[net].Connection[ins]->tmpX;
+                tmpOri = rawNet[net].Connection[ins]->x;
+
+                n_1 += tmpOri * exp(tmpOri / gamma);
+                d_1 += exp(tmpOri / gamma);
+                n_2 += tmpOri * exp(-tmpOri/ gamma);
+                d_2 += exp(-tmpOri/ gamma);
+
+                mn_1 += tmpGra * exp(tmpGra / gamma);
+                md_1 += exp(tmpGra / gamma);
+                mn_2 += tmpGra * exp(-tmpGra/ gamma);
+                md_2 += exp(-tmpGra/ gamma);
+            }
+            score += ( mn_1/md_1 - mn_2/mn_2 ) - ( n_1/d_1 - n_2/n_2 ); 
         }
 
-        score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
+        score = originScore + score; 
+
+    }
+    else{
+
+        for (int net = 0; net < rawNet.size(); net++)
+        {
+            double numerator_1 = 0.0;
+            double denominator_1 = 0.0;
+            double numerator_2 = 0.0;
+            double denominator_2 = 0.0;
+
+            for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
+            {
+                double tmp = 0.0;
+
+                tmp = rawNet[net].Connection[instance]->x;
+
+                numerator_1 += tmp * exp(tmp / gamma);
+                denominator_1 += exp(tmp / gamma);
+                numerator_2 += tmp * exp(-tmp/ gamma);
+                denominator_2 += exp(-tmp/ gamma);
+            }
+            score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
+        }
     }
 
     return score;
-
 }
 
-double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool isGra)
+double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore)
 {
     double score = 0.0;
 
-    for (int net = 0; net < (int) rawNet.size(); net++)
+    if(isGra)
     {
-        double numerator_1 = 0.0;
-        double denominator_1 = 0.0;
-        double numerator_2 = 0.0;
-        double denominator_2 = 0.0;
-
-        for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
+        for(int net = 0; net < graInstance.numNetConnection; net++)
         {
-            double tmp = 0.0;
+            double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
+            double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
-            if(isGra)
-                tmp = rawNet[net].Connection[instance]->tmpY;
-            else
-                tmp = rawNet[net].Connection[instance]->y;
+            for (int ins = 0 ; ins < rawNet[net].numPins; ins++)
+            {
+                double tmpGra = 0.0, tmpOri = 0.0;
 
-            numerator_1 += tmp * exp(tmp / gamma);
-            denominator_1 += exp(tmp / gamma);
-            numerator_2 += tmp * exp(-tmp/ gamma);
-            denominator_2 += exp(-tmp/ gamma);
+                tmpGra = rawNet[net].Connection[ins]->tmpY;
+                tmpOri = rawNet[net].Connection[ins]->y;
+
+                n_1 += tmpOri * exp(tmpOri / gamma);
+                d_1 += exp(tmpOri / gamma);
+                n_2 += tmpOri * exp(-tmpOri/ gamma);
+                d_2 += exp(-tmpOri/ gamma);
+
+                mn_1 += tmpGra * exp(tmpGra / gamma);
+                md_1 += exp(tmpGra / gamma);
+                mn_2 += tmpGra * exp(-tmpGra/ gamma);
+                md_2 += exp(-tmpGra/ gamma);
+            }
+            score += ( mn_1/md_1 - mn_2/mn_2 ) - ( n_1/d_1 - n_2/n_2 ); 
         }
 
-        score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
+        score = originScore + score; 
     }
+    else
+    {
+        for (int net = 0; net < (int) rawNet.size(); net++)
+        {
+            double numerator_1 = 0.0;
+            double denominator_1 = 0.0;
+            double numerator_2 = 0.0;
+            double denominator_2 = 0.0;
+
+            for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
+            {
+                double tmp = 0.0;
+
+                tmp = rawNet[net].Connection[instance]->y;
+
+                numerator_1 += tmp * exp(tmp / gamma);
+                denominator_1 += exp(tmp / gamma);
+                numerator_2 += tmp * exp(-tmp/ gamma);
+                denominator_2 += exp(-tmp/ gamma);
+            }
+            score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
+        }
+    }
+
+    
 
     return score;
 }
@@ -389,7 +447,7 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         instances[i].tmpX = instances[i].x;
         instances[i].tmpX += h;
         
-        score = scoreOfX(rawNet, gamma, isGra);
+        score = scoreOfX(rawNet, gamma, true, instances[i], xScore);
 
         // Dedecut the original block(needMinus = ture) first and the add the gra one(isGra = true).
 
@@ -422,7 +480,7 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         instances[i].tmpY = instances[i].y;
         instances[i].tmpY += h;
 
-        score = scoreOfY(rawNet, gamma, true);
+        score = scoreOfY(rawNet, gamma, true, instances[i], yScore);
 
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true);
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false);
@@ -482,9 +540,9 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
 {
     double score_of_x, score_of_y, score_of_z, densityScore, totalScore, wireLength;
 
-    score_of_x = scoreOfX(rawNet, gamma, false);
+    score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
 
-    score_of_y = scoreOfY(rawNet, gamma, false);
+    score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
 
     densityScore = scoreOfz(rawNet, instances, binInfo, 1);
 
@@ -613,8 +671,8 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     double *originSecondLayer = createBins(binInfo);
     double numInstances = instances.size();
     
-    xScore = scoreOfX(rawNets, gamma, false);
-    yScore = scoreOfY(rawNets, gamma, false);
+    xScore = scoreOfX(rawNets, gamma, false, instances[0], 0);
+    yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
     
     for(int j = 0; j < numInstances; j++)
         instances[j].density = returnDensity(instances[j].z, 0.0);

@@ -98,8 +98,8 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     int size = instances.size();
 
-    xScore = scoreOfX(rawNet, gamma, false);
-    yScore = scoreOfY(rawNet, gamma, false);
+    xScore = scoreOfX(rawNet, gamma, false, instances[0], 0);
+    yScore = scoreOfY(rawNet, gamma, false, instances[0], 0);
     tsvScore = TSVofNet(rawNet);
 
     for(int i = 0; i < size; i++)
@@ -120,17 +120,17 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         instances[i].tmpX = instances[i].x;
         instances[i].tmpX += h;
         
-        memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-        memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-        tmpXscore = scoreOfX(rawNet, gamma, true);
+        tmpXscore = scoreOfX(rawNet, gamma, true, instances[i], xScore);
 
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
 
         tmpDen = scoreOfPenalty(fl, sl, binInfo);
 
-        grax += fabs( (tmpXscore - xScore) / h) ;
+        grax += fabs( (tmpXscore - xScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h );
 
         // part of y /////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         instances[i].tmpY = instances[i].y;
         instances[i].tmpY += h;
 
-        tmpYscore = scoreOfY(rawNet, gamma, true);
+        tmpYscore = scoreOfY(rawNet, gamma, true, instances[i], yScore);
 
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);

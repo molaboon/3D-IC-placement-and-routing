@@ -24,8 +24,6 @@ int main(int argc, char *argv[]){
 	// srand(time(NULL));
 
 	double startTime, endTime;
-
-	startTime = clock();
 	
 	char *inputName = *(argv + 1);
 	char *outputName = *(argv + 2);
@@ -122,7 +120,10 @@ int main(int argc, char *argv[]){
 				{
 					// cout << "next iter\n\n";
 					break;
-				}	
+				}
+				endTime = clock();
+
+				printf("Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
 			}
 			// penaltyWeight *= 2;
 		}
