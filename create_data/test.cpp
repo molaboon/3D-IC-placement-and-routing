@@ -6,9 +6,9 @@ using namespace std;
 
 int main()
 {
-	int *t ;
+	int t[3] = {0, 1, 2};
 
-	cout << t[i]  << endl;
+	cout << *t + 1  << endl;
 
 	return 0;
 

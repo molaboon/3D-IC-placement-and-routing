@@ -4,7 +4,7 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
 
 double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore);
 
-double TSVofNet( vector <RawNet> &rawNet);
+double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, double originScore);
 
 double bellShapeFunc(const double z, const double layer);
 

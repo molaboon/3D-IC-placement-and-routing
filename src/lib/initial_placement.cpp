@@ -58,22 +58,13 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
         double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
-        double Z = 0.5;
+        double Z = fmod( (double) rand(), 2.0 ) ;
 
-        // if(instances[i].isMacro)
-        // // {
-        // instances[i].x = x[cnt];
-        // instances[i].y = y[cnt];
-        // instances[i].z = z[cnt];
         instances[i].rotate = 0;
 
-        // cnt++;
-        
-        // instances[i].x = topDie.upperRightX / 2.0 + i*10;
-        // instances[i].y = topDie.upperRightY / 2.0 + i*10 ;
         instances[i].x = X;
         instances[i].y = Y;
-        instances[i].z = 0.5 ;
+        instances[i].z = Z ;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;
         instances[i].tmpZ = instances[i].z;
@@ -100,7 +91,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     xScore = scoreOfX(rawNet, gamma, false, instances[0], 0);
     yScore = scoreOfY(rawNet, gamma, false, instances[0], 0);
-    tsvScore = TSVofNet(rawNet);
+    tsvScore = TSVofNet(rawNet, false, instances[0], 0);
 
     for(int i = 0; i < size; i++)
     {
@@ -130,6 +121,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
         tmpDen = scoreOfPenalty(fl, sl, binInfo);
 
+        instances[i].tmpX = instances[i].x;
         grax += fabs( (tmpXscore - xScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h );
 
@@ -150,16 +142,18 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
         gray += fabs( (tmpYscore - yScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h );
+        instances[i].tmpY = instances[i].y;
 
         // part of z /////////////////////////////////////////////////////////////
                        
         double tmpz = instances[i].z;
         double tmpTSV = 0.0;
 
-        instances[i].z += h;
+        instances[i].tmpZ = instances[i].z;
+        instances[i].tmpZ += h;
         instances[i].density = returnDensity(instances[i].z, 0.0);
 
-        tmpTSV = TSVofNet(rawNet);
+        tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
 
         memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
         memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
@@ -172,8 +166,8 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         graz += fabs( (tmpTSV - tsvScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h);
 
-        instances[i].z = tmpz;
-        instances[i].density = returnDensity(instances[i].z, 0.0);        
+        instances[i].tmpZ = instances[i].z;
+        instances[i].density = returnDensity(instances[i].z, 0.0);
     } 
 
     free(fl);

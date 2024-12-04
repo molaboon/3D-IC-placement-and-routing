@@ -205,30 +205,66 @@ double returnPsi(double z)
     return psi;
 }
 
-double TSVofNet( vector <RawNet> &rawNet)
+double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, double originScore)
 {
     double score = 0.0;
     int size = rawNet.size();
 
-    for (int net = 0; net < size; net++)
+    if(isGra)
     {
-        double numerator_1 = 0.0;
-        double denominator_1 = 0.0;
-        double numerator_2 = 0.0;
-        double denominator_2 = 0.0;
-
-        for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
+        for(int net = 0; net < graInstance.numNetConnection; net++)
         {
-            double tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
+            double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
+            double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
-            numerator_1 += tmpPsi * exp(tmpPsi / 0.05);
-            denominator_1 += exp(tmpPsi / 0.05);
-            numerator_2 += tmpPsi * exp(-tmpPsi/ 0.05);
-            denominator_2 += exp(-tmpPsi/ 0.05);
+            for (int ins = 0 ; ins < rawNet[net].numPins; ins++)
+            {
+                double tmpGra = 0.0, tmpOri = 0.0, tmpGraPsi = 0.0, tmpPsi = 0.0;
+                
+                tmpGra = rawNet[net].Connection[ins]->tmpZ;
+                tmpOri = rawNet[net].Connection[ins]->z;
+
+                tmpGraPsi = returnPsi(tmpGra);
+                tmpPsi = returnPsi(tmpOri);
+
+                n_1 += tmpPsi * exp(tmpPsi / 0.05);
+                d_1 += exp(tmpPsi / 0.05);
+                n_2 += tmpPsi * exp(-tmpPsi/ 0.05);
+                d_2 += exp(-tmpPsi/ 0.05);
+
+                mn_1 += tmpGraPsi * exp(tmpGraPsi / 0.05);
+                md_1 += exp(tmpGraPsi / 0.05);
+                mn_2 += tmpGraPsi * exp(-tmpGraPsi/ 0.05);
+                md_2 += exp(-tmpGraPsi/ 0.05);
+            }
+            score += ( mn_1/md_1 - mn_2/mn_2 ) - ( n_1/d_1 - n_2/n_2 ); 
         }
-        score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
+
+        score = originScore + score; 
+    }
+    else
+    {
+        for (int net = 0; net < size; net++)
+        {
+            double numerator_1 = 0.0;
+            double denominator_1 = 0.0;
+            double numerator_2 = 0.0;
+            double denominator_2 = 0.0;
+
+            for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
+            {
+                double tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
+
+                numerator_1 += tmpPsi * exp(tmpPsi / 0.05);
+                denominator_1 += exp(tmpPsi / 0.05);
+                numerator_2 += tmpPsi * exp(-tmpPsi/ 0.05);
+                denominator_2 += exp(-tmpPsi/ 0.05);
+            }
+            score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
+        }
     }
 
+    
     return score;
 }
 
@@ -456,6 +492,7 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
 
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
+        instances[i].tmpX = instances[i].x;
         instances[i].gra_x =  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
     }
     free(firstLayer);
@@ -487,6 +524,7 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
             
         score2 = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
+        instances[i].tmpY = instances[i].y;
         instances[i].gra_y = ( (score - yScore) + penaltyWeight * (score2 - penaltyScore) ) / h;
     }
     
@@ -501,15 +539,15 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
 
     for(int i = 0; i < instances.size(); i++)
     {
-        double tmpz = instances[i].z;
         double tmpd = instances[i].density;
         double score , score2;
         bool needMinus = false;
         
-        instances[i].z += h;
-        instances[i].density = returnDensity(instances[i].z, 0.0);
+        instances[i].tmpZ = instances[i].z;
+        instances[i].tmpZ += h;
+        instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
 
-        score = TSVofNet(rawNet);
+        score = TSVofNet(rawNet, true, instances[i], zScore);
 
         memcpy(fl, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
         memcpy(sl, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
@@ -522,7 +560,7 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         instances[i].gra_z = (score - zScore) / h;
         instances[i].gra_d = penaltyWeight * ( score2 - penaltyScore) / h;
 
-        instances[i].z = tmpz;
+        instances[i].tmpZ = instances[i].z;
         instances[i].density = tmpd;
     }
 
@@ -546,7 +584,7 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
 
     densityScore = scoreOfz(rawNet, instances, binInfo, 1);
 
-    score_of_z = TSVofNet(rawNet);
+    score_of_z = TSVofNet(rawNet, false, instances[0], 0);
 
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
 
@@ -677,7 +715,7 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     for(int j = 0; j < numInstances; j++)
         instances[j].density = returnDensity(instances[j].z, 0.0);
         
-    zScore = TSVofNet(rawNets);
+    zScore = TSVofNet(rawNets, false, instances[0], 0);
     
     for(int j = 0; j < numInstances; j++)
         penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false);    
