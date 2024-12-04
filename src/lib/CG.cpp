@@ -30,13 +30,25 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
         {
             double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
             double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
+            int nowNet = 0;
 
-            for (int ins = 0 ; ins < rawNet[net].numPins; ins++)
+            if( graInstance.isMacro)
+            {
+                for(int net2 = 0; net2 < rawNet.size(); net2++)
+                    if(rawNet[net2].netIndex == graInstance.connectedNet[net])
+                    {
+                        nowNet = net2;
+                        break;
+                    }
+                
+            }
+
+            for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
                 double tmpGra = 0.0, tmpOri = 0.0;
-
-                tmpGra = rawNet[net].Connection[ins]->tmpX;
-                tmpOri = rawNet[net].Connection[ins]->x;
+                
+                tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpX;
+                tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->x;
 
                 n_1 += tmpOri * exp(tmpOri / gamma);
                 d_1 += exp(tmpOri / gamma);
@@ -48,7 +60,7 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
                 mn_2 += tmpGra * exp(-tmpGra/ gamma);
                 md_2 += exp(-tmpGra/ gamma);
             }
-            score += ( mn_1/md_1 - mn_2/mn_2 ) - ( n_1/d_1 - n_2/n_2 ); 
+            score += ( mn_1/md_1 - mn_2/md_2 ) - ( n_1/d_1 - n_2/d_2 ); 
         }
 
         score = originScore + score; 
@@ -92,12 +104,12 @@ double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool i
             double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
             double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
-            for (int ins = 0 ; ins < rawNet[net].numPins; ins++)
+            for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
                 double tmpGra = 0.0, tmpOri = 0.0;
 
-                tmpGra = rawNet[net].Connection[ins]->tmpY;
-                tmpOri = rawNet[net].Connection[ins]->y;
+                tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpY;
+                tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->y;
 
                 n_1 += tmpOri * exp(tmpOri / gamma);
                 d_1 += exp(tmpOri / gamma);
@@ -109,7 +121,7 @@ double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool i
                 mn_2 += tmpGra * exp(-tmpGra/ gamma);
                 md_2 += exp(-tmpGra/ gamma);
             }
-            score += ( mn_1/md_1 - mn_2/mn_2 ) - ( n_1/d_1 - n_2/n_2 ); 
+            score += ( mn_1/md_1 - mn_2/md_2 ) - ( n_1/d_1 - n_2/d_2 ); 
         }
 
         score = originScore + score; 
@@ -217,12 +229,12 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
             double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
             double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
-            for (int ins = 0 ; ins < rawNet[net].numPins; ins++)
+            for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
                 double tmpGra = 0.0, tmpOri = 0.0, tmpGraPsi = 0.0, tmpPsi = 0.0;
                 
-                tmpGra = rawNet[net].Connection[ins]->tmpZ;
-                tmpOri = rawNet[net].Connection[ins]->z;
+                tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpZ;
+                tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->z;
 
                 tmpGraPsi = returnPsi(tmpGra);
                 tmpPsi = returnPsi(tmpOri);
@@ -237,7 +249,7 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
                 mn_2 += tmpGraPsi * exp(-tmpGraPsi/ 0.05);
                 md_2 += exp(-tmpGraPsi/ 0.05);
             }
-            score += ( mn_1/md_1 - mn_2/mn_2 ) - ( n_1/d_1 - n_2/n_2 ); 
+            score += ( mn_1/md_1 - mn_2/md_2 ) - ( n_1/d_1 - n_2/d_2 ); 
         }
 
         score = originScore + score; 

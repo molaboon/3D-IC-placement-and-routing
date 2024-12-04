@@ -168,6 +168,10 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.x = 0.0;
         temp.y = 0.0;
         temp.z = 0.0;
+        temp.tmpX = 0.0;
+        temp.tmpY = 0.0;
+        temp.tmpZ = 0.0;
+        temp.layer = 0;
         temp.finalX = 0;
         temp.finalY = 0;
         temp.finalWidth = 0;
@@ -289,6 +293,16 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             netsOfMacros.emplace_back(macroTmp);
         }
     }
+
+    // copy the connectedNet array from instances to macros
+
+    for(int i = 0; i < macros.size(); i++)
+    {
+        macros[i].connectedNet = instances[ macros[i].instIndex ].connectedNet;
+        macros[i].numNetConnection = instances[ macros[i].instIndex ].numNetConnection;
+    }
+        
+    
 
     fclose(input);
 }

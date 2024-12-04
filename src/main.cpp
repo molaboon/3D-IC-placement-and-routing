@@ -17,6 +17,8 @@ using namespace std;
 using std::vector;
 
 #define dimention 3
+#define macroPart 1
+#define stdCellPart 0
 
 int main(int argc, char *argv[]){
 	
@@ -64,9 +66,13 @@ int main(int argc, char *argv[]){
 
 	/*	macro gradient and placement	*/
 	
-	// macroGradient( macros, netsOfMacros, top_die, totalIter);
-	// macroLegalization(macros);
-	// macroPartition( macros, netsOfMacros, top_die);
+	if(macroPart)
+	{
+		macroGradient( macros, netsOfMacros, top_die, totalIter);
+		macroLegalization(macros);
+		// macroPartition( macros, netsOfMacros, top_die);
+	}
+
 
 	/*	coarsening */
 
@@ -74,7 +80,7 @@ int main(int argc, char *argv[]){
 
 	/*	first placement and CG preprocessing	*/
 	
-	if (true){
+	if (stdCellPart){
 
 		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 		double wireLength, newWireLength;

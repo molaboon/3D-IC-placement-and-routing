@@ -122,6 +122,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         tmpDen = scoreOfPenalty(fl, sl, binInfo);
 
         instances[i].tmpX = instances[i].x;
+        
         grax += fabs( (tmpXscore - xScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h );
 
