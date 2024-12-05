@@ -298,11 +298,20 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
     for(int i = 0; i < macros.size(); i++)
     {
-        macros[i].connectedNet = instances[ macros[i].instIndex ].connectedNet;
-        macros[i].numNetConnection = instances[ macros[i].instIndex ].numNetConnection;
-    }
+        macros[i].numNetConnection = 0;
         
-    
+        for(int net = 0; net < netsOfMacros.size(); net++)
+        {
+            for(int pin = 0; pin < netsOfMacros[net].numPins; pin++)
+            {
+                if(netsOfMacros[net].Connection[pin]->instIndex == macros[i].instIndex)
+                {
+                    macros[i].connectedNet[ macros[i].numNetConnection ] = net;
+                    macros[i].numNetConnection++;
+                }
+            }
+        }
+    }
 
     fclose(input);
 }

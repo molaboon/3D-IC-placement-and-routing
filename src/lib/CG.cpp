@@ -32,17 +32,6 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
             double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
             int nowNet = 0;
 
-            if( graInstance.isMacro)
-            {
-                for(int net2 = 0; net2 < rawNet.size(); net2++)
-                    if(rawNet[net2].netIndex == graInstance.connectedNet[net])
-                    {
-                        nowNet = net2;
-                        break;
-                    }
-                
-            }
-
             for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
                 double tmpGra = 0.0, tmpOri = 0.0;
@@ -78,7 +67,7 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
             for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
             {
                 double tmp = 0.0;
-
+     
                 tmp = rawNet[net].Connection[instance]->x;
 
                 numerator_1 += tmp * exp(tmp / gamma);
@@ -222,7 +211,7 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
     double score = 0.0;
     int size = rawNet.size();
 
-    if(isGra)
+    if(isGra && !graInstance.isMacro)
     {
         for(int net = 0; net < graInstance.numNetConnection; net++)
         {
@@ -265,8 +254,13 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
 
             for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
             {
-                double tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
+                double tmpPsi = 0.0;
 
+                if(isGra)
+                    tmpPsi = returnPsi(rawNet[net].Connection[instance]->tmpZ);
+                else
+                    tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
+               
                 numerator_1 += tmpPsi * exp(tmpPsi / 0.05);
                 denominator_1 += exp(tmpPsi / 0.05);
                 numerator_2 += tmpPsi * exp(-tmpPsi/ 0.05);
@@ -578,7 +572,6 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
 
     free(fl);
     free(sl);
-
 }
 
 double infaltionRatio(instance instance, double routingOverflow)

@@ -73,7 +73,6 @@ int main(int argc, char *argv[]){
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
-
 	/*	coarsening */
 
 	// coarsen(rawnet, instances);
