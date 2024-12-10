@@ -21,16 +21,15 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance)
     binInfo->binXnum = floor( sqrt( (double) Numinstance ));
     binInfo->binWidth = floor(die->upperRightX / binInfo->binXnum);
 
-    if(binInfo->binWidth * binInfo->binXnum < binInfo->dieWidth)
+    while(binInfo->binWidth * binInfo->binXnum < binInfo->dieWidth)
         binInfo->binXnum += 1;
         
     binInfo->binYnum = floor( sqrt( (double) Numinstance ));
     binInfo->binHeight = floor(die->upperRightY / binInfo->binYnum);
 
-    if(binInfo->binHeight * binInfo->binYnum < binInfo->dieHeight)
+    while(binInfo->binHeight * binInfo->binYnum < binInfo->dieHeight)
         binInfo->binYnum += 1;
         
-    
     binInfo->Numinstance = Numinstance;
 
 }
@@ -58,12 +57,12 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
         double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
-        double Z = fmod( (double) rand(), 2.0 ) ;
+        double Z = 0.5 ;
 
         instances[i].rotate = 0;
 
         instances[i].x = X;
-        instances[i].y = Y;
+        instances[i].y = X;
         instances[i].z = Z ;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;
@@ -91,13 +90,13 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     xScore = scoreOfX(rawNet, gamma, false, instances[0], 0);
     yScore = scoreOfY(rawNet, gamma, false, instances[0], 0);
-    tsvScore = TSVofNet(rawNet, false, instances[0], 0);
 
     for(int i = 0; i < size; i++)
     {
         instances[i].density = returnDensity(instances[i].z, 0.0);
         penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false);
     }
+    tsvScore = TSVofNet(rawNet, false, instances[0], 0);
 
     penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
 

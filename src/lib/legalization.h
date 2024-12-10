@@ -23,3 +23,5 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
 void place2nearRow(const Die die, const Die theOtherDie,vector <vector<int>> &diePlacementState, vector <vector<int>> &theOtherDiePlacementState, vector <instance> &instances, int *dieCellWidth, int *theOtherDieCellWidth);
 
 void writeVisualFile(const vector <instance> instances, char *outputFile, Die &topDie);
+
+void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie);

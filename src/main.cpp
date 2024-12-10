@@ -18,7 +18,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 
 int main(int argc, char *argv[]){
 	
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> *techMenuPtr = new vector<Tech_menu>;				//The detail of the library of the standardcell by different technology
 
-	int numInstances;														//How many instances need to be placeed in the two dies
+	int numStdCells;														//How many instances need to be placeed in the two dies
 	vector <instance> instances;							    //The standard cell with its library
 	
 	int NumNets;															//How many nets connect betweem Instances
@@ -53,23 +53,24 @@ int main(int argc, char *argv[]){
 	vector <RawNet> netsOfMacros;
 	vector <int> numStdCellConncetMacro;
 	vector <terminal> terminals;
+	vector < vector<instance> > pinsInMacros;
  
 	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, techMenuPtr);	
 	readDieInfo(input, &top_die, &bottom_die);
 	readHybridTerminalInfo(input, &terminalTech);
-	readInstanceInfo(input, &numInstances, instances, &NumTechnologies, techMenuPtr, macros, stdCells);
+	readInstanceInfo(input, &numStdCells, instances, &NumTechnologies, techMenuPtr, macros, stdCells, pinsInMacros);
 	delete techMenuPtr;
 	
-	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro);
-	returnGridInfo(&top_die, &binInfo, numInstances);
+	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
+	returnGridInfo(&top_die, &binInfo, numStdCells);
 
 	/*	macro gradient and placement	*/
 	
 	if(macroPart)
 	{
 		macroGradient( macros, netsOfMacros, top_die, totalIter);
-		macroLegalization(macros);
+		macroLegalization(macros, top_die, bottom_die);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
@@ -83,10 +84,11 @@ int main(int argc, char *argv[]){
 
 		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 		double wireLength, newWireLength;
-		double lastCG[ numInstances * 3 ] = {0.0};
-		double nowCG[ numInstances * 3 ] = {0.0};
-		double lastGra[ numInstances * 3 ] = {0.0};
-		double nowGra[ numInstances * 3 ] = {0.0};
+
+		double *lastCG = new double[ numStdCells * 3 ]{0.0};
+		double *nowCG = new double[ numStdCells * 3 ]{0.0};
+		double *lastGra = new double[ numStdCells * 3 ]{0.0};
+		double *nowGra = new double[ numStdCells * 3 ]{0.0};
 
 		firstPlacement(instances, binInfo, top_die);
 
@@ -106,13 +108,13 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		int totalIter = numInstances ;
+		int totalIter = numStdCells ;
 
 		for(int i = 0; i < totalIter; i++)
 		{
 			for(int j = 0; j < 40; j++)
 			{
-				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numInstances, i);
+				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, i);
 
 				newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 
@@ -143,18 +145,18 @@ int main(int argc, char *argv[]){
 	{	
 		// firstPlacement(instances, binInfo, top_die);
 		// cell2BestLayer(macros, top_die, bottom_die);
-		// place2BestRow(instances, numInstances, top_die, bottom_die, macros);
+		// place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		writeVisualFile(macros, visualFile, top_die);
-		// writeFile(instances, outputName, rawnet, numInstances, terminals);
+		// writeFile(instances, outputName, rawnet, numStdCells, terminals);
 	}
 
 	return 0;
 }
 
 // printNetInfo(NumNets, rawnet);
-// printInstanceInfo(numInstances, instances);
+// printInstanceInfo(numStdCells, instances);
 // printTechnologyInfo(NumTechnologies, TechMenu);
 // printDieInfo(top_die, bottom_die);
 // printHybridTerminalInfo(terminal);
-// printInstanceInfo(numInstances, instances);
+// printInstanceInfo(numStdCells, instances);

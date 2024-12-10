@@ -684,7 +684,7 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, Die &t
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].layer == topLayer || instances[inst].z > 0.5)
+        if( instances[inst].layer == topLayer)
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) instances[inst].finalX, 
@@ -697,7 +697,7 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, Die &t
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].layer == btmLayer || instances[inst].z < 0.5) 
+        if( instances[inst].layer == btmLayer ) 
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) instances[inst].finalX, 
@@ -764,4 +764,82 @@ void writeFile(const vector <instance> instances, char *outputFile, const vector
             );
     }
     fclose(output);
+}
+
+void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
+{
+    // int topDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
+    // int btmDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
+    int numMacro = macros.size();
+
+    vector <int> topDieMacro;
+    vector <int> btmDieMacro;
+    
+    /*  place standard cell to best row */
+
+    for(int inst = 0; inst < numMacro; inst++)
+    {
+        macros[inst].finalX = (int) macros[inst].x - macros[inst].width/2;
+        macros[inst].finalY = (int) macros[inst].y - macros[inst].height/2;
+        macros[inst].finalWidth = (int) macros[inst].width;
+        macros[inst].finalHeight = (int) macros[inst].height;
+
+        if(macros[inst].layer)
+            topDieMacro.push_back(inst);
+        else
+            btmDieMacro.push_back(inst);
+    }
+
+    int topX = 0;
+    int topY = 0;
+    int maxTopX = 0;
+    int btmX = 0;
+    int btmY = 0;
+    int maxBtmX = 0;
+
+    for(int inst = 0; inst < 3; inst++)
+    {
+        if(topY + macros[ topDieMacro[inst] ].finalHeight > topDie.upperRightY)
+        {
+            topY = 0;
+            topX = maxTopX;
+        }
+
+        if(btmY + macros[ btmDieMacro[inst] ].finalHeight > topDie.upperRightY)
+        {
+            btmY = 0;
+            btmX = maxBtmX;
+        }
+
+        if(topX + macros[ topDieMacro[inst] ].finalWidth > topDie.upperRightX)
+        {
+            macros[inst].rotate = 90;
+            macros[inst].finalWidth = (int) macros[inst].width;
+            macros[inst].finalHeight = (int) macros[inst].height;
+        }
+
+        if(btmX + macros[ btmDieMacro[inst] ].finalWidth > topDie.upperRightX)
+        {
+            macros[inst].rotate = 90;
+            macros[inst].finalWidth = (int) macros[inst].width;
+            macros[inst].finalHeight = (int) macros[inst].height;
+        }
+        
+        macros[ topDieMacro[inst] ].finalY = topY;
+        macros[ btmDieMacro[inst] ].finalY = btmY;
+
+        macros[ topDieMacro[inst] ].finalX = topX;
+        macros[ btmDieMacro[inst] ].finalX = btmX;
+        
+        topY += macros[ topDieMacro[inst] ].finalHeight;
+        btmY += macros[ btmDieMacro[inst] ].finalHeight;
+
+        
+        if(macros[ topDieMacro[inst] ].finalWidth > maxTopX)
+            maxTopX = macros[ topDieMacro[inst] ].finalWidth;
+        
+        if(macros[ btmDieMacro[inst] ].finalWidth > maxBtmX)
+            maxBtmX = macros[ btmDieMacro[inst] ].finalWidth;
+
+    }
 }

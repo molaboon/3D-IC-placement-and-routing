@@ -211,7 +211,7 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
     double score = 0.0;
     int size = rawNet.size();
 
-    if(isGra && !graInstance.isMacro)
+    if(isGra)
     {
         for(int net = 0; net < graInstance.numNetConnection; net++)
         {
@@ -256,10 +256,7 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
             {
                 double tmpPsi = 0.0;
 
-                if(isGra)
-                    tmpPsi = returnPsi(rawNet[net].Connection[instance]->tmpZ);
-                else
-                    tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
+                tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
                
                 numerator_1 += tmpPsi * exp(tmpPsi / 0.05);
                 denominator_1 += exp(tmpPsi / 0.05);
@@ -269,7 +266,6 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
             score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
         }
     }
-
     
     return score;
 }
@@ -400,6 +396,9 @@ void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer,
 
             int bin_index = (length[0] + x) + (row * (length[2] + y));
 
+            if(bin_index >= binInfo.binXnum * binInfo.binYnum)
+                cout << instance.instIndex << endl;
+
             if(needMinus)
             {
                 firstLayer[bin_index] -= y_length * x_length * density ;
@@ -410,8 +409,6 @@ void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer,
                 firstLayer[bin_index] += y_length * x_length * density ;
                 secondLayer[bin_index] += y_length * x_length * (1.0 - density) ;
             }
-
-            
             // routing_overflow = ((x_length + y_length) / 2.0) * y_length * x_length;
         }
     }

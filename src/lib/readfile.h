@@ -14,7 +14,7 @@ using std::vector;
 #define NET_NAME_SIZE 20
 
 typedef struct _pin{
-    char pinName[PIN_NAME_SIZE]; //P1, P2, ...
+    int pinID;
     int pinLocationX;
     int pinLocationY;
 }Pin;
@@ -65,9 +65,7 @@ typedef struct _termina{
 }Hybrid_terminal;
 
 typedef struct _Instance{
-    // char instName[INSTANCE_NAME_SIZE];      //C1, C2, ...
-    // char libCellName[LIBCELL_NAME_SIZE];    //MC1, MC2, ...
-    char libPinName[PIN_NAME_SIZE];
+    // char libPinName[PIN_NAME_SIZE];
 
     bool isMacro ;
 
@@ -154,7 +152,9 @@ void printDieInfo(Die top_die, Die bottom_die);
 void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal);
 void printHybridTerminalInfo(Hybrid_terminal terminal);
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells);
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, 
+                        vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells, 
+                        vector< vector<instance> > &pinsInMacros);
 void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro);

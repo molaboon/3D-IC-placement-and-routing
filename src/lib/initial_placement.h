@@ -17,6 +17,8 @@ typedef struct grid_info
 
     int Numinstance;
 
+    bool startStdCellPlacement;
+
 }gridInfo;
 
 

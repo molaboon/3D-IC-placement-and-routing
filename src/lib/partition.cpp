@@ -6,7 +6,7 @@
 #include "readfile.h"
 #include "initial_placement.h"
 #include "CG.h"
-
+#include "legalization.h"
 
 void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
 {
@@ -151,21 +151,16 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
 }
 
-void macroLegalization(vector <instance> &macros)
+void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 {
-    int numMacro = macros.size();
 
-    for (int i = 0; i < numMacro; i++)
-    {
-        macros[i].finalX = macros[i].x - macros[i].width/2;
-        macros[i].finalY = macros[i].y - macros[i].height/2;
+    cell2BestLayer(macros, topDie, btmDie);
 
-        macros[i].finalWidth = macros[i].width;
-        macros[i].finalHeight = macros[i].height;
-        if(macros[i].z < 0.5)
-            macros[i].layer = 0;
-        
-        else
-            macros[i].layer = 1;
-    }
+    macroPlaceAndRotate(macros, topDie, btmDie);    
+}
+
+
+void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros)
+{
+    
 }

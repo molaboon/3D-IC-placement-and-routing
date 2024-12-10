@@ -30,7 +30,10 @@ void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> *T
         //read libcell libcell count time
         for(int j = 0; j < temp.libcell_count; j++){
             char isMacro;
-            fscanf(input, "%*s %s %s %lf %lf %d", &isMacro, temp_libcell[j].libCellName, &(temp_libcell[j].libCellSizeX), &(temp_libcell[j].libCellSizeY), &(temp_libcell[j].pinCount));
+            fscanf(input, "%*s %s %s %lf %lf %d", &isMacro, temp_libcell[j].libCellName, 
+                                                  &(temp_libcell[j].libCellSizeX), 
+                                                  &(temp_libcell[j].libCellSizeY), 
+                                                  &(temp_libcell[j].pinCount));
             
             if(isMacro == 89)
                 temp_libcell[j].isMacro = true;
@@ -39,8 +42,10 @@ void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> *T
 
             //read pinarray pinarray_count time
             vector <Pin> temp_pinarray(temp_libcell[j].pinCount);   
+
             for(int k = 0; k  < temp_libcell[j].pinCount; k++){
-                fscanf(input, "%*s %s %d %d", temp_pinarray[k].pinName, &(temp_pinarray[k].pinLocationX), &(temp_pinarray[k].pinLocationY));
+                temp_pinarray[k].pinID = k;
+                fscanf(input, "%*s %*s %d %d", &(temp_pinarray[k].pinLocationX), &(temp_pinarray[k].pinLocationY));
             }
             temp_libcell[j].pinarray = temp_pinarray;
         }
@@ -51,19 +56,19 @@ void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> *T
 } 
 
 void printTechnologyInfo(int NumTechnologies, vector <Tech_menu> TechMenu){
-    printf("\nNumTechnologies <technologyCount>: %d\n\n", NumTechnologies);
-    for(int i = 0; i < NumTechnologies; i++){
-        printf("Tech <techName> <libCellCount>: %s %d:\n", TechMenu[i].tech, TechMenu[i].libcell_count);
-        for(int j = 0; j < TechMenu[i].libcell_count; j++){
-            printf("\tLibCell <libCellName> <libCellSizeX> <libCellSizeY> <pinCount> <isMacro>: %s %lf %lf %d\n", TechMenu[i].libcell[j].libCellName, TechMenu[i].libcell[j].libCellSizeX, TechMenu[i].libcell[j].libCellSizeY, TechMenu[i].libcell[j].pinCount);
-            for(int k = 0; k < TechMenu[i].libcell[j].pinCount; k++){
-                printf("\t\tPin <pinName> <pinLocationX> <pinLocationY>: %s %d %d\n", TechMenu[i].libcell[j].pinarray[k].pinName, TechMenu[i].libcell[j].pinarray[k].pinLocationX, TechMenu[i].libcell[j].pinarray[k].pinLocationY);
-            }
-            printf("\n");   
-        }
-        printf("\n\n");
-    }
-    printf("\n");
+    // printf("\nNumTechnologies <technologyCount>: %d\n\n", NumTechnologies);
+    // for(int i = 0; i < NumTechnologies; i++){
+    //     printf("Tech <techName> <libCellCount>: %s %d:\n", TechMenu[i].tech, TechMenu[i].libcell_count);
+    //     for(int j = 0; j < TechMenu[i].libcell_count; j++){
+    //         printf("\tLibCell <libCellName> <libCellSizeX> <libCellSizeY> <pinCount> <isMacro>: %s %lf %lf %d\n", TechMenu[i].libcell[j].libCellName, TechMenu[i].libcell[j].libCellSizeX, TechMenu[i].libcell[j].libCellSizeY, TechMenu[i].libcell[j].pinCount);
+    //         for(int k = 0; k < TechMenu[i].libcell[j].pinCount; k++){
+    //             printf("\t\tPin <pinName> <pinLocationX> <pinLocationY>: %s %d %d\n", TechMenu[i].libcell[j].pinarray[k].pinName, TechMenu[i].libcell[j].pinarray[k].pinLocationX, TechMenu[i].libcell[j].pinarray[k].pinLocationY);
+    //         }
+    //         printf("\n");   
+    //     }
+    //     printf("\n\n");
+    // }
+    // printf("\n");
 }
 
 void readDieInfo(FILE *input, Die *top_die, Die *bottom_die){
@@ -130,7 +135,9 @@ void printHybridTerminalInfo(Hybrid_terminal terminal){
     printf("TerminalSpacing <spacing>: %d\n\n", terminal.spacing);
 }
 
-void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells)
+void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, 
+                        vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells, 
+                        vector< vector<instance> > &pinsInMacros)
 {
     assert(input);
     int numOfTech = TechMenu->size();
@@ -145,7 +152,6 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         char current_libCellName[LIBCELL_NAME_SIZE];
 		memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
 		strncpy(current_libCellName, libCellName + 2, strlen(libCellName)-2);
-
 
         temp.instIndex = i;
         temp.width = TechMenu->at(0).libcell[atoi(current_libCellName)-1].libCellSizeX;
@@ -181,6 +187,26 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.area = temp.width * temp.height;
         temp.inflateArea = temp.inflateWidth * temp.inflateHeight;
         
+        // store the pin coordinate of each macro to vector
+        if(temp.isMacro)
+        {
+            int numPins = TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinCount;
+            vector <instance> pins;
+
+            for(int p = 0; p < numPins; p++)
+            {
+                instance tpins;
+
+                tpins.instIndex = i;
+                tpins.x = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationX;
+                tpins.y = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationY;
+
+                pins.emplace_back(tpins);
+            }
+
+            pinsInMacros.emplace_back(pins);
+        }
+        
         if(temp.isMacro)
             macros.emplace_back( temp );
         else
@@ -208,7 +234,7 @@ void printInstanceInfo(int NumInstances, vector <instance> instances){
     // printf("\n");
 }
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro)
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro, vector < vector<instance> > &pinsInMacros)
 {
     assert(input);
     int size = instances.size();
@@ -258,7 +284,6 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             instances[atoi(current_libCellName)-1].connectedNet[instances[atoi(current_libCellName)-1].numNetConnection] = i;
             instances[atoi(current_libCellName)-1].numNetConnection += 1;
             
-            // temp_connection[pin]->netsConnect[i] = 1;
 
             if(instances[atoi(current_libCellName)-1].isMacro)
             {
