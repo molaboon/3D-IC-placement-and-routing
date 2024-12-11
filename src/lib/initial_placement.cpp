@@ -62,7 +62,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         instances[i].rotate = 0;
 
         instances[i].x = X;
-        instances[i].y = X;
+        instances[i].y = Y;
         instances[i].z = Z ;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;
@@ -94,7 +94,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     for(int i = 0; i < size; i++)
     {
         instances[i].density = returnDensity(instances[i].z, 0.0);
-        penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false);
+        penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false, NULL);
     }
     tsvScore = TSVofNet(rawNet, false, instances[0], 0);
 
@@ -102,23 +102,27 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     double startTime = clock();
 
+    memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
+    memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
+
     for(int i = 0; i < size; i++)
     {        
         double tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
+        double graGrade = 0.0;
 
         // part of x
         instances[i].tmpX = instances[i].x;
         instances[i].tmpX += h;
         
-        memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
-        memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
-
         tmpXscore = scoreOfX(rawNet, gamma, true, instances[i], xScore);
 
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
-
-        tmpDen = scoreOfPenalty(fl, sl, binInfo);
+        tmpDen = penaltyScore;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+        tmpDen -= graGrade;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
+        tmpDen += graGrade;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
 
         instances[i].tmpX = instances[i].x;
         
@@ -127,18 +131,18 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
         // part of y /////////////////////////////////////////////////////////////
 
-        memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-        memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-
         instances[i].tmpY = instances[i].y;
         instances[i].tmpY += h;
 
         tmpYscore = scoreOfY(rawNet, gamma, true, instances[i], yScore);
 
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
-
-        tmpDen = scoreOfPenalty(fl, sl, binInfo);
+        tmpDen = penaltyScore;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+        tmpDen -= graGrade;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
+        tmpDen += graGrade;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
 
         gray += fabs( (tmpYscore - yScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h );
@@ -155,13 +159,14 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
         tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
 
-        memcpy(fl, originfl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-        memcpy(sl, originsl,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+        tmpDen = penaltyScore;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+        tmpDen -= graGrade;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
+        tmpDen += graGrade;
 
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true);
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false);
-
-        tmpDen = scoreOfPenalty(fl, sl, binInfo);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
 
         graz += fabs( (tmpTSV - tsvScore) / h);
         grad += fabs( (tmpDen - penaltyScore) / h);

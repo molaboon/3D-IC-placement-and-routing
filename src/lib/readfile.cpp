@@ -277,7 +277,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             char current_libCellName[LIBCELL_NAME_SIZE];
     		
             memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
-
+            
             strncpy(current_libCellName, token + 1, strlen(token)-1);
 
             temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );

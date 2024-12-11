@@ -157,7 +157,10 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
                         vector< vector<instance> > &pinsInMacros);
 void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
-void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro);
+void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, 
+                vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro,
+                vector <vector<instance>> &pinsInMacro);
+
 void printNetInfo(int NumNets, vector <RawNet> rawnet);
 
 #endif

@@ -18,7 +18,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 1
+#define stdCellPart 0
 
 int main(int argc, char *argv[]){
 	
@@ -120,6 +120,9 @@ int main(int argc, char *argv[]){
 
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
+				double g = clock();
+				printf("Time iter: %fs\n", (g - startTime) / (double) CLOCKS_PER_SEC );
+
 				if( newScore < totalScore)
 					totalScore = newScore;
 
@@ -128,9 +131,7 @@ int main(int argc, char *argv[]){
 					// cout << "next iter\n\n";
 					break;
 				}
-				endTime = clock();
-
-				printf("Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
+				
 			}
 			// penaltyWeight *= 2;
 		}
