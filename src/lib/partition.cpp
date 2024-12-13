@@ -159,8 +159,50 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
     macroPlaceAndRotate(macros, topDie, btmDie);    
 }
 
-
 void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros)
 {
-    
+    int numMacro = macro.size();
+
+    for(int i = 0; i < numMacro; i++)
+    {
+        int numPins = pinsInMacros[numMacro].size();
+
+        int x = macro[numMacro].finalX;
+        int y = macro[numMacro].finalY;
+        int w = macro[numMacro].finalWidth;
+        int h = macro[numMacro].finalHeight;
+
+        for(int j = 0; j < numMacro; j++)
+        {
+            switch ( macro[numMacro].rotate )
+            {
+                // if macro rotate = 0 
+                case 0:
+                    pinsInMacros[numMacro].at(j).x = (double) x + pinsInMacros[numMacro].at(j).finalX;
+                    pinsInMacros[numMacro].at(j).y = (double) y + pinsInMacros[numMacro].at(j).finalY;
+                    break;
+                
+                case 90:
+                    pinsInMacros[numMacro].at(j).x = (double) x + ( h - pinsInMacros[numMacro].at(j).finalY );
+                    pinsInMacros[numMacro].at(j).y = (double) y + pinsInMacros[numMacro].at(j).finalX;
+                    break;
+                
+                case 180:
+                    pinsInMacros[numMacro].at(j).x = (double) x + ( w - pinsInMacros[numMacro].at(j).finalX );
+                    pinsInMacros[numMacro].at(j).y = (double) y + ( h - pinsInMacros[numMacro].at(j).finalY );
+                    break;
+                
+                case 270:
+                    pinsInMacros[numMacro].at(j).x = (double) x + (pinsInMacros[numMacro].at(j).finalY );
+                    pinsInMacros[numMacro].at(j).y = (double) y + (pinsInMacros[numMacro].at(j).finalX );
+                    break;
+
+                default:
+                    cout << "rotation error" << endl;
+                    break;
+            }
+        }
+    }
 }
+
+

@@ -198,9 +198,14 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
                 instance tpins;
 
                 tpins.instIndex = i;
-                tpins.x = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationX;
-                tpins.y = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationY;
-
+                tpins.isMacro = true;
+                tpins.finalX = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationX;
+                tpins.finalY = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationY;
+                tpins.width = 0.0;
+                tpins.height = 0.0;
+                tpins.inflateWidth = 0.0;
+                tpins.inflateHeight = 0.0;
+                
                 pins.emplace_back(tpins);
             }
 
@@ -246,7 +251,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
     
     for(int i = 0; i < numMacro; i++)
     {
-        macrosMap[ macros[i].instIndex ] = i; 
+        macrosMap[ macros[i].instIndex ] = i;
         numStdCellConnectMacro.push_back(0);
     }
         
@@ -275,19 +280,23 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
             //divide the string by using delimiter "/"
             char *token = strtok(buffer, "/");
             char current_libCellName[LIBCELL_NAME_SIZE];
+            char current_pin[LIBCELL_NAME_SIZE];
     		
             memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
+            memset(current_pin,'\0', LIBCELL_NAME_SIZE);
             
             strncpy(current_libCellName, token + 1, strlen(token)-1);
-
-            temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
+            token = strtok(NULL, "/");
+            strncpy(current_pin, token + 1, strlen(token)-1);
+            
             instances[atoi(current_libCellName)-1].connectedNet[instances[atoi(current_libCellName)-1].numNetConnection] = i;
             instances[atoi(current_libCellName)-1].numNetConnection += 1;
             
-
             if(instances[atoi(current_libCellName)-1].isMacro)
             {
                 numMacro++;
+
+                int macroIndex = macrosMap[atoi(current_libCellName)-1];
 
                 for(int j = 0; j < (int )macros.size(); j++)
                 {
@@ -295,10 +304,15 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
                         macros_connection.push_back( &macros[j] );
                 }
 
-                numStdCellConnectMacro[ macrosMap[atoi(current_libCellName)-1] ] += temp.numPins;
+                numStdCellConnectMacro[ macroIndex ] += temp.numPins;
+                temp_connection[pin] = (&pinsInMacros[macroIndex][atoi(current_pin)-1]);
 
-                if(numMacro > 1)
+                if(numMacro > 1) 
                     haveMacro = true;
+            }
+            else
+            {
+                temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
             }
         }
 
@@ -351,4 +365,9 @@ void printNetInfo(int NumNets, vector <RawNet> rawnet){
         printf("\n");
     }
     printf("\n");
+}
+
+void returnDensityMap(map <double, double> *densityMap)
+{
+
 }

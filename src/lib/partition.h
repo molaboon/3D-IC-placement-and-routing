@@ -9,3 +9,5 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie);
 
 void macroRotation(vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie);
+
+void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros);

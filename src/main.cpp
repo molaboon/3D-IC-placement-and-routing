@@ -5,6 +5,7 @@
 #include <time.h>
 #include <omp.h>
 #include <iostream>
+#include <map>
 
 #include "lib/readfile.h"
 #include "lib/initial_placement.h"
@@ -54,6 +55,8 @@ int main(int argc, char *argv[]){
 	vector <int> numStdCellConncetMacro;
 	vector <terminal> terminals;
 	vector < vector<instance> > pinsInMacros;
+
+	map <double, double> densityMap;
  
 	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, techMenuPtr);	
@@ -62,6 +65,8 @@ int main(int argc, char *argv[]){
 	readInstanceInfo(input, &numStdCells, instances, &NumTechnologies, techMenuPtr, macros, stdCells, pinsInMacros);
 	delete techMenuPtr;
 	
+	// create a vector called "pinsInMacro". 
+	// Because the macro are fixed after placement of macro, the "pinsInMacros" is stored the pin info of each macro
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
 	returnGridInfo(&top_die, &binInfo, numStdCells);
 
@@ -71,6 +76,7 @@ int main(int argc, char *argv[]){
 	{
 		macroGradient( macros, netsOfMacros, top_die, totalIter);
 		macroLegalization(macros, top_die, bottom_die);
+		updatePinsInMacroInfo( macros, pinsInMacros);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
@@ -118,6 +124,8 @@ int main(int argc, char *argv[]){
 
 				newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 
+				updatePinsInMacroInfo( macros, pinsInMacros);
+				
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
 				double g = clock();
