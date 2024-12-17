@@ -783,6 +783,7 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
         macros[inst].finalY = (int) macros[inst].y - macros[inst].height/2;
         macros[inst].finalWidth = (int) macros[inst].width;
         macros[inst].finalHeight = (int) macros[inst].height;
+        macros[inst].rotate = 0;
 
         if(macros[inst].layer)
             topDieMacro.push_back(inst);

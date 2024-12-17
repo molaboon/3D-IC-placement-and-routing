@@ -165,36 +165,36 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
 
     for(int i = 0; i < numMacro; i++)
     {
-        int numPins = pinsInMacros[numMacro].size();
+        int numPins = pinsInMacros[i].size();
 
-        int x = macro[numMacro].finalX;
-        int y = macro[numMacro].finalY;
-        int w = macro[numMacro].finalWidth;
-        int h = macro[numMacro].finalHeight;
+        int x = macro[i].finalX;
+        int y = macro[i].finalY;
+        int w = macro[i].finalWidth;
+        int h = macro[i].finalHeight;
 
-        for(int j = 0; j < numMacro; j++)
+        for(int j = 0; j < numPins; j++)
         {
-            switch ( macro[numMacro].rotate )
+            switch ( macro[i].rotate )
             {
                 // if macro rotate = 0 
                 case 0:
-                    pinsInMacros[numMacro].at(j).x = (double) x + pinsInMacros[numMacro].at(j).finalX;
-                    pinsInMacros[numMacro].at(j).y = (double) y + pinsInMacros[numMacro].at(j).finalY;
+                    pinsInMacros[i].at(j).x = (double) x + pinsInMacros[i].at(j).finalX;
+                    pinsInMacros[i].at(j).y = (double) y + pinsInMacros[i].at(j).finalY;
                     break;
                 
                 case 90:
-                    pinsInMacros[numMacro].at(j).x = (double) x + ( h - pinsInMacros[numMacro].at(j).finalY );
-                    pinsInMacros[numMacro].at(j).y = (double) y + pinsInMacros[numMacro].at(j).finalX;
+                    pinsInMacros[i].at(j).x = (double) x + ( h - pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).y = (double) y + pinsInMacros[i].at(j).finalX;
                     break;
                 
                 case 180:
-                    pinsInMacros[numMacro].at(j).x = (double) x + ( w - pinsInMacros[numMacro].at(j).finalX );
-                    pinsInMacros[numMacro].at(j).y = (double) y + ( h - pinsInMacros[numMacro].at(j).finalY );
+                    pinsInMacros[i].at(j).x = (double) x + ( w - pinsInMacros[i].at(j).finalX );
+                    pinsInMacros[i].at(j).y = (double) y + ( h - pinsInMacros[i].at(j).finalY );
                     break;
                 
                 case 270:
-                    pinsInMacros[numMacro].at(j).x = (double) x + (pinsInMacros[numMacro].at(j).finalY );
-                    pinsInMacros[numMacro].at(j).y = (double) y + (pinsInMacros[numMacro].at(j).finalX );
+                    pinsInMacros[i].at(j).x = (double) x + (pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).y = (double) y + (pinsInMacros[i].at(j).finalX );
                     break;
 
                 default:

@@ -760,9 +760,9 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer);
     
-    memcpy( lastGra, nowGra, Dimensions * binInfo.Numinstance * sizeof(double) );
+    memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(double) );
 
-    for(int i = 0; i < binInfo.Numinstance; i++)
+    for(int i = 0; i < numInstances; i++)
     {
         nowGra[i*3] = instances[i].gra_x;
         nowGra[i*3 + 1] = instances[i].gra_y;

@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 
 int main(int argc, char *argv[]){
 	
@@ -37,23 +37,23 @@ int main(int argc, char *argv[]){
 	assert(input);
 
 	Die top_die, bottom_die;												//store the die information
-	Hybrid_terminal terminalTech;												//store the size of the hybrid bond terminal connect between two dies
+	Hybrid_terminal terminalTech;											//store the size of the hybrid bond terminal connect between two dies
 	
 	int NumTechnologies;													//TA and TB
 	vector <Tech_menu> *techMenuPtr = new vector<Tech_menu>;				//The detail of the library of the standardcell by different technology
 
 	int numStdCells;														//How many instances need to be placeed in the two dies
-	vector <instance> instances;							    //The standard cell with its library
+	vector <instance> instances;							    			//The information of standard cell and Macro 
 	
 	int NumNets;															//How many nets connect betweem Instances
-	vector <RawNet> rawnet;													//The rawnet data store in input
- 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin)
+	vector <RawNet> rawnet;													//All of the netlist
+ 	gridInfo binInfo;														// bin infomation(bin w/h, num of bin, die w/h)
 
-	vector <instance> macros;
-	vector <instance> stdCells;
+	vector <instance> macros;												//devide the "instances" into "macro" and "std cell",
+	vector <instance> stdCells;												// but they are store in diff memory, so be carefull
 	vector <RawNet> netsOfMacros;
 	vector <int> numStdCellConncetMacro;
-	vector <terminal> terminals;
+	vector <terminal> terminals;											// sotre the position of terminal (for output)
 	vector < vector<instance> > pinsInMacros;
 
 	map <double, double> densityMap;
@@ -65,8 +65,12 @@ int main(int argc, char *argv[]){
 	readInstanceInfo(input, &numStdCells, instances, &NumTechnologies, techMenuPtr, macros, stdCells, pinsInMacros);
 	delete techMenuPtr;
 	
-	// create a vector called "pinsInMacro". 
-	// Because the macro are fixed after placement of macro, the "pinsInMacros" is stored the pin info of each macro
+	/*  
+		create a vector called "pinsInMacro". 
+		Because the macro are fixed after placement of macro, the "pinsInMacros" is stored the pin info of each macro 
+		netOfMacros = [*macros, ...]
+		rawnet = [*instances, *pinsInMacro, ...]
+	*/
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
 	returnGridInfo(&top_die, &binInfo, numStdCells);
 
@@ -96,6 +100,8 @@ int main(int argc, char *argv[]){
 		double *lastGra = new double[ numStdCells * 3 ]{0.0};
 		double *nowGra = new double[ numStdCells * 3 ]{0.0};
 
+		int qqq = 0;
+
 		firstPlacement(instances, binInfo, top_die);
 
 		gamma = 0.05 * binInfo.dieWidth;
@@ -114,12 +120,13 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		int totalIter = numStdCells ;
+		int totalIter = 80 ;
 
 		for(int i = 0; i < totalIter; i++)
 		{
-			for(int j = 0; j < 40; j++)
+			for(int j = 0; j < 100; j++)
 			{
+				qqq++;
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, i);
 
 				newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
@@ -128,10 +135,7 @@ int main(int argc, char *argv[]){
 				
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-				double g = clock();
-				printf("Time iter: %fs\n", (g - startTime) / (double) CLOCKS_PER_SEC );
-
-				if( newScore < totalScore)
+				if( newScore < totalScore * 1.1)
 					totalScore = newScore;
 
 				else
@@ -146,7 +150,7 @@ int main(int argc, char *argv[]){
 
 		endTime = clock();
 
-		printf("Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
+		printf("Time: %fs, iter: %d\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq );
 
 	}
 
@@ -156,7 +160,7 @@ int main(int argc, char *argv[]){
 		// cell2BestLayer(macros, top_die, bottom_die);
 		// place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-		writeVisualFile(macros, visualFile, top_die);
+		writeVisualFile(instances, visualFile, top_die);
 		// writeFile(instances, outputName, rawnet, numStdCells, terminals);
 	}
 

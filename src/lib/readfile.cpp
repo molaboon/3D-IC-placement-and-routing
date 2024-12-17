@@ -298,7 +298,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
                 int macroIndex = macrosMap[atoi(current_libCellName)-1];
 
-                for(int j = 0; j < (int )macros.size(); j++)
+                for(int j = 0; j < (int)macros.size(); j++)
                 {
                     if(macros[j].instIndex == (atoi(current_libCellName)-1))
                         macros_connection.push_back( &macros[j] );
