@@ -159,7 +159,7 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
     macroPlaceAndRotate(macros, topDie, btmDie);    
 }
 
-void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros)
+void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros, vector<instance> &instances)
 {
     int numMacro = macro.size();
 
@@ -202,6 +202,14 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
                     break;
             }
         }
+
+        instances[ macro[i].instIndex ].width = (double) w;
+        instances[ macro[i].instIndex ].height = (double) h;
+        instances[ macro[i].instIndex ].x = double (macro[i].finalX + macro[i].finalWidth / 2);
+        instances[ macro[i].instIndex ].y = double (macro[i].finalY + macro[i].finalHeight / 2);
+        instances[ macro[i].instIndex ].z = double (macro[i].layer);
+        instances[ macro[i].instIndex ].layer = macro[i].layer;
+
     }
 }
 

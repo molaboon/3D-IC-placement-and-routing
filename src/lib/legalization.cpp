@@ -14,6 +14,7 @@ using namespace std;
 
 #define btmLayer 0
 #define topLayer 1
+#define theCellDoesntPlaceToLayer 3
 
 void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie)
 {
@@ -29,10 +30,10 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
     for(int i = 0; i < numInstances; i++)
     {
-        if( instances[i].z < 0.5)
+        if( instances[i].z < 0.5 && instances[i].layer == theCellDoesntPlaceToLayer)
         {
             instances[i].layer = btmLayer;
-
+            
             if(instances[i].rotate == 90 || instances[i].rotate == 270)
             {
                 instances[i].finalWidth = (int) instances[i].inflateHeight;
@@ -46,9 +47,10 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
             btmDieArea += instances[i].inflateArea;
         }
-        else
+        else if(instances[i].z > 0.5 && instances[i].layer == theCellDoesntPlaceToLayer)
         {
             instances[i].layer = topLayer;
+        
             if(instances[i].rotate == 90 || instances[i].rotate == 270)
             {
                 instances[i].finalWidth = (int) instances[i].height;
@@ -221,10 +223,10 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
  
         if(instances[inst].isMacro )
         {
-            int uperX = (int) instances[inst].x + (instances[inst].finalWidth) ;
-            int uperY = (int) instances[inst].y + (instances[inst].finalHeight) ;
-            int lowerX = (int) instances[inst].x;
-            int lowerY = (int) instances[inst].y;
+            int uperX = instances[inst].finalX + (instances[inst].finalWidth) ;
+            int uperY = instances[inst].finalY + (instances[inst].finalHeight) ;
+            int lowerX = instances[inst].finalX;
+            int lowerY = instances[inst].finalY;
             int uperRow, lowerRow;
             instances[inst].finalY = lowerY;  
             
