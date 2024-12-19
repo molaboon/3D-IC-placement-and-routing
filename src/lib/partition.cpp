@@ -130,11 +130,13 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
         {
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, i);
 
-            if(j == 0)
-                totalScore = newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
+            newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
 
+            if( j == 0)
+				totalScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
             else
-                newScore = newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
+                newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
+
 
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
 
@@ -150,7 +152,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     }
 
 }
-
+ 
 void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 {
 
@@ -208,6 +210,10 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
         instances[ macro[i].instIndex ].x = double (macro[i].finalX + macro[i].finalWidth / 2);
         instances[ macro[i].instIndex ].y = double (macro[i].finalY + macro[i].finalHeight / 2);
         instances[ macro[i].instIndex ].z = double (macro[i].layer);
+        instances[ macro[i].instIndex ].finalX = x;
+        instances[ macro[i].instIndex ].finalY = y;
+        instances[ macro[i].instIndex ].finalWidth = w;
+        instances[ macro[i].instIndex ].finalHeight = h;
         instances[ macro[i].instIndex ].layer = macro[i].layer;
 
     }

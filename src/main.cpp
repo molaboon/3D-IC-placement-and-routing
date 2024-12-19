@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, totalIter);
+		macroGradient( macros, netsOfMacros, top_die, 10);
 		macroLegalization(macros, top_die, bottom_die);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
@@ -120,38 +120,33 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		int totalIter = 40 ;
-
 		for(int i = 0; i < totalIter; i++)
 		{
 			for(int j = 0; j < 20; j++)
 			{
 				qqq++;
-				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, i);
 
-				if( j == 0)
-					totalScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
+				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 				
-				else
-					newScore = newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
-
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				
+				if( j == 0)
+					totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
+				else
+					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
+
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
 				if(j == 0)
 					continue;
 
-				if( newScore < totalScore * 1.1  )
+				if( newScore < totalScore  )
 					totalScore = newScore;
 
 				else
-				{
-					// cout << "next iter\n\n";
 					break;
-				}
 				
 			}
 			penaltyWeight *= 2;
@@ -165,7 +160,7 @@ int main(int argc, char *argv[]){
 
 	if(true)
 	{	
-		cell2BestLayer(instances, top_die, bottom_die);
+		// cell2BestLayer(instances, top_die, bottom_die);
 		// place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		writeVisualFile(instances, visualFile, top_die);

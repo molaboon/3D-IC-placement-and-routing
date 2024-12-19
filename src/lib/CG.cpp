@@ -675,7 +675,7 @@ double returnAlpha(double nowCG[])
 {   
     double Alpha = 0.0, weight = 0.2;
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 2; i++)
         Alpha += nowCG[i] * nowCG[i];
 
     Alpha = sqrt(Alpha);
@@ -705,7 +705,7 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
         inst.z = 0.0;    
 }
 
-double newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
+void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
 {
     double score = 0.0, wireLength = 0.0;
     for(int index = 0; index < binInfo.Numinstance; index++)
@@ -721,7 +721,7 @@ double newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double
 
         spaceX = tmp[0] * Alpha * binInfo.binWidth;
         spaceY = tmp[1] * Alpha * binInfo.binHeight;
-        spaceZ = tmp[2] * Alpha * 1;
+        spaceZ = tmp[2] * 1/1000;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
@@ -729,11 +729,6 @@ double newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double
 
         glodenSearch(instances[index], binInfo);
     }
-
-    score = returnTotalScore( rawNets, gamma, binInfo, penaltyWeight, instances);
-
-    return score;
-
 }
 
 void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double &penaltyWeight)
