@@ -16,6 +16,7 @@
 #define znotChanged 0
 #define Dimensions 3
 #define spaceZweight 0.01
+#define cellMoveSize 200
 
 using namespace std;
 
@@ -610,13 +611,13 @@ double infaltionRatio(instance instance, double routingOverflow)
 
 double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances)
 {
-    double score_of_x, score_of_y, score_of_z, densityScore, totalScore, wireLength;
+    double score_of_x, score_of_y, score_of_z, densityScore = 0.0, totalScore, wireLength;
 
     score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
 
     score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
 
-    densityScore = scoreOfz(rawNet, instances, binInfo, 1);
+    // densityScore = scoreOfz(rawNet, instances, binInfo, 1);
 
     score_of_z = TSVofNet(rawNet, false, instances[0], 0);
 
@@ -667,7 +668,13 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     beta = beta/norm;
 
     for(int index = 0; index < Numinstance * Dimensions; index ++)
+    {
         nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
+        
+        if(iteration == 0)
+            nowCG[index] = -nowCG[index];
+    }
+        
 
 }
 
@@ -675,7 +682,7 @@ double returnAlpha(double nowCG[])
 {   
     double Alpha = 0.0, weight = 0.2;
 
-    for(int i = 0; i < 2; i++)
+    for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
 
     Alpha = sqrt(Alpha);
@@ -687,16 +694,16 @@ double returnAlpha(double nowCG[])
 void glodenSearch(instance &inst, const gridInfo binInfo)
 {   
     if( inst.x + inst.width/2 > binInfo.dieWidth)
-        inst.x = binInfo.dieWidth - inst.width/2 - 1.0 ;
+        inst.x = binInfo.dieWidth - inst.width ;
 
-    else if (inst.x - inst.width/2 < 0.0)
-        inst.x = 0.0 + inst.width/2 + 1.0;
+    else if (inst.x - inst.width <= 0.0)
+        inst.x = inst.width + 1.0;
 
     if(inst.y + inst.height/2> binInfo.dieHeight)
-        inst.y = binInfo.dieHeight - inst.height/2 - 1.0;
+        inst.y = binInfo.dieHeight - inst.height;
 
-    else if (inst.y - inst.height/2 < 0.0)
-        inst.y = 0.0 + inst.height/2 + 1.0;
+    else if (inst.y - inst.height/2 <= 0.0)
+        inst.y = 0.0 + inst.height + 1.0;
 
     if(inst.z > 1.0)
         inst.z = 1.0;
@@ -721,7 +728,7 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
 
         spaceX = tmp[0] * Alpha * binInfo.binWidth;
         spaceY = tmp[1] * Alpha * binInfo.binHeight;
-        spaceZ = tmp[2] * 1/1000;
+        spaceZ = tmp[2] * Alpha * 1/10000;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;

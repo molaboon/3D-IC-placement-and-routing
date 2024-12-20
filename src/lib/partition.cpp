@@ -107,6 +107,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     gridInfo macroBinInfo;
 
     int numMacro = macros.size();
+    int iii = -1;
     double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
     double wireLength, newWireLength;
     double lastCG[ numMacro * 3 ] = {0.0};
@@ -119,37 +120,35 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     returnGridInfo(&topDie, &macroBinInfo, numMacro);
     firstPlacement(macros, macroBinInfo, topDie);
     penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
-    totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
     CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
-
-    // penaltyWeight = 1.0;
-
+    
     for(int i = 0; i < totalIter; i++)
     {
-        for(int j = 0; j < 40; j++)
+        totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
+    
+        for(int j = 0; j < 100; j++)
         {
-            conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, i);
-
+            iii++;
+            conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
             newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
+            writeVisualFile(macros, iii, topDie);
 
-            if( j == 0)
-				totalScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
-            else
-                newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
-
+            newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
 
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
+            
 
-            if( newScore < totalScore * 1.1)
+            if( newScore < totalScore )
                 totalScore = newScore;
-
+            
+            else if( newScore < totalScore *1.1)
+            {}
             else
-                break;	
+                break;	                
         }
-
-        cout << i << endl;
-        penaltyWeight *= 2;
+        // penaltyWeight *= 2;
     }
+    cout << iii << endl;
 
 }
  
@@ -158,7 +157,7 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 
     cell2BestLayer(macros, topDie, btmDie);
 
-    macroPlaceAndRotate(macros, topDie, btmDie);    
+    // macroPlaceAndRotate(macros, topDie, btmDie);    
 }
 
 void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros, vector<instance> &instances)

@@ -305,7 +305,8 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
                 }
 
                 numStdCellConnectMacro[ macroIndex ] += temp.numPins;
-                temp_connection[pin] = (&pinsInMacros[macroIndex][atoi(current_pin)-1]);
+                temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
+                // temp_connection[pin] = (&pinsInMacros[macroIndex][atoi(current_pin)-1]);
 
                 if(numMacro > 1) 
                     haveMacro = true;

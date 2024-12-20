@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 1
+#define stdCellPart 0
 
 int main(int argc, char *argv[]){
 	
@@ -29,9 +29,7 @@ int main(int argc, char *argv[]){
 	double startTime, endTime;
 	
 	char *inputName = *(argv + 1);
-	char *outputName = *(argv + 2);
-	char *visualFile = *(argv + 3);
-	int totalIter = atoi(*(argv + 4));
+	int totalIter = atoi(*(argv + 2));
 
 	FILE *input = fopen(inputName, "r");
 	assert(input);
@@ -78,9 +76,9 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, 10);
-		macroLegalization(macros, top_die, bottom_die);
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		macroGradient( macros, netsOfMacros, top_die, totalIter);
+		// macroLegalization(macros, top_die, bottom_die);
+		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
@@ -122,27 +120,20 @@ int main(int argc, char *argv[]){
 
 		for(int i = 0; i < totalIter; i++)
 		{
-			for(int j = 0; j < 20; j++)
+			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
+			for(int j = 0; j < 30; j++)
 			{
 				qqq++;
 
-				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, i);
-
+				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, j);
 				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
-				
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				
-				if( j == 0)
-					totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
-				else
-					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
+				newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
 
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-				if(j == 0)
-					continue;
-
-				if( newScore < totalScore  )
+				if( newScore < totalScore * 1.05 )
 					totalScore = newScore;
 
 				else
@@ -163,7 +154,7 @@ int main(int argc, char *argv[]){
 		// cell2BestLayer(instances, top_die, bottom_die);
 		// place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-		writeVisualFile(instances, visualFile, top_die);
+		// writeVisualFile(macros, 0, top_die);
 		// writeFile(instances, outputName, rawnet, numStdCells, terminals);
 	}
 

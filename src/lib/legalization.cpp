@@ -670,12 +670,18 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
 {}
 
-void writeVisualFile(const vector <instance> instances, char *outputFile, Die &topDie)
+void writeVisualFile(const vector <instance> instances, int iteration, Die &topDie)
 {
-    FILE *output;
+    char filename[30];
+    snprintf(filename, sizeof(filename), "visulization/data/%d.txt", iteration);
 
-    output = fopen(outputFile, "w");
+    FILE *output = fopen(filename, "w");
 
+    if (output == NULL) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+ 
     int numInstOnTopDie = 0;
     int numInstOnBtmDie = 0;
     int numInstances = instances.size();
@@ -728,11 +734,14 @@ void writeVisualFile(const vector <instance> instances, char *outputFile, Die &t
 
 }
 
-void writeFile(const vector <instance> instances, char *outputFile, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
+void writeFile(const vector <instance> instances, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
 {
     FILE *output;
+    
+    char filename[30];
+    snprintf(filename, sizeof(filename), "out.txt");
 
-    output = fopen(outputFile, "w");
+    output = fopen(filename, "w");
 
     int numInstOnTopDie = 0;
     int numInstOnBtmDie = 0;

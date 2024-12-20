@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from moviepy import ImageSequenceClip
 
 
 class Instance:
@@ -32,7 +33,7 @@ def plot_result(instances, iter, die_width, die_height, plot_block_area, die):
 
     width = die_width
     height = die_height
-    fig, ax = plt.subplots(1,1, figsize = (20,20))
+    fig, ax = plt.subplots(1, 1, figsize = (20,20))
     ax.plot( width, height, 'g.')
     ax.plot(0, 0, 'g.')
 
@@ -52,7 +53,7 @@ def plot_result(instances, iter, die_width, die_height, plot_block_area, die):
     else:
         ax.set_title("Bottom Die Placement", fontsize = 24)
 
-    path = 'visulization/iter' + str(iter) 
+    path = 'visulization/graph/iter' + str(iter) 
     plt.savefig( path + '.jpg')
     plt.close()
     
@@ -136,10 +137,25 @@ def read_data(filename):
     
     return instances, die_width, die_height
 
-def main():    
-    instances, die_width, die_height = read_data('visulization/0.txt')
-    plot_result(instances, " btm", die_width, die_height, 0, 0)
-    plot_result(instances, " top", die_width, die_height, 0, 1)
+def gif(iter):
+    
+    image_files = []
+    for i in range(iter):
+        image_files.append('visulization/graph/iter{}.jpg'.format(i))
+
+    # 創建圖片序列剪輯
+    clip = ImageSequenceClip(image_files, fps=10)  # fps 表示每秒幀數，可以根據需要調整
+
+    # 將剪輯寫入文件
+    clip.write_videofile('output_video.mp4', codec='libx264')
+
+def main():
+    iteration = 59
+    for i in range(iteration):       
+        instances, die_width, die_height = read_data("visulization/data/{}.txt".format(i))
+        plot_result(instances, i, die_width, die_height, 0, 0)
+        # plot_result(instances, " top", die_width, die_height, 0, 1)
+    gif(iteration)
 
 main()
 
