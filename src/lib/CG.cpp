@@ -503,7 +503,6 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         bool isGra, needMinus;
         double score = 0.0, score2 = 0.0, graGrade = 0.0;
         
-        
         instances[i].tmpX = instances[i].x;
         instances[i].tmpX += h;
         
@@ -574,30 +573,29 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
     for(int i = 0; i < instances.size(); i++)
     {
         double tmpd = instances[i].density;
-        double score , score2, graGrade = 0.0;
+        double score , score2 = penaltyScore, graGrade = 0.0;
         bool needMinus = false;
         
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+        score2 -= graGrade;
+
         instances[i].tmpZ = instances[i].z;
         instances[i].tmpZ += h;
         instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
 
         score = TSVofNet(rawNet, true, instances[i], zScore);
-
-        
-        score2 = penaltyScore;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        score2 -= graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
+     
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
         score2 += graGrade;
 
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, needMinus = true, &graGrade);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = true, &graGrade);
+        instances[i].tmpZ = instances[i].z;
+        instances[i].density = tmpd;
+
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = false, &graGrade);
         
         instances[i].gra_z = (score - zScore) / h;
         instances[i].gra_d = penaltyWeight * ( score2 - penaltyScore) / h;
-
-        instances[i].tmpZ = instances[i].z;
-        instances[i].density = tmpd;
     }
 
     free(fl);
@@ -617,7 +615,7 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
 
     score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
 
-    // densityScore = scoreOfz(rawNet, instances, binInfo, 1);
+    densityScore = scoreOfz(rawNet, instances, binInfo, 1);
 
     score_of_z = TSVofNet(rawNet, false, instances[0], 0);
 

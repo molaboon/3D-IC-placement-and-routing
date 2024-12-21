@@ -38,7 +38,7 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 {
     // give each cell initial solution
 
-    srand( time(NULL) );
+    // srand( time(NULL) );
 
     // double x[] = {0.0, 0.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478,   0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000,      0};
     // double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 20000, 20000,   0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000,  31000};
@@ -150,29 +150,28 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
         // part of z /////////////////////////////////////////////////////////////
                        
-        double tmpz = instances[i].z;
         double tmpTSV = 0.0;
+
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
 
         instances[i].tmpZ = instances[i].z;
         instances[i].tmpZ += h;
-        instances[i].density = returnDensity(instances[i].z, 0.0);
+        instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
 
         tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
 
         tmpDen = penaltyScore;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
         tmpDen -= graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
-        tmpDen += graGrade;
-
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-
-        graz += fabs( (tmpTSV - tsvScore) / h);
-        grad += fabs( (tmpDen - penaltyScore) / h);
-
+        tmpDen += graGrade;
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
         instances[i].tmpZ = instances[i].z;
         instances[i].density = returnDensity(instances[i].z, 0.0);
+        
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
+        
+        graz += fabs( (tmpTSV - tsvScore) / h);
+        grad += fabs( (tmpDen - penaltyScore) / h);
     } 
 
     free(fl);

@@ -1,26 +1,14 @@
 NumTechnologies 2
-Tech TA 3
-LibCell N MC1 7 10 1
+Tech TA 1
+LibCell Y MC1 10 10 2
 Pin P1 2 7
-LibCell N MC2 14 10 2
-Pin P1 10 4
-Pin P2 4 6
-LibCell Y MC3 10 10 3
-Pin P1 5 3
-Pin P2 3 6
-Pin P3 10 8
-Tech TB 3
-LibCell N MC1 7 15 1
-Pin P1 2 11
-LibCell N MC2 12 15 2
-Pin P1 5 12
 Pin P2 8 3
-LibCell Y MC3 15 15 3
-Pin P1 2 12
-Pin P2 3 3
-Pin P3 15 7
+Tech TB 1
+LibCell Y MC1 10 10 2
+Pin P1 2 10
+Pin P2 8 3
 
-DieSize 0 0 40 30
+DieSize 0 0 40 40
 
 TopDieMaxUtil 80
 BottomDieMaxUtil 90
@@ -36,12 +24,15 @@ TerminalSpacing 5
 TerminalCost 10
 
 NumInstances 4
-Inst C1 MC3
-Inst C2 MC3
-Inst C3 MC3
-Inst C4 MC3
+Inst C1 MC1
+Inst C2 MC1
+Inst C3 MC1
+Inst C4 MC1
 
-NumNets 1
+NumNets 2
 Net N1 2
 Pin C1/P1
-Pin C3/P2
+Pin C2/P1
+Net N2 2
+Pin C3/P1
+Pin C4/P1
