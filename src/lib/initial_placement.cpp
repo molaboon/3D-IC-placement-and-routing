@@ -167,7 +167,6 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
         instances[i].tmpZ = instances[i].z;
         instances[i].density = returnDensity(instances[i].z, 0.0);
-        
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
         
         graz += fabs( (tmpTSV - tsvScore) / h);

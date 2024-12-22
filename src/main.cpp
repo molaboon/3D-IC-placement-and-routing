@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 
 int main(int argc, char *argv[]){
 	
@@ -76,9 +76,9 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, totalIter);
-		// macroLegalization(macros, top_die, bottom_die);
-		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		macroGradient( macros, netsOfMacros, top_die, 10);
+		macroLegalization(macros, top_die, bottom_die);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
 		double *lastGra = new double[ numStdCells * 3 ]{0.0};
 		double *nowGra = new double[ numStdCells * 3 ]{0.0};
 
-		int qqq = 0;
+		int qqq = -1;
 
 		firstPlacement(instances, binInfo, top_die);
 
@@ -128,12 +128,13 @@ int main(int argc, char *argv[]){
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, j);
 				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
-				
+				writeVisualFile(instances, qqq, top_die);
+
 				newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
 
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-				if( newScore < totalScore * 1.05 )
+				if( newScore < totalScore * 1.01 )
 					totalScore = newScore;
 
 				else

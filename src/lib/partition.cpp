@@ -126,18 +126,17 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     {
         totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
     
-        for(int j = 0; j < 100; j++)
+        for(int j = 0; j < 20; j++)
         {
             iii++;
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
             newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
-            writeVisualFile(macros, iii, topDie);
+            // writeVisualFile(macros, iii, topDie);
 
             newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
 
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
             
-
             if( newScore < totalScore )
                 totalScore = newScore;
             
@@ -146,7 +145,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
             else
                 break;	                
         }
-        // penaltyWeight *= 2;
+        penaltyWeight *= 2;
     }
     cout << iii << endl;
 
@@ -157,7 +156,7 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 
     cell2BestLayer(macros, topDie, btmDie);
 
-    // macroPlaceAndRotate(macros, topDie, btmDie);    
+    macroPlaceAndRotate(macros, topDie, btmDie);    
 }
 
 void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros, vector<instance> &instances)

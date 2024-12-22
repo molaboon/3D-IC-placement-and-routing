@@ -46,7 +46,7 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
                 d_2 += exp(-tmpOri/ gamma);
 
                 mn_1 += tmpGra * exp(tmpGra / gamma);
-                md_1 += exp(tmpGra / gamma);
+                md_1 += exp(tmpGra / gamma);    
                 mn_2 += tmpGra * exp(-tmpGra/ gamma);
                 md_2 += exp(-tmpGra/ gamma);
             }
@@ -68,7 +68,7 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
             for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
             {
                 double tmp = 0.0;
-     
+
                 tmp = rawNet[net].Connection[instance]->x;
 
                 numerator_1 += tmp * exp(tmp / gamma);
@@ -540,7 +540,6 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         bool needMinus = false, isGra = false;
         double score = 0.0, score2 = 0.0, graGrade = 0.0;
 
-        
         instances[i].tmpY = instances[i].y;
         instances[i].tmpY += h;
 
@@ -609,7 +608,7 @@ double infaltionRatio(instance instance, double routingOverflow)
 
 double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances)
 {
-    double score_of_x, score_of_y, score_of_z, densityScore = 0.0, totalScore, wireLength;
+    double score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
 
     score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
 
@@ -658,7 +657,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
 
     for(int index = 0; index < Numinstance * Dimensions; index++)
     {
-        norm += lastGra[index];
+        norm += fabs(lastGra[index]);
         beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
     }
 
@@ -678,7 +677,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
 
 double returnAlpha(double nowCG[])
 {   
-    double Alpha = 0.0, weight = 0.2;
+    double Alpha = 0.0, weight = 0.5;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
@@ -713,6 +712,7 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
 {
     double score = 0.0, wireLength = 0.0;
+
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         double tmp[Dimensions] = {0.0};
@@ -733,6 +733,13 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
         instances[index].z += spaceZ;
 
         glodenSearch(instances[index], binInfo);
+    }
+
+    for(int i = 0; i < (int) instances.size(); i++)
+    {
+        instances[i].tmpX = instances[i].x;
+        instances[i].tmpY = instances[i].y;
+        instances[i].tmpZ = instances[i].z;
     }
 }
 
