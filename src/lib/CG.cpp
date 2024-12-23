@@ -611,15 +611,11 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     double score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
 
     score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
-
     score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
-
     densityScore = scoreOfz(rawNet, instances, binInfo, 1);
-
     score_of_z = TSVofNet(rawNet, false, instances[0], 0);
 
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
-
     wireLength = score_of_x + score_of_y;
 
     return totalScore;

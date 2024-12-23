@@ -105,89 +105,93 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
     memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-    for(int i = 0; i < size; i++)
-    {        
-        double tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
-        double graGrade = 0.0;
+    if(false)
+    {
+        for(int i = 0; i < size; i++)
+        {        
+            double tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
+            double graGrade = 0.0;
 
-        // part of x
-        instances[i].tmpX = instances[i].x;
-        instances[i].tmpX += h;
-        
-        tmpXscore = scoreOfX(rawNet, gamma, true, instances[i], xScore);
+            // part of x
+            instances[i].tmpX = instances[i].x;
+            instances[i].tmpX += h;
+            
+            tmpXscore = scoreOfX(rawNet, gamma, true, instances[i], xScore);
 
-        tmpDen = penaltyScore;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        tmpDen -= graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
-        tmpDen += graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
+            tmpDen = penaltyScore;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+            tmpDen -= graGrade;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
+            tmpDen += graGrade;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
 
-        instances[i].tmpX = instances[i].x;
-        
-        grax += fabs( (tmpXscore - xScore) / h);
-        grad += fabs( (tmpDen - penaltyScore) / h );
+            instances[i].tmpX = instances[i].x;
+            
+            grax += fabs( (tmpXscore - xScore) / h);
+            grad += fabs( (tmpDen - penaltyScore) / h );
 
-        // part of y /////////////////////////////////////////////////////////////
+            // part of y /////////////////////////////////////////////////////////////
 
-        instances[i].tmpY = instances[i].y;
-        instances[i].tmpY += h;
+            instances[i].tmpY = instances[i].y;
+            instances[i].tmpY += h;
 
-        tmpYscore = scoreOfY(rawNet, gamma, true, instances[i], yScore);
+            tmpYscore = scoreOfY(rawNet, gamma, true, instances[i], yScore);
 
-        tmpDen = penaltyScore;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        tmpDen -= graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
-        tmpDen += graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
+            tmpDen = penaltyScore;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+            tmpDen -= graGrade;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
+            tmpDen += graGrade;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
 
-        gray += fabs( (tmpYscore - yScore) / h);
-        grad += fabs( (tmpDen - penaltyScore) / h );
-        instances[i].tmpY = instances[i].y;
+            gray += fabs( (tmpYscore - yScore) / h);
+            grad += fabs( (tmpDen - penaltyScore) / h );
+            instances[i].tmpY = instances[i].y;
 
-        // part of z /////////////////////////////////////////////////////////////
-                       
-        double tmpTSV = 0.0;
+            // part of z /////////////////////////////////////////////////////////////
+                        
+            double tmpTSV = 0.0;
 
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
 
-        instances[i].tmpZ = instances[i].z;
-        instances[i].tmpZ += h;
-        instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
+            instances[i].tmpZ = instances[i].z;
+            instances[i].tmpZ += h;
+            instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
 
-        tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
+            tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
 
-        tmpDen = penaltyScore;
-        tmpDen -= graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-        tmpDen += graGrade;
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        instances[i].tmpZ = instances[i].z;
-        instances[i].density = returnDensity(instances[i].z, 0.0);
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-        
-        graz += fabs( (tmpTSV - tsvScore) / h);
-        grad += fabs( (tmpDen - penaltyScore) / h);
-    } 
+            tmpDen = penaltyScore;
+            tmpDen -= graGrade;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
+            tmpDen += graGrade;
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
+            instances[i].tmpZ = instances[i].z;
+            instances[i].density = returnDensity(instances[i].z, 0.0);
+            penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
+            
+            graz += fabs( (tmpTSV - tsvScore) / h);
+            grad += fabs( (tmpDen - penaltyScore) / h);
+        } 
 
-    free(fl);
-    free(sl);
+        free(fl);
+        free(sl);
+        penaltyWeight = ((grax + gray + graz) / grad);
+    }
 
-    penaltyWeight = (grax + gray + graz) / grad;
-
-    gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originfl, originsl);
-    gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originfl, originsl);
-    gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originfl, originsl);
+    penaltyWeight = 1e-5;
+    
+    // gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originfl, originsl);
+    // gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originfl, originsl);
+    // gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originfl, originsl);
 
     double endTime = clock();
 
     free(originfl);
     free(originsl);
 
-    printf("penalty Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
+    // printf("penalty Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
 
     return penaltyWeight;
 }

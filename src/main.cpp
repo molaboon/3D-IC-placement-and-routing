@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 1
+#define stdCellPart 0
 
 int main(int argc, char *argv[]){
 	
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, 10);
+		macroGradient( macros, netsOfMacros, top_die, 25);
 		macroLegalization(macros, top_die, bottom_die);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
@@ -104,11 +104,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
-
-		totalScore = returnTotalScore(rawnet, gamma, binInfo, penaltyWeight, instances);
-
-		CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
-
+		
 		/*	std. cell Coarsening	*/
 		// cout << "here" <<endl;
 
@@ -121,11 +117,14 @@ int main(int argc, char *argv[]){
 		for(int i = 0; i < totalIter; i++)
 		{
 			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
-			for(int j = 0; j < 30; j++)
+			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
+			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
+
+			for(int j = 0; j < 100; j++)
 			{
 				qqq++;
 
-				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, j);
+				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
@@ -134,7 +133,7 @@ int main(int argc, char *argv[]){
 
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-				if( newScore < totalScore * 1.01 )
+				if( newScore < totalScore  )
 					totalScore = newScore;
 
 				else

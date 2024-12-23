@@ -120,18 +120,19 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     returnGridInfo(&topDie, &macroBinInfo, numMacro);
     firstPlacement(macros, macroBinInfo, topDie);
     penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
-    CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
     
     for(int i = 0; i < totalIter; i++)
     {
         totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
+        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
+        CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
     
-        for(int j = 0; j < 20; j++)
+        for(int j = 0; j < 40; j++)
         {
             iii++;
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
             newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
-            // writeVisualFile(macros, iii, topDie);
+            writeVisualFile(macros, iii, topDie);
 
             newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
 
@@ -140,8 +141,6 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
             if( newScore < totalScore )
                 totalScore = newScore;
             
-            else if( newScore < totalScore *1.1)
-            {}
             else
                 break;	                
         }
