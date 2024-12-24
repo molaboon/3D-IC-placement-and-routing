@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 
 int main(int argc, char *argv[]){
 	
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]){
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-			for(int j = 0; j < 100; j++)
+			for(int j = 0; j < 40; j++)
 			{
 				qqq++;
 
@@ -136,8 +136,8 @@ int main(int argc, char *argv[]){
 				if( newScore < totalScore  )
 					totalScore = newScore;
 
-				else
-					break;
+				// else
+				// 	break;
 				
 			}
 			penaltyWeight *= 2;
