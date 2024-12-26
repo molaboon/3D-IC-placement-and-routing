@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 1
+#define stdCellPart 0
 
 int main(int argc, char *argv[]){
 	
@@ -76,9 +76,9 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, 25);
-		macroLegalization(macros, top_die, bottom_die);
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		macroGradient( macros, netsOfMacros, top_die, 40);
+		// macroLegalization(macros, top_die, bottom_die);
+		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 

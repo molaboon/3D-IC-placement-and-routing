@@ -17,6 +17,7 @@
 #define Dimensions 3
 #define spaceZweight 0.01
 #define cellMoveSize 200
+#define onlyPenalty 0
 
 using namespace std;
 
@@ -519,7 +520,7 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade);
 
         instances[i].tmpX = instances[i].x;
-        instances[i].gra_x =  (score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
+        instances[i].gra_x =  onlyPenalty*(score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
     }
     free(firstLayer);
     free(secondLayer);
@@ -554,7 +555,7 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade);
         
         instances[i].tmpY = instances[i].y;
-        instances[i].gra_y = ( (score - yScore) + penaltyWeight * (score2 - penaltyScore) ) / h;
+        instances[i].gra_y = ( onlyPenalty*(score - yScore) + penaltyWeight * (score2 - penaltyScore) ) / h;
     }
     
     free(firstLayer);
@@ -673,7 +674,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
 
 double returnAlpha(double nowCG[])
 {   
-    double Alpha = 0.0, weight = 0.5;
+    double Alpha = 0.0, weight = 1;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
@@ -722,11 +723,11 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
 
         spaceX = tmp[0] * Alpha * binInfo.binWidth;
         spaceY = tmp[1] * Alpha * binInfo.binHeight;
-        spaceZ = tmp[2] * Alpha * 1/10000;
+        spaceZ = (tmp[2]/sqrt(tmp[2] * tmp[2])) * 1/10000;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-        instances[index].z += spaceZ;
+        instances[index].z = 0.8;
 
         glodenSearch(instances[index], binInfo);
     }

@@ -140,14 +140,12 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
             
             if( newScore < totalScore )
                 totalScore = newScore;
-            
             else
                 break;	                
         }
         penaltyWeight *= 2;
     }
     cout << iii << endl;
-
 }
  
 void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
