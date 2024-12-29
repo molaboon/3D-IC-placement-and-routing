@@ -8,13 +8,13 @@ LibCell Y MC1 10 10 2
 Pin P1 2 10
 Pin P2 8 3
 
-DieSize 0 0 40 40
+DieSize 0 0 30 30
 
 TopDieMaxUtil 80
 BottomDieMaxUtil 90
 
-TopDieRows 0 0 40 10 3
-BottomDieRows 0 0 40 15 2
+TopDieRows 0 0 30 10 3
+BottomDieRows 0 0 30 15 2
 
 TopDieTech TA
 BottomDieTech TB

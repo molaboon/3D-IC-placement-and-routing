@@ -451,40 +451,50 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
     double overAreaOfY = 0.0;
     double overAreaOfXY = 0.0;
 
-    if( binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth )
-        overAreaOfX = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * binInfo.binHeight;
-    else
-        overAreaOfX = area;
+    // if( binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth )
+    //     overAreaOfX = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * binInfo.binHeight;
+    // else
+    //     overAreaOfX = area;
     
-    if( binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight )
-        overAreaOfY = (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) ) * binInfo.binWidth;
-    else
-        overAreaOfY = area;
+    // if( binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight )
+    //     overAreaOfY = (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) ) * binInfo.binWidth;
+    // else
+    //     overAreaOfY = area;
     
-    if(binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight && binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth)
-        overAreaOfXY = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) );
-    else 
-        overAreaOfXY = area;
+    // if(binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight && binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth)
+    //     overAreaOfXY = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) );
+    // else 
+    //     overAreaOfXY = area;
+
+    // for(int i = 0; i < binYnum; i++)
+    // {
+    //     for(int j = 0; j < binXnum; j++)
+    //     {
+    //         int b = j + i*binXnum;
+            
+    //         if(j == binXnum - 1 && i == binYnum - 1)
+    //             score += (firstLayer[b] - overAreaOfXY) * (firstLayer[b] - overAreaOfXY) + (secondLayer[b] - overAreaOfXY) * (secondLayer[b] - overAreaOfXY);
+
+    //         else if(j == binXnum - 1)
+    //             score += (firstLayer[b] - overAreaOfX) * (firstLayer[b] - overAreaOfX) + (secondLayer[b] - overAreaOfX) * (secondLayer[b] - overAreaOfX);
+            
+    //         else if (i == binYnum - 1)
+    //             score += (firstLayer[b] - overAreaOfY) * (firstLayer[b] - overAreaOfY) + (secondLayer[b] - overAreaOfY) * (secondLayer[b] - overAreaOfY);
+
+    //         else
+    //             score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);                
+    //     }
+    // }
 
     for(int i = 0; i < binYnum; i++)
     {
         for(int j = 0; j < binXnum; j++)
         {
             int b = j + i*binXnum;
-            
-            if(j == binXnum - 1 && i == binYnum - 1)
-                score += (firstLayer[b] - overAreaOfXY) * (firstLayer[b] - overAreaOfXY) + (secondLayer[b] - overAreaOfXY) * (secondLayer[b] - overAreaOfXY);
-
-            else if(j == binXnum - 1)
-                score += (firstLayer[b] - overAreaOfX) * (firstLayer[b] - overAreaOfX) + (secondLayer[b] - overAreaOfX) * (secondLayer[b] - overAreaOfX);
-            
-            else if (i == binYnum - 1)
-                score += (firstLayer[b] - overAreaOfY) * (firstLayer[b] - overAreaOfY) + (secondLayer[b] - overAreaOfY) * (secondLayer[b] - overAreaOfY);
-
-            else
-                score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);                
+            score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);                
         }
     }
+    
 
     
     return score;    

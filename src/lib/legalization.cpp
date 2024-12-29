@@ -695,8 +695,8 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
         if( instances[inst].z > 0.5 && instances[inst].layer == 3 )
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
-            (int) (instances[inst].x - instances[inst].width), 
-            (int) (instances[inst].y - instances[inst].height),
+            (int) (instances[inst].x - instances[inst].width/2), 
+            (int) (instances[inst].y - instances[inst].height/2),
             (int) instances[inst].width,
             (int) instances[inst].height);
         
@@ -716,8 +716,8 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
         if( instances[inst].z < 0.5 && instances[inst].layer == 3 )
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
-            (int) (instances[inst].x - instances[inst].inflateWidth), 
-            (int) (instances[inst].y - instances[inst].inflateHeight),
+            (int) (instances[inst].x - instances[inst].inflateWidth/2), 
+            (int) (instances[inst].y - instances[inst].inflateHeight/2),
             (int) instances[inst].inflateWidth,
             (int) instances[inst].inflateHeight);
 

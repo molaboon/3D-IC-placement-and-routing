@@ -141,15 +141,15 @@ def gif(iter):
     
     image_files = []
     for i in range(iter):
-        image_files.append('visulization/graph/iter{}.jpg'.format(i))
+        image_files.append('visulization/graph/itertop{}.jpg'.format(i))
 
-    clip = ImageSequenceClip(image_files, fps=20)  # fps 表示每秒幀數，可以根據需要調整
+    clip = ImageSequenceClip(image_files, fps=10)  # fps 表示每秒幀數，可以根據需要調整
 
     clip.write_videofile('output_video.mp4', codec='libx264')
 
 def main():
     iteration = 73
-    i = 89
+    i = 81
     for i in range(iteration):       
         instances, die_width, die_height = read_data("visulization/data/{}.txt".format(i))
         plot_result(instances, i, die_width, die_height, 0, 0)
