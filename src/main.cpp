@@ -70,13 +70,13 @@ int main(int argc, char *argv[]){
 		rawnet = [*instances, *pinsInMacro, ...]
 	*/
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
-	returnGridInfo(&top_die, &binInfo, numStdCells);
+	returnGridInfo(&top_die, &binInfo, numStdCells, instances);
 
 	/*	macro gradient and placement	*/
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, 40);
+		macroGradient( macros, netsOfMacros, top_die, 20);
 		// macroLegalization(macros, top_die, bottom_die);
 		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);

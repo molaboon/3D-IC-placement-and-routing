@@ -495,7 +495,6 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
         }
     }
     
-
     
     return score;    
 }

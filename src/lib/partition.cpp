@@ -117,7 +117,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
 
     gamma = 0.05 * topDie.upperRightX;
     
-    returnGridInfo(&topDie, &macroBinInfo, numMacro);
+    returnGridInfo(&topDie, &macroBinInfo, numMacro, macros);
     firstPlacement(macros, macroBinInfo, topDie);
     penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
     

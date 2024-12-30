@@ -12,25 +12,32 @@
 
 
 
-void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance)
+void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance, vector <instance> &instances)
 {   
     binInfo->dieWidth = die->upperRightX ; 
     binInfo->dieHeight = die->upperRightY ;
-
-    // binXnum * binYnum ~= Numinstance
-    binInfo->binXnum = floor( sqrt( (double) Numinstance ));
-    binInfo->binWidth = floor(die->upperRightX / binInfo->binXnum);
-
-    while(binInfo->binWidth * binInfo->binXnum < binInfo->dieWidth)
-        binInfo->binXnum += 1;
-        
-    binInfo->binYnum = floor( sqrt( (double) Numinstance ));
-    binInfo->binHeight = floor(die->upperRightY / binInfo->binYnum);
-
-    while(binInfo->binHeight * binInfo->binYnum < binInfo->dieHeight)
-        binInfo->binYnum += 1;
-        
     binInfo->Numinstance = Numinstance;
+    binInfo->binHeight = instances[0].height;
+
+
+    int size = instances.size();
+    int totalX = 0;
+
+    for(int i = 0; i < size; i++)
+        totalX += (int) instances[i].width;
+    
+    totalX = totalX / size;
+
+    binInfo->binWidth = (double) totalX;
+    binInfo->binXnum = floor( binInfo->dieWidth / binInfo->binWidth );
+    binInfo->binYnum = floor( binInfo->dieHeight / binInfo->binHeight );
+
+    while (binInfo->binXnum * binInfo->binWidth < binInfo->dieWidth)
+        binInfo->binXnum += 1;
+    
+    while (binInfo->binYnum * binInfo->binHeight < binInfo->dieHeight)
+        binInfo->binYnum += 1;
+    
 
 }
 
