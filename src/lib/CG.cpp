@@ -17,7 +17,7 @@
 #define Dimensions 3
 #define spaceZweight 0.01
 #define cellMoveSize 200
-#define onlyPenalty 0
+#define onlyPenalty 1
 
 using namespace std;
 
@@ -683,7 +683,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
 
 double returnAlpha(double nowCG[])
 {   
-    double Alpha = 0.0, weight = 1;
+    double Alpha = 0.0, weight = 0.7;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
@@ -732,11 +732,11 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
 
         spaceX = tmp[0] * Alpha * binInfo.binWidth;
         spaceY = tmp[1] * Alpha * binInfo.binHeight;
-        spaceZ = (tmp[2]/sqrt(tmp[2] * tmp[2])) * 1/10000;
+        spaceZ = tmp[2] * Alpha * 1/10000;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-        instances[index].z = 0.8;
+        instances[index].z += spaceZ;
 
         glodenSearch(instances[index], binInfo);
     }

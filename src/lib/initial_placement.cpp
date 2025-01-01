@@ -62,10 +62,10 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         double minY = instances[i].inflateHeight;
         double maxY = binInfo.dieHeight - instances[i].inflateHeight;
 
-        // double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
-        // double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
-        double X = maxX * 0.5;
-        double Y = maxY * 0.5;
+        double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
+        double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
+        // double X = maxX * 0.5;
+        // double Y = maxY * 0.5;
         double Z = 0.5 ;
 
         instances[i].rotate = 0;
@@ -108,8 +108,6 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     tsvScore = TSVofNet(rawNet, false, instances[0], 0);
 
     penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
-
-    double startTime = clock();
 
     memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
     memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
@@ -188,14 +186,6 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         free(sl);
         penaltyWeight = ((grax + gray + graz) / grad);
     }
-
-    penaltyWeight = 1;
-    
-    // gradientX(rawNet, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originfl, originsl);
-    // gradientY(rawNet, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originfl, originsl);
-    // gradientZ(rawNet, gamma, instances, binInfo, penaltyWeight, tsvScore, penaltyScore, originfl, originsl);
-
-    double endTime = clock();
 
     free(originfl);
     free(originsl);

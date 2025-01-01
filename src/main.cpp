@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 
 int main(int argc, char *argv[]){
 	
@@ -77,8 +77,8 @@ int main(int argc, char *argv[]){
 	if(macroPart)
 	{
 		macroGradient( macros, netsOfMacros, top_die, 20);
-		// macroLegalization(macros, top_die, bottom_die);
-		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		macroLegalization(macros, top_die, bottom_die);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
@@ -136,8 +136,8 @@ int main(int argc, char *argv[]){
 				if( newScore < totalScore  )
 					totalScore = newScore;
 
-				// else
-				// 	break;
+				else
+					break;
 				
 			}
 			penaltyWeight *= 2;
