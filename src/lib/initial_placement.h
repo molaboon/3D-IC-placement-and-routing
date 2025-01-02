@@ -26,6 +26,8 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance, vector <instan
 
 void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie);
 
+void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &macros, gridInfo binInfo, Die topDie) ;
+
 double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo);
 
 

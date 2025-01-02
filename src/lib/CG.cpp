@@ -628,6 +628,8 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
 
+    // printf("%f, %f\n", wireLength, score_of_z);
+
     return totalScore;
 }
 
@@ -683,7 +685,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
 
 double returnAlpha(double nowCG[])
 {   
-    double Alpha = 0.0, weight = 0.7;
+    double Alpha = 0.0, weight = 1.0;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
@@ -732,7 +734,7 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
 
         spaceX = tmp[0] * Alpha * binInfo.binWidth;
         spaceY = tmp[1] * Alpha * binInfo.binHeight;
-        spaceZ = tmp[2] * Alpha * 1/10000;
+        spaceZ = tmp[2] * Alpha;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;

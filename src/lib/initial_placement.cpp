@@ -47,12 +47,6 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
     // srand( time(NULL) );
 
-    // double x[] = {0.0, 0.0,    0.0, 6000.0,     0.0,  8613.0,     0,  5478,   0, 8000, 16000, 24000,     0,  8000, 12804, 12000, 17226, 12000, 16000, 19206, 18000, 25839, 18000, 16000, 25608, 24000, 20000, 24000,  8000, 32010, 30000, 30000, 30000,      0};
-    // double y[] = {0.0,    0.0, 5800.0, 5800.0, 15000.0, 15000.0, 20000, 20000,   0,    0,     0,     0, 12000, 12000,     0,  5800, 15000, 25000, 12000,     0,  5800, 15000, 25000, 24000,     0,  5800, 20000, 25000, 24000,     0,  5800, 20000, 25000,  31000};
-    // double z[] = {0.2,    0.8,    0.2,    0.8,     0.2,     0.8,   0.2,   0.8, 0.2,  0.8,   0.2,   0.8,   0.2,   0.8,   0.8,   0.2,   0.2,   0.8,   0.2,   0.8,   0.2,   0.8,   0.2,   0.2,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2,   0.2,   0.8,   0.2};
-    // double x[] = {15.0, 16.0, 17.0, 18.0, 15.0, 16.0, 17.0, 18.0};
-    // double y[] = {15.0, 16.0, 17.0, 18.0, 15.0, 16.0, 17.0, 18.0};
-    
     int cnt = 0;
 
     for(int i = 0; i < instances.size(); i++)
@@ -79,9 +73,31 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
     }
 }
 
-void macroFirstPlacement( vector <instance> &macros, vector <instance*> &netOfmacros ) 
+void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &macros, gridInfo binInfo, Die topDie) 
 {
+    int cellSize = instances.size();
+    int macroSize = macros.size();
+    
+    for(int i = 0; i < cellSize; i++)
+    {
+        double minX = 11000;
+        double maxX = binInfo.dieWidth - instances[i].inflateWidth;
+        double minY = 9000;
+        double maxY = binInfo.dieHeight - instances[i].inflateHeight;
 
+        double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
+        double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
+        double Z = 0.5 ;
+
+        instances[i].rotate = 0;
+
+        instances[i].x = X;
+        instances[i].y = Y;
+        instances[i].z = Z ;
+        instances[i].tmpX = instances[i].x;
+        instances[i].tmpY = instances[i].y;
+        instances[i].tmpZ = instances[i].z;
+    }
 }
 
 double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo)
@@ -112,7 +128,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
     memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-    if(true)
+    if(false)
     {
         for(int i = 0; i < size; i++)
         {        
@@ -187,6 +203,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         penaltyWeight = ((grax + gray + graz) / grad);
     }
 
+    penaltyWeight = 1e-6;
     free(originfl);
     free(originsl);
 

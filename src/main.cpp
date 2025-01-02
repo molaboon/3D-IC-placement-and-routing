@@ -100,10 +100,11 @@ int main(int argc, char *argv[]){
 
 		int qqq = -1;
 
-		firstPlacement(instances, binInfo, top_die);
+		stdCellFirstPlacement(instances, macros, binInfo, top_die);
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		
 		/*	std. cell Coarsening	*/
 		// cout << "here" <<endl;
@@ -133,7 +134,7 @@ int main(int argc, char *argv[]){
 
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
 
-				if( newScore < totalScore  )
+				if( newScore < totalScore * 1.01  )
 					totalScore = newScore;
 
 				else
