@@ -675,17 +675,12 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     for(int index = 0; index < Numinstance * Dimensions; index ++)
     {
         nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
-        
-        if(iteration == 0)
-            nowCG[index] = -nowCG[index];
     }
-        
-
 }
 
 double returnAlpha(double nowCG[])
 {   
-    double Alpha = 0.0, weight = 1.0;
+    double Alpha = 0.0, weight = 0.2;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
@@ -751,7 +746,7 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
     }
 }
 
-void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double &penaltyWeight)
+void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG, double &penaltyWeight)
 {
     double xScore, yScore, zScore, penaltyScore, tmpScore = 0.0;
     double *originFirstLayer = createBins(binInfo);
@@ -776,6 +771,7 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer);
     
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(double) );
+    memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(double) );
 
     for(int i = 0; i < numInstances; i++)
     {

@@ -110,10 +110,11 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     int iii = -1;
     double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
     double wireLength, newWireLength;
-    double lastCG[ numMacro * 3 ] = {0.0};
-    double nowCG[ numMacro * 3 ] = {0.0};
-    double lastGra[ numMacro * 3 ] = {0.0};
-    double nowGra[ numMacro * 3 ] = {0.0};
+
+    double *lastCG = new double[ numMacro * 3 ]{0.0};
+    double *nowCG = new double[ numMacro * 3 ]{0.0};
+    double *lastGra = new double[ numMacro * 3 ]{0.0};
+    double *nowGra = new double[ numMacro * 3 ]{0.0};
 
     gamma = 0.05 * topDie.upperRightX;
     
@@ -124,20 +125,20 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     for(int i = 0; i < totalIter; i++)
     {
         totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
-        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
+        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
         CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
     
         for(int j = 0; j < 40; j++)
         {
             iii++;
-            conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
+            
             newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
             writeVisualFile(macros, iii, topDie);
-
             newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
-
-            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, penaltyWeight);
             
+            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
+            conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
+
             if( newScore < totalScore )
                 totalScore = newScore;
             else

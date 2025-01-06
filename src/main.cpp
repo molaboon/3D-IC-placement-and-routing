@@ -104,6 +104,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+		// penaltyWeight = 1;
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		
 		/*	std. cell Coarsening	*/
@@ -118,23 +119,23 @@ int main(int argc, char *argv[]){
 		for(int i = 0; i < totalIter; i++)
 		{
 			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
-			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
+			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 			for(int j = 0; j < 40; j++)
 			{
 				qqq++;
 
-				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
 
 				newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
-
-				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, penaltyWeight);
-
-				if( newScore < totalScore * 1.01  )
+				
+				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
+				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
+				
+				if( newScore < totalScore )
 					totalScore = newScore;
 
 				else

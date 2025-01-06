@@ -55,6 +55,10 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
         double maxX = binInfo.dieWidth - instances[i].inflateWidth;
         double minY = instances[i].inflateHeight;
         double maxY = binInfo.dieHeight - instances[i].inflateHeight;
+        // double minX = 400;
+        // double maxX = 600;
+        // double minY = 400;
+        // double maxY = 600;
 
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
         double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
@@ -80,9 +84,14 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     
     for(int i = 0; i < cellSize; i++)
     {
-        double minX = 11000;
+        double minX = 10000;
+        // double maxX = 15000;
+        double minY = 10000;
+        // double maxY = 15000;
+
+        // double minX = instances[i].inflateWidth;
         double maxX = binInfo.dieWidth - instances[i].inflateWidth;
-        double minY = 9000;
+        // double minY = instances[i].inflateHeight;
         double maxY = binInfo.dieHeight - instances[i].inflateHeight;
 
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
