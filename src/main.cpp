@@ -101,11 +101,10 @@ int main(int argc, char *argv[]){
 		int qqq = -1;
 
 		stdCellFirstPlacement(instances, macros, binInfo, top_die);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
-		penaltyWeight = 1;
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		
 		/*	std. cell Coarsening	*/
 		// cout << "here" <<endl;

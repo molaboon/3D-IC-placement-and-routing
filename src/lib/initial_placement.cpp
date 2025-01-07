@@ -81,16 +81,23 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     
     for(int i = 0; i < cellSize; i++)
     {
-        double minX = 13000;
-        double maxX = 13900;
-        double minY = 13000;
-        double maxY = 13900;
+        double minX, minY, maxX, maxY;
 
-        // double minX = instances[i].inflateWidth;
-        // double maxX = binInfo.dieWidth - instances[i].inflateWidth;
-        // double minY = instances[i].inflateHeight;
-        // double maxY = binInfo.dieHeight - instances[i].inflateHeight;
-
+        if(instances[i].isMacro)
+        {
+            minX = instances[i].inflateWidth;
+            maxX = binInfo.dieWidth - instances[i].inflateWidth;
+            minY = instances[i].inflateHeight;
+            maxY = binInfo.dieHeight - instances[i].inflateHeight;
+        }
+        else
+        {
+            minX = 12000;
+            maxX = 22000;
+            minY = 10000;
+            maxY = 17000;
+        }
+        
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
         double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
         double Z = 0.5 ;
@@ -99,7 +106,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
 
         instances[i].x = X;
         instances[i].y = Y;
-        instances[i].z = Z ;
+        instances[i].z = Z;
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;
         instances[i].tmpZ = instances[i].z;
@@ -134,7 +141,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
     memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-    if(true)
+    if(false)
     {
         for(int i = 0; i < size; i++)
         {        
@@ -209,7 +216,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         penaltyWeight = ((grax + gray + graz) / grad);
     }
 
-    // penaltyWeight = 1e-8;
+    penaltyWeight = 1e-6;
     free(originfl);
     free(originsl);
 
