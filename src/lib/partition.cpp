@@ -121,6 +121,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     returnGridInfo(&topDie, &macroBinInfo, numMacro, macros);
     firstPlacement(macros, macroBinInfo, topDie);
     penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
+    penaltyWeight = 1;
     
     for(int i = 0; i < totalIter; i++)
     {
@@ -132,7 +133,7 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
         {
             iii++;
             
-            newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo);
+            newSolution(netsOfMacros, macros, penaltyWeight, gamma, nowCG, macroBinInfo, 20);
             writeVisualFile(macros, iii, topDie);
             newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
             

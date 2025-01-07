@@ -661,8 +661,26 @@ void CGandGraPreprocessing( vector <instance> &instances, double *nowGra, double
 
 void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration)
 {
-    double beta = 0.0, norm = 0.0;
+    
+    // for(int index = 0; index < Numinstance; index++)
+    // {
+        double beta = 0.0, norm = 0.0;
+    //     for(int i = 0; i < Dimensions; i++)
+    //     {
+    //         int a = index * Dimensions + i;
+    //         norm += fabs(lastGra[a]);
+    //         beta += nowGra[a] * ( nowGra[a] - lastGra[a]);
+    //     } 
+            
+    //     norm = norm * norm;
+    //     beta = beta/norm;
 
+    //     for(int i = 0; i < Dimensions; i++)
+    //     {
+    //         int a = index * Dimensions + i;
+    //         nowCG[a] = (-nowGra[a]) + (beta * lastCG[a]);
+    //     }
+    // }
     for(int index = 0; index < Numinstance * Dimensions; index++)
     {
         norm += fabs(lastGra[index]);
@@ -680,13 +698,13 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
 
 double returnAlpha(double nowCG[])
 {   
-    double Alpha = 0.0, weight = 0.2;
+    double Alpha = 0.0;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
 
     Alpha = sqrt(Alpha);
-    Alpha = weight / Alpha;
+    Alpha =  1.0 / Alpha;
 
     return Alpha;
 }
@@ -712,10 +730,21 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
         inst.z = 0.0;    
 }
 
-void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo)
+void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo, int iter)
 {
-    double score = 0.0, wireLength = 0.0;
+    double score = 0.0, wireLength = 0.0, weight = 0.2;
 
+    // if (iter < 5)
+    //     weight = 1.0;
+    // else if (iter > 5 && iter < 15)
+    //     weight = 0.8;
+    // else if (iter > 15 && iter < 25)
+    //     weight = 0.6;    
+    // else if (iter > 25 && iter < 35)
+    //     weight = 0.4;
+    // else
+    //     weight = 0.2;
+    
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         double tmp[Dimensions] = {0.0};
@@ -727,9 +756,9 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * binInfo.binWidth;
-        spaceY = tmp[1] * Alpha * binInfo.binHeight;
-        spaceZ = tmp[2] * Alpha;
+        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth;
+        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight;
+        spaceZ = tmp[2] * Alpha * weight;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;

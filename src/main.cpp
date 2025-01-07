@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
-		// penaltyWeight = 1;
+		penaltyWeight = 1;
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		
 		/*	std. cell Coarsening	*/
@@ -122,11 +122,11 @@ int main(int argc, char *argv[]){
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-			for(int j = 0; j < 40; j++)
+			for(int j = 0; j < 100; j++)
 			{
 				qqq++;
 
-				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo);
+				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo, i);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
 

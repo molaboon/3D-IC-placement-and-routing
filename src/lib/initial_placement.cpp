@@ -21,13 +21,12 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance, vector <instan
 
 
     int size = instances.size();
-    int totalX = 0;
+    int totalX = 999;
 
     for(int i = 0; i < size; i++)
-        totalX += (int) instances[i].width;
+        if ( (int) instances[i].width < totalX )
+            totalX = (int) instances[i].width;
     
-    totalX = totalX / size;
-
     binInfo->binWidth = (double) totalX;
     binInfo->binXnum = floor( binInfo->dieWidth / binInfo->binWidth );
     binInfo->binYnum = floor( binInfo->dieHeight / binInfo->binHeight );
@@ -62,8 +61,6 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
         double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
-        // double X = maxX * 0.5;
-        // double Y = maxY * 0.5;
         double Z = 0.5 ;
 
         instances[i].rotate = 0;
@@ -84,15 +81,15 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     
     for(int i = 0; i < cellSize; i++)
     {
-        double minX = 10000;
-        // double maxX = 15000;
-        double minY = 10000;
-        // double maxY = 15000;
+        double minX = 13000;
+        double maxX = 13900;
+        double minY = 13000;
+        double maxY = 13900;
 
         // double minX = instances[i].inflateWidth;
-        double maxX = binInfo.dieWidth - instances[i].inflateWidth;
+        // double maxX = binInfo.dieWidth - instances[i].inflateWidth;
         // double minY = instances[i].inflateHeight;
-        double maxY = binInfo.dieHeight - instances[i].inflateHeight;
+        // double maxY = binInfo.dieHeight - instances[i].inflateHeight;
 
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
         double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
@@ -137,7 +134,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
     memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
-    if(false)
+    if(true)
     {
         for(int i = 0; i < size; i++)
         {        
@@ -212,7 +209,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
         penaltyWeight = ((grax + gray + graz) / grad);
     }
 
-    penaltyWeight = 1e-6;
+    // penaltyWeight = 1e-8;
     free(originfl);
     free(originsl);
 
