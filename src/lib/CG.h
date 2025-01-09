@@ -40,7 +40,7 @@ double returnAlpha(double nowCG[]);
 
 void glodenSearch(instance &inst, gridInfo binInfo);
 
-void newSolution(vector <RawNet> &rawNet, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo, int iter);
+void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo);
 
 void updateGra(vector <RawNet> &rawNet, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG,double &penaltyWeight);
 

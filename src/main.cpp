@@ -121,11 +121,11 @@ int main(int argc, char *argv[]){
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-			for(int j = 0; j < 100; j++)
+			for(int j = 0; j < 6000; j++)
 			{
 				qqq++;
 
-				newSolution(rawnet, instances, penaltyWeight, gamma, nowCG, binInfo, i);
+				newSolution(instances, nowCG, binInfo);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
 
@@ -137,11 +137,10 @@ int main(int argc, char *argv[]){
 				if( newScore < totalScore )
 					totalScore = newScore;
 
-				else
-					break;
-				
+				if(penaltyWeight < 1000.0)
+					penaltyWeight *= 1.01;
+
 			}
-			penaltyWeight *= 2;
 		}
 
 		endTime = clock();

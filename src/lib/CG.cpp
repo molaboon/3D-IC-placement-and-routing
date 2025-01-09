@@ -628,7 +628,8 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
 
-    // printf("%f, %f\n", wireLength, score_of_z);
+    if(penaltyWeight > 1000)
+        printf("%f, %f\n", wireLength, score_of_z);
 
     return totalScore;
 }
@@ -681,6 +682,8 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
             nowCG[a] = (-nowGra[a]) + (beta * lastCG[a]);
         }
     }
+
+    // double beta = 0.0, norm = 0.0;
     // for(int index = 0; index < Numinstance * Dimensions; index++)
     // {
     //     norm += fabs(lastGra[index]);
@@ -691,9 +694,8 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     // beta = beta/norm;
 
     // for(int index = 0; index < Numinstance * Dimensions; index ++)
-    // {
     //     nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
-    // }
+    
 }
 
 double returnAlpha(double nowCG[])
@@ -730,7 +732,7 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
         inst.z = 0.0;    
 }
 
-void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double penaltyWeight, double gamma, double *nowCG, grid_info binInfo, int iter)
+void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
 {
     double score = 0.0, wireLength = 0.0, weight = 0.2;
 
@@ -756,8 +758,8 @@ void newSolution(vector <RawNet> &rawNets, vector<instance> &instances, double p
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth;
-        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight;
+        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 3;
+        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 3;
         spaceZ = tmp[2] * Alpha * weight * 0.001;
 
         instances[index].x += spaceX;
@@ -812,3 +814,9 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     free(originFirstLayer);
     free(originSecondLayer);
 }
+
+void clacBktrk( vector <instance> instances, double *lastGra, double *nowCG)
+{
+
+}
+

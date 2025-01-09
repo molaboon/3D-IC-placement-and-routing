@@ -629,7 +629,9 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
 
     int terminalX = terminalTech.spacing + terminalTech.sizeX / 2;
     int terminalY = terminalTech.spacing + terminalTech.sizeY / 2;
+    int numTerOfX = 0, numTerOfY = 0;
 
+    // calculate the number of the terminal in rawnet
     for(int net = 0; net < numNet; net++)
     {
         int firstInstLater = rawNet[net].Connection[0]->layer;
@@ -652,6 +654,11 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
         }
     }
 
+    numTerOfX = (dieWidth - terminalTech.sizeX) / (terminalTech.sizeX + terminalTech.spacing);
+    numTerOfY = (dieHight - terminalTech.sizeY) / (terminalTech.sizeY + terminalTech.spacing);
+    char terminalArray[numTerOfY][numTerOfX] = {0};
+
+    // place the terminal to the position
     for (int t = 0; t < numTerminal; t++)
     {
         terminals[t].x = terminalX;
