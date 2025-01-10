@@ -627,8 +627,8 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     int dieWidth = (int) topDie.upperRightX;
     int dieHight = (int) topDie.upperRightY;
 
-    int terminalX = terminalTech.spacing + terminalTech.sizeX / 2;
-    int terminalY = terminalTech.spacing + terminalTech.sizeY / 2;
+    int spaceX = terminalTech.spacing + terminalTech.sizeX;
+    int spaceY = terminalTech.spacing + terminalTech.sizeY;
     int numTerOfX = 0, numTerOfY = 0;
 
     // calculate the number of the terminal in rawnet
@@ -654,22 +654,51 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
         }
     }
 
-    numTerOfX = (dieWidth - terminalTech.sizeX) / (terminalTech.sizeX + terminalTech.spacing);
-    numTerOfY = (dieHight - terminalTech.sizeY) / (terminalTech.sizeY + terminalTech.spacing);
+    numTerOfX = (dieWidth - terminalTech.sizeX) / spaceX;
+    numTerOfY = (dieHight - terminalTech.sizeY) / spaceY;
     char terminalArray[numTerOfY][numTerOfX] = {0};
 
     // place the terminal to the position
     for (int t = 0; t < numTerminal; t++)
     {
-        terminals[t].x = terminalX;
-        terminals[t].y = terminalY;
+        int minX = 99999, minY= 99999, maxX = 0, maxY = 0;
 
-        terminalX += terminalTech.sizeX + terminalTech.spacing;
-
-        if (terminalX + terminalTech.sizeX + terminalTech.spacing > dieWidth)
+        for(int i = 0; i < rawNet[ terminals[t].netID ].numPins; i ++ )
         {
-            terminalX = terminalTech.spacing + terminalTech.sizeX / 2;
-            terminalY += terminalTech.sizeY + terminalTech.spacing;
+            if( rawNet[terminals[t].netID].Connection[i]->finalX < minX )
+                minX = rawNet[terminals[t].netID].Connection[i]->finalX;
+
+            if( rawNet[terminals[t].netID].Connection[i]->finalX > maxX )
+                maxX = rawNet[terminals[t].netID].Connection[i]->finalX;
+
+            if( rawNet[terminals[t].netID].Connection[i]->finalY < minY )
+                minY = rawNet[terminals[t].netID].Connection[i]->finalY;
+
+            if( rawNet[terminals[t].netID].Connection[i]->finalY > maxY )
+                maxY = rawNet[terminals[t].netID].Connection[i]->finalY;
+        }
+
+        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
+        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
+
+        while (true)
+        {
+            if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
+            {
+                terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] = 1;
+                break;
+            }
+            else
+            {
+                terminals[t].x += spaceX;
+                terminals[t].y += spaceY;
+
+                if(terminals[t].x > dieWidth || terminals[t].y > dieHight)
+                {
+                    printf("terminal error in line 698\n");
+                    break;
+                }
+            }
         }
     }
 }

@@ -121,7 +121,7 @@ int main(int argc, char *argv[]){
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-			for(int j = 0; j < 6000; j++)
+			for(int j = 0; j < 1; j++)
 			{
 				qqq++;
 
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]){
 
 	if(true)
 	{	
-		// cell2BestLayer(instances, top_die, bottom_die);
+		cell2BestLayer(instances, top_die, bottom_die);
 		// place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		// writeVisualFile(macros, 0, top_die);
