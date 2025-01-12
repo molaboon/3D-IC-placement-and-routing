@@ -115,13 +115,13 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
-		for(int i = 0; i < totalIter; i++)
+		for(int i = 0; i < 1; i++)
 		{
 			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-			for(int j = 0; j < 1; j++)
+			for(int j = 0; j < totalIter; j++)
 			{
 				qqq++;
 
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]){
 		}
 
 		endTime = clock();
-
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		printf("Time: %fs, iter: %d\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq );
 
 	}
@@ -160,10 +160,3 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
-
-// printNetInfo(NumNets, rawnet);
-// printInstanceInfo(numStdCells, instances);
-// printTechnologyInfo(NumTechnologies, TechMenu);
-// printDieInfo(top_die, bottom_die);
-// printHybridTerminalInfo(terminal);
-// printInstanceInfo(numStdCells, instances);

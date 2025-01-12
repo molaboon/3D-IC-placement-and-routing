@@ -12,7 +12,7 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
 void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> &macros);
 
-void writeFile(const vector <instance> instances, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals);
+void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet, const int numInstances, const vector <terminal> &terminals);
 
 void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,  vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie);
 

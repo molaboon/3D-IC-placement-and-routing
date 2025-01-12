@@ -661,9 +661,9 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
     for (int t = 0; t < numTerminal; t++)
     {
         int minX = 99999, minY= 99999, maxX = 0, maxY = 0;
-        bool addXorY = false;
+        int numPins = rawNet[ terminals[t].netID ].numPins;
 
-        for(int i = 0; i < rawNet[ terminals[t].netID ].numPins; i ++ )
+        for(int i = 0; i < numPins; i++ )
         {
             if( rawNet[terminals[t].netID].Connection[i]->finalX < minX )
                 minX = rawNet[terminals[t].netID].Connection[i]->finalX;
@@ -681,32 +681,44 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
         terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
         terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
 
-        while (true)
+        if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
         {
-            if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
+            terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] = 1;
+        }
+        else
+        {
+            bool found = false;
+            minY = minY / spaceY;
+            maxY = maxY / spaceY;
+            minX = minX / spaceX;
+            maxX = maxX / spaceX;
+            do
             {
-                terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] = 1;
-                break;
-            }
-            else
-            {
-                if(addXorY)
+                for (int yy = minY; yy < maxY; yy++)
                 {
-                    terminals[t].x += spaceX;
-                    addXorY = 0;
+                    for(int xx = minX; xx < maxX; xx++)
+                    {
+                        if(terminalArray[yy][xx] == 0)
+                        {
+                            terminals[t].x = xx * spaceX;
+                            terminals[t].y = yy * spaceY;
+                            found = true;
+                            terminalArray[yy][xx] = 1;
+                            break;
+                        }
+                    }
+
+                    if(found)
+                        break;
                 }
-                else
-                {
-                    terminals[t].y += spaceY;
-                    addXorY = 1;
-                }
-                
-                if(terminals[t].x > dieWidth || terminals[t].y > dieHight)
-                {
-                    printf("terminal error in line 698\n");
-                    break;
-                }
-            }
+
+                minY /= 2;
+                minX /= 2;
+                maxX *= 2;
+                maxY *= 2;
+
+            } while (!found);
+            
         }
     }
 }
@@ -778,7 +790,7 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
 
 }
 
-void writeFile(const vector <instance> instances, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals)
+void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet, const int numInstances, const vector <terminal> &terminals)
 {
     FILE *output;
     

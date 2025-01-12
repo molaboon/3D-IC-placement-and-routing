@@ -628,9 +628,6 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
 
-    if(penaltyWeight > 1000)
-        printf("%f, %f\n", wireLength, score_of_z);
-
     return totalScore;
 }
 
@@ -760,7 +757,7 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
 
         spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 3;
         spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 3;
-        spaceZ = tmp[2] * Alpha * weight * 0.001;
+        spaceZ = tmp[2] * Alpha * weight ;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
