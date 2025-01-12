@@ -30,7 +30,7 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
     for(int i = 0; i < numInstances; i++)
     {
-        if( instances[i].z < 0.5 && instances[i].layer == theCellDoesntPlaceToLayer)
+        if( (instances[i].z < 0.5 && instances[i].layer == theCellDoesntPlaceToLayer) || instances[i].layer == 0)
         {
             instances[i].layer = btmLayer;
             
@@ -47,7 +47,7 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
             btmDieArea += instances[i].inflateArea;
         }
-        else if(instances[i].z > 0.5 && instances[i].layer == theCellDoesntPlaceToLayer)
+        else if( (instances[i].z > 0.5 && instances[i].layer == theCellDoesntPlaceToLayer) || instances[i].layer == 1)
         {
             instances[i].layer = topLayer;
         
@@ -297,7 +297,6 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             
             instances[inst].rotate = 0;
         }
-        instances[inst].finalX = (int) instances[inst].x;
     }
     
 
@@ -620,7 +619,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
     }
 }
 
-void insertTerminal(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
+void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
 { 
     int numNet = rawNet.size();
     int numTerminal = 0;
@@ -662,6 +661,7 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
     for (int t = 0; t < numTerminal; t++)
     {
         int minX = 99999, minY= 99999, maxX = 0, maxY = 0;
+        bool addXorY = false;
 
         for(int i = 0; i < rawNet[ terminals[t].netID ].numPins; i ++ )
         {
@@ -690,9 +690,17 @@ void insertTerminal(const vector <instance> instances, const vector <RawNet> raw
             }
             else
             {
-                terminals[t].x += spaceX;
-                terminals[t].y += spaceY;
-
+                if(addXorY)
+                {
+                    terminals[t].x += spaceX;
+                    addXorY = 0;
+                }
+                else
+                {
+                    terminals[t].y += spaceY;
+                    addXorY = 1;
+                }
+                
                 if(terminals[t].x > dieWidth || terminals[t].y > dieHight)
                 {
                     printf("terminal error in line 698\n");
@@ -895,8 +903,8 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
         macros[ topDieMacro[inst] ].finalX = topX;
         macros[ btmDieMacro[inst] ].finalX = btmX;
         
-        topY += macros[ topDieMacro[inst] ].finalHeight;
-        btmY += macros[ btmDieMacro[inst] ].finalHeight;
+        topY += macros[ topDieMacro[inst] ].finalHeight +33;
+        btmY += macros[ btmDieMacro[inst] ].finalHeight +33;
 
         
         if(macros[ topDieMacro[inst] ].finalWidth > maxTopX)

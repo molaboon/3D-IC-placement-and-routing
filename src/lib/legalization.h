@@ -14,7 +14,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
 void writeFile(const vector <instance> instances, const vector <RawNet> rawNet, const int numInstances, const vector <terminal> terminals);
 
-void insertTerminal(const vector <instance> instances, const vector <RawNet> rawNet,  vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie);
+void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,  vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie);
 
 void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals);
 

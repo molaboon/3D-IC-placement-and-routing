@@ -152,10 +152,10 @@ int main(int argc, char *argv[]){
 	if(true)
 	{	
 		cell2BestLayer(instances, top_die, bottom_die);
-		// place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
-		// insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-		// writeVisualFile(macros, 0, top_die);
-		// writeFile(instances, outputName, rawnet, numStdCells, terminals);
+		place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
+		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
+		writeVisualFile(instances, 0, top_die);
+		writeFile(instances, rawnet, numStdCells, terminals);
 	}
 
 	return 0;
