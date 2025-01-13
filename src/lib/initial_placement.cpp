@@ -113,7 +113,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     }
 }
 
-double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo)
+double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, double *densityMap)
 {
     double h = 0.00001;
     double penaltyWeight;
@@ -131,7 +131,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     for(int i = 0; i < size; i++)
     {
-        instances[i].density = returnDensity(instances[i].z, 0.0);
+        instances[i].density = returnDensity(instances[i].z, densityMap);
         penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false, NULL);
     }
     tsvScore = TSVofNet(rawNet, false, instances[0], 0);
@@ -194,7 +194,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
             instances[i].tmpZ = instances[i].z;
             instances[i].tmpZ += h;
-            instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
+            instances[i].density = returnDensity(instances[i].tmpZ, densityMap);
 
             tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
 
@@ -204,7 +204,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
             tmpDen += graGrade;
             penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
             instances[i].tmpZ = instances[i].z;
-            instances[i].density = returnDensity(instances[i].z, 0.0);
+            instances[i].density = returnDensity(instances[i].z, densityMap);
             penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
             
             graz += fabs( (tmpTSV - tsvScore) / h);

@@ -54,8 +54,8 @@ int main(int argc, char *argv[]){
 	vector <terminal> terminals;											// sotre the position of terminal (for output)
 	vector < vector<instance> > pinsInMacros;
 
-	map <double, double> densityMap;
- 
+	double *densityMap = new double[ 100001 ]{0};
+
 	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, techMenuPtr);	
 	readDieInfo(input, &top_die, &bottom_die);
@@ -71,12 +71,12 @@ int main(int argc, char *argv[]){
 	*/
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
 	returnGridInfo(&top_die, &binInfo, numStdCells, instances);
-
+	returnDensityMap(densityMap);
 	/*	macro gradient and placement	*/
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, 20);
+		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
 		macroLegalization(macros, top_die, bottom_die);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		// macroPartition( macros, netsOfMacros, top_die);
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		gamma = 0.05 * binInfo.dieWidth;
-		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo);
+		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
 		
 		/*	std. cell Coarsening	*/
 		// cout << "here" <<endl;
@@ -117,8 +117,8 @@ int main(int argc, char *argv[]){
 
 		for(int i = 0; i < 1; i++)
 		{
-			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
-			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
+			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
+			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 			for(int j = 0; j < totalIter; j++)
@@ -129,9 +129,9 @@ int main(int argc, char *argv[]){
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
 
-				newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances);
+				newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
 				
-				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
+				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 				
 				if( newScore < totalScore )

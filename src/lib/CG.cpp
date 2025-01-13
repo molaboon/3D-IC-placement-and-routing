@@ -140,9 +140,6 @@ double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool i
             score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
         }
     }
-
-    
-
     return score;
 }
 
@@ -176,20 +173,25 @@ double RSum( const double z){
     return rsum;
 }
 
-double returnDensity(const double z, const double layer)
+double returnDensity(const double z, const double *densityMap)
+{
+    int index = 0;
+
+    index = int(z/1e-5);
+
+    return densityMap[index] ;
+}
+
+double returnDensityInDensityMap(const double z, const double layer)
 {
     double Rz, Bz, BzRSum;
 
     Rz = bellShapeFunc(z, layer);
-
     Bz = exp(Rz/ eta);
-
     BzRSum = RSum(z);
 
     Bz = Bz / BzRSum;
-
     return Bz;
-
 }
 
 double returnPsi(double z)
@@ -200,8 +202,7 @@ double returnPsi(double z)
     {
         double score ;
 
-        score = (double)i * returnDensity(z, (double)i);
-
+        score = (double)i * returnDensityInDensityMap(z, (double)i);
         psi += score;
     }
 
@@ -272,7 +273,7 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
     return score;
 }
 
-double scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged)
+double scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged, double *densityMap)
 {
     double score = 0.0;
     int size = instances.size();
@@ -285,7 +286,7 @@ double scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInf
     {
         if(zisChanged)
         {
-            double tmpD = returnDensity(instances[i].z, 0.0);
+            double tmpD = returnDensity(instances[i].z, densityMap);
 
             instances[i].density = tmpD;
         }
@@ -571,7 +572,7 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
     free(secondLayer);
 }
 
-void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
+void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer, double *densityMap)
 {   
     double *fl = createBins(binInfo);
     double *sl = createBins(binInfo);
@@ -590,7 +591,7 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
 
         instances[i].tmpZ = instances[i].z;
         instances[i].tmpZ += h;
-        instances[i].density = returnDensity(instances[i].tmpZ, 0.0);
+        instances[i].density = returnDensity(instances[i].tmpZ, densityMap);
 
         score = TSVofNet(rawNet, true, instances[i], zScore);
      
@@ -616,13 +617,13 @@ double infaltionRatio(instance instance, double routingOverflow)
     return 0.0;
 }
 
-double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances)
+double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances, double *densityMap)
 {
     double score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
 
     score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
     score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
-    densityScore = scoreOfz(rawNet, instances, binInfo, 1);
+    densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap);
     score_of_z = TSVofNet(rawNet, false, instances[0], 0);
 
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
@@ -774,7 +775,7 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
     }
 }
 
-void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG, double &penaltyWeight)
+void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG, double &penaltyWeight, double *densityMap)
 {
     double xScore, yScore, zScore, penaltyScore, tmpScore = 0.0;
     double *originFirstLayer = createBins(binInfo);
@@ -785,7 +786,7 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
     
     for(int j = 0; j < numInstances; j++)
-        instances[j].density = returnDensity(instances[j].z, 0.0);
+        instances[j].density = returnDensity(instances[j].z, densityMap);
         
     zScore = TSVofNet(rawNets, false, instances[0], 0);
 
@@ -796,7 +797,7 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     
     gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
     gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
-    gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer);
+    gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
     
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(double) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(double) );
@@ -817,3 +818,13 @@ void clacBktrk( vector <instance> instances, double *lastGra, double *nowCG)
 
 }
 
+void returnDensityMap(double *densityMap)
+{
+    double z = 0.0;
+
+    for(int i = 0 ; i < 100001; i++)
+    {
+        densityMap[i] = returnDensityInDensityMap(z, 0.0);
+        z += 1e-5;
+    }
+}

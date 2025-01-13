@@ -102,7 +102,7 @@ void macroRotation(vector <instance> &macros, vector <RawNet> &netsOfMacros, Die
     
 }
 
-void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter)
+void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter, double *densityMap)
 {
     gridInfo macroBinInfo;
 
@@ -120,12 +120,12 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     
     returnGridInfo(&topDie, &macroBinInfo, numMacro, macros);
     firstPlacement(macros, macroBinInfo, topDie);
-    penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo);
+    penaltyWeight = returnPenaltyWeight(netsOfMacros, gamma, macros, macroBinInfo, densityMap);
     
     for(int i = 0; i < totalIter; i++)
     {
-        totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
-        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
+        totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap);
+        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
         CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
     
         for(int j = 0; j < 50; j++)
@@ -134,9 +134,9 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
             
             newSolution(macros, nowCG, macroBinInfo);
             writeVisualFile(macros, iii, topDie);
-            newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros);
+            newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap);
             
-            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight);
+            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
 
             if( newScore < totalScore )

@@ -28,6 +28,6 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie);
 
 void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &macros, gridInfo binInfo, Die topDie) ;
 
-double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo);
+double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, double *densityMap);
 
 
