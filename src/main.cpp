@@ -144,7 +144,7 @@ int main(int argc, char *argv[]){
 		}
 
 		endTime = clock();
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
 		printf("Time: %fs, iter: %d\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq );
 
 	}

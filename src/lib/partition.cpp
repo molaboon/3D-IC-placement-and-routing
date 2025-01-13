@@ -216,4 +216,60 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
     }
 }
 
+void finalUpdatePinsInMacro(vector<instance> &macro, vector < vector<instance> > &pinsInMacros, vector<instance> &instances)
+{
+    int numMacro = macro.size();
 
+    for(int i = 0; i < numMacro; i++)
+    {
+        int numPins = pinsInMacros[i].size();
+
+        int x = macro[i].finalX;
+        int y = macro[i].finalY;
+        int w = macro[i].finalWidth;
+        int h = macro[i].finalHeight;
+
+        for(int j = 0; j < numPins; j++)
+        {
+            switch ( macro[i].rotate )
+            {
+                // if macro rotate = 0 
+                case 0:
+                    pinsInMacros[i].at(j).finalX =  x + pinsInMacros[i].at(j).finalX;
+                    pinsInMacros[i].at(j).finalY =  y + pinsInMacros[i].at(j).finalY;
+                    break;
+                
+                case 90:
+                    pinsInMacros[i].at(j).finalX =  x + ( h - pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).finalY =  y + pinsInMacros[i].at(j).finalX;
+                    break;
+                
+                case 180:
+                    pinsInMacros[i].at(j).finalX =  x + ( w - pinsInMacros[i].at(j).finalX );
+                    pinsInMacros[i].at(j).finalY =  y + ( h - pinsInMacros[i].at(j).finalY );
+                    break;
+                
+                case 270:
+                    pinsInMacros[i].at(j).finalX =  x + (pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).finalY =  y + (pinsInMacros[i].at(j).finalX );
+                    break;
+
+                default:
+                    cout << "rotation error" << endl;
+                    break;
+            }
+        }
+
+        instances[ macro[i].instIndex ].width = (double) w;
+        instances[ macro[i].instIndex ].height = (double) h;
+        instances[ macro[i].instIndex ].x = double (macro[i].finalX + macro[i].finalWidth / 2);
+        instances[ macro[i].instIndex ].y = double (macro[i].finalY + macro[i].finalHeight / 2);
+        instances[ macro[i].instIndex ].z = double (macro[i].layer);
+        instances[ macro[i].instIndex ].finalX = x;
+        instances[ macro[i].instIndex ].finalY = y;
+        instances[ macro[i].instIndex ].finalWidth = w;
+        instances[ macro[i].instIndex ].finalHeight = h;
+        instances[ macro[i].instIndex ].layer = macro[i].layer;
+        instances[ macro[i].instIndex ].rotate = macro[i].rotate;
+    }
+}

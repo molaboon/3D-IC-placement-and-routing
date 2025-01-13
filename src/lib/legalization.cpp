@@ -678,8 +678,8 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                 maxY = rawNet[terminals[t].netID].Connection[i]->finalY;
         }
 
-        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
-        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
+        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX  + spaceX;
+        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY  + spaceY;
 
         if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
         {
@@ -688,10 +688,15 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
         else
         {
             bool found = false;
-            minY = minY / spaceY;
-            maxY = maxY / spaceY;
-            minX = minX / spaceX;
-            maxX = maxX / spaceX;
+            minY = minY / spaceY ;
+            maxY = maxY / spaceY ;
+            minX = minX / spaceX ;
+            maxX = maxX / spaceX ;
+            
+            if(minX < 1)
+                minX = 1;
+            if(minY < 1)
+                minY = 1;
             do
             {
                 for (int yy = minY; yy < maxY; yy++)
@@ -712,10 +717,20 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                         break;
                 }
 
-                minY /= 2;
-                minX /= 2;
-                maxX *= 2;
-                maxY *= 2;
+                minY = minY >> 1;
+                minX = minX >> 1;
+                maxX = maxX << 1;
+                maxY = maxY << 1;
+                
+                if(maxX > dieWidth/spaceX)
+                    maxX = (dieWidth - spaceX) / spaceX ;
+                if(maxY > dieHight/spaceY)
+                    maxY = (dieHight - spaceY) / spaceY ;
+                
+                if(minX < 1)
+                    minX = 1;
+                if(minY < 1)
+                    minY = 1;
 
             } while (!found);
             
@@ -795,7 +810,7 @@ void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet
     FILE *output;
     
     char filename[30];
-    snprintf(filename, sizeof(filename), "out.txt");
+    snprintf(filename, sizeof(filename), "output.txt");
 
     output = fopen(filename, "w");
 
@@ -889,7 +904,7 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
             topX = maxTopX;
         }
 
-        if(btmY + macros[ btmDieMacro[inst] ].finalHeight > topDie.upperRightY)
+        if(btmY + macros[ btmDieMacro[inst] ].finalHeight > btmDie.upperRightY)
         {
             btmY = 0;
             btmX = maxBtmX;
@@ -897,16 +912,16 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
 
         if(topX + macros[ topDieMacro[inst] ].finalWidth > topDie.upperRightX)
         {
-            macros[inst].rotate = 90;
-            macros[inst].finalWidth = (int) macros[inst].width;
-            macros[inst].finalHeight = (int) macros[inst].height;
+            macros[topDieMacro[inst]].rotate = 90;
+            macros[topDieMacro[inst]].finalWidth = (int) macros[topDieMacro[inst]].width;
+            macros[topDieMacro[inst]].finalHeight = (int) macros[topDieMacro[inst]].height;
         }
 
-        if(btmX + macros[ btmDieMacro[inst] ].finalWidth > topDie.upperRightX)
+        if(btmX + macros[ btmDieMacro[inst] ].finalWidth > btmDie.upperRightX)
         {
-            macros[inst].rotate = 90;
-            macros[inst].finalWidth = (int) macros[inst].width;
-            macros[inst].finalHeight = (int) macros[inst].height;
+            macros[btmDieMacro[inst]].rotate = 90;
+            macros[btmDieMacro[inst]].finalWidth = (int) macros[btmDieMacro[inst]].width;
+            macros[btmDieMacro[inst]].finalHeight = (int) macros[btmDieMacro[inst]].height;
         }
         
         macros[ topDieMacro[inst] ].finalY = topY;
