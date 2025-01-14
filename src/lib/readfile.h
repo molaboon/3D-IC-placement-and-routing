@@ -67,7 +67,8 @@ typedef struct _termina{
 typedef struct _Instance{
     // char libPinName[PIN_NAME_SIZE];
 
-    bool isMacro ;
+    bool isMacro;
+    bool canPass;
 
     int rotate;
     int numNetConnection;

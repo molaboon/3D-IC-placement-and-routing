@@ -124,22 +124,19 @@ int main(int argc, char *argv[]){
 			for(int j = 0; j < totalIter; j++)
 			{
 				qqq++;
+				cout << qqq << endl;
 
 				newSolution(instances, nowCG, binInfo);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
 
-				newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
+				// newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
 				
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 				
-				if( newScore < totalScore )
-					totalScore = newScore;
-
 				if(penaltyWeight < 1000.0)
 					penaltyWeight *= 1.01;
-
 			}
 		}
 

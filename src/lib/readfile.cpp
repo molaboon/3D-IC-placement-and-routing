@@ -183,6 +183,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.finalWidth = 0;
         temp.finalHeight = 0;
         temp.connectedNet = tmpNetConnect;
+        temp.canPass = false;
         
         temp.area = temp.width * temp.height;
         temp.inflateArea = temp.inflateWidth * temp.inflateHeight;
@@ -205,6 +206,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
                 tpins.height = 0.0;
                 tpins.inflateWidth = 0.0;
                 tpins.inflateHeight = 0.0;
+                tpins.canPass = false;
                 
                 pins.emplace_back(tpins);
             }

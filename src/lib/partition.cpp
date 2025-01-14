@@ -212,6 +212,7 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
         instances[ macro[i].instIndex ].finalHeight = h;
         instances[ macro[i].instIndex ].layer = macro[i].layer;
         instances[ macro[i].instIndex ].rotate = macro[i].rotate;
+        instances[ macro[i].instIndex ].canPass = true;
 
     }
 }

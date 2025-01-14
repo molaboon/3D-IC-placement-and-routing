@@ -511,6 +511,9 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
 
     for(int i = 0; i < size; i++)
     {
+        if(instances[i].canPass)
+            continue;
+        
         bool isGra, needMinus;
         double score = 0.0, score2 = 0.0, graGrade = 0.0;
         
@@ -547,7 +550,10 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
     memcpy(secondLayer, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
 
     for(int i = 0; i < size; i++)
-    {
+    {   
+        if(instances[i].canPass)
+            continue;
+
         bool needMinus = false, isGra = false;
         double score = 0.0, score2 = 0.0, graGrade = 0.0;
 
@@ -582,6 +588,9 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
 
     for(int i = 0; i < instances.size(); i++)
     {
+        if(instances[i].canPass)
+            continue;
+
         double tmpd = instances[i].density;
         double score , score2 = penaltyScore, graGrade = 0.0;
         bool needMinus = false;
@@ -747,6 +756,9 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
     
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
+        if(instances[index].canPass)
+            continue;
+        
         double tmp[Dimensions] = {0.0};
         double Alpha, spaceX, spaceY, spaceZ;
 
@@ -781,7 +793,8 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     double *originFirstLayer = createBins(binInfo);
     double *originSecondLayer = createBins(binInfo);
     double numInstances = instances.size();
-        
+
+
     xScore = scoreOfX(rawNets, gamma, false, instances[0], 0);
     yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
     
@@ -799,6 +812,7 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
     
+
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(double) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(double) );
 
