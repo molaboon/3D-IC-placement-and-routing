@@ -129,19 +129,17 @@ int main(int argc, char *argv[]){
 				newSolution(instances, nowCG, binInfo);
 				updatePinsInMacroInfo( macros, pinsInMacros, instances);
 				writeVisualFile(instances, qqq, top_die);
-
-				// newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
-				
 				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 				
-				if(penaltyWeight < 1000.0)
+				if(penaltyWeight < 500.0)
 					penaltyWeight *= 1.01;
 			}
 		}
 
 		endTime = clock();
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
+		// newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
 		printf("Time: %fs, iter: %d\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq );
 
 	}

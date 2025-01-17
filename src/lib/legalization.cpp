@@ -391,6 +391,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
         
         for(int inst = 0; inst < numStdcellInRow; inst++)
         {
+            cout << inst << endl;
             int cellID = instMap[ sortArray[inst] ];
             int nowCellFinalX = instances[cellID].finalX;
             int nowCellWidth = instances[cellID].finalWidth;
@@ -497,6 +498,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
             nowRowCellWidth -= nowCellWidth;            
         }
 
+        // 將 sort 好的 cell 放入diePlacementState 中
         short cnt = 0;
 
         for(int i = 0; i < (int) diePlacementState[row].size(); i++)
@@ -678,8 +680,8 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                 maxY = rawNet[terminals[t].netID].Connection[i]->finalY;
         }
 
-        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX  + spaceX;
-        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY  + spaceY;
+        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
+        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
 
         if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
         {
@@ -722,10 +724,10 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                 maxX = maxX << 1;
                 maxY = maxY << 1;
                 
-                if(maxX > dieWidth/spaceX)
-                    maxX = (dieWidth - spaceX) / spaceX ;
-                if(maxY > dieHight/spaceY)
-                    maxY = (dieHight - spaceY) / spaceY ;
+                if(maxX >= dieWidth/spaceX)
+                    maxX = (dieWidth - spaceX) / spaceX - 1;
+                if(maxY >= dieHight/spaceY)
+                    maxY = (dieHight - spaceY) / spaceY - 1;
                 
                 if(minX < 1)
                     minX = 1;
@@ -913,15 +915,15 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
         if(topX + macros[ topDieMacro[inst] ].finalWidth > topDie.upperRightX)
         {
             macros[topDieMacro[inst]].rotate = 90;
-            macros[topDieMacro[inst]].finalWidth = (int) macros[topDieMacro[inst]].width;
-            macros[topDieMacro[inst]].finalHeight = (int) macros[topDieMacro[inst]].height;
+            macros[topDieMacro[inst]].finalWidth = (int) macros[topDieMacro[inst]].height;
+            macros[topDieMacro[inst]].finalHeight = (int) macros[topDieMacro[inst]].width;
         }
 
-        if(btmX + macros[ btmDieMacro[inst] ].finalWidth > btmDie.upperRightX)
+        if(btmX + macros[ btmDieMacro[inst] ].finalWidth > topDie.upperRightX)
         {
             macros[btmDieMacro[inst]].rotate = 90;
-            macros[btmDieMacro[inst]].finalWidth = (int) macros[btmDieMacro[inst]].width;
-            macros[btmDieMacro[inst]].finalHeight = (int) macros[btmDieMacro[inst]].height;
+            macros[btmDieMacro[inst]].finalWidth = (int) macros[btmDieMacro[inst]].height;
+            macros[btmDieMacro[inst]].finalHeight = (int) macros[btmDieMacro[inst]].width;
         }
         
         macros[ topDieMacro[inst] ].finalY = topY;

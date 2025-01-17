@@ -670,38 +670,67 @@ void CGandGraPreprocessing( vector <instance> &instances, double *nowGra, double
 void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration)
 {
     
-    for(int index = 0; index < Numinstance; index++)
-    {
-        double beta = 0.0, norm = 0.0;
-        for(int i = 0; i < Dimensions; i++)
-        {
-            int a = index * Dimensions + i;
-            norm += fabs(lastGra[a]);
-            beta += nowGra[a] * ( nowGra[a] - lastGra[a]);
-        } 
-            
-        norm = norm * norm;
-        beta = beta/norm;
-
-        for(int i = 0; i < Dimensions; i++)
-        {
-            int a = index * Dimensions + i;
-            nowCG[a] = (-nowGra[a]) + (beta * lastCG[a]);
-        }
-    }
-
-    // double beta = 0.0, norm = 0.0;
-    // for(int index = 0; index < Numinstance * Dimensions; index++)
+    // for(int index = 0; index < Numinstance; index++)
     // {
-    //     norm += fabs(lastGra[index]);
-    //     beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
+    //     double beta = 0.0, norm = 0.0;
+    //     for(int i = 0; i < Dimensions; i++)
+    //     {
+    //         int a = index * Dimensions + i;
+    //         norm += fabs(lastGra[a]);
+    //         beta += nowGra[a] * ( nowGra[a] - lastGra[a]);
+    //     } 
+            
+    //     norm = norm * norm;
+    //     beta = beta/norm;
+
+    //     for(int i = 0; i < Dimensions; i++)
+    //     {
+    //         int a = index * Dimensions + i;
+    //         nowCG[a] = (-nowGra[a]) + (beta * lastCG[a]);
+    //     }
     // }
 
-    // norm = norm * norm;
-    // beta = beta/norm;
+    // double beta = 0.0, norm = 0.0;
+    // double beta2 = 0.0, norm2 = 0.0;
+    // double beta3 = 0.0, norm3 = 0.0;
+    // for(int index = 0; index < Numinstance; index++)
+    // {
+    //     norm += fabs(lastGra[index * Dimensions]);
+    //     norm2 += fabs(lastGra[index* Dimensions+1]);
+    //     norm3 += fabs(lastGra[index* Dimensions+2]);
 
-    // for(int index = 0; index < Numinstance * Dimensions; index ++)
-    //     nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
+    //     beta += nowGra[index * Dimensions] * ( nowGra[index * Dimensions] - lastGra[index * Dimensions]);
+    //     beta2 += nowGra[index * Dimensions+1] * ( nowGra[index * Dimensions+1] - lastGra[index * Dimensions+1]);
+    //     beta3 += nowGra[index * Dimensions+2] * ( nowGra[index * Dimensions+2] - lastGra[index * Dimensions+2]);
+        
+    // }
+    // beta = beta/ (norm * norm);
+    // beta2 = beta2 / (norm2 * norm2);
+    // beta3 = beta3 / (norm3 * norm3);
+
+    // for(int index = 0; index < Numinstance; index++)
+    // {
+    //     nowCG[index* Dimensions] = (-nowGra[index* Dimensions]) + (beta * lastCG[index* Dimensions]);
+    //     nowCG[index* Dimensions + 1] = (-nowGra[index* Dimensions+1]) + (beta2 * lastCG[index* Dimensions+1]);
+    //     nowCG[index* Dimensions + 2] = (-nowGra[index* Dimensions+2]) + (beta3 * lastCG[index* Dimensions+2]);
+    // }
+        
+
+    double beta = 0.0, norm = 0.0;
+    for(int index = 0; index < Numinstance * Dimensions; index++)
+    {
+        norm += fabs(lastGra[index]);
+        beta += nowGra[index] * ( nowGra[index] - lastGra[index]);
+    }
+
+    norm = norm * norm;
+    beta = beta/norm;
+    
+    if(beta < 0)
+        beta = 0;
+
+    for(int index = 0; index < Numinstance * Dimensions; index ++)
+        nowCG[index] = (-nowGra[index]) + (beta * lastCG[index]);
     
 }
 
@@ -741,7 +770,7 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 
 void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
 {
-    double score = 0.0, wireLength = 0.0, weight = 0.2;
+    double score = 0.0, wireLength = 0.0, weight = 0.3;
 
     // if (iter < 5)
     //     weight = 1.0;
@@ -768,8 +797,8 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 3;
-        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 3;
+        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 5;
+        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 5;
         spaceZ = tmp[2] * Alpha * weight ;
 
         instances[index].x += spaceX;
