@@ -396,6 +396,8 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
             int nowCellFinalX = instances[cellID].finalX;
             int nowCellWidth = instances[cellID].finalWidth;
 
+            needRestart:
+
             if( startX + nowCellWidth >= upperRightX )
             {
                 int lookDown = row + 1;
@@ -486,6 +488,9 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
                         else
                         {
                             macroX = upperRightX;
+
+                            if (startX + nowCellWidth >= upperRightX )
+                                goto needRestart;
                         }
 
                     } while (startX + nowCellWidth > macroX);
