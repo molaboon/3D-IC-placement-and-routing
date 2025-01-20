@@ -20,6 +20,7 @@ using std::vector;
 #define dimention 3
 #define macroPart 1
 #define stdCellPart 1
+#define useEplace 1
 
 int main(int argc, char *argv[]){
 	
@@ -115,26 +116,46 @@ int main(int argc, char *argv[]){
 
 		startTime = clock();
 
+		
 		for(int i = 0; i < 1; i++)
 		{
 			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
-			for(int j = 0; j < totalIter; j++)
+			if( !useEplace )
 			{
-				qqq++;
-				cout << qqq << endl;
+				for(int j = 0; j < totalIter; j++)
+				{
+					qqq++;
+					cout << qqq << endl;
 
-				newSolution(instances, nowCG, binInfo);
-				updatePinsInMacroInfo( macros, pinsInMacros, instances);
-				writeVisualFile(instances, qqq, top_die);
-				updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
-				conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
-				
-				if(penaltyWeight < 500.0)
-					penaltyWeight *= 1.01;
+					newSolution(instances, nowCG, binInfo);
+					updatePinsInMacroInfo( macros, pinsInMacros, instances);
+					writeVisualFile(instances, qqq, top_die);
+					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
+					
+					if(penaltyWeight < 500.0)
+						penaltyWeight *= 1.01;
+				}
 			}
+			else
+			{
+				double lastAk = 1.0;
+				double optParam = 1.0;
+
+				for(int j = 0; j < totalIter; j++)
+				{
+					clacBktrk(instances, lastGra, nowGra, lastAk, optParam, rawnet, gamma, binInfo, lastCG, nowCG, penaltyWeight, densityMap);
+					writeVisualFile(instances, qqq, top_die);
+					
+					if(penaltyWeight < 200.0)
+						penaltyWeight *= 1.01;
+				}
+				
+			}
+			
 		}
 
 		endTime = clock();

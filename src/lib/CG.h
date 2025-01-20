@@ -47,6 +47,10 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo);
 void updateGra(vector <RawNet> &rawNet, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG,double &penaltyWeight, double *dnesityMap);
 
 void returnDensityMap(double *densityMap);
-// double infaltionRatio(instance instance, double routingOverflow);
+
+void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, double &lastAk, double &optParam, 
+                vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
+                double &penaltyWeight, double *densityMap);
+            
 double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell);
 

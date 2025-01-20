@@ -823,7 +823,6 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     double *originSecondLayer = createBins(binInfo);
     double numInstances = instances.size();
 
-
     xScore = scoreOfX(rawNets, gamma, false, instances[0], 0);
     yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
     
@@ -867,32 +866,72 @@ void returnDensityMap(double *densityMap)
     }
 }
 
-void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, double &lastAk, double *lastSolution)
+void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, double &lastAk, double &optParam, 
+                vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
+                double &penaltyWeight, double *densityMap)
 {
     double stepSize = 0.0;
-    double newAk =  (1+ sqrt( 4.0 * lastAk * lastAk + 1.0) ) / 2;
+    double newParam =  (1+ sqrt( 4.0 * lastAk * lastAk + 1.0) ) / 2;
     int numInstances = instances.size();
 
-    double *lastRefSolution = new double [numInstances *3] {0.0};
     double *newRefSolution = new double [numInstances *3] {0.0};
     double *tmpGra = new double [numInstances *3] {0.0};
     double *tmpSolution = new double [numInstances *3] {0.0};
 
     memcpy(tmpGra, nowGra, numInstances * 3 * sizeof(double));
 
+    
+
+    for(int a = 0; a < numInstances; a++)
+    {
+        tmpSolution[a*3] = instances[a].x;
+        tmpSolution[a*3 + 1] = instances[a].y;
+        tmpSolution[a*3 + 2] = instances[a].z;
+
+        newRefSolution[a*3] = instances[a].refX;
+
+    }
+
+    optParam = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
+
     while (true)
     {
         for(int i = 0; i < numInstances; i++)
         {
-            instances[i].x = instances[i].refX + tmpGra[i * 3] * stepSize;
-            instances[i].y = instances[i].refY + tmpGra[i * 3 + 1] * stepSize;
-            instances[i].z = instances[i].refZ + tmpGra[i * 3 + 2] * stepSize;
+            instances[i].x = instances[i].refX - tmpGra[i * 3] * stepSize;
+            instances[i].y = instances[i].refY - tmpGra[i * 3 + 1] * stepSize;
+            instances[i].z = instances[i].refZ - tmpGra[i * 3 + 2] * stepSize;
 
-            newRefSolution[ i*3 ] = instances[i].x;
+            double param = ((optParam-1) / newParam);
+
+            newRefSolution[ i*3 ] = instances[i].x + (instances[i].x - tmpSolution[i*3]) * param;
+            newRefSolution[ i*3 +1 ] = instances[i].y + (instances[i].y - tmpSolution[i*3]) * param;
+            newRefSolution[ i*3 +2 ] = instances[i].z + (instances[i].z - tmpSolution[i*3]) * param;
+
         }
-    }
-    
 
+        updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+
+        double newLip = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
+        double newStepsize = 1 / newLip;
+        
+        if( 0.95 * stepSize <= newStepsize)
+        {
+            stepSize = newStepsize;
+            break;
+        }
+
+        stepSize = newStepsize;
+    }
+
+    for(int i = 0; i < numInstances; i++)
+    {
+        instances[i].refX = newRefSolution[i*3];
+        instances[i].refY = newRefSolution[i*3 + 1];
+        instances[i].refZ = newRefSolution[i*3 + 2 ];
+    }
+
+    optParam = newParam;
     
 }
 
