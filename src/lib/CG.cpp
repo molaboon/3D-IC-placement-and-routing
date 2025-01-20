@@ -638,6 +638,8 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
 
+    printf("HPWL: %f, HBT: %f\n", wireLength, score_of_z);
+
     return totalScore;
 }
 
@@ -827,7 +829,10 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
     
     for(int j = 0; j < numInstances; j++)
+    {
         instances[j].density = returnDensity(instances[j].z, densityMap);
+    }
+        
         
     zScore = TSVofNet(rawNets, false, instances[0], 0);
 
@@ -866,21 +871,21 @@ void returnDensityMap(double *densityMap)
     }
 }
 
-void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, double &lastAk, double &optParam, 
+void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, int iteration, double *optParam, 
                 vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
                 double &penaltyWeight, double *densityMap)
 {
     double stepSize = 0.0;
-    double newParam =  (1+ sqrt( 4.0 * lastAk * lastAk + 1.0) ) / 2;
+    double newParam =  (1+ sqrt( 4.0 * *optParam * *optParam + 1.0) ) / 2;
     int numInstances = instances.size();
 
     double *newRefSolution = new double [numInstances *3] {0.0};
     double *tmpGra = new double [numInstances *3] {0.0};
     double *tmpSolution = new double [numInstances *3] {0.0};
+    double param = ((*optParam-1) / newParam);
+
 
     memcpy(tmpGra, nowGra, numInstances * 3 * sizeof(double));
-
-    
 
     for(int a = 0; a < numInstances; a++)
     {
@@ -889,10 +894,15 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, d
         tmpSolution[a*3 + 2] = instances[a].z;
 
         newRefSolution[a*3] = instances[a].refX;
-
+        newRefSolution[a*3 + 1] = instances[a].refY;
+        newRefSolution[a*3 + 2] = instances[a].refZ;    
     }
 
-    optParam = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
+    if(iteration == 0)
+        stepSize = 1;
+    else
+        stepSize = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
+    
 
     while (true)
     {
@@ -902,18 +912,17 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, d
             instances[i].y = instances[i].refY - tmpGra[i * 3 + 1] * stepSize;
             instances[i].z = instances[i].refZ - tmpGra[i * 3 + 2] * stepSize;
 
-            double param = ((optParam-1) / newParam);
-
             newRefSolution[ i*3 ] = instances[i].x + (instances[i].x - tmpSolution[i*3]) * param;
             newRefSolution[ i*3 +1 ] = instances[i].y + (instances[i].y - tmpSolution[i*3]) * param;
             newRefSolution[ i*3 +2 ] = instances[i].z + (instances[i].z - tmpSolution[i*3]) * param;
-
+            
+            glodenSearch(instances[i], binInfo);
         }
 
         updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 
         double newLip = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
-        double newStepsize = 1 / newLip;
+        double newStepsize = 1/newLip;
         
         if( 0.95 * stepSize <= newStepsize)
         {
@@ -931,7 +940,7 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, d
         instances[i].refZ = newRefSolution[i*3 + 2 ];
     }
 
-    optParam = newParam;
+    *optParam = newParam;
     
 }
 
@@ -944,7 +953,7 @@ double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *la
     for (int i = 0; i < numOfStdCell*3; i++)
     {
         numerator += (nowRefSolution[i] - lastRefSolution[i]) * (nowRefSolution[i] - lastRefSolution[i]);
-        denomenator += (nowGra[i] - lastGra[i]);
+        denomenator += (nowGra[i] - lastGra[i]) * (nowGra[i] - lastGra[i]);
     }
 
     return sqrt(numerator)/sqrt(denomenator);

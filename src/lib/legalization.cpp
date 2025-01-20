@@ -391,7 +391,6 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
         
         for(int inst = 0; inst < numStdcellInRow; inst++)
         {
-            cout << inst << endl;
             int cellID = instMap[ sortArray[inst] ];
             int nowCellFinalX = instances[cellID].finalX;
             int nowCellWidth = instances[cellID].finalWidth;
@@ -423,11 +422,7 @@ void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vec
                 if( !haveChanged )
                 {
                     int cellCoor = find( diePlacementState[row].begin(), diePlacementState[row].end(), cellID) - diePlacementState[row].begin();
-                    // if (cellID = 10206)
-                    // {
-                    //     cout << row << endl;
-                    // }
-
+        
                     while ( !haveChanged && lookUp > 0 )
                     {   
                         if( cellWidth[lookUp] + nowCellWidth*2 < upperRightX )

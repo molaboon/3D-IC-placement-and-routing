@@ -142,16 +142,18 @@ int main(int argc, char *argv[]){
 			}
 			else
 			{
-				double lastAk = 1.0;
+				double stepSize = 1.0;
 				double optParam = 1.0;
+				penaltyWeight = 0.01;
 
 				for(int j = 0; j < totalIter; j++)
-				{
-					clacBktrk(instances, lastGra, nowGra, lastAk, optParam, rawnet, gamma, binInfo, lastCG, nowCG, penaltyWeight, densityMap);
-					writeVisualFile(instances, qqq, top_die);
+				{	
+					clacBktrk(instances, lastGra, nowGra, j, &optParam, rawnet, gamma, binInfo, lastCG, nowCG, penaltyWeight, densityMap);
+					writeVisualFile(instances, j, top_die);
+					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 					
-					if(penaltyWeight < 200.0)
-						penaltyWeight *= 1.01;
+					if(penaltyWeight < 100.0)
+						penaltyWeight *= 2;
 				}
 				
 			}
@@ -160,8 +162,8 @@ int main(int argc, char *argv[]){
 
 		endTime = clock();
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
-		// newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
-		printf("Time: %fs, iter: %d\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq );
+		newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
+		printf("Time: %fs, iter: %d, pw: %f\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq , penaltyWeight);
 
 	}
 

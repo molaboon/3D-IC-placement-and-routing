@@ -48,7 +48,7 @@ void updateGra(vector <RawNet> &rawNet, double gamma, vector<instance> &instance
 
 void returnDensityMap(double *densityMap);
 
-void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, double &lastAk, double &optParam, 
+void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, int iter, double *optParam, 
                 vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
                 double &penaltyWeight, double *densityMap);
             
