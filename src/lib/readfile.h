@@ -104,6 +104,10 @@ typedef struct _Instance{
     double gra_z = 0.0;
     double gra_d = 0.0;
 
+    double refX = 0.0;
+    double refY = 0.0;
+    double refZ = 0.0;
+
     vector<int> connectedNet;
 
 }instance;

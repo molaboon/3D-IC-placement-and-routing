@@ -110,6 +110,9 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
         instances[i].tmpX = instances[i].x;
         instances[i].tmpY = instances[i].y;
         instances[i].tmpZ = instances[i].z;
+        instances[i].refX = X;
+        instances[i].refY = Y;
+        instances[i].refZ = Z;
     }
 }
 

@@ -856,11 +856,6 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     free(originSecondLayer);
 }
 
-void clacBktrk( vector <instance> instances, double *lastGra, double *nowCG)
-{
-
-}
-
 void returnDensityMap(double *densityMap)
 {
     double z = 0.0;
@@ -870,4 +865,49 @@ void returnDensityMap(double *densityMap)
         densityMap[i] = returnDensityInDensityMap(z, 0.0);
         z += 1e-5;
     }
+}
+
+void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, double &lastAk, double *lastSolution)
+{
+    double stepSize = 0.0;
+    double newAk =  (1+ sqrt( 4.0 * lastAk * lastAk + 1.0) ) / 2;
+    int numInstances = instances.size();
+
+    double *lastRefSolution = new double [numInstances *3] {0.0};
+    double *newRefSolution = new double [numInstances *3] {0.0};
+    double *tmpGra = new double [numInstances *3] {0.0};
+    double *tmpSolution = new double [numInstances *3] {0.0};
+
+    memcpy(tmpGra, nowGra, numInstances * 3 * sizeof(double));
+
+    while (true)
+    {
+        for(int i = 0; i < numInstances; i++)
+        {
+            instances[i].x = instances[i].refX + tmpGra[i * 3] * stepSize;
+            instances[i].y = instances[i].refY + tmpGra[i * 3 + 1] * stepSize;
+            instances[i].z = instances[i].refZ + tmpGra[i * 3 + 2] * stepSize;
+
+            newRefSolution[ i*3 ] = instances[i].x;
+        }
+    }
+    
+
+    
+}
+
+
+double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell)
+{
+    double denomenator = 0.0;
+    double numerator = 0.0;
+    
+    for (int i = 0; i < numOfStdCell*3; i++)
+    {
+        numerator += (nowRefSolution[i] - lastRefSolution[i]) * (nowRefSolution[i] - lastRefSolution[i]);
+        denomenator += (nowGra[i] - lastGra[i]);
+    }
+
+    return sqrt(numerator)/sqrt(denomenator);
+
 }

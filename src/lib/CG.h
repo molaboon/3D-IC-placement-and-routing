@@ -48,5 +48,5 @@ void updateGra(vector <RawNet> &rawNet, double gamma, vector<instance> &instance
 
 void returnDensityMap(double *densityMap);
 // double infaltionRatio(instance instance, double routingOverflow);
-
+double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell);
 
