@@ -873,56 +873,64 @@ void returnDensityMap(double *densityMap)
 
 void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, int iteration, double *optParam, 
                 vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
-                double &penaltyWeight, double *densityMap)
+                double &penaltyWeight, double *densityMap, double *lastRefSoltion, double *curRefSoltion)
 {
     double stepSize = 0.0;
     double newParam =  (1+ sqrt( 4.0 * *optParam * *optParam + 1.0) ) / 2;
     int numInstances = instances.size();
 
+    double *curRefGra = new double [numInstances *3] {0.0};
+    double *curUk = new double [numInstances *3] {0.0};
     double *newRefSolution = new double [numInstances *3] {0.0};
-    double *tmpGra = new double [numInstances *3] {0.0};
-    double *tmpSolution = new double [numInstances *3] {0.0};
     double param = ((*optParam-1) / newParam);
 
 
-    memcpy(tmpGra, nowGra, numInstances * 3 * sizeof(double));
+    memcpy(curRefGra, nowGra, numInstances * 3 * sizeof(double));
 
-    for(int a = 0; a < numInstances; a++)
+    for(int i = 0; i < numInstances; i++)
     {
-        tmpSolution[a*3] = instances[a].x;
-        tmpSolution[a*3 + 1] = instances[a].y;
-        tmpSolution[a*3 + 2] = instances[a].z;
+        curUk[i*3] = instances[i].x;
+        curUk[i*3 + 1] = instances[i].y;
+        curUk[i*3 + 2] = instances[i].z;
 
-        newRefSolution[a*3] = instances[a].refX;
-        newRefSolution[a*3 + 1] = instances[a].refY;
-        newRefSolution[a*3 + 2] = instances[a].refZ;    
+        curRefSoltion[i*3] = instances[i].refX;
+        curRefSoltion[i*3+1] = instances[i].refY;
+        curRefSoltion[i*3+2] = instances[i].refZ;
     }
 
     if(iteration == 0)
+    {
         stepSize = 1;
+        memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(double));
+    }
     else
-        stepSize = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
+        stepSize = calcLipschitz(lastRefSoltion, curRefSoltion, lastGra, nowGra, numInstances);
     
 
     while (true)
     {
         for(int i = 0; i < numInstances; i++)
         {
-            instances[i].x = instances[i].refX - tmpGra[i * 3] * stepSize;
-            instances[i].y = instances[i].refY - tmpGra[i * 3 + 1] * stepSize;
-            instances[i].z = instances[i].refZ - tmpGra[i * 3 + 2] * stepSize;
+            double refX, refY, refZ;
+            refX = curRefSoltion[i * 3] - curRefGra[i * 3] * stepSize;
+            refY = curRefSoltion[i * 3 + 1] - curRefGra[i * 3 + 1] * stepSize;
+            refZ = curRefSoltion[i * 3 + 2] - curRefGra[i * 3 + 2] * stepSize;
 
-            newRefSolution[ i*3 ] = instances[i].x + (instances[i].x - tmpSolution[i*3]) * param;
-            newRefSolution[ i*3 +1 ] = instances[i].y + (instances[i].y - tmpSolution[i*3]) * param;
-            newRefSolution[ i*3 +2 ] = instances[i].z + (instances[i].z - tmpSolution[i*3]) * param;
-            
+            instances[i].x = refX + (refX - curUk[i*3]) * param;
+            instances[i].y = refY + (refY - curUk[i*3]) * param;
+            instances[i].z = refZ + (refZ - curUk[i*3]) * param;
+
             glodenSearch(instances[i], binInfo);
+
+            newRefSolution[i*3] = instances[i].x;
+            newRefSolution[i*3+1] = instances[i].y;
+            newRefSolution[i*3+2] = instances[i].z;
+            
         }
 
         updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 
-        double newLip = calcLipschitz(tmpSolution, newRefSolution, lastGra, nowGra, numInstances);
-        double newStepsize = 1/newLip;
+        double newStepsize = calcLipschitz(curRefSoltion, newRefSolution, curRefGra, nowGra, numInstances);
         
         if( 0.95 * stepSize <= newStepsize)
         {
@@ -933,15 +941,52 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
         stepSize = newStepsize;
     }
 
+    //Net's Method
+
     for(int i = 0; i < numInstances; i++)
-    {
-        instances[i].refX = newRefSolution[i*3];
-        instances[i].refY = newRefSolution[i*3 + 1];
-        instances[i].refZ = newRefSolution[i*3 + 2 ];
+    {   
+        instances[i].x = curRefSoltion[i*3] - curRefGra[i*3] * stepSize;
+        instances[i].y = curRefSoltion[i*3+1] - curRefGra[i*3+1] * stepSize;
+        instances[i].z = curRefSoltion[i*3+2] - curRefGra[i*3+2] * stepSize;
+
+        glodenSearch(instances[i], binInfo);
+
+        instances[i].refX = instances[i].x + ( instances[i].x - curUk[i*3]) * param;
+        instances[i].refY = instances[i].y + ( instances[i].y - curUk[i*3]) * param;
+        instances[i].refZ = instances[i].z + ( instances[i].z - curUk[i*3]) * param;
+
+        instances[i].x = instances[i].refX;
+        instances[i].y = instances[i].refY;
+        instances[i].z = instances[i].refZ;
+
+        glodenSearch(instances[i], binInfo);
+
+        instances[i].refX = instances[i].x;
+        instances[i].refY = instances[i].y;
+        instances[i].refZ = instances[i].z;
     }
 
-    *optParam = newParam;
+    updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+
+    for(int i = 0; i < numInstances; i++)
+    {
+        instances[i].x = curRefSoltion[i*3] - curRefGra[i*3] * stepSize;
+        instances[i].y = curRefSoltion[i*3+1] - curRefGra[i*3+1] * stepSize;
+        instances[i].z = curRefSoltion[i*3+2] - curRefGra[i*3+2] * stepSize;
+
+        glodenSearch(instances[i], binInfo);
+
+    }
     
+    memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(double));
+    memcpy(lastGra, curRefGra, numInstances * 3 * sizeof(double));
+
+    *optParam = newParam;
+
+    free(curUk);
+    free(curRefGra);
+    free(newRefSolution);
+
 }
 
 

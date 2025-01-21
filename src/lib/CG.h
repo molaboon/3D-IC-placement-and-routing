@@ -50,7 +50,7 @@ void returnDensityMap(double *densityMap);
 
 void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, int iter, double *optParam, 
                 vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
-                double &penaltyWeight, double *densityMap);
+                double &penaltyWeight, double *densityMap, double *curRefSoltion, double *newRefSolution);
             
 double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell);
 

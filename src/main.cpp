@@ -20,7 +20,7 @@ using std::vector;
 #define dimention 3
 #define macroPart 1
 #define stdCellPart 1
-#define useEplace 1
+#define useEplace 0
 
 int main(int argc, char *argv[]){
 	
@@ -136,24 +136,25 @@ int main(int argc, char *argv[]){
 					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 					
-					if(penaltyWeight < 500.0)
-						penaltyWeight *= 1.01;
+					// if(penaltyWeight < 500.0)
+						// penaltyWeight *= 1.01;
 				}
 			}
 			else
 			{
-				double stepSize = 1.0;
-				double optParam = 1.0;
-				penaltyWeight = 0.01;
 
+				double optParam = 1.0;
+				double *curRefSoltion = new double [numStdCells *3] {0.0};
+    			double *newRefSolution = new double [numStdCells *3] {0.0};
+    
 				for(int j = 0; j < totalIter; j++)
 				{	
-					clacBktrk(instances, lastGra, nowGra, j, &optParam, rawnet, gamma, binInfo, lastCG, nowCG, penaltyWeight, densityMap);
+					clacBktrk(instances, lastGra, nowGra, j, &optParam, rawnet, gamma, binInfo, lastCG, nowCG, 
+							  penaltyWeight, densityMap, curRefSoltion, newRefSolution);
 					writeVisualFile(instances, j, top_die);
-					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 					
-					if(penaltyWeight < 100.0)
-						penaltyWeight *= 2;
+					// if(penaltyWeight < 50.0)
+						// penaltyWeight *= 1.1;
 				}
 				
 			}
