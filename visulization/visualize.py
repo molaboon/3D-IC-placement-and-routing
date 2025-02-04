@@ -31,8 +31,13 @@ def plot_rectangle(ax, x1, y1, x2, y2, c, style, if_fill):
 
 def plot_result(instances, iter, die_width, die_height, plot_block_area, die):
 
-    width = die_width
-    height = die_height
+    if die_width > die_height:
+        width = die_width
+        height = die_width
+    else:
+        width = die_height
+        height = die_height
+
     fig, ax = plt.subplots(1, 1, figsize = (20,20))
     ax.plot( width, height, 'g.')
     ax.plot(0, 0, 'g.')
@@ -148,14 +153,13 @@ def gif(iter):
     clip.write_videofile('output_video.mp4', codec='libx264')
 
 def main():
-    iteration = 73
-    i = 81
-    for i in range(iteration):       
+    iteration = [2]
+    for i in (iteration):       
         instances, die_width, die_height = read_data("visulization/data/{}.txt".format(i))
         plot_result(instances, i, die_width, die_height, 0, 0)
         plot_result(instances, "top{}".format(i), die_width, die_height, 0, 1)
 
-    gif(iteration)
+    # gif(iteration)
 
 main()
 

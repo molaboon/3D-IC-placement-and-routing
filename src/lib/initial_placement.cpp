@@ -22,12 +22,20 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance, vector <instan
 
     int size = instances.size();
     int totalX = 999;
+    int totalY = 999;
 
     for(int i = 0; i < size; i++)
+    {   
         if ( (int) instances[i].width < totalX )
             totalX = (int) instances[i].width;
-    
+
+        if ( (int) instances[i].height < totalY )
+            totalY = (int) instances[i].height;
+        
+    }        
+        
     binInfo->binWidth = (double) totalX;
+    binInfo->binHeight = (double) totalY;
     binInfo->binXnum = floor( binInfo->dieWidth / binInfo->binWidth );
     binInfo->binYnum = floor( binInfo->dieHeight / binInfo->binHeight );
 

@@ -54,3 +54,4 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
             
 double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell);
 
+void refPosition(vector <instance> &instances);

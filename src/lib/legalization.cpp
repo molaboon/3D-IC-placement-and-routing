@@ -891,56 +891,30 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
             btmDieMacro.push_back(inst);
     }
 
-    int topX = 0;
-    int topY = 0;
-    int maxTopX = 0;
-    int btmX = 0;
-    int btmY = 0;
-    int maxBtmX = 0;
+    macros[ topDieMacro[0] ].finalY = 0;
+    macros[ btmDieMacro[0] ].finalY = 0;
 
-    for(int inst = 0; inst < 3; inst++)
-    {
-        if(topY + macros[ topDieMacro[inst] ].finalHeight > topDie.upperRightY)
-        {
-            topY = 0;
-            topX = maxTopX;
-        }
+    macros[ topDieMacro[0] ].finalX = 0;
+    macros[ btmDieMacro[0] ].finalX = 0;
+    
+    macros[ topDieMacro[1] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 100;
+    macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight;
 
-        if(btmY + macros[ btmDieMacro[inst] ].finalHeight > btmDie.upperRightY)
-        {
-            btmY = 0;
-            btmX = maxBtmX;
-        }
+    macros[ topDieMacro[1] ].finalX = 0;
+    macros[ btmDieMacro[1] ].finalX = 0;
+    
+    macros[topDieMacro[2]].rotate = 90;
+    macros[topDieMacro[2]].finalWidth = (int) macros[topDieMacro[2]].height;
+    macros[topDieMacro[2]].finalHeight = (int) macros[topDieMacro[2]].width;
 
-        if(topX + macros[ topDieMacro[inst] ].finalWidth > topDie.upperRightX)
-        {
-            macros[topDieMacro[inst]].rotate = 90;
-            macros[topDieMacro[inst]].finalWidth = (int) macros[topDieMacro[inst]].height;
-            macros[topDieMacro[inst]].finalHeight = (int) macros[topDieMacro[inst]].width;
-        }
+    macros[btmDieMacro[2]].rotate = 90;
+    macros[btmDieMacro[2]].finalWidth = (int) macros[btmDieMacro[2]].height;
+    macros[btmDieMacro[2]].finalHeight = (int) macros[btmDieMacro[2]].width;
+    
+    macros[ topDieMacro[2] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 5000;
+    macros[ btmDieMacro[2] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 5000;
 
-        if(btmX + macros[ btmDieMacro[inst] ].finalWidth > topDie.upperRightX)
-        {
-            macros[btmDieMacro[inst]].rotate = 90;
-            macros[btmDieMacro[inst]].finalWidth = (int) macros[btmDieMacro[inst]].height;
-            macros[btmDieMacro[inst]].finalHeight = (int) macros[btmDieMacro[inst]].width;
-        }
-        
-        macros[ topDieMacro[inst] ].finalY = topY;
-        macros[ btmDieMacro[inst] ].finalY = btmY;
+    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
+    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
 
-        macros[ topDieMacro[inst] ].finalX = topX;
-        macros[ btmDieMacro[inst] ].finalX = btmX;
-        
-        topY += macros[ topDieMacro[inst] ].finalHeight +33;
-        btmY += macros[ btmDieMacro[inst] ].finalHeight +33;
-
-        
-        if(macros[ topDieMacro[inst] ].finalWidth > maxTopX)
-            maxTopX = macros[ topDieMacro[inst] ].finalWidth;
-        
-        if(macros[ btmDieMacro[inst] ].finalWidth > maxBtmX)
-            maxBtmX = macros[ btmDieMacro[inst] ].finalWidth;
-
-    }
 }

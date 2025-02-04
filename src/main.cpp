@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 1
+#define stdCellPart 0
 #define useEplace 0
 
 int main(int argc, char *argv[]){
@@ -80,6 +80,7 @@ int main(int argc, char *argv[]){
 		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
 		macroLegalization(macros, top_die, bottom_die);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		writeVisualFile(macros, 2, top_die);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}
 
@@ -107,17 +108,11 @@ int main(int argc, char *argv[]){
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
 		
-		/*	std. cell Coarsening	*/
-		// cout << "here" <<endl;
-
-		// coarsen(rawnet, instances);
-
 		/*	Refinement(CG)	*/
 
 		startTime = clock();
-
 		
-		for(int i = 0; i < 1; i++)
+		for(int i = 0; i < 100; i++)
 		{
 			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
 			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
@@ -128,17 +123,24 @@ int main(int argc, char *argv[]){
 				for(int j = 0; j < totalIter; j++)
 				{
 					qqq++;
-					cout << qqq << endl;
 
 					newSolution(instances, nowCG, binInfo);
 					updatePinsInMacroInfo( macros, pinsInMacros, instances);
 					writeVisualFile(instances, qqq, top_die);
+
+					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
+					
+					if( newScore > totalScore)
+						break;
+
 					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 					
-					// if(penaltyWeight < 500.0)
-						// penaltyWeight *= 1.01;
 				}
+				
+				refPosition(instances);
+				if(penaltyWeight < 500.0)
+					penaltyWeight *= 2;
 			}
 			else
 			{
@@ -152,19 +154,14 @@ int main(int argc, char *argv[]){
 					clacBktrk(instances, lastGra, nowGra, j, &optParam, rawnet, gamma, binInfo, lastCG, nowCG, 
 							  penaltyWeight, densityMap, curRefSoltion, newRefSolution);
 					writeVisualFile(instances, j, top_die);
-					
-					// if(penaltyWeight < 50.0)
-						// penaltyWeight *= 1.1;
 				}
-				
 			}
-			
 		}
 
 		endTime = clock();
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
-		newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
-		printf("Time: %fs, iter: %d, pw: %f\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq , penaltyWeight);
+		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap);
+		printf("Time: %fs, iter: %d, score: %f\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq , newScore);
 
 	}
 

@@ -638,7 +638,8 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
 
-    printf("HPWL: %f, HBT: %f\n", wireLength, score_of_z);
+    if(penaltyWeight == 1)
+        printf("HPWL: %f, HBT: %f\n", wireLength, score_of_z);
 
     return totalScore;
 }
@@ -692,32 +693,7 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     //     }
     // }
 
-    // double beta = 0.0, norm = 0.0;
-    // double beta2 = 0.0, norm2 = 0.0;
-    // double beta3 = 0.0, norm3 = 0.0;
-    // for(int index = 0; index < Numinstance; index++)
-    // {
-    //     norm += fabs(lastGra[index * Dimensions]);
-    //     norm2 += fabs(lastGra[index* Dimensions+1]);
-    //     norm3 += fabs(lastGra[index* Dimensions+2]);
-
-    //     beta += nowGra[index * Dimensions] * ( nowGra[index * Dimensions] - lastGra[index * Dimensions]);
-    //     beta2 += nowGra[index * Dimensions+1] * ( nowGra[index * Dimensions+1] - lastGra[index * Dimensions+1]);
-    //     beta3 += nowGra[index * Dimensions+2] * ( nowGra[index * Dimensions+2] - lastGra[index * Dimensions+2]);
         
-    // }
-    // beta = beta/ (norm * norm);
-    // beta2 = beta2 / (norm2 * norm2);
-    // beta3 = beta3 / (norm3 * norm3);
-
-    // for(int index = 0; index < Numinstance; index++)
-    // {
-    //     nowCG[index* Dimensions] = (-nowGra[index* Dimensions]) + (beta * lastCG[index* Dimensions]);
-    //     nowCG[index* Dimensions + 1] = (-nowGra[index* Dimensions+1]) + (beta2 * lastCG[index* Dimensions+1]);
-    //     nowCG[index* Dimensions + 2] = (-nowGra[index* Dimensions+2]) + (beta3 * lastCG[index* Dimensions+2]);
-    // }
-        
-
     double beta = 0.0, norm = 0.0;
     for(int index = 0; index < Numinstance * Dimensions; index++)
     {
@@ -773,17 +749,6 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
 {
     double score = 0.0, wireLength = 0.0, weight = 0.3;
-
-    // if (iter < 5)
-    //     weight = 1.0;
-    // else if (iter > 5 && iter < 15)
-    //     weight = 0.8;
-    // else if (iter > 15 && iter < 25)
-    //     weight = 0.6;    
-    // else if (iter > 25 && iter < 35)
-    //     weight = 0.4;
-    // else
-    //     weight = 0.2;
     
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
@@ -791,17 +756,21 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
             continue;
         
         double tmp[Dimensions] = {0.0};
-        double Alpha, spaceX, spaceY, spaceZ;
+        double Alpha = 1, spaceX, spaceY, spaceZ;
 
         tmp[0] = nowCG[index * Dimensions];
-        tmp[1] = nowCG[index * Dimensions + 1];
-        tmp[2] = nowCG[index * Dimensions + 2];
+        tmp[1] = nowCG[index * Dimensions + 1] ;
+        tmp[2] = nowCG[index * Dimensions + 2] ;
 
-        Alpha = returnAlpha(tmp);
+        // Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 5;
-        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 5;
-        spaceZ = tmp[2] * Alpha * weight ;
+        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth / fabs(tmp[0]);
+        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight / fabs(tmp[1]);
+        spaceZ = tmp[2] * Alpha * weight * 0.001 / fabs(tmp[2]);
+
+        instances[index].refX = instances[index].x;
+        instances[index].refY = instances[index].y;
+        instances[index].refZ = instances[index].z;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
@@ -1002,5 +971,16 @@ double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *la
     }
 
     return sqrt(numerator)/sqrt(denomenator);
+}
 
+void refPosition(vector <instance> &instances)
+{
+    int size = instances.size();
+
+    for(int i = 0; i < size; i++)
+    {
+        instances[i].x = instances[i].refX;
+        instances[i].y = instances[i].refY;
+        instances[i].z = instances[i].refZ;
+    }
 }

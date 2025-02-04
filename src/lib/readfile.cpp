@@ -208,6 +208,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
                 tpins.inflateHeight = 0.0;
                 tpins.canPass = false;
                 
+                
                 pins.emplace_back(tpins);
             }
 
