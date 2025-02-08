@@ -408,7 +408,7 @@ void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer,
 
             int bin_index = (length[0] + x) + (row * (length[2] + y));
 
-            if(bin_index >= binInfo.binXnum * binInfo.binYnum)
+            if(bin_index >= binInfo.binXnum * binInfo.binYnum || bin_index < 0)
                 cout << instance.instIndex << endl;
 
             if(needMinus)
@@ -671,29 +671,7 @@ void CGandGraPreprocessing( vector <instance> &instances, double *nowGra, double
 }
 
 void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration)
-{
-    
-    // for(int index = 0; index < Numinstance; index++)
-    // {
-    //     double beta = 0.0, norm = 0.0;
-    //     for(int i = 0; i < Dimensions; i++)
-    //     {
-    //         int a = index * Dimensions + i;
-    //         norm += fabs(lastGra[a]);
-    //         beta += nowGra[a] * ( nowGra[a] - lastGra[a]);
-    //     } 
-            
-    //     norm = norm * norm;
-    //     beta = beta/norm;
-
-    //     for(int i = 0; i < Dimensions; i++)
-    //     {
-    //         int a = index * Dimensions + i;
-    //         nowCG[a] = (-nowGra[a]) + (beta * lastCG[a]);
-    //     }
-    // }
-
-        
+{    
     double beta = 0.0, norm = 0.0;
     for(int index = 0; index < Numinstance * Dimensions; index++)
     {
@@ -762,11 +740,11 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
         tmp[1] = nowCG[index * Dimensions + 1] ;
         tmp[2] = nowCG[index * Dimensions + 2] ;
 
-        // Alpha = returnAlpha(tmp);
+        Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth / fabs(tmp[0]);
-        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight / fabs(tmp[1]);
-        spaceZ = tmp[2] * Alpha * weight * 0.001 / fabs(tmp[2]);
+        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth ;
+        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight ;
+        spaceZ = tmp[2] * Alpha * weight;
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;
