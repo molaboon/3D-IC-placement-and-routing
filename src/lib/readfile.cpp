@@ -206,8 +206,9 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
                 tpins.height = 0.0;
                 tpins.inflateWidth = 0.0;
                 tpins.inflateHeight = 0.0;
+                tpins.numNetConnection = 0;
                 tpins.canPass = false;
-                
+                tpins.connectedNet = tmpNetConnect;
                 
                 pins.emplace_back(tpins);
             }
@@ -227,19 +228,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 }
 
 void printInstanceInfo(int NumInstances, vector <instance> instances){
-    // printf("NumInstances <instanceCount>: %d\n", NumInstances);
-    // for(int i = 0; i < NumInstances; i++){
-    //     printf("\tInst <Name> <lib> <w> <h> <x> <y>: %s %s %lf %lf %lf %lf %lf\n", 
-    //     instances[i].instName, 
-    //     instances[i].libCellName, 
-    //     instances[i].width, 
-    //     instances[i].height,
-    //     instances[i].x,
-    //     instances[i].y,
-    //     instances[i].z
-    //     );
-    // }
-    // printf("\n");
+    //
 }
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro, vector < vector<instance> > &pinsInMacros)
@@ -310,6 +299,9 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
                 numStdCellConnectMacro[ macroIndex ] += temp.numPins;
                 // temp_connection[pin] = ( &instances[atoi(current_libCellName)-1] );
                 temp_connection[pin] = (&pinsInMacros[macroIndex][atoi(current_pin)-1]);
+                int nn = pinsInMacros[macroIndex][atoi(current_pin)-1].numNetConnection;
+                pinsInMacros[macroIndex][atoi(current_pin)-1].connectedNet[nn] = i;
+                pinsInMacros[macroIndex][atoi(current_pin)-1].numNetConnection ++;
 
                 if(numMacro > 1) 
                     haveMacro = true;
@@ -337,7 +329,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
         }
     }
 
-    // copy the connectedNet array from instances to macros
+    // copy the connectedNet array from "instances" to "macros"
 
     for(int i = 0; i < macros.size(); i++)
     {
@@ -360,15 +352,6 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 }
 
 void printNetInfo(int NumNets, vector <RawNet> rawnet){
-    printf("\nNumNets <netCount>: %d\n", NumNets);
-    for(int i = 0; i < NumNets; i++){
-        // printf("\tNet <netName> <numPins>: %s %d\n", rawnet[i].netName, rawnet[i].numPins);
-        for(int j = 0; j < rawnet[i].numPins; j++){
-            printf("\t\t<instance>: %lf %lf %lf \n",  rawnet[i].Connection[j]->x, rawnet[i].Connection[j]->y, rawnet[i].Connection[j]->z);
-        }
-        printf("\n");
-    }
-    printf("\n");
 }
 
 void returnDensityMap(map <double, double> *densityMap)

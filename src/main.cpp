@@ -19,7 +19,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 #define useEplace 0
 
 int main(int argc, char *argv[]){
@@ -80,6 +80,8 @@ int main(int argc, char *argv[]){
 		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
 		macroLegalization(macros, top_die, bottom_die);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		macroRotate(macros, pinsInMacros, rawnet, instances);
+
 		writeVisualFile(macros, 2, top_die);
 		// macroPartition( macros, netsOfMacros, top_die);
 	}

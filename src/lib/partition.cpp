@@ -97,11 +97,6 @@ int returnCut(vector <RawNet> &netsOfMacros)
     return cut;
 }
 
-void macroRotation(vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie)
-{
-    
-}
-
 void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter, double *densityMap)
 {
     gridInfo macroBinInfo;
@@ -153,7 +148,7 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 
     cell2BestLayer(macros, topDie, btmDie);
 
-    macroPlaceAndRotate(macros, topDie, btmDie);    
+    macroPlace(macros, topDie, btmDie);
 }
 
 void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros, vector<instance> &instances)

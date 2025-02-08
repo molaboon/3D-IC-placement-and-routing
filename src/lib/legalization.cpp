@@ -866,7 +866,7 @@ void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet
     fclose(output);
 }
 
-void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
+void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
 {
     // int topDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
     // int btmDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
@@ -917,4 +917,66 @@ void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
     macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
 
+}
+
+void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> stdCells)
+{
+
+    // calculate the grade of the corners in each macro
+    // according to the grade, we rotate the heighest grade of corner of macro to the center 
+
+    int numOfmacros = macros.size();
+
+    for(int i = 0; i < numOfmacros; i++)
+    {
+        int gradeOfCorners[4] = {0};
+        int numOfPinsInMacros = pinsInMacros[i].size();
+        int nowMacroIndex = macros[i].instIndex;
+
+        for(int j = 0; j < numOfPinsInMacros; j++)
+        {
+            int nowPinx = pinsInMacros[i][j].finalX;
+            int nowPiny = pinsInMacros[i][j].finalY;
+            int lineX = (macros[i].finalX + macros[i].finalWidth) / 2;
+            int lineY = (macros[i].finalY + macros[i].height) / 2;
+            int gradeIndex = 0;
+
+            if(nowPinx < lineX && nowPiny < lineY)
+                gradeIndex = 0;
+            else if(nowPinx > lineX && nowPiny < lineY)
+                gradeIndex = 1;
+            else if(nowPinx < lineX && nowPiny > lineY)
+                gradeIndex = 2;
+            else
+                gradeIndex = 3;
+
+            for(int k = 0; k < pinsInMacros[i][j].numNetConnection; k++)
+            {
+                int netIndex = pinsInMacros[i][j].connectedNet[k];
+                
+                for(int l = 0; l < rawnets[netIndex].numPins; l++)
+                {
+                    int instIndex = rawnets[netIndex].Connection[l]->instIndex;
+                    int numNets = stdCells[instIndex].numNetConnection;
+                    
+                    for(int m = 0; m < numNets; m++)
+                    {
+                        for(int n = 0; n < rawnets[ stdCells[instIndex].connectedNet[m] ].numPins; n++)
+                        {
+                            int instIndex2 = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->instIndex;
+
+                            if(stdCells[instIndex2].isMacro && stdCells[instIndex2].instIndex != nowMacroIndex)
+                            {
+                                int otherPinx = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalX;
+                                int otherPiny = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalY;
+
+                                gradeOfCorners[gradeIndex] += abs(11000 - nowPinx) + abs(9000 - nowPiny); 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        printf("aa\n");
+    }
 }

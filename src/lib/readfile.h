@@ -71,7 +71,6 @@ typedef struct _Instance{
     bool canPass;
 
     int rotate;
-    int numNetConnection;
     int instIndex = 0;
 
     double x;
@@ -108,6 +107,7 @@ typedef struct _Instance{
     double refY = 0.0;
     double refZ = 0.0;
 
+    int numNetConnection;
     vector<int> connectedNet;
 
 }instance;

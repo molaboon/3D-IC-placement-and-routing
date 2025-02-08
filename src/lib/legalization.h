@@ -24,4 +24,6 @@ void place2nearRow(const Die die, const Die theOtherDie,vector <vector<int>> &di
 
 void writeVisualFile(const vector <instance> instances, int iteration, Die &topDie);
 
-void macroPlaceAndRotate(vector <instance> &macros, Die topDie, Die btmDie);
+void macroPlace(vector <instance> &macros, Die topDie, Die btmDie);
+
+void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> stdCells);
