@@ -79,8 +79,8 @@ int main(int argc, char *argv[]){
 	{
 		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
 		macroLegalization(macros, top_die, bottom_die);
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 		macroRotate(macros, pinsInMacros, rawnet, instances);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		writeVisualFile(macros, 2, top_die);
 		// macroPartition( macros, netsOfMacros, top_die);

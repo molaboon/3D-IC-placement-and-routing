@@ -36,8 +36,11 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
             
             if(instances[i].rotate == 90 || instances[i].rotate == 270)
             {
-                instances[i].finalWidth = (int) instances[i].inflateHeight;
-                instances[i].finalHeight = (int) instances[i].inflateWidth;
+                if(!instances[i].canPass)
+                {
+                    instances[i].finalWidth = (int) instances[i].inflateHeight;
+                    instances[i].finalHeight = (int) instances[i].inflateWidth;
+                }    
             }
             else
             {
@@ -53,8 +56,11 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
         
             if(instances[i].rotate == 90 || instances[i].rotate == 270)
             {
-                instances[i].finalWidth = (int) instances[i].height;
-                instances[i].finalHeight = (int) instances[i].width;
+                if(!instances[i].canPass)
+                {
+                    instances[i].finalWidth = (int) instances[i].height;
+                    instances[i].finalHeight = (int) instances[i].width;
+                }
             }
             else
             {
@@ -294,8 +300,6 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
                 instances[inst].finalY = btmDie.rowHeight * row;
                 btmDieCellsWidth[row] += instances[inst].finalWidth;
             }
-            
-            instances[inst].rotate = 0;
         }
     }
     
