@@ -109,6 +109,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
+		penaltyWeight = 1e-7;
 		
 		/*	Refinement(CG)	*/
 

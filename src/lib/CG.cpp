@@ -736,15 +736,15 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
         double tmp[Dimensions] = {0.0};
         double Alpha = 1, spaceX, spaceY, spaceZ;
 
-        tmp[0] = nowCG[index * Dimensions];
+        tmp[0] = nowCG[index * Dimensions]; 
         tmp[1] = nowCG[index * Dimensions + 1] ;
         tmp[2] = nowCG[index * Dimensions + 2] ;
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth ;
-        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight ;
-        spaceZ = tmp[2] * Alpha * weight;
+        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 5;
+        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 5;
+        spaceZ = tmp[2] * Alpha * weight ;
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;

@@ -898,6 +898,9 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[0] ].finalY = 0;
     macros[ btmDieMacro[0] ].finalY = 0;
 
+    macros[ topDieMacro[0] ].rotate = 180;
+    macros[ btmDieMacro[0] ].rotate = 180;
+    
     macros[ topDieMacro[0] ].finalX = 0;
     macros[ btmDieMacro[0] ].finalX = 0;
     
@@ -906,6 +909,9 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
 
     macros[ topDieMacro[1] ].finalX = 0;
     macros[ btmDieMacro[1] ].finalX = 0;
+
+    macros[ btmDieMacro[1] ].rotate = 180;
+
     
     macros[topDieMacro[2]].rotate = 90;
     macros[topDieMacro[2]].finalWidth = (int) macros[topDieMacro[2]].height;

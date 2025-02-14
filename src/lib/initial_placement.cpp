@@ -101,9 +101,9 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
         else
         {
             minX = 12000;
-            maxX = 22000;
-            minY = 10000;
-            maxY = 17000;
+            maxX = 14000;
+            minY = 8000;
+            maxY = 11000;
         }
         
         double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
