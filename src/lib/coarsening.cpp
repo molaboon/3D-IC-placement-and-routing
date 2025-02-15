@@ -148,13 +148,13 @@ int returnDegree(nodeNets &nodeNets, int netIndex)
     return 0;
 }
 
-double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, double avgArea)
+float returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, float avgArea)
 {
     int firstNodeNumConnect = firstNode.numConnection;
     int secondNodeNumConnect = secondNode.numConnection;
 
-    double Ddegree = 0;
-    double score;
+    float Ddegree = 0;
+    float score;
 
     netConnet *firstNetConnect = firstNode.connection;
 
@@ -172,7 +172,7 @@ double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests
                 {}
                 else
                 {
-                    Ddegree += 1.0 / (double) (tmp - 1);
+                    Ddegree += 1.0 / (float) (tmp - 1);
                 }
             }
 
@@ -378,9 +378,9 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
 {
     int numInstance = nodesForest.size();
     
-    double  bestGrade = 0;
+    float  bestGrade = 0;
 
-    double bestDegree = 0.0;
+    float bestDegree = 0.0;
 
     node *bestChoice1, *bestChoice2;
 
@@ -388,8 +388,8 @@ void bestChoice(vector < node* > &nodesForest, int avgArea, nodeNets &nets, node
     {
         for(int secondNode = firstNode + 1; secondNode < numInstance; secondNode++ )
         {  
-            double degree = 0.0;
-            double tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nets, avgArea);
+            float degree = 0.0;
+            float tmpGrade = returnCoarsenScore( *nodesForest[firstNode], *nodesForest[secondNode], nets, avgArea);
 
             if (tmpGrade > bestGrade)
             {
@@ -447,7 +447,7 @@ void printWhichMerged()
 
 void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
 {
-    double START, END; 
+    float START, END; 
     START = clock();
     
     nodeNets nodeNets;
@@ -457,9 +457,9 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
     int numInstance = instances.size();  
     int instIndex = numInstance;
 
-    double bestGrade = 0.0;
-    double totalArea = 0.0;
-    double avgArea = 0.0; 
+    float bestGrade = 0.0;
+    float totalArea = 0.0;
+    float avgArea = 0.0; 
 
     for(int i = 0; i < numInstance; i++)
         totalArea += instances[i].area;
@@ -473,7 +473,7 @@ void coarsen(vector <RawNet> rawNets, vector<instance> &instances)
     {
         node *newNode = createNode(instIndex);
 
-        avgArea = totalArea / double(numInstance);
+        avgArea = totalArea / float(numInstance);
 
         bestChoice(nodesForest, avgArea, nodeNets, newNode);
 

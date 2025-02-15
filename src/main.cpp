@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 	// start_time = omp_get_wtime();
 	// srand(time(NULL));
 
-	double startTime, endTime;
+	float startTime, endTime;
 	
 	char *inputName = *(argv + 1);
 	int totalIter = atoi(*(argv + 2));
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 	vector <terminal> terminals;											// sotre the position of terminal (for output)
 	vector < vector<instance> > pinsInMacros;
 
-	double *densityMap = new double[ 100001 ]{0};
+	float *densityMap = new float[ 100001 ]{0};
 
 	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, techMenuPtr);	
@@ -94,13 +94,13 @@ int main(int argc, char *argv[]){
 	
 	if (stdCellPart){
 
-		double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
-		double wireLength, newWireLength;
+		float gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+		float wireLength, newWireLength;
 
-		double *lastCG = new double[ numStdCells * 3 ]{0.0};
-		double *nowCG = new double[ numStdCells * 3 ]{0.0};
-		double *lastGra = new double[ numStdCells * 3 ]{0.0};
-		double *nowGra = new double[ numStdCells * 3 ]{0.0};
+		float *lastCG = new float[ numStdCells * 3 ]{0.0};
+		float *nowCG = new float[ numStdCells * 3 ]{0.0};
+		float *lastGra = new float[ numStdCells * 3 ]{0.0};
+		float *nowGra = new float[ numStdCells * 3 ]{0.0};
 
 		int qqq = -1;
 
@@ -148,9 +148,9 @@ int main(int argc, char *argv[]){
 			else
 			{
 
-				double optParam = 1.0;
-				double *curRefSoltion = new double [numStdCells *3] {0.0};
-    			double *newRefSolution = new double [numStdCells *3] {0.0};
+				float optParam = 1.0;
+				float *curRefSoltion = new float [numStdCells *3] {0.0};
+    			float *newRefSolution = new float [numStdCells *3] {0.0};
     
 				for(int j = 0; j < totalIter; j++)
 				{	
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]){
 		endTime = clock();
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
 		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap);
-		printf("Time: %fs, iter: %d, score: %f\n", (endTime - startTime) / (double) CLOCKS_PER_SEC, qqq , newScore);
+		printf("Time: %fs, iter: %d, score: %f\n", (endTime - startTime) / (float) CLOCKS_PER_SEC, qqq , newScore);
 
 	}
 

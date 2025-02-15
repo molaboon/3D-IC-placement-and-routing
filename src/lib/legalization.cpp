@@ -18,13 +18,13 @@ using namespace std;
 
 void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie)
 {
-    double topDieArea = 0.0;
-    double btmDieArea = 0.0;
-    double topDieUtl = 0.0;
-    double btmDieUtl = 0.0;
-    double topDieMaxUtl = 0.0;
-    double btmDieMaxUtl = 0.0;
-    double maxArea = (topDie.upperRightX * topDie.upperRightY);
+    float topDieArea = 0.0;
+    float btmDieArea = 0.0;
+    float topDieUtl = 0.0;
+    float btmDieUtl = 0.0;
+    float topDieMaxUtl = 0.0;
+    float btmDieMaxUtl = 0.0;
+    float maxArea = (topDie.upperRightX * topDie.upperRightY);
 
     int numInstances = instances.size();
 
@@ -75,8 +75,8 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
     topDieUtl = topDieArea / maxArea;
     btmDieUtl = btmDieArea / maxArea;
 
-    topDieMaxUtl = (double) topDie.MaxUtil / 100.0;
-    btmDieMaxUtl = (double) btmDie.MaxUtil / 100.0;
+    topDieMaxUtl = (float) topDie.MaxUtil / 100.0;
+    btmDieMaxUtl = (float) btmDie.MaxUtil / 100.0;
 
     /* if any die exceed the  max utilizaiton*/
     int whileLoop = 1;
@@ -161,8 +161,8 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
                 {
                     if( instances[j].layer == btmLayer)
                     {
-                        double tmpTopUtl = (topDieArea - instances[inst].area + instances[j].area) / maxArea;
-                        double tmpBtmUtl = (btmDieArea - instances[j].inflateArea + instances[inst].inflateArea) / maxArea;
+                        float tmpTopUtl = (topDieArea - instances[inst].area + instances[j].area) / maxArea;
+                        float tmpBtmUtl = (btmDieArea - instances[j].inflateArea + instances[inst].inflateArea) / maxArea;
 
                         if( tmpTopUtl < topDieMaxUtl && tmpBtmUtl < btmDieMaxUtl)
                         {
@@ -225,7 +225,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     for(int inst = 0; inst < numInstances; inst++)
     {
         int row = 0;
-        double upOrdown = instances[inst].y ;
+        float upOrdown = instances[inst].y ;
  
         if(instances[inst].isMacro )
         {
@@ -271,10 +271,10 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
         {
             if( instances[inst].layer == topLayer)
             {
-                upOrdown = fmod( upOrdown, (double) topDie.rowHeight);
+                upOrdown = fmod( upOrdown, (float) topDie.rowHeight);
                 row = ( (int) instances[inst].y) / topDie.rowHeight ;
 
-                if( upOrdown > (double) topDie.rowHeight / 2.0 )
+                if( upOrdown > (float) topDie.rowHeight / 2.0 )
                     row += 1;
                 
                 if( row >= topDie.repeatCount)
@@ -287,10 +287,10 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
             }
             else
             {
-                upOrdown = fmod( upOrdown, (double) btmDie.rowHeight);
+                upOrdown = fmod( upOrdown, (float) btmDie.rowHeight);
                 row = ((int) instances[inst].y )  / btmDie.rowHeight ;
 
-                if( upOrdown > (double) btmDie.rowHeight / 2.0 )
+                if( upOrdown > (float) btmDie.rowHeight / 2.0 )
                     row += 1;
                 
                 if( row >= btmDie.repeatCount)
@@ -876,24 +876,12 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     // int btmDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
     int numMacro = macros.size();
 
-    vector <int> topDieMacro;
-    vector <int> btmDieMacro;
+    int topDieMacro[3] = {0, 2, 4};
+    int btmDieMacro[3] = {1, 3, 5};
     
     /*  place standard cell to best row */
 
-    for(int inst = 0; inst < numMacro; inst++)
-    {
-        macros[inst].finalX = (int) macros[inst].x - macros[inst].width/2;
-        macros[inst].finalY = (int) macros[inst].y - macros[inst].height/2;
-        macros[inst].finalWidth = (int) macros[inst].width;
-        macros[inst].finalHeight = (int) macros[inst].height;
-        macros[inst].rotate = 0;
-
-        if(macros[inst].layer)
-            topDieMacro.push_back(inst);
-        else
-            btmDieMacro.push_back(inst);
-    }
+    
 
     macros[ topDieMacro[0] ].finalY = 0;
     macros[ btmDieMacro[0] ].finalY = 0;

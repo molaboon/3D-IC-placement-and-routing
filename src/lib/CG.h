@@ -1,57 +1,57 @@
 #include "readfile.h"
 
-double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore);
+float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
 
-double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore);
+float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
 
-double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, double originScore);
+float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore);
 
-double bellShapeFunc(const double z, const double layer);
+float bellShapeFunc(const float z, const float layer);
 
-double RSum(const double z);
+float RSum(const float z);
 
-double returnDensity(const double z, const double *densityMap);
+float returnDensity(const float z, const float *densityMap);
 
-double returnDensityInDensityMap(const double z, const double layer);
+float returnDensityInDensityMap(const float z, const float layer);
 
-double returnPsi(const double z);
+float returnPsi(const float z);
 
-double scoreOfz( vector <RawNet> &rawNet, vector <instance> &instances, gridInfo binInfo, bool zisChanged, double *dnesityMap);
+float scoreOfz( vector <RawNet> &rawNet, vector <instance> &instances, gridInfo binInfo, bool zisChanged, float *dnesityMap);
 
-double *createBins(gridInfo binInfo);
+float *createBins(gridInfo binInfo);
 
-void penaltyInfoOfinstance(const instance instance, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool isGra, bool needMinus, double *graGrade);
+void penaltyInfoOfinstance(const instance instance, const gridInfo binInfo, float *firstLayer, float *secondLayer, bool isGra, bool needMinus, float *graGrade);
 
-void calculatePenaltyArea(double coordinate[], int *length, double *firstLayer, double *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, double *grade);
+void calculatePenaltyArea(float coordinate[], int *length, float *firstLayer, float *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, float *grade);
 
-double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo);
+float scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo);
 
-void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer);
+void gradientX(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float xScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer);
 
-void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer);
+void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float yScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer);
 
-void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer, double *dnesityMap);
+void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float yScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer, float *dnesityMap);
 
-double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances, double *densityMap);
+float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap);
 
-void CGandGraPreprocessing( vector <instance> &instances, double *nowGra, double *nowCG, double *lastGra, double *lastCG);
+void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG);
 
-void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration);
+void conjugateGradient(float *nowGra, float *nowCG, float *lastCG, float *lastGra, int Numinstance, int iteration);
 
-double returnAlpha(double nowCG[]);
+float returnAlpha(float nowCG[]);
 
 void glodenSearch(instance &inst, gridInfo binInfo);
 
-void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo);
+void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo);
 
-void updateGra(vector <RawNet> &rawNet, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG,double &penaltyWeight, double *dnesityMap);
+void updateGra(vector <RawNet> &rawNet, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG,float &penaltyWeight, float *dnesityMap);
 
-void returnDensityMap(double *densityMap);
+void returnDensityMap(float *densityMap);
 
-void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, int iter, double *optParam, 
-                vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
-                double &penaltyWeight, double *densityMap, double *curRefSoltion, double *newRefSolution);
+void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int iter, float *optParam, 
+                vector <RawNet> &rawNets, float gamma, grid_info &binInfo, float *lastCG, float *nowCG, 
+                float &penaltyWeight, float *densityMap, float *curRefSoltion, float *newRefSolution);
             
-double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell);
+float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGra, float *nowGra, int numOfStdCell);
 
 void refPosition(vector <instance> &instances);

@@ -21,8 +21,8 @@ typedef struct _pin{
 
 typedef struct _Libcell{
     char libCellName[LIBCELL_NAME_SIZE]; //MC1,MC2...
-    double libCellSizeX;
-    double libCellSizeY;
+    float libCellSizeX;
+    float libCellSizeY;
     int pinCount;
     bool isMacro;
     vector <Pin> pinarray;
@@ -39,8 +39,8 @@ typedef struct _die{
     int lowerLeftX;
     int lowerLeftY;
     
-    double upperRightX;
-    double upperRightY;
+    float upperRightX;
+    float upperRightY;
     int MaxUtil;
 
     int startX;
@@ -73,9 +73,9 @@ typedef struct _Instance{
     int rotate;
     int instIndex = 0;
 
-    double x;
-	double y;
-	double z;
+    float x;
+	float y;
+	float z;
     
     int layer;
     int finalX;
@@ -83,29 +83,29 @@ typedef struct _Instance{
     int finalWidth;
     int finalHeight;
 
-    double tmpX;
-    double tmpY;
-    double tmpZ;
+    float tmpX;
+    float tmpY;
+    float tmpZ;
 
-    double width;
-    double height;
-    double inflateWidth;
-    double inflateHeight;
-    double area;
-    double inflateArea;
+    float width;
+    float height;
+    float inflateWidth;
+    float inflateHeight;
+    float area;
+    float inflateArea;
 
-    double density = 0.0;
+    float density = 0.0;
 
-    double inflationRatio = 1.0;
+    float inflationRatio = 1.0;
 
-    double gra_x = 0.0;
-    double gra_y = 0.0;
-    double gra_z = 0.0;
-    double gra_d = 0.0;
+    float gra_x = 0.0;
+    float gra_y = 0.0;
+    float gra_z = 0.0;
+    float gra_d = 0.0;
 
-    double refX = 0.0;
-    double refY = 0.0;
-    double refZ = 0.0;
+    float refX = 0.0;
+    float refY = 0.0;
+    float refZ = 0.0;
 
     int numNetConnection;
     vector<int> connectedNet;

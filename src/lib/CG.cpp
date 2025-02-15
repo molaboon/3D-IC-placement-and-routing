@@ -11,7 +11,7 @@
 #define eta 0.1
 #define total_layer 2
 #define alpha 10
-#define h 0.00001
+#define h 1
 #define zChanged 1
 #define znotChanged 0
 #define Dimensions 3
@@ -22,21 +22,21 @@
 using namespace std;
 
 
-double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore)
+float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore)
 {
-    double score = 0.0;
+    float score = 0.0;
 
     if(isGra)
     {
         for(int net = 0; net < graInstance.numNetConnection; net++)
         {
-            double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
-            double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
+            float n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
+            float mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
             int nowNet = 0;
 
             for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
-                double tmpGra = 0.0, tmpOri = 0.0;
+                float tmpGra = 0.0, tmpOri = 0.0;
                 
                 tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpX;
                 tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->x;
@@ -61,14 +61,14 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
 
         for (int net = 0; net < rawNet.size(); net++)
         {
-            double numerator_1 = 0.0;
-            double denominator_1 = 0.0;
-            double numerator_2 = 0.0;
-            double denominator_2 = 0.0;
+            float numerator_1 = 0.0;
+            float denominator_1 = 0.0;
+            float numerator_2 = 0.0;
+            float denominator_2 = 0.0;
 
             for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
             {
-                double tmp = 0.0;
+                float tmp = 0.0;
 
                 tmp = rawNet[net].Connection[instance]->x;
 
@@ -84,20 +84,20 @@ double scoreOfX( const vector <RawNet> &rawNet, const double gamma, const bool i
     return score;
 }
 
-double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool isGra, instance graInstance, double originScore)
+float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore)
 {
-    double score = 0.0;
+    float score = 0.0;
 
     if(isGra)
     {
         for(int net = 0; net < graInstance.numNetConnection; net++)
         {
-            double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
-            double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
+            float n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
+            float mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
             for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
-                double tmpGra = 0.0, tmpOri = 0.0;
+                float tmpGra = 0.0, tmpOri = 0.0;
 
                 tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpY;
                 tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->y;
@@ -121,14 +121,14 @@ double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool i
     {
         for (int net = 0; net < (int) rawNet.size(); net++)
         {
-            double numerator_1 = 0.0;
-            double denominator_1 = 0.0;
-            double numerator_2 = 0.0;
-            double denominator_2 = 0.0;
+            float numerator_1 = 0.0;
+            float denominator_1 = 0.0;
+            float numerator_2 = 0.0;
+            float denominator_2 = 0.0;
 
             for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
             {
-                double tmp = 0.0;
+                float tmp = 0.0;
 
                 tmp = rawNet[net].Connection[instance]->y;
 
@@ -143,9 +143,9 @@ double scoreOfY( const vector <RawNet> &rawNet, const double gamma, const bool i
     return score;
 }
 
-double bellShapeFunc( const double z, const double layer)
+float bellShapeFunc( const float z, const float layer)
 {     
-    double distance = abs(z - layer);
+    float distance = abs(z - layer);
 
     if (distance <= 0.5) 
         return 1.0 - 2.0 * (distance * distance);
@@ -157,34 +157,32 @@ double bellShapeFunc( const double z, const double layer)
         return 0.0;
 }
 
-double RSum( const double z){
+float RSum( const float z){
     
-    double rsum = 0.0 ;
+    float rsum = 0.0 ;
     
-    // double eta = 0.1 ;
+    // float eta = 0.1 ;
 
     for (int i = 0 ; i < total_layer; i++)
     {
-        double l = (double) i;
-        double tmp = bellShapeFunc(z, l);
+        float l = (float) i;
+        float tmp = bellShapeFunc(z, l);
 
         rsum += exp( tmp / eta);
     }
     return rsum;
 }
 
-double returnDensity(const double z, const double *densityMap)
+float returnDensity(const float z, const float *densityMap)
 {
-    int index = 0;
-
-    index = int(z/1e-5);
+    int index = int(z);
 
     return densityMap[index] ;
 }
 
-double returnDensityInDensityMap(const double z, const double layer)
+float returnDensityInDensityMap(const float z, const float layer)
 {
-    double Rz, Bz, BzRSum;
+    float Rz, Bz, BzRSum;
 
     Rz = bellShapeFunc(z, layer);
     Bz = exp(Rz/ eta);
@@ -194,36 +192,36 @@ double returnDensityInDensityMap(const double z, const double layer)
     return Bz;
 }
 
-double returnPsi(double z)
+float returnPsi(float z)
 {
-    double psi = 0;
+    float psi = 0;
     
     for(int i = 0; i < total_layer; i++)
     {
-        double score ;
+        float score ;
 
-        score = (double)i * returnDensityInDensityMap(z, (double)i);
+        score = (float)i * returnDensityInDensityMap(z, (float)i);
         psi += score;
     }
 
     return psi;
 }
 
-double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, double originScore)
+float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore)
 {
-    double score = 0.0;
+    float score = 0.0;
     int size = rawNet.size();
 
     if(isGra)
     {
         for(int net = 0; net < graInstance.numNetConnection; net++)
         {
-            double n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
-            double mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
+            float n_1 = 0.0, d_1 = 0.0, n_2 = 0.0, d_2 = 0.0;
+            float mn_1 = 0.0, md_1 = 0.0, mn_2 = 0.0, md_2 = 0.0;
 
             for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
-                double tmpGra = 0.0, tmpOri = 0.0, tmpGraPsi = 0.0, tmpPsi = 0.0;
+                float tmpGra = 0.0, tmpOri = 0.0, tmpGraPsi = 0.0, tmpPsi = 0.0;
                 
                 tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpZ;
                 tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->z;
@@ -250,14 +248,14 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
     {
         for (int net = 0; net < size; net++)
         {
-            double numerator_1 = 0.0;
-            double denominator_1 = 0.0;
-            double numerator_2 = 0.0;
-            double denominator_2 = 0.0;
+            float numerator_1 = 0.0;
+            float denominator_1 = 0.0;
+            float numerator_2 = 0.0;
+            float denominator_2 = 0.0;
 
             for (int instance = 0 ; instance < rawNet[net].numPins; instance++)
             {
-                double tmpPsi = 0.0;
+                float tmpPsi = 0.0;
 
                 tmpPsi = returnPsi(rawNet[net].Connection[instance]->z);
                
@@ -273,12 +271,12 @@ double TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, doub
     return score;
 }
 
-double scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged, double *densityMap)
+float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged, float *densityMap)
 {
-    double score = 0.0;
+    float score = 0.0;
     int size = instances.size();
-    double *firstLayer = createBins(binInfo);
-	double *secondLayer = createBins(binInfo);
+    float *firstLayer = createBins(binInfo);
+	float *secondLayer = createBins(binInfo);
 
     //  claculate score of penalty
 
@@ -286,7 +284,7 @@ double scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInf
     {
         if(zisChanged)
         {
-            double tmpD = returnDensity(instances[i].z, densityMap);
+            float tmpD = returnDensity(instances[i].z, densityMap);
 
             instances[i].density = tmpD;
         }
@@ -300,24 +298,24 @@ double scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInf
     return score;
 }
 
-double *createBins(gridInfo binInfo)
+float *createBins(gridInfo binInfo)
 {
-    double *bins;
+    float *bins;
 
-    bins = (double *)calloc( binInfo.binXnum * binInfo.binYnum, sizeof( double ) );
+    bins = (float *)calloc( binInfo.binXnum * binInfo.binYnum, sizeof( float ) );
 
     return bins;
 }
 
-void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, double *firstLayer, double *secondLayer, bool isGra, bool needMinus, double *graGrade)
+void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, float *firstLayer, float *secondLayer, bool isGra, bool needMinus, float *graGrade)
 {
     int leftXnum, rightXnum, topYnum, btmYnum;
     int row = (int) binInfo.binXnum;
 
-    double coordinate[4] = { 0.0 };
+    float coordinate[4] = { 0.0 };
     int length[4] = {0};
     
-    double leftX = 0, rightX = 0, topY = 0, btmY = 0;
+    float leftX = 0, rightX = 0, topY = 0, btmY = 0;
 
     if(isGra)
     {
@@ -349,7 +347,7 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, dou
     length[2] = topYnum;
     length[3] = btmYnum;
 
-    double grade[2] = {0.0};
+    float grade[2] = {0.0};
 
     if(needMinus)
         calculatePenaltyArea( coordinate, length, firstLayer, secondLayer, row, instance, binInfo, needMinus, grade);
@@ -368,17 +366,17 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, dou
     // if_length = [if_left_x_num, if_right_x_num, if_top_y_num, if_btm_y_num ]
 }
 
-void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer, double *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, double *grade)
+void calculatePenaltyArea( float coordinate[], int *length, float *firstLayer, float *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, float *grade)
 {   
-    // double routing_overflow;
+    // float routing_overflow;
 
-    double density = instance.density;
-    double firstLayerGrade = 0.0;
-    double secondLayerGrade = 0.0;
+    float density = instance.density;
+    float firstLayerGrade = 0.0;
+    float secondLayerGrade = 0.0;
 
     for (int y = 0; y <= length[3] - length[2]; ++y) 
     {
-        double y_length, x_length;
+        float y_length, x_length;
         if (length[3] == length[2]) 
             y_length = coordinate[3] - coordinate[2];
 
@@ -439,18 +437,18 @@ void calculatePenaltyArea( double coordinate[], int *length, double *firstLayer,
     // instance.inflate_ratio = 1;
 }
 
-double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
+float scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo)
 {
-    double score = 0.0;
-    double area = binInfo.binWidth * binInfo.binHeight;
+    float score = 0.0;
+    float area = binInfo.binWidth * binInfo.binHeight;
     
     int binXnum = (int) binInfo.binXnum;
     int binYnum = (int) binInfo.binYnum;
 
     // if bin area > die area
-    double overAreaOfX = 0.0;
-    double overAreaOfY = 0.0;
-    double overAreaOfXY = 0.0;
+    float overAreaOfX = 0.0;
+    float overAreaOfY = 0.0;
+    float overAreaOfXY = 0.0;
 
     // if( binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth )
     //     overAreaOfX = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * binInfo.binHeight;
@@ -500,14 +498,14 @@ double scoreOfPenalty(double *firstLayer, double *secondLayer, gridInfo binInfo)
     return score;    
 }
 
-void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double xScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
+void gradientX(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float xScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer)
 {
     int size = instances.size();
-    double *firstLayer = createBins(binInfo);
-    double *secondLayer = createBins(binInfo);
+    float *firstLayer = createBins(binInfo);
+    float *secondLayer = createBins(binInfo);
 
-    memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-    memcpy(secondLayer, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+    memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+    memcpy(secondLayer, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
 
     for(int i = 0; i < size; i++)
     {
@@ -515,7 +513,7 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
             continue;
         
         bool isGra, needMinus;
-        double score = 0.0, score2 = 0.0, graGrade = 0.0;
+        float score = 0.0, score2 = 0.0, graGrade = 0.0;
         
         instances[i].tmpX = instances[i].x;
         instances[i].tmpX += h;
@@ -539,15 +537,15 @@ void gradientX(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
     free(secondLayer);
 }
 
-void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double yScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer)
+void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float yScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer)
 {
     int size = instances.size();
     
-    double *firstLayer = createBins(binInfo);      
-    double *secondLayer = createBins(binInfo);
+    float *firstLayer = createBins(binInfo);      
+    float *secondLayer = createBins(binInfo);
 
-    memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-    memcpy(secondLayer, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+    memcpy(firstLayer, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+    memcpy(secondLayer, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
 
     for(int i = 0; i < size; i++)
     {   
@@ -555,7 +553,7 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
             continue;
 
         bool needMinus = false, isGra = false;
-        double score = 0.0, score2 = 0.0, graGrade = 0.0;
+        float score = 0.0, score2 = 0.0, graGrade = 0.0;
 
         instances[i].tmpY = instances[i].y;
         instances[i].tmpY += h;
@@ -578,21 +576,21 @@ void gradientY(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
     free(secondLayer);
 }
 
-void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, const double penaltyWeight, const double zScore, const double penaltyScore, const double *originFirstLayer, const double *originSecondLayer, double *densityMap)
+void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float zScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer, float *densityMap)
 {   
-    double *fl = createBins(binInfo);
-    double *sl = createBins(binInfo);
+    float *fl = createBins(binInfo);
+    float *sl = createBins(binInfo);
 
-    memcpy(fl, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
-    memcpy(sl, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(double));
+    memcpy(fl, originFirstLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+    memcpy(sl, originSecondLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
 
     for(int i = 0; i < instances.size(); i++)
     {
         if(instances[i].canPass)
             continue;
 
-        double tmpd = instances[i].density;
-        double score , score2 = penaltyScore, graGrade = 0.0;
+        float tmpd = instances[i].density;
+        float score , score2 = penaltyScore, graGrade = 0.0;
         bool needMinus = false;
         
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
@@ -621,14 +619,14 @@ void gradientZ(vector <RawNet> &rawNet, const double gamma, vector <instance> &i
     free(sl);
 }
 
-double infaltionRatio(instance instance, double routingOverflow)
+float infaltionRatio(instance instance, float routingOverflow)
 {   
     return 0.0;
 }
 
-double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridInfo binInfo, const double penaltyWeight, vector <instance> &instances, double *densityMap)
+float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap)
 {
-    double score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
+    float score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
 
     score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
     score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
@@ -644,7 +642,7 @@ double returnTotalScore(vector<RawNet> &rawNet, const double gamma, const gridIn
     return totalScore;
 }
 
-void CGandGraPreprocessing( vector <instance> &instances, double *nowGra, double *nowCG, double *lastGra, double *lastCG)
+void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG)
 {
     int size = instances.size();
 
@@ -670,9 +668,9 @@ void CGandGraPreprocessing( vector <instance> &instances, double *nowGra, double
     }
 }
 
-void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *lastGra, int Numinstance, int iteration)
+void conjugateGradient(float *nowGra, float *nowCG, float *lastCG, float *lastGra, int Numinstance, int iteration)
 {    
-    double beta = 0.0, norm = 0.0;
+    float beta = 0.0, norm = 0.0;
     for(int index = 0; index < Numinstance * Dimensions; index++)
     {
         norm += fabs(lastGra[index]);
@@ -690,9 +688,9 @@ void conjugateGradient(double *nowGra, double *nowCG, double *lastCG, double *la
     
 }
 
-double returnAlpha(double nowCG[])
+float returnAlpha(float nowCG[])
 {   
-    double Alpha = 0.0;
+    float Alpha = 0.0;
 
     for(int i = 0; i < 3; i++)
         Alpha += nowCG[i] * nowCG[i];
@@ -717,24 +715,24 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
     else if (inst.y - inst.height/2 <= 0.0)
         inst.y = 0.0 + inst.height + 1.0;
 
-    if(inst.z > 1.0)
-        inst.z = 1.0;
+    if(inst.z > 10000.0)
+        inst.z = 10000.0;
 
     else if(inst.z < 0.0)
         inst.z = 0.0;    
 }
 
-void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
+void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
-    double score = 0.0, wireLength = 0.0, weight = 0.3;
+    float score = 0.0, wireLength = 0.0, weight = 0.3;
     
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
             continue;
         
-        double tmp[Dimensions] = {0.0};
-        double Alpha = 1, spaceX, spaceY, spaceZ;
+        float tmp[Dimensions] = {0.0};
+        float Alpha = 1, spaceX, spaceY, spaceZ;
 
         tmp[0] = nowCG[index * Dimensions]; 
         tmp[1] = nowCG[index * Dimensions + 1] ;
@@ -765,12 +763,12 @@ void newSolution(vector<instance> &instances, double *nowCG, grid_info binInfo)
     }
 }
 
-void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instances, grid_info &binInfo, double *lastGra, double *nowGra, double *lastCG, double *nowCG, double &penaltyWeight, double *densityMap)
+void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG, float &penaltyWeight, float *densityMap)
 {
-    double xScore, yScore, zScore, penaltyScore, tmpScore = 0.0;
-    double *originFirstLayer = createBins(binInfo);
-    double *originSecondLayer = createBins(binInfo);
-    double numInstances = instances.size();
+    float xScore, yScore, zScore, penaltyScore, tmpScore = 0.0;
+    float *originFirstLayer = createBins(binInfo);
+    float *originSecondLayer = createBins(binInfo);
+    float numInstances = instances.size();
 
     xScore = scoreOfX(rawNets, gamma, false, instances[0], 0);
     yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
@@ -779,7 +777,6 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     {
         instances[j].density = returnDensity(instances[j].z, densityMap);
     }
-        
         
     zScore = TSVofNet(rawNets, false, instances[0], 0);
 
@@ -793,8 +790,8 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
     
 
-    memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(double) );
-    memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(double) );
+    memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
+    memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(float) );
 
     for(int i = 0; i < numInstances; i++)
     {
@@ -807,9 +804,9 @@ void updateGra(vector <RawNet> &rawNets, double gamma, vector<instance> &instanc
     free(originSecondLayer);
 }
 
-void returnDensityMap(double *densityMap)
+void returnDensityMap(float *densityMap)
 {
-    double z = 0.0;
+    float z = 0.0;
 
     for(int i = 0 ; i < 100001; i++)
     {
@@ -818,21 +815,21 @@ void returnDensityMap(double *densityMap)
     }
 }
 
-void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, int iteration, double *optParam, 
-                vector <RawNet> &rawNets, double gamma, grid_info &binInfo, double *lastCG, double *nowCG, 
-                double &penaltyWeight, double *densityMap, double *lastRefSoltion, double *curRefSoltion)
+void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int iteration, float *optParam, 
+                vector <RawNet> &rawNets, float gamma, grid_info &binInfo, float *lastCG, float *nowCG, 
+                float &penaltyWeight, float *densityMap, float *lastRefSoltion, float *curRefSoltion)
 {
-    double stepSize = 0.0;
-    double newParam =  (1+ sqrt( 4.0 * *optParam * *optParam + 1.0) ) / 2;
+    float stepSize = 0.0;
+    float newParam =  (1+ sqrt( 4.0 * *optParam * *optParam + 1.0) ) / 2;
     int numInstances = instances.size();
 
-    double *curRefGra = new double [numInstances *3] {0.0};
-    double *curUk = new double [numInstances *3] {0.0};
-    double *newRefSolution = new double [numInstances *3] {0.0};
-    double param = ((*optParam-1) / newParam);
+    float *curRefGra = new float [numInstances *3] {0.0};
+    float *curUk = new float [numInstances *3] {0.0};
+    float *newRefSolution = new float [numInstances *3] {0.0};
+    float param = ((*optParam-1) / newParam);
 
 
-    memcpy(curRefGra, nowGra, numInstances * 3 * sizeof(double));
+    memcpy(curRefGra, nowGra, numInstances * 3 * sizeof(float));
 
     for(int i = 0; i < numInstances; i++)
     {
@@ -848,7 +845,7 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
     if(iteration == 0)
     {
         stepSize = 1;
-        memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(double));
+        memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(float));
     }
     else
         stepSize = calcLipschitz(lastRefSoltion, curRefSoltion, lastGra, nowGra, numInstances);
@@ -858,7 +855,7 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
     {
         for(int i = 0; i < numInstances; i++)
         {
-            double refX, refY, refZ;
+            float refX, refY, refZ;
             refX = curRefSoltion[i * 3] - curRefGra[i * 3] * stepSize;
             refY = curRefSoltion[i * 3 + 1] - curRefGra[i * 3 + 1] * stepSize;
             refZ = curRefSoltion[i * 3 + 2] - curRefGra[i * 3 + 2] * stepSize;
@@ -877,7 +874,7 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
 
         updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 
-        double newStepsize = calcLipschitz(curRefSoltion, newRefSolution, curRefGra, nowGra, numInstances);
+        float newStepsize = calcLipschitz(curRefSoltion, newRefSolution, curRefGra, nowGra, numInstances);
         
         if( 0.95 * stepSize <= newStepsize)
         {
@@ -925,8 +922,8 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
 
     }
     
-    memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(double));
-    memcpy(lastGra, curRefGra, numInstances * 3 * sizeof(double));
+    memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(float));
+    memcpy(lastGra, curRefGra, numInstances * 3 * sizeof(float));
 
     *optParam = newParam;
 
@@ -937,10 +934,10 @@ void clacBktrk( vector <instance> &instances, double *lastGra, double *nowGra, i
 }
 
 
-double calcLipschitz(double *lastRefSolution, double *nowRefSolution, double *lastGra, double *nowGra, int numOfStdCell)
+float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGra, float *nowGra, int numOfStdCell)
 {
-    double denomenator = 0.0;
-    double numerator = 0.0;
+    float denomenator = 0.0;
+    float numerator = 0.0;
     
     for (int i = 0; i < numOfStdCell*3; i++)
     {

@@ -6,14 +6,14 @@ using namespace std;
 
 typedef struct grid_info
 {
-    double dieHeight;
-    double dieWidth;
+    float dieHeight;
+    float dieWidth;
 
-    double binWidth;
-    double binHeight;
+    float binWidth;
+    float binHeight;
 
-    double binXnum;
-    double binYnum;
+    float binXnum;
+    float binYnum;
 
     int Numinstance;
 
@@ -28,6 +28,6 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie);
 
 void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &macros, gridInfo binInfo, Die topDie) ;
 
-double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, double *densityMap);
+float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, float *densityMap);
 
 

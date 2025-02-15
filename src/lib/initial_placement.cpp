@@ -34,8 +34,8 @@ void returnGridInfo(Die *die, gridInfo *binInfo, int Numinstance, vector <instan
         
     }        
         
-    binInfo->binWidth = (double) totalX;
-    binInfo->binHeight = (double) totalY;
+    binInfo->binWidth = (float) totalX;
+    binInfo->binHeight = (float) totalY;
     binInfo->binXnum = floor( binInfo->dieWidth / binInfo->binWidth );
     binInfo->binYnum = floor( binInfo->dieHeight / binInfo->binHeight );
 
@@ -58,18 +58,18 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 
     for(int i = 0; i < instances.size(); i++)
     {
-        double minX = instances[i].inflateWidth;
-        double maxX = binInfo.dieWidth - instances[i].inflateWidth;
-        double minY = instances[i].inflateHeight;
-        double maxY = binInfo.dieHeight - instances[i].inflateHeight;
-        // double minX = 400;
-        // double maxX = 600;
-        // double minY = 400;
-        // double maxY = 600;
+        float minX = instances[i].inflateWidth;
+        float maxX = binInfo.dieWidth - instances[i].inflateWidth;
+        float minY = instances[i].inflateHeight;
+        float maxY = binInfo.dieHeight - instances[i].inflateHeight;
+        // float minX = 400;
+        // float maxX = 600;
+        // float minY = 400;
+        // float maxY = 600;
 
-        double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
-        double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
-        double Z = 0.5 ;
+        float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
+        float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
+        float Z = 0.5 ;
 
         instances[i].rotate = 0;
 
@@ -89,7 +89,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     
     for(int i = 0; i < cellSize; i++)
     {
-        double minX, minY, maxX, maxY;
+        float minX, minY, maxX, maxY;
 
         if(instances[i].isMacro)
         {
@@ -106,9 +106,9 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
             maxY = 11000;
         }
         
-        double X = fmod( (double) rand(), ( maxX - minX + 1) ) + minX ;
-        double Y = fmod( (double) rand(), ( maxY - minY + 1) ) + minY ;
-        double Z = 0.5 ;
+        float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
+        float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
+        float Z = 0.5 ;
 
         instances[i].rotate = 0;
 
@@ -124,16 +124,16 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     }
 }
 
-double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <instance> &instances, gridInfo binInfo, double *densityMap)
+float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, float *densityMap)
 {
-    double h = 0.00001;
-    double penaltyWeight;
-    double xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, penaltyScore = 0.0;
-    double grax = 0.0, gray = 0.0, graz = 0.0, grad = 0.0;
-    double *originfl = createBins(binInfo);
-    double *originsl = createBins(binInfo);
-    double *fl = createBins(binInfo);
-    double *sl = createBins(binInfo);
+    float h = 0.00001;
+    float penaltyWeight;
+    float xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, penaltyScore = 0.0;
+    float grax = 0.0, gray = 0.0, graz = 0.0, grad = 0.0;
+    float *originfl = createBins(binInfo);
+    float *originsl = createBins(binInfo);
+    float *fl = createBins(binInfo);
+    float *sl = createBins(binInfo);
 
     int size = instances.size();
 
@@ -149,15 +149,15 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
     penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
 
-    memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
-    memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(double));
+    memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(float));
+    memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(float));
 
     if(false)
     {
         for(int i = 0; i < size; i++)
         {        
-            double tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
-            double graGrade = 0.0;
+            float tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
+            float graGrade = 0.0;
 
             // part of x
             instances[i].tmpX = instances[i].x;
@@ -199,7 +199,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
 
             // part of z /////////////////////////////////////////////////////////////
                         
-            double tmpTSV = 0.0;
+            float tmpTSV = 0.0;
 
             penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
 
@@ -231,7 +231,7 @@ double returnPenaltyWeight(vector <RawNet> &rawNet, const double gamma, vector <
     free(originfl);
     free(originsl);
 
-    // printf("penalty Time: %fs\n", (endTime - startTime) / (double) CLOCKS_PER_SEC );
+    // printf("penalty Time: %fs\n", (endTime - startTime) / (float) CLOCKS_PER_SEC );
 
     return penaltyWeight;
 }

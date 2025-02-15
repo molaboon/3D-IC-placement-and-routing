@@ -42,7 +42,7 @@ typedef struct nodeNets
     vector < nodeNet* > netnets;
 };
 
-double returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, double avgArea);
+float returnCoarsenScore(node &firstNode, node &secondNode, nodeNets &nodeNests, float avgArea);
 
 int returnDegree(nodeNets &nodeNets, int netIndex);
 

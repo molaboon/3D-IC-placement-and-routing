@@ -17,10 +17,10 @@ void macroPartition( vector <instance> &macros, vector <RawNet> &netsOfMacros, D
     int cut = 0;
     int bestCut = 9999;
 
-    double topDieArea = 0;
-    double btmDieArea = 0;
-    double dif = 0;
-    double ratio = 0.5;
+    float topDieArea = 0;
+    float btmDieArea = 0;
+    float dif = 0;
+    float ratio = 0.5;
 
     int finalLayer[numMacros] = {0};
     
@@ -97,19 +97,19 @@ int returnCut(vector <RawNet> &netsOfMacros)
     return cut;
 }
 
-void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter, double *densityMap)
+void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter, float *densityMap)
 {
     gridInfo macroBinInfo;
 
     int numMacro = macros.size();
     int iii = -1;
-    double gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
-    double wireLength, newWireLength;
+    float gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+    float wireLength, newWireLength;
 
-    double *lastCG = new double[ numMacro * 3 ]{0.0};
-    double *nowCG = new double[ numMacro * 3 ]{0.0};
-    double *lastGra = new double[ numMacro * 3 ]{0.0};
-    double *nowGra = new double[ numMacro * 3 ]{0.0};
+    float *lastCG = new float[ numMacro * 3 ]{0.0};
+    float *nowCG = new float[ numMacro * 3 ]{0.0};
+    float *lastGra = new float[ numMacro * 3 ]{0.0};
+    float *nowGra = new float[ numMacro * 3 ]{0.0};
 
     gamma = 0.05 * topDie.upperRightX;
     
@@ -170,23 +170,23 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
             {
                 // if macro rotate = 0 
                 case 0:
-                    pinsInMacros[i].at(j).x = (double) x + pinsInMacros[i].at(j).finalX;
-                    pinsInMacros[i].at(j).y = (double) y + pinsInMacros[i].at(j).finalY;
+                    pinsInMacros[i].at(j).x = (float) x + pinsInMacros[i].at(j).finalX;
+                    pinsInMacros[i].at(j).y = (float) y + pinsInMacros[i].at(j).finalY;
                     break;
                 
                 case 90:
-                    pinsInMacros[i].at(j).x = (double) x + ( h - pinsInMacros[i].at(j).finalY );
-                    pinsInMacros[i].at(j).y = (double) y + pinsInMacros[i].at(j).finalX;
+                    pinsInMacros[i].at(j).x = (float) x + ( h - pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).y = (float) y + pinsInMacros[i].at(j).finalX;
                     break;
                 
                 case 180:
-                    pinsInMacros[i].at(j).x = (double) x + ( w - pinsInMacros[i].at(j).finalX );
-                    pinsInMacros[i].at(j).y = (double) y + ( h - pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).x = (float) x + ( w - pinsInMacros[i].at(j).finalX );
+                    pinsInMacros[i].at(j).y = (float) y + ( h - pinsInMacros[i].at(j).finalY );
                     break;
                 
                 case 270:
-                    pinsInMacros[i].at(j).x = (double) x + (pinsInMacros[i].at(j).finalY );
-                    pinsInMacros[i].at(j).y = (double) y + (pinsInMacros[i].at(j).finalX );
+                    pinsInMacros[i].at(j).x = (float) x + (pinsInMacros[i].at(j).finalY );
+                    pinsInMacros[i].at(j).y = (float) y + (pinsInMacros[i].at(j).finalX );
                     break;
 
                 default:
@@ -195,11 +195,11 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
             }
         }
 
-        instances[ macro[i].instIndex ].width = (double) w;
-        instances[ macro[i].instIndex ].height = (double) h;
-        instances[ macro[i].instIndex ].x = double (macro[i].finalX + macro[i].finalWidth / 2);
-        instances[ macro[i].instIndex ].y = double (macro[i].finalY + macro[i].finalHeight / 2);
-        instances[ macro[i].instIndex ].z = double (macro[i].layer);
+        instances[ macro[i].instIndex ].width = (float) w;
+        instances[ macro[i].instIndex ].height = (float) h;
+        instances[ macro[i].instIndex ].x = float (macro[i].finalX + macro[i].finalWidth / 2);
+        instances[ macro[i].instIndex ].y = float (macro[i].finalY + macro[i].finalHeight / 2);
+        instances[ macro[i].instIndex ].z = float (macro[i].layer);
         instances[ macro[i].instIndex ].finalX = x;
         instances[ macro[i].instIndex ].finalY = y;
         instances[ macro[i].instIndex ].finalWidth = w;
@@ -255,11 +255,11 @@ void finalUpdatePinsInMacro(vector<instance> &macro, vector < vector<instance> >
             }
         }
 
-        instances[ macro[i].instIndex ].width = (double) w;
-        instances[ macro[i].instIndex ].height = (double) h;
-        instances[ macro[i].instIndex ].x = double (macro[i].finalX + macro[i].finalWidth / 2);
-        instances[ macro[i].instIndex ].y = double (macro[i].finalY + macro[i].finalHeight / 2);
-        instances[ macro[i].instIndex ].z = double (macro[i].layer);
+        instances[ macro[i].instIndex ].width = (float) w;
+        instances[ macro[i].instIndex ].height = (float) h;
+        instances[ macro[i].instIndex ].x = float (macro[i].finalX + macro[i].finalWidth / 2);
+        instances[ macro[i].instIndex ].y = float (macro[i].finalY + macro[i].finalHeight / 2);
+        instances[ macro[i].instIndex ].z = float (macro[i].layer);
         instances[ macro[i].instIndex ].finalX = x;
         instances[ macro[i].instIndex ].finalY = y;
         instances[ macro[i].instIndex ].finalWidth = w;

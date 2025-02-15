@@ -30,7 +30,7 @@ void readTechnologyInfo(FILE *input, int *NumTechnologies, vector <Tech_menu> *T
         //read libcell libcell count time
         for(int j = 0; j < temp.libcell_count; j++){
             char isMacro;
-            fscanf(input, "%*s %s %s %lf %lf %d", &isMacro, temp_libcell[j].libCellName, 
+            fscanf(input, "%*s %s %s %f %f %d", &isMacro, temp_libcell[j].libCellName, 
                                                   &(temp_libcell[j].libCellSizeX), 
                                                   &(temp_libcell[j].libCellSizeY), 
                                                   &(temp_libcell[j].pinCount));
@@ -60,7 +60,7 @@ void printTechnologyInfo(int NumTechnologies, vector <Tech_menu> TechMenu){
     // for(int i = 0; i < NumTechnologies; i++){
     //     printf("Tech <techName> <libCellCount>: %s %d:\n", TechMenu[i].tech, TechMenu[i].libcell_count);
     //     for(int j = 0; j < TechMenu[i].libcell_count; j++){
-    //         printf("\tLibCell <libCellName> <libCellSizeX> <libCellSizeY> <pinCount> <isMacro>: %s %lf %lf %d\n", TechMenu[i].libcell[j].libCellName, TechMenu[i].libcell[j].libCellSizeX, TechMenu[i].libcell[j].libCellSizeY, TechMenu[i].libcell[j].pinCount);
+    //         printf("\tLibCell <libCellName> <libCellSizeX> <libCellSizeY> <pinCount> <isMacro>: %s %f %f %d\n", TechMenu[i].libcell[j].libCellName, TechMenu[i].libcell[j].libCellSizeX, TechMenu[i].libcell[j].libCellSizeY, TechMenu[i].libcell[j].pinCount);
     //         for(int k = 0; k < TechMenu[i].libcell[j].pinCount; k++){
     //             printf("\t\tPin <pinName> <pinLocationX> <pinLocationY>: %s %d %d\n", TechMenu[i].libcell[j].pinarray[k].pinName, TechMenu[i].libcell[j].pinarray[k].pinLocationX, TechMenu[i].libcell[j].pinarray[k].pinLocationY);
     //         }
@@ -75,7 +75,7 @@ void readDieInfo(FILE *input, Die *top_die, Die *bottom_die){
     assert(input);
 
     //read DieSize of the top die and the bottom size
-    fscanf(input,"%*s %d %d %lf %lf", &(top_die->lowerLeftX), &(top_die->lowerLeftY), &(top_die->upperRightX), &(top_die->upperRightY));
+    fscanf(input,"%*s %d %d %f %f", &(top_die->lowerLeftX), &(top_die->lowerLeftY), &(top_die->upperRightX), &(top_die->upperRightY));
     bottom_die->lowerLeftX = top_die->lowerLeftX;
     bottom_die->lowerLeftY = top_die->lowerLeftY;
     bottom_die->upperRightX = top_die->upperRightX;
@@ -200,8 +200,8 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
 
                 tpins.instIndex = i;
                 tpins.isMacro = true;
-                tpins.finalX = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationX;
-                tpins.finalY = (double) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationY;
+                tpins.finalX = (float) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationX;
+                tpins.finalY = (float) TechMenu->at(0).libcell[atoi(current_libCellName)-1].pinarray[p].pinLocationY;
                 tpins.width = 0.0;
                 tpins.height = 0.0;
                 tpins.inflateWidth = 0.0;
@@ -354,7 +354,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 void printNetInfo(int NumNets, vector <RawNet> rawnet){
 }
 
-void returnDensityMap(map <double, double> *densityMap)
+void returnDensityMap(map <float, float> *densityMap)
 {
 
 }
