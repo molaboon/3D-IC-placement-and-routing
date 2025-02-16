@@ -175,7 +175,7 @@ float RSum( const float z){
 
 float returnDensity(const float z, const float *densityMap)
 {
-    int index = int(z);
+    int index = int(z/0.1);
 
     return densityMap[index] ;
 }
@@ -207,7 +207,7 @@ float returnPsi(float z)
     return psi;
 }
 
-float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore)
+float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore, float *densityMap)
 {
     float score = 0.0;
     int size = rawNet.size();
@@ -226,8 +226,8 @@ float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float
                 tmpGra = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->tmpZ;
                 tmpOri = rawNet[ graInstance.connectedNet[net] ].Connection[ins]->z;
 
-                tmpGraPsi = returnPsi(tmpGra);
-                tmpPsi = returnPsi(tmpOri);
+                tmpPsi= 1.0 - returnDensity(tmpOri, densityMap);
+                tmpGraPsi = 1.0 - returnDensity(tmpGra, densityMap);
 
                 n_1 += tmpPsi * exp(tmpPsi / 0.05);
                 d_1 += exp(tmpPsi / 0.05);
@@ -522,7 +522,6 @@ void gradientX(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
 
         // Dedecut the original block(needMinus = ture) first and the add the gra one(isGra = true).
 
-        score2 = penaltyScore;
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true, &graGrade);
         score2 -= graGrade;
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false, &graGrade);
@@ -531,7 +530,7 @@ void gradientX(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade);
 
         instances[i].tmpX = instances[i].x;
-        instances[i].gra_x =  onlyPenalty*(score - xScore)/h + ( penaltyWeight * ( score2 - penaltyScore ) ) / h;
+        instances[i].gra_x =  onlyPenalty*(score - xScore)/h + ( penaltyWeight * (score2) ) / h;
     }
     free(firstLayer);
     free(secondLayer);
@@ -560,7 +559,6 @@ void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
 
         score = scoreOfY(rawNet, gamma, true, instances[i], yScore);
 
-        score2 = penaltyScore;
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true, &graGrade);
         score2 -= graGrade;
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false, &graGrade);
@@ -569,7 +567,7 @@ void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade);
         
         instances[i].tmpY = instances[i].y;
-        instances[i].gra_y = ( onlyPenalty*(score - yScore) + penaltyWeight * (score2 - penaltyScore) ) / h;
+        instances[i].gra_y = ( onlyPenalty*(score - yScore) + penaltyWeight * (score2) ) / h;
     }
     
     free(firstLayer);
@@ -590,7 +588,7 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
             continue;
 
         float tmpd = instances[i].density;
-        float score , score2 = penaltyScore, graGrade = 0.0;
+        float score , score2 = 0.0, graGrade = 0.0;
         bool needMinus = false;
         
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
@@ -600,7 +598,7 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         instances[i].tmpZ += h;
         instances[i].density = returnDensity(instances[i].tmpZ, densityMap);
 
-        score = TSVofNet(rawNet, true, instances[i], zScore);
+        score = TSVofNet(rawNet, true, instances[i], zScore, densityMap);
      
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
         score2 += graGrade;
@@ -611,8 +609,8 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
 
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = false, &graGrade);
         
-        instances[i].gra_z = (score - zScore) / h;
-        instances[i].gra_d = penaltyWeight * ( score2 - penaltyScore) / h;
+        instances[i].gra_z = (score - zScore) / h * alpha;
+        instances[i].gra_d = penaltyWeight * ( score2) / h;
     }
 
     free(fl);
@@ -631,7 +629,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
     score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
     densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap);
-    score_of_z = TSVofNet(rawNet, false, instances[0], 0);
+    score_of_z = TSVofNet(rawNet, false, instances[0], 0, densityMap);
 
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
@@ -742,7 +740,7 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 5;
         spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 5;
-        spaceZ = tmp[2] * Alpha * weight ;
+        spaceZ = tmp[2] * Alpha * weight * 1000;
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;
@@ -778,7 +776,7 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         instances[j].density = returnDensity(instances[j].z, densityMap);
     }
         
-    zScore = TSVofNet(rawNets, false, instances[0], 0);
+    zScore = TSVofNet(rawNets, false, instances[0], 0, densityMap);
 
     for(int j = 0; j < numInstances; j++)
         penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL);

@@ -109,7 +109,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
-		penaltyWeight = 1e-7;
+		penaltyWeight = 1e-5;
 		
 		/*	Refinement(CG)	*/
 
@@ -168,7 +168,7 @@ int main(int argc, char *argv[]){
 
 	}
 
-	if(true)
+	if(false)
 	{	
 		cell2BestLayer(instances, top_die, bottom_die);
 		place2BestRow(instances, numStdCells, top_die, bottom_die, macros);

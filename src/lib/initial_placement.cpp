@@ -108,7 +108,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
         
         float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
         float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
-        float Z = 0.5 ;
+        float Z = 5000 ;
 
         instances[i].rotate = 0;
 
@@ -145,7 +145,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
         instances[i].density = returnDensity(instances[i].z, densityMap);
         penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false, NULL);
     }
-    tsvScore = TSVofNet(rawNet, false, instances[0], 0);
+    tsvScore = TSVofNet(rawNet, false, instances[0], 0, densityMap);
 
     penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
 
@@ -207,7 +207,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
             instances[i].tmpZ += h;
             instances[i].density = returnDensity(instances[i].tmpZ, densityMap);
 
-            tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore);
+            tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore, densityMap);
 
             tmpDen = penaltyScore;
             tmpDen -= graGrade;

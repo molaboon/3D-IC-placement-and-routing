@@ -4,7 +4,7 @@ float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isG
 
 float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
 
-float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore);
+float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore, float *densityMap);
 
 float bellShapeFunc(const float z, const float layer);
 

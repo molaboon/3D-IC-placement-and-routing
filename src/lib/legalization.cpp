@@ -769,7 +769,7 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].z > 0.5 && instances[inst].layer == 3 )
+        if( instances[inst].z > 5000 && instances[inst].layer == 3 )
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) (instances[inst].x - instances[inst].width/2), 
@@ -876,11 +876,13 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     // int btmDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
     int numMacro = macros.size();
 
-    int topDieMacro[3] = {0, 2, 4};
-    int btmDieMacro[3] = {1, 3, 5};
+    int topDieMacro[3] = {0, 1, 4};
+    int btmDieMacro[3] = {2, 3, 5};
     
     /*  place standard cell to best row */
 
+    macros[ topDieMacro[2] ].layer = topLayer;
+    macros[ btmDieMacro[2] ].layer = btmLayer;
     
 
     macros[ topDieMacro[0] ].finalY = 0;
