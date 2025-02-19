@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 	// start_time = omp_get_wtime();
 	// srand(time(NULL));
 
-	float startTime, endTime;
+	time_t startTime, endTime;
 	
 	char *inputName = *(argv + 1);
 	int totalIter = atoi(*(argv + 2));
@@ -73,13 +73,15 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
 	returnGridInfo(&top_die, &binInfo, numStdCells, instances);
 	returnDensityMap(densityMap);
+	
 	/*	macro gradient and placement	*/
 	
 	if(macroPart)
 	{
 		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
+		cell2BestLayer(macros, top_die, bottom_die, netsOfMacros);
 		macroLegalization(macros, top_die, bottom_die);
-		macroRotate(macros, pinsInMacros, rawnet, instances);
+		// macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		writeVisualFile(macros, 2, top_die);
@@ -113,7 +115,7 @@ int main(int argc, char *argv[]){
 		
 		/*	Refinement(CG)	*/
 
-		startTime = clock();
+		startTime = time(NULL);
 		
 		for(int i = 0; i < 100; i++)
 		{
@@ -161,16 +163,16 @@ int main(int argc, char *argv[]){
 			}
 		}
 
-		endTime = clock();
+		endTime = time(NULL);
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
 		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap);
-		printf("Time: %fs, iter: %d, score: %f\n", (endTime - startTime) / (float) CLOCKS_PER_SEC, qqq , newScore);
+		printf("Time: %lds, iter: %d, score: %f\n", (endTime - startTime), qqq , newScore);
 
 	}
-
-	if(false)
+	
+	if(true)
 	{	
-		cell2BestLayer(instances, top_die, bottom_die);
+		cell2BestLayer(instances, top_die, bottom_die, rawnet);
 		place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
 		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
 		writeVisualFile(instances, 0, top_die);

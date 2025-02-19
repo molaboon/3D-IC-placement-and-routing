@@ -145,9 +145,6 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
  
 void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 {
-
-    cell2BestLayer(macros, topDie, btmDie);
-
     macroPlace(macros, topDie, btmDie);
 }
 

@@ -227,9 +227,6 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
     read_one_blank_line(input);
 }
 
-void printInstanceInfo(int NumInstances, vector <instance> instances){
-    //
-}
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &instances, vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro, vector < vector<instance> > &pinsInMacros)
 {
@@ -349,12 +346,4 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
     }
 
     fclose(input);
-}
-
-void printNetInfo(int NumNets, vector <RawNet> rawnet){
-}
-
-void returnDensityMap(map <float, float> *densityMap)
-{
-
 }

@@ -16,7 +16,7 @@ using namespace std;
 #define topLayer 1
 #define theCellDoesntPlaceToLayer 3
 
-void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie)
+void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie, vector <RawNet> rawNets)
 {
     float topDieArea = 0.0;
     float btmDieArea = 0.0;
@@ -30,7 +30,7 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
     for(int i = 0; i < numInstances; i++)
     {
-        if( (instances[i].z < 0.5 && instances[i].layer == theCellDoesntPlaceToLayer) || instances[i].layer == 0)
+        if( (instances[i].z < 5000 && instances[i].layer == theCellDoesntPlaceToLayer) || instances[i].layer == 0)
         {
             instances[i].layer = btmLayer;
             
@@ -50,7 +50,7 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
 
             btmDieArea += instances[i].inflateArea;
         }
-        else if( (instances[i].z > 0.5 && instances[i].layer == theCellDoesntPlaceToLayer) || instances[i].layer == 1)
+        else if( (instances[i].z > 5000 && instances[i].layer == theCellDoesntPlaceToLayer) || instances[i].layer == 1)
         {
             instances[i].layer = topLayer;
         
@@ -72,11 +72,29 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
         }
     }
 
+    int numTerminal = 0;
+
+    for(int net = 0; net < rawNets.size(); net++)
+    {
+        int firstInstLater = rawNets[net].Connection[0]->layer;
+
+        for(int inst = 1 ; inst < rawNets[net].numPins; inst++)
+        {
+            if( rawNets[net].Connection[inst]->layer != firstInstLater )
+            {
+                numTerminal++;
+                break;
+            }
+        }
+    }
+
     topDieUtl = topDieArea / maxArea;
     btmDieUtl = btmDieArea / maxArea;
 
     topDieMaxUtl = (float) topDie.MaxUtil / 100.0;
     btmDieMaxUtl = (float) btmDie.MaxUtil / 100.0;
+
+    printf("%d, %f, %f\n", numTerminal, topDieUtl, btmDieUtl);
 
     /* if any die exceed the  max utilizaiton*/
     int whileLoop = 1;
@@ -769,7 +787,7 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].z > 5000 && instances[inst].layer == 3 )
+        if( instances[inst].z >= 5000 && instances[inst].layer == 3 )
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) (instances[inst].x - instances[inst].width/2), 
@@ -790,7 +808,7 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
 
     for(int inst = 0; inst < numInstances; inst++)
     {
-        if( instances[inst].z < 0.5 && instances[inst].layer == 3 )
+        if( instances[inst].z < 5000 && instances[inst].layer == 3 )
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
             (int) (instances[inst].x - instances[inst].inflateWidth/2), 
@@ -883,6 +901,9 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
 
     macros[ topDieMacro[2] ].layer = topLayer;
     macros[ btmDieMacro[2] ].layer = btmLayer;
+
+    macros[ topDieMacro[0]].layer = topLayer;
+    macros[ btmDieMacro[0]].layer = btmLayer;
     
 
     macros[ topDieMacro[0] ].finalY = 0;
@@ -977,6 +998,6 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
                 }
             }
         }
-        printf("aa\n");
+        printf("");
     }
 }

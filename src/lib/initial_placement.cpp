@@ -100,10 +100,10 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
         }
         else
         {
-            minX = 12000;
-            maxX = 14000;
-            minY = 8000;
-            maxY = 11000;
+            minX = 13500;
+            maxX = 13600;
+            minY = 9800;
+            maxY = 10000;
         }
         
         float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
@@ -126,7 +126,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
 
 float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, float *densityMap)
 {
-    float h = 0.00001;
+    float h = 1;
     float penaltyWeight;
     float xScore = 0.0, yScore = 0.0 , tsvScore = 0.0, penaltyScore = 0.0;
     float grax = 0.0, gray = 0.0, graz = 0.0, grad = 0.0;
@@ -152,7 +152,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
     memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(float));
     memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(float));
 
-    if(false)
+    if(true)
     {
         for(int i = 0; i < size; i++)
         {        
@@ -175,7 +175,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
 
             instances[i].tmpX = instances[i].x;
             
-            grax += fabs( (tmpXscore - xScore) / h);
+            grax += fabs( (tmpXscore) / h);
             grad += fabs( (tmpDen - penaltyScore) / h );
 
             // part of y /////////////////////////////////////////////////////////////
@@ -193,7 +193,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
             penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
             penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
 
-            gray += fabs( (tmpYscore - yScore) / h);
+            gray += fabs( (tmpYscore) / h);
             grad += fabs( (tmpDen - penaltyScore) / h );
             instances[i].tmpY = instances[i].y;
 
@@ -218,7 +218,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
             instances[i].density = returnDensity(instances[i].z, densityMap);
             penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
             
-            graz += fabs( (tmpTSV - tsvScore) / h);
+            graz += fabs( (tmpTSV) / h);
             grad += fabs( (tmpDen - penaltyScore) / h);
         } 
 
@@ -227,7 +227,6 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
         penaltyWeight = ((grax + gray + graz) / grad);
     }
 
-    penaltyWeight = 1e-6;
     free(originfl);
     free(originsl);
 

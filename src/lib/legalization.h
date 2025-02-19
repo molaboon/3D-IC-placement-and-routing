@@ -8,7 +8,7 @@ typedef struct _terminal{
 
 }terminal;
 
-void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie);
+void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie, vector <RawNet> rawNets);
 
 void place2BestRow( vector <instance> &instances, const int numInstances, Die topDie, Die btmDie, vector <instance> &macros);
 
