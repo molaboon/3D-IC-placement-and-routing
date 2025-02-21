@@ -20,7 +20,7 @@ float scoreOfz( vector <RawNet> &rawNet, vector <instance> &instances, gridInfo 
 
 float *createBins(gridInfo binInfo);
 
-void penaltyInfoOfinstance(const instance instance, const gridInfo binInfo, float *firstLayer, float *secondLayer, bool isGra, bool needMinus, float *graGrade);
+void penaltyInfoOfinstance(const instance instance, const gridInfo binInfo, float *firstLayer, float *secondLayer, bool isGra, bool needMinus, float *graGrade, const int graVariable);
 
 void calculatePenaltyArea(float coordinate[], int *length, float *firstLayer, float *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, float *grade);
 

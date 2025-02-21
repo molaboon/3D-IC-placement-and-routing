@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
-		penaltyWeight = 1e-5;
+		penaltyWeight = 1e-3;
 		
 		/*	Refinement(CG)	*/
 
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]){
 				}
 				
 				refPosition(instances);
-				if(penaltyWeight < 500.0)
+				if(penaltyWeight < 4.0)
 					penaltyWeight *= 2;
 			}
 			else

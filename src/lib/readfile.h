@@ -86,6 +86,7 @@ typedef struct _Instance{
     float tmpX;
     float tmpY;
     float tmpZ;
+    float tmpD;
 
     float width;
     float height;
