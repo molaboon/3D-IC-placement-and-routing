@@ -143,6 +143,7 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
     for(int i = 0; i < size; i++)
     {
         instances[i].density = returnDensity(instances[i].z, densityMap);
+        instances[i].tmpD = instances[i].density;
         penaltyInfoOfinstance(instances[i], binInfo, originfl, originsl, false, false, NULL, 0);
     }
     tsvScore = TSVofNet(rawNet, false, instances[0], 0, densityMap);

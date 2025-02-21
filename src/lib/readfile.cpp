@@ -177,6 +177,7 @@ void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instanc
         temp.tmpX = 0.0;
         temp.tmpY = 0.0;
         temp.tmpZ = 0.0;
+        temp.tmpD = 0.0;
         temp.layer = 3;
         temp.finalX = 0;
         temp.finalY = 0;

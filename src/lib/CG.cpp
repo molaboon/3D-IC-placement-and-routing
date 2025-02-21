@@ -310,6 +310,7 @@ float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo
             float tmpD = returnDensity(instances[i].z, densityMap);
 
             instances[i].density = tmpD;
+            instances[i].tmpD = instances[i].density;
         }
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
     }
@@ -365,7 +366,7 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, flo
             rightX = instance.x + (instance.width * 0.5);
             topY = instance.y - (instance.height * 0.5);
             btmY = instance.y + (instance.height * 0.5);
-            coordinate[4] = instance.gra_d;
+            coordinate[4] = instance.tmpD;
             break;
         }
     }
@@ -375,6 +376,7 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, flo
         rightX = instance.x + (instance.width * 0.5);
         topY = instance.y - (instance.height * 0.5);
         btmY = instance.y + (instance.height * 0.5);
+        coordinate[4] = instance.density;
     }
     
     leftXnum = (int) (leftX / binInfo.binWidth);
@@ -645,12 +647,12 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
 
         score = TSVofNet(rawNet, true, instances[i], zScore, densityMap);
      
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade, graVaribaleZ);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade, graVaribaleZ);
         score2 += graGrade;
 
-        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = true, &graGrade, graVaribaleZ);
+        penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, needMinus = true, &graGrade, graVaribaleZ);
         instances[i].tmpZ = instances[i].z;
-        instances[i].density = tmpd;
+        instances[i].tmpD = tmpd;
 
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = false, &graGrade, graVaribaleZ);
         
@@ -792,7 +794,7 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 5;
         spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 5;
-        spaceZ = tmp[2] * Alpha * weight * 10000000;
+        spaceZ = tmp[2] * Alpha * weight * 1000;
 
         if(spaceZ > -1.0 && spaceZ < 1.0)
             spaceZ = (spaceZ > 0) ? 10.0 : -10.0;
@@ -827,6 +829,7 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
     for(int j = 0; j < numInstances; j++)
     {
         instances[j].density = returnDensity(instances[j].z, densityMap);
+        instances[j].tmpD = instances[j].density;
     }
         
     zScore = TSVofNet(rawNets, false, instances[0], 0, densityMap);

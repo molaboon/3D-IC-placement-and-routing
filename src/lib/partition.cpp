@@ -124,14 +124,14 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
         updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
         CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
     
-        for(int j = 0; j < 100; j++)
+        for(int j = 0; j < 1; j++)
         {
             iii++;
             
             newSolution(macros, nowCG, macroBinInfo);
             writeVisualFile(macros, iii, topDie);
             // newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap);
-            writeVisualFile(macros, iii, topDie);
+            // writeVisualFile(macros, iii, topDie);
             updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
 
@@ -205,6 +205,7 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
         instances[ macro[i].instIndex ].rotate = macro[i].rotate;
         instances[ macro[i].instIndex ].canPass = true;
         instances[ macro[i].instIndex ].density = instances[ macro[i].instIndex ].layer;
+        instances[ macro[i].instIndex ].tmpD = instances[ macro[i].instIndex ].layer;
     }
 }
 
