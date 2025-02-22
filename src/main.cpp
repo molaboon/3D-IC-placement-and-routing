@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
 		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
 		cell2BestLayer(macros, top_die, bottom_die, netsOfMacros);
 		macroLegalization(macros, top_die, bottom_die);
-		// macroRotate(macros, pinsInMacros, rawnet, instances);
+		macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		writeVisualFile(macros, 2, top_die);

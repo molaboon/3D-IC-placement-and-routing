@@ -909,7 +909,7 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[0] ].finalY = 0;
     macros[ btmDieMacro[0] ].finalY = 0;
 
-    macros[ topDieMacro[0] ].rotate = 180;
+    macros[ topDieMacro[0] ].rotate = 0;
     macros[ btmDieMacro[0] ].rotate = 180;
     
     macros[ topDieMacro[0] ].finalX = 0;
@@ -921,14 +921,15 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[1] ].finalX = 0;
     macros[ btmDieMacro[1] ].finalX = 0;
 
-    macros[ btmDieMacro[1] ].rotate = 180;
+    macros[ topDieMacro[1] ].rotate = 180;
+    macros[ btmDieMacro[1] ].rotate = 0;
 
     
-    macros[topDieMacro[2]].rotate = 90;
+    macros[topDieMacro[2]].rotate = 270;
     macros[topDieMacro[2]].finalWidth = (int) macros[topDieMacro[2]].height;
     macros[topDieMacro[2]].finalHeight = (int) macros[topDieMacro[2]].width;
 
-    macros[btmDieMacro[2]].rotate = 90;
+    macros[btmDieMacro[2]].rotate = 270;
     macros[btmDieMacro[2]].finalWidth = (int) macros[btmDieMacro[2]].height;
     macros[btmDieMacro[2]].finalHeight = (int) macros[btmDieMacro[2]].width;
     
@@ -956,10 +957,10 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
 
         for(int j = 0; j < numOfPinsInMacros; j++)
         {
-            int nowPinx = pinsInMacros[i][j].finalX;
-            int nowPiny = pinsInMacros[i][j].finalY;
+            int nowPinx = pinsInMacros[i][j].x;
+            int nowPiny = pinsInMacros[i][j].y;
             int lineX = (macros[i].finalX + macros[i].finalWidth) / 2;
-            int lineY = (macros[i].finalY + macros[i].height) / 2;
+            int lineY = (macros[i].finalY + macros[i].finalHeight) / 2;
             int gradeIndex = 0;
 
             if(nowPinx < lineX && nowPiny < lineY)
@@ -991,13 +992,13 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
                                 int otherPinx = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalX;
                                 int otherPiny = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalY;
 
-                                gradeOfCorners[gradeIndex] += abs(11000 - nowPinx) + abs(9000 - nowPiny); 
+                                gradeOfCorners[gradeIndex] += 1 ; 
                             }
                         }
                     }
                 }
             }
         }
-        printf("");
+        printf("a");
     }
 }

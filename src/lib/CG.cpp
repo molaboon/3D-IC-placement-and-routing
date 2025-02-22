@@ -673,11 +673,20 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
 {
     float score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
 
-    score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
-    score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
-    densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap);
-    score_of_z = TSVofNet(rawNet, false, instances[0], 0, densityMap);
-
+#pragma omp parallel sections num_threads(8)
+{
+    #pragma omp section
+        score_of_x = scoreOfX(rawNet, gamma, false, instances[0], 0);
+    #pragma omp section
+        score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
+    #pragma omp section
+    {
+        densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap);
+        score_of_z = TSVofNet(rawNet, false, instances[0], 0, densityMap);
+    }
+    
+}
+    
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
     wireLength = score_of_x + score_of_y;
 
@@ -774,10 +783,6 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
     float score = 0.0, wireLength = 0.0, weight = 0.3;
-
-// #pragma omp parallel num_threads(8)
-{
-    // #pragma omp for
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
@@ -813,7 +818,6 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
         instances[index].tmpY = instances[index].y;
         instances[index].tmpZ = instances[index].z;
     }
-}   
 }
 
 void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG, float &penaltyWeight, float *densityMap)
@@ -823,26 +827,37 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
     float *originSecondLayer = createBins(binInfo);
     const int numInstances = instances.size();
 
-    xScore = scoreOfX(rawNets, gamma, false, instances[0], 0);
-    yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
-    
-    for(int j = 0; j < numInstances; j++)
+#pragma omp parallel sections num_threads(8)
+{
+    #pragma omp section
+        xScore = scoreOfX(rawNets, gamma, false, instances[0], 0);
+    #pragma omp section
+        yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
+    #pragma omp section
     {
-        instances[j].density = returnDensity(instances[j].z, densityMap);
-        instances[j].tmpD = instances[j].density;
+        for(int j = 0; j < numInstances; j++)
+        {
+            instances[j].density = returnDensity(instances[j].z, densityMap);
+            instances[j].tmpD = instances[j].density;
+        }
+            
+        zScore = TSVofNet(rawNets, false, instances[0], 0, densityMap);
+
+        for(int j = 0; j < numInstances; j++)
+            penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
+        penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);  
     }
-        
-    zScore = TSVofNet(rawNets, false, instances[0], 0, densityMap);
+}
 
-    for(int j = 0; j < numInstances; j++)
-        penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
-
-    penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);  
-    
-    gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
-    gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
-    gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
-    
+#pragma omp parallel sections num_threads(8)
+{
+    #pragma omp section
+        gradientX(rawNets, gamma, instances, binInfo, penaltyWeight, xScore, penaltyScore, originFirstLayer, originSecondLayer);
+    #pragma omp section
+        gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
+    #pragma omp section
+        gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
+}    
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(float) );
 
