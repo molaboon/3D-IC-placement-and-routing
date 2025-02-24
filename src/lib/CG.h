@@ -55,3 +55,5 @@ void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int
 float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGra, float *nowGra, int numOfStdCell);
 
 void refPosition(vector <instance> &instances);
+
+void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, Die btmDie);

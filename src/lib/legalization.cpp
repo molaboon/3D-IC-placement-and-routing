@@ -762,9 +762,6 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
     }
 }
 
-void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals)
-{}
-
 void writeVisualFile(const vector <instance> instances, int iteration, Die &topDie)
 {
     char filename[30];

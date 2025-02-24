@@ -1028,3 +1028,125 @@ void refPosition(vector <instance> &instances)
         instances[i].z = instances[i].refZ;
     }
 }
+
+void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, Die btmDie)
+{
+    float binArea = binInfo.binWidth * 2 * binInfo.binHeight * 2;
+    float topDieArea = (topDie.upperRightX * topDie.upperRightY) * (float) (100 - topDie.MaxUtil) / 100.0;
+    float btmDieArea = (btmDie.upperRightX * btmDie.upperRightY) * (float) (100 - btmDie.MaxUtil) / 100.0;
+
+    int numTopFiller = (int) (topDieArea / binArea) + 1;
+    int numBtmFiller = (int) (btmDieArea / binArea) + 1; 
+
+    for(int i = 0; i < numTopFiller; i++)
+    {
+        // float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
+        instance tmp;
+
+        tmp.x = fmod( (float) rand(), ( 14000 - 13000 + 1) ) + 13000;
+        tmp.y = 0;
+        tmp.z = 9999;
+        tmp.width = binInfo.binWidth * 2;
+        tmp.height = binInfo.binHeight * 2;
+        tmp.density = 0.99999;
+
+        filler.emplace_back(tmp);
+    }
+
+    for(int i = 0; i < numTopFiller; i++)
+    {
+        // float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
+        instance tmp;
+
+        tmp.x = fmod( (float) rand(), ( 14000 - 13000 + 1) ) + 13000 ;
+        tmp.y = 0;
+        tmp.z = 1;
+        tmp.width = binInfo.binWidth * 2;
+        tmp.height = binInfo.binHeight * 2;
+        tmp.density = 0.00001;
+
+        filler.emplace_back(tmp);
+    }
+}
+
+void graFillerX(vector <instance> &fillers, gridInfo binInfo, const float penaltyWeight, const float *ori1stLayer, const float *ori2ndLayer)
+{
+    int size = fillers.size();
+    float *firstLayer = createBins(binInfo);
+    float *secondLayer = createBins(binInfo);
+
+    memcpy(firstLayer, ori1stLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+    memcpy(secondLayer, ori2ndLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+
+    for(int i = 0; i < size; i++)
+    { 
+        bool isGra, needMinus;
+        float score2 = 0.0, graGrade = 0.0;
+        
+        fillers[i].tmpX = fillers[i].x;
+        fillers[i].tmpX += h;
+        
+        // Dedecut the original block(needMinus = ture) first and the add the gra one(isGra = true).
+
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true, &graGrade, graVaribaleX);
+        score2 -= graGrade;
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false, &graGrade, graVaribaleX);
+        score2 += graGrade;
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = true, &graGrade, graVaribaleX);
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade, graVaribaleX);
+
+        fillers[i].tmpX = fillers[i].x;
+        fillers[i].gra_x = ( penaltyWeight * (score2) ) / h;
+    }
+    free(firstLayer);
+    free(secondLayer);
+}
+
+void graFillerY(vector <instance> &fillers, gridInfo binInfo, const float penaltyWeight, const float *ori1stLayer, const float *ori2ndLayer)
+{
+    int size = fillers.size();
+    float *firstLayer = createBins(binInfo);
+    float *secondLayer = createBins(binInfo);
+
+    memcpy(firstLayer, ori1stLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+    memcpy(secondLayer, ori2ndLayer,  binInfo.binXnum * binInfo.binYnum * sizeof(float));
+
+    for(int i = 0; i < size; i++)
+    { 
+        bool isGra, needMinus;
+        float score2 = 0.0, graGrade = 0.0;
+        
+        fillers[i].tmpY = fillers[i].y;
+        fillers[i].tmpY += h;
+        
+        // Dedecut the original block(needMinus = ture) first and the add the gra one(isGra = true).
+
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true, &graGrade, graVaribaleX);
+        score2 -= graGrade;
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false, &graGrade, graVaribaleX);
+        score2 += graGrade;
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = true, &graGrade, graVaribaleX);
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade, graVaribaleX);
+
+        fillers[i].tmpY = fillers[i].y;
+        fillers[i].gra_y = ( penaltyWeight * (score2) ) / h;
+    }
+    free(firstLayer);
+    free(secondLayer);
+}
+
+void mvFiller(vector <instance> &fillers, gridInfo binInfo)
+{
+    int size = fillers.size();
+
+    for(int i = 0; i < size; i++)
+    {
+        float we = sqrt(fillers[i].gra_x * fillers[i].gra_x + fillers[i].gra_y * fillers[i].gra_y);
+        
+        fillers[i].x += we * fillers[i].gra_x * binInfo.binWidth;
+        fillers[i].y += we * fillers[i].gra_y * binInfo.binHeight;
+        
+        glodenSearch(fillers[i], binInfo);
+
+    }
+}

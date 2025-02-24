@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 	FILE *input = fopen(inputName, "r");
 	assert(input);
 
-	Die top_die, bottom_die;												//store the die information
+	Die topDie, btmDie;												//store the die information
 	Hybrid_terminal terminalTech;											//store the size of the hybrid bond terminal connect between two dies
 	
 	int NumTechnologies;													//TA and TB
@@ -54,12 +54,13 @@ int main(int argc, char *argv[]){
 	vector <int> numStdCellConncetMacro;
 	vector <terminal> terminals;											// sotre the position of terminal (for output)
 	vector < vector<instance> > pinsInMacros;
+	vector <instance> fillers; 
 
 	float *densityMap = new float[ 100001 ]{0};
 
 	/*	read data	*/
 	readTechnologyInfo(input, &NumTechnologies, techMenuPtr);	
-	readDieInfo(input, &top_die, &bottom_die);
+	readDieInfo(input, &topDie, &btmDie);
 	readHybridTerminalInfo(input, &terminalTech);
 	readInstanceInfo(input, &numStdCells, instances, &NumTechnologies, techMenuPtr, macros, stdCells, pinsInMacros);
 	delete techMenuPtr;
@@ -71,21 +72,22 @@ int main(int argc, char *argv[]){
 		rawnet = [*instances, *pinsInMacro, ...]
 	*/
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
-	returnGridInfo(&top_die, &binInfo, numStdCells, instances);
+	returnGridInfo(&topDie, &binInfo, numStdCells, instances);
 	returnDensityMap(densityMap);
+	fillerPreprocess(fillers, binInfo, topDie, btmDie);
 	
 	/*	macro gradient and placement	*/
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, top_die, 20, densityMap);
-		cell2BestLayer(macros, top_die, bottom_die, netsOfMacros);
-		macroLegalization(macros, top_die, bottom_die);
+		macroGradient( macros, netsOfMacros, topDie, 20, densityMap);
+		cell2BestLayer(macros, topDie, btmDie, netsOfMacros);
+		macroLegalization(macros, topDie, btmDie);
 		macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
-		writeVisualFile(macros, 2, top_die);
-		// macroPartition( macros, netsOfMacros, top_die);
+		writeVisualFile(macros, 2, topDie);
+		// macroPartition( macros, netsOfMacros, topDie);
 	}
 
 	/*	coarsening */
@@ -106,7 +108,7 @@ int main(int argc, char *argv[]){
 
 		int qqq = -1;
 
-		stdCellFirstPlacement(instances, macros, binInfo, top_die);
+		stdCellFirstPlacement(instances, macros, binInfo, topDie);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		gamma = 0.05 * binInfo.dieWidth;
@@ -131,7 +133,7 @@ int main(int argc, char *argv[]){
 
 					newSolution(instances, nowCG, binInfo);
 					updatePinsInMacroInfo( macros, pinsInMacros, instances);
-					writeVisualFile(instances, qqq, top_die);
+					writeVisualFile(instances, qqq, topDie);
 
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
 					
@@ -158,7 +160,7 @@ int main(int argc, char *argv[]){
 				{	
 					clacBktrk(instances, lastGra, nowGra, j, &optParam, rawnet, gamma, binInfo, lastCG, nowCG, 
 							  penaltyWeight, densityMap, curRefSoltion, newRefSolution);
-					writeVisualFile(instances, j, top_die);
+					writeVisualFile(instances, j, topDie);
 				}
 			}
 		}
@@ -172,10 +174,10 @@ int main(int argc, char *argv[]){
 	
 	if(true)
 	{	
-		cell2BestLayer(instances, top_die, bottom_die, rawnet);
-		place2BestRow(instances, numStdCells, top_die, bottom_die, macros);
-		insertTerminal(instances, rawnet, terminals, terminalTech, top_die);
-		writeVisualFile(instances, 0, top_die);
+		cell2BestLayer(instances, topDie, btmDie, rawnet);
+		place2BestRow(instances, numStdCells, topDie, btmDie, macros);
+		insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
+		writeVisualFile(instances, 0, topDie);
 		writeFile(instances, rawnet, numStdCells, terminals);
 	}
 

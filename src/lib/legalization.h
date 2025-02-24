@@ -16,8 +16,6 @@ void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet
 
 void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,  vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie);
 
-void calculateActualHPWL(const vector <instance> instances, const vector <RawNet> rawNet, vector <terminal> &terminals);
-
 void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <vector<int>> &dieMacroPlacementState, vector <instance> &instances, int *cellWidth);
 
 void place2nearRow(const Die die, const Die theOtherDie,vector <vector<int>> &diePlacementState, vector <vector<int>> &theOtherDiePlacementState, vector <instance> &instances, int *dieCellWidth, int *theOtherDieCellWidth);
