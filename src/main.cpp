@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, topDie, 20, densityMap);
+		macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
 		cell2BestLayer(macros, topDie, btmDie, netsOfMacros);
 		macroLegalization(macros, topDie, btmDie);
 		macroRotate(macros, pinsInMacros, rawnet, instances);
@@ -119,28 +119,30 @@ int main(int argc, char *argv[]){
 
 		startTime = time(NULL);
 		
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < totalIter; i++)
 		{
-			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
-			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+			totalScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
+			updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
 			CGandGraPreprocessing(instances, nowGra, nowCG, lastGra, lastCG);
 
 			if( !useEplace )
 			{
-				for(int j = 0; j < totalIter; j++)
+				for(int j = 0; j < 200; j++)
 				{
 					qqq++;
-
+					mvFiller(fillers, binInfo);
 					newSolution(instances, nowCG, binInfo);
 					updatePinsInMacroInfo( macros, pinsInMacros, instances);
-					writeVisualFile(instances, qqq, topDie);
+					writeVisualFile(fillers, qqq, topDie);
 
-					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap);
+					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
 					
 					if( newScore > totalScore)
 						break;
+					else
+						totalScore = newScore;
 
-					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
 					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 					
 				}
@@ -167,7 +169,7 @@ int main(int argc, char *argv[]){
 
 		endTime = time(NULL);
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
-		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap);
+		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap, fillers);
 		printf("Time: %lds, iter: %d, score: %f\n", (endTime - startTime), qqq , newScore);
 
 	}

@@ -16,7 +16,7 @@ float returnDensityInDensityMap(const float z, const float layer);
 
 float returnPsi(const float z);
 
-float scoreOfz( vector <RawNet> &rawNet, vector <instance> &instances, gridInfo binInfo, bool zisChanged, float *dnesityMap);
+float scoreOfz( vector <RawNet> &rawNet, vector <instance> &instances, gridInfo binInfo, bool zisChanged, float *dnesityMap, vector <instance> &fillers);
 
 float *createBins(gridInfo binInfo);
 
@@ -32,7 +32,7 @@ void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
 
 void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float yScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer, float *dnesityMap);
 
-float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap);
+float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap, vector <instance> &fillers);
 
 void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG);
 
@@ -44,7 +44,7 @@ void glodenSearch(instance &inst, gridInfo binInfo);
 
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo);
 
-void updateGra(vector <RawNet> &rawNet, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG,float &penaltyWeight, float *dnesityMap);
+void updateGra(vector <RawNet> &rawNet, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG,float &penaltyWeight, float *dnesityMap, vector <instance> &fillers);
 
 void returnDensityMap(float *densityMap);
 
@@ -57,3 +57,9 @@ float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGr
 void refPosition(vector <instance> &instances);
 
 void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, Die btmDie);
+
+void graFillerX(vector <instance> &fillers, gridInfo binInfo, const float penaltyWeight, const float *ori1stLayer, const float *ori2ndLayer);
+
+void graFillerY(vector <instance> &fillers, gridInfo binInfo, const float penaltyWeight, const float *ori1stLayer, const float *ori2ndLayer);
+
+void mvFiller(vector <instance> &fillers, gridInfo binInfo);

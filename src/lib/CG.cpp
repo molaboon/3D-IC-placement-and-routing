@@ -294,10 +294,11 @@ float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float
     return score;
 }
 
-float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged, float *densityMap)
+float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo binInfo, bool zisChanged, float *densityMap, vector <instance> &fillers)
 {
     float score = 0.0;
     int size = instances.size();
+    int numFiller = fillers.size();
     float *firstLayer = createBins(binInfo);
 	float *secondLayer = createBins(binInfo);
 
@@ -314,6 +315,11 @@ float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo
         }
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
     }
+
+    for(int i = 0; i < numFiller; i++)
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
+    
+
     score = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
     free(firstLayer);
@@ -669,7 +675,7 @@ float infaltionRatio(instance instance, float routingOverflow)
     return 0.0;
 }
 
-float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap)
+float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap, vector <instance> &fillers)
 {
     float score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
 
@@ -681,7 +687,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
         score_of_y = scoreOfY(rawNet, gamma, false, instances[0], 0);
     #pragma omp section
     {
-        densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap);
+        densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap, fillers);
         score_of_z = TSVofNet(rawNet, false, instances[0], 0, densityMap);
     }
     
@@ -782,7 +788,7 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
-    float score = 0.0, wireLength = 0.0, weight = 0.3;
+    float score = 0.0, wireLength = 0.0, weight = 1;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
@@ -797,8 +803,8 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * weight * binInfo.binWidth * 5;
-        spaceY = tmp[1] * Alpha * weight * binInfo.binHeight * 5;
+        spaceX = tmp[0] * Alpha * binInfo.binWidth;
+        spaceY = tmp[1] * Alpha * binInfo.binHeight;
         spaceZ = tmp[2] * Alpha * weight * 1000;
 
         if(spaceZ > -1.0 && spaceZ < 1.0)
@@ -820,12 +826,13 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
     }
 }
 
-void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG, float &penaltyWeight, float *densityMap)
+void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instances, grid_info &binInfo, float *lastGra, float *nowGra, float *lastCG, float *nowCG, float &penaltyWeight, float *densityMap, vector <instance> &fillers)
 {
     float xScore, yScore, zScore, penaltyScore, tmpScore = 0.0;
     float *originFirstLayer = createBins(binInfo);
     float *originSecondLayer = createBins(binInfo);
     const int numInstances = instances.size();
+    const int numFiller = fillers.size();
 
 #pragma omp parallel sections num_threads(8)
 {
@@ -845,6 +852,10 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
 
         for(int j = 0; j < numInstances; j++)
             penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
+        
+        for(int j = 0; j < numFiller; j++)
+            penaltyInfoOfinstance(fillers[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
+
         penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);  
     }
 }
@@ -857,6 +868,12 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     #pragma omp section
         gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
+    #pragma omp section
+    {
+        graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+        graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+    }
+        
 }    
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(float) );
@@ -941,7 +958,7 @@ void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int
             
         }
 
-        updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+        // updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 
         float newStepsize = calcLipschitz(curRefSoltion, newRefSolution, curRefGra, nowGra, numInstances);
         
@@ -979,7 +996,7 @@ void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int
         instances[i].refZ = instances[i].z;
     }
 
-    updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+    // updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
 
     for(int i = 0; i < numInstances; i++)
     {
@@ -1044,8 +1061,10 @@ void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, D
         instance tmp;
 
         tmp.x = fmod( (float) rand(), ( 14000 - 13000 + 1) ) + 13000;
-        tmp.y = 0;
+        tmp.y = fmod( (float) rand(), ( 12000 - 9000 + 1) ) + 9000;
         tmp.z = 9999;
+        tmp.instIndex = i;
+        tmp.layer = 3;
         tmp.width = binInfo.binWidth * 2;
         tmp.height = binInfo.binHeight * 2;
         tmp.density = 0.99999;
@@ -1059,8 +1078,10 @@ void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, D
         instance tmp;
 
         tmp.x = fmod( (float) rand(), ( 14000 - 13000 + 1) ) + 13000 ;
-        tmp.y = 0;
+        tmp.y = fmod( (float) rand(), ( 12000 - 9000 + 1) ) + 9000;
         tmp.z = 1;
+        tmp.instIndex = i;
+        tmp.layer = 3;
         tmp.width = binInfo.binWidth * 2;
         tmp.height = binInfo.binHeight * 2;
         tmp.density = 0.00001;
@@ -1121,16 +1142,17 @@ void graFillerY(vector <instance> &fillers, gridInfo binInfo, const float penalt
         
         // Dedecut the original block(needMinus = ture) first and the add the gra one(isGra = true).
 
-        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true, &graGrade, graVaribaleX);
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = true, &graGrade, graVaribaleY);
         score2 -= graGrade;
-        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false, &graGrade, graVaribaleX);
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = false, &graGrade, graVaribaleY);
         score2 += graGrade;
-        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = true, &graGrade, graVaribaleX);
-        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade, graVaribaleX);
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = true, needMinus = true, &graGrade, graVaribaleY);
+        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, isGra = false, needMinus = false, &graGrade, graVaribaleY);
 
         fillers[i].tmpY = fillers[i].y;
         fillers[i].gra_y = ( penaltyWeight * (score2) ) / h;
     }
+
     free(firstLayer);
     free(secondLayer);
 }
@@ -1138,15 +1160,18 @@ void graFillerY(vector <instance> &fillers, gridInfo binInfo, const float penalt
 void mvFiller(vector <instance> &fillers, gridInfo binInfo)
 {
     int size = fillers.size();
+    float we;
 
     for(int i = 0; i < size; i++)
     {
-        float we = sqrt(fillers[i].gra_x * fillers[i].gra_x + fillers[i].gra_y * fillers[i].gra_y);
+        if( fillers[i].gra_x == 0 && fillers[i].gra_y == 0)
+            we = 1;
+        else
+            we =  1 / sqrt(fillers[i].gra_x * fillers[i].gra_x + fillers[i].gra_y * fillers[i].gra_y);
         
-        fillers[i].x += we * fillers[i].gra_x * binInfo.binWidth;
-        fillers[i].y += we * fillers[i].gra_y * binInfo.binHeight;
+        fillers[i].x += we * fillers[i].gra_x * binInfo.binWidth * 0.8;
+        fillers[i].y += we * fillers[i].gra_y * binInfo.binHeight * 0.8;
         
         glodenSearch(fillers[i], binInfo);
-
     }
 }

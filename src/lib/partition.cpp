@@ -97,7 +97,7 @@ int returnCut(vector <RawNet> &netsOfMacros)
     return cut;
 }
 
-void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter, float *densityMap)
+void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Die topDie, int totalIter, float *densityMap, vector <instance> fillers)
 {
     gridInfo macroBinInfo;
 
@@ -120,8 +120,8 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
     
     for(int i = 0; i < 1; i++)
     {
-        totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap);
-        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+        totalScore = returnTotalScore(netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap, fillers);
+        updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
         CGandGraPreprocessing(macros, nowGra, nowCG, lastGra, lastCG);
     
         for(int j = 0; j < 1; j++)
@@ -129,10 +129,10 @@ void macroGradient( vector <instance> &macros, vector <RawNet> &netsOfMacros, Di
             iii++;
             
             newSolution(macros, nowCG, macroBinInfo);
-            writeVisualFile(macros, iii, topDie);
-            // newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap);
             // writeVisualFile(macros, iii, topDie);
-            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
+            // newScore = returnTotalScore( netsOfMacros, gamma, macroBinInfo, penaltyWeight, macros, densityMap);
+            writeVisualFile(fillers, iii, topDie);
+            updateGra(netsOfMacros, gamma, macros, macroBinInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
             conjugateGradient(nowGra, nowCG, lastCG, lastGra, numMacro, 1);
 
             if(penaltyWeight < 200)
