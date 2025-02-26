@@ -22,6 +22,7 @@
 #define graVaribaleX 0
 #define graVaribaleY 1
 #define graVaribaleZ 2
+#define needFillers 0
 
 using namespace std;
 
@@ -316,10 +317,12 @@ float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
     }
 
-    for(int i = 0; i < numFiller; i++)
-        penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
+    if (needFillers)
+    {
+        for(int i = 0; i < numFiller; i++)
+            penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
+    }
     
-
     score = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
     free(firstLayer);
@@ -498,46 +501,6 @@ float scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo)
     int binXnum = (int) binInfo.binXnum;
     int binYnum = (int) binInfo.binYnum;
 
-    // if bin area > die area
-    float overAreaOfX = 0.0;
-    float overAreaOfY = 0.0;
-    float overAreaOfXY = 0.0;
-
-    // if( binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth )
-    //     overAreaOfX = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * binInfo.binHeight;
-    // else
-    //     overAreaOfX = area;
-    
-    // if( binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight )
-    //     overAreaOfY = (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) ) * binInfo.binWidth;
-    // else
-    //     overAreaOfY = area;
-    
-    // if(binInfo.binYnum * binInfo.binHeight > binInfo.dieHeight && binInfo.binXnum * binInfo.binWidth > binInfo.dieWidth)
-    //     overAreaOfXY = (binInfo.dieWidth - (binInfo.binXnum * binInfo.binWidth) ) * (binInfo.dieHeight - (binInfo.binYnum * binInfo.binHeight) );
-    // else 
-    //     overAreaOfXY = area;
-
-    // for(int i = 0; i < binYnum; i++)
-    // {
-    //     for(int j = 0; j < binXnum; j++)
-    //     {
-    //         int b = j + i*binXnum;
-            
-    //         if(j == binXnum - 1 && i == binYnum - 1)
-    //             score += (firstLayer[b] - overAreaOfXY) * (firstLayer[b] - overAreaOfXY) + (secondLayer[b] - overAreaOfXY) * (secondLayer[b] - overAreaOfXY);
-
-    //         else if(j == binXnum - 1)
-    //             score += (firstLayer[b] - overAreaOfX) * (firstLayer[b] - overAreaOfX) + (secondLayer[b] - overAreaOfX) * (secondLayer[b] - overAreaOfX);
-            
-    //         else if (i == binYnum - 1)
-    //             score += (firstLayer[b] - overAreaOfY) * (firstLayer[b] - overAreaOfY) + (secondLayer[b] - overAreaOfY) * (secondLayer[b] - overAreaOfY);
-
-    //         else
-    //             score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);                
-    //     }
-    // }
-
     for(int i = 0; i < binYnum; i++)
     {
         for(int j = 0; j < binXnum; j++)
@@ -690,7 +653,6 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
         densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap, fillers);
         score_of_z = TSVofNet(rawNet, false, instances[0], 0, densityMap);
     }
-    
 }
     
     totalScore = score_of_x + score_of_y + score_of_z * alpha + (densityScore) * penaltyWeight;
@@ -868,11 +830,12 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     #pragma omp section
         gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
-    #pragma omp section
-    {
-        graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-        graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-    }
+    // #pragma omp section
+    // if(needFillers)
+    // {
+    //     graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+    //     graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+    // }
         
 }    
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
@@ -1060,8 +1023,8 @@ void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, D
         // float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
         instance tmp;
 
-        tmp.x = fmod( (float) rand(), ( 14000 - 13000 + 1) ) + 13000;
-        tmp.y = fmod( (float) rand(), ( 12000 - 9000 + 1) ) + 9000;
+        tmp.x = fmod( (float) rand(), ( 22000 - 100 + 1) ) + 100;
+        tmp.y = fmod( (float) rand(), ( 18000 - 100 + 1) ) + 100;
         tmp.z = 9999;
         tmp.instIndex = i;
         tmp.layer = 3;
@@ -1077,8 +1040,8 @@ void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, D
         // float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
         instance tmp;
 
-        tmp.x = fmod( (float) rand(), ( 14000 - 13000 + 1) ) + 13000 ;
-        tmp.y = fmod( (float) rand(), ( 12000 - 9000 + 1) ) + 9000;
+        tmp.x = fmod( (float) rand(), ( 22000 - 100 + 1) ) + 100 ;
+        tmp.y = fmod( (float) rand(), ( 18000 - 100 + 1) ) + 100;
         tmp.z = 1;
         tmp.instIndex = i;
         tmp.layer = 3;
@@ -1174,4 +1137,44 @@ void mvFiller(vector <instance> &fillers, gridInfo binInfo)
         
         glodenSearch(fillers[i], binInfo);
     }
+}
+
+bool OvRatio(vector <instance> &instances, gridInfo binInfo)
+{
+    // check overflow ratio
+
+    int size = instances.size();
+    float totalInstanceArea = 0;
+    float *firstLayer = createBins(binInfo);
+    float *secondLayer = createBins(binInfo);
+    float score = 0.0;
+    float area = binInfo.binWidth * binInfo.binHeight;
+    
+    int binXnum = (int) binInfo.binXnum;
+    int binYnum = (int) binInfo.binYnum;
+    
+    for(int i = 0; i < size; i++)
+    {
+        penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
+        
+        if(!instances[i].canPass)
+            totalInstanceArea += instances[i].area;
+    }
+        
+
+    for(int i = 0; i < binYnum; i++)
+    {
+        for(int j = 0; j < binXnum; j++)
+        {
+            int b = j + i*binXnum;
+            
+            score +=  max((firstLayer[b] - area), 0.0f);
+            score +=  max((secondLayer[b] - area), 0.0f);
+        }
+    }
+
+    if(score / totalInstanceArea < 0.1)
+        return true;
+    else
+        return false;
 }

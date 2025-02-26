@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
 		macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
 		cell2BestLayer(macros, topDie, btmDie, netsOfMacros);
 		macroLegalization(macros, topDie, btmDie);
-		macroRotate(macros, pinsInMacros, rawnet, instances);
+		// macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		writeVisualFile(macros, 2, topDie);
@@ -130,14 +130,16 @@ int main(int argc, char *argv[]){
 				for(int j = 0; j < 200; j++)
 				{
 					qqq++;
-					mvFiller(fillers, binInfo);
+					// mvFiller(fillers, binInfo);
 					newSolution(instances, nowCG, binInfo);
 					updatePinsInMacroInfo( macros, pinsInMacros, instances);
-					writeVisualFile(fillers, qqq, topDie);
+					writeVisualFile(instances, qqq, topDie);
 
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
 					
 					if( newScore > totalScore)
+						break;
+					else if(OvRatio(instances, binInfo))
 						break;
 					else
 						totalScore = newScore;
@@ -165,6 +167,10 @@ int main(int argc, char *argv[]){
 					writeVisualFile(instances, j, topDie);
 				}
 			}
+
+			if( OvRatio(instances, binInfo) )
+				break;
+			
 		}
 
 		endTime = time(NULL);
