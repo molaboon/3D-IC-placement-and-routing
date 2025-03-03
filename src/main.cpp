@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
-		penaltyWeight = 1e-3;
+		penaltyWeight = 1e-7;
 		
 		/*	Refinement(CG)	*/
 
@@ -137,12 +137,12 @@ int main(int argc, char *argv[]){
 
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
 					
-					if( newScore > totalScore)
-						break;
-					else if(OvRatio(instances, binInfo))
-						break;
-					else
-						totalScore = newScore;
+					// if( newScore > totalScore)
+					// 	break;
+					// else if(OvRatio(instances, binInfo))
+					// 	break;
+					// else
+					// 	totalScore = newScore;
 
 					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
 					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
@@ -150,7 +150,7 @@ int main(int argc, char *argv[]){
 				}
 				
 				refPosition(instances);
-				if(penaltyWeight < 4.0)
+				if(penaltyWeight < 100.0)
 					penaltyWeight *= 2;
 			}
 			else

@@ -85,7 +85,6 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &macros, gridInfo binInfo, Die topDie) 
 {
     int cellSize = instances.size();
-    int macroSize = macros.size();
     
     for(int i = 0; i < cellSize; i++)
     {
@@ -108,7 +107,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
         
         float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
         float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
-        float Z = 5000 ;
+        float Z = 4496;
 
         instances[i].rotate = 0;
 
