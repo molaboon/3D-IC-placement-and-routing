@@ -88,7 +88,7 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
     
     for(int i = 0; i < cellSize; i++)
     {
-        float minX, minY, maxX, maxY;
+        float minX, minY, maxX, maxY, minZ, maxZ;
 
         if(instances[i].isMacro)
         {
@@ -103,11 +103,13 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
             maxX = 13600;
             minY = 9800;
             maxY = 10000;
+            minZ = 4994;
+            maxZ = 5000;
         }
         
         float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
         float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
-        float Z = 4496;
+        float Z = fmod( (float) rand(), ( maxZ - minZ + 1) ) + minZ;
 
         instances[i].rotate = 0;
 

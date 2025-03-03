@@ -909,13 +909,13 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[0] ].rotate = 0;
     macros[ btmDieMacro[0] ].rotate = 180;
     
-    macros[ topDieMacro[0] ].finalX = topDie.upperRightX - macros[ topDieMacro[0] ].finalWidth - 10;
+    macros[ topDieMacro[0] ].finalX = 0;
     macros[ btmDieMacro[0] ].finalX = 0;
     
     macros[ topDieMacro[1] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 100;
-    macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight;
+    macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 100;
 
-    macros[ topDieMacro[1] ].finalX = topDie.upperRightX - macros[ topDieMacro[1] ].finalWidth - 10;
+    macros[ topDieMacro[1] ].finalX = 0;
     macros[ btmDieMacro[1] ].finalX = 0;
 
     macros[ topDieMacro[1] ].rotate = 180;
@@ -930,11 +930,11 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[btmDieMacro[2]].finalWidth = (int) macros[btmDieMacro[2]].height;
     macros[btmDieMacro[2]].finalHeight = (int) macros[btmDieMacro[2]].width;
     
-    macros[ topDieMacro[2] ].finalY = 0;
+    macros[ topDieMacro[2] ].finalY = btmDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 5000;
     macros[ btmDieMacro[2] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 5000;
 
-    macros[ topDieMacro[2] ].finalX = 0;
-    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
+    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
+    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 100;
 
 }
 
@@ -998,4 +998,31 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
         }
         printf("a");
     }
+}
+
+void writeData(const float hpwl, const float hbt, const float penalty)
+{
+    FILE *hpwlOutput;
+    FILE *hbtOutput;
+    FILE *penaltyOutput;
+    
+    char filename[30];
+    char filename1[30];
+    char filename2[30];
+
+    snprintf(filename, sizeof(filename), "HPWL.txt");
+    snprintf(filename1, sizeof(filename), "HBT.txt");
+    snprintf(filename2, sizeof(filename), "Penalty.txt");
+
+    hpwlOutput = fopen(filename, "a");
+    hbtOutput = fopen(filename1, "a");
+    penaltyOutput = fopen(filename2, "a");
+
+    fprintf(hpwlOutput, "%f\n", hpwl);
+    fprintf(hbtOutput, "%f\n", hbt);
+    fprintf(penaltyOutput, "%f\n", penalty);
+
+    fclose(hpwlOutput);
+    fclose(hbtOutput);
+    fclose(penaltyOutput);
 }

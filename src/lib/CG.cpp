@@ -8,6 +8,7 @@
 #include "initial_placement.h"
 #include "CG.h"
 #include "readfile.h"
+#include "legalization.h"
 
 #define eta 0.1
 #define total_layer 2
@@ -177,10 +178,7 @@ float returnDensity(const float z, const float *densityMap)
 {
     int index = int(z/0.1f);
 
-    if(z > 4496)
-        return densityMap[88888];
-    else
-        return densityMap[22222];
+    return densityMap[index];
 }
 
 float returnDensityInDensityMap(const float z, const float layer)
@@ -232,7 +230,7 @@ float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float
             //     weight = 2500;
             // else
             //     weight = 3000;
-
+ 
             for (int ins = 0 ; ins < rawNet[ graInstance.connectedNet[net] ].numPins; ins++)
             {
                 float tmpGra = 0.0, tmpOri = 0.0, tmpGraPsi = 0.0, tmpPsi = 0.0;
@@ -244,21 +242,14 @@ float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float
                 tmpGraPsi = 1.0 - tmpGra;
 
                 if(tmpPsi < 0.5)
-                {
                     tmpPsi = 0.00001;
-                    // tmpGraPsi = 0.99999;
-                }
                 else
-                {
                     tmpPsi = 0.99999;
-                    // tmpGraPsi = 0.00001;
-                }
 
                 if(tmpGraPsi < 0.5)
                     tmpGraPsi = 0.00001;
                 else
                     tmpGraPsi = 0.9999;
-                
                 
                 n_1 += tmpPsi * exp(tmpPsi / 0.05);
                 d_1 += exp(tmpPsi / 0.05);
@@ -555,7 +546,7 @@ void gradientX(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         float score = 0.0, score2 = 0.0, graGrade = 0.0;
         
         instances[i].tmpX = instances[i].x;
-        instances[i].tmpX += h;
+        instances[i].tmpX += 2;
         
         score = scoreOfX(rawNet, gamma, true, instances[i], xScore);
 
@@ -594,7 +585,7 @@ void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         float score = 0.0, score2 = 0.0, graGrade = 0.0;
 
         instances[i].tmpY = instances[i].y;
-        instances[i].tmpY += h;
+        instances[i].tmpY += 2;
 
         score = scoreOfY(rawNet, gamma, true, instances[i], yScore);
 
@@ -632,9 +623,12 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade, graVaribaleZ);
         score2 -= graGrade;
-
-        instances[i].tmpZ = instances[i].z;
-        instances[i].tmpZ += 2;
+        
+        if(instances[i].z < 4996)
+            instances[i].tmpZ = 8888;
+        else
+            instances[i].tmpZ = 2222;
+        
         instances[i].tmpD = returnDensity(instances[i].tmpZ, densityMap);
 
         score = TSVofNet(rawNet, true, instances[i], zScore, densityMap);
@@ -649,7 +643,7 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = false, &graGrade, graVaribaleZ);
         
         instances[i].gra_z = (alpha) * (score);
-        instances[i].gra_d = penaltyWeight * ( score2 );
+        instances[i].gra_d = 0;
     }
 
     free(fl);
@@ -682,6 +676,8 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     penaltyScore = score_of_z * (alpha) + (densityScore) * penaltyWeight; 
     wireLength = score_of_x + score_of_y;
 
+    writeData(wireLength, score_of_z, densityScore);
+    
     if(penaltyWeight == 1)
     {
         score_of_z = TSVofNet(rawNet, false, instances[0], 1, densityMap);
@@ -689,7 +685,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     }
         
 
-    return score_of_z;
+    return penaltyScore + wireLength;
 }
 
 void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG)
@@ -785,13 +781,13 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         tmp[0] = nowCG[index * Dimensions]; 
         tmp[1] = nowCG[index * Dimensions + 1] ;
-        tmp[2] = nowCG[index * Dimensions + 2] ;
+        tmp[2] = 0;
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * binInfo.binWidth * 0.99;
-        spaceY = tmp[1] * Alpha * binInfo.binHeight * 0.99;
-        spaceZ = tmp[2] * Alpha * 1000;
+        spaceX = tmp[0] * Alpha * binInfo.binWidth * 0.99f;
+        spaceY = tmp[1] * Alpha * binInfo.binHeight * 0.99f;
+        spaceZ = (nowCG[index * Dimensions + 2] > 0)? 5.0f : -5.0f ;
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;
@@ -799,15 +795,12 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-        instances[index].z += spaceZ;
-        
-        // if(instances[index].z > 5000)
-        //     instances[index].z = ( spaceZ > 0) ? 7000 : 20;
-        // else
-        //     instances[index].z = ( spaceZ > 0) ? 20 : 7000;
-        
-        // instances[index].z += spaceZ;
 
+        if(instances[index].z < 4997)
+            instances[index].z += spaceZ;
+        else
+            instances[index].z -= spaceZ;
+        
         glodenSearch(instances[index], binInfo);
     
         instances[index].tmpX = instances[index].x;
@@ -834,8 +827,10 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
     {
         for(int j = 0; j < numInstances; j++)
         {
-            instances[j].density = returnDensity(instances[j].z, densityMap);
-            instances[j].tmpD = instances[j].density;
+            float tmpD = returnDensity(instances[j].z, densityMap);
+
+            instances[j].density = tmpD;
+            instances[j].tmpD = tmpD;
         }
             
         zScore = TSVofNet(rawNets, false, instances[0], 0, densityMap);
@@ -1195,13 +1190,15 @@ bool OvRatio(vector <instance> &instances, gridInfo binInfo)
         for(int j = 0; j < binXnum; j++)
         {
             int b = j + i*binXnum;
-            
-            score +=  max((firstLayer[b] - area), 0.0f);
-            score +=  max((secondLayer[b] - area), 0.0f);
+            score +=  fabs((firstLayer[b] - area));
+            score +=  fabs((secondLayer[b] - area));
         }
     }
 
-    if(score / totalInstanceArea < 0.1)
+    free(firstLayer);
+    free(secondLayer);
+
+    if(score / totalInstanceArea < 0.3f)
         return true;
     else
         return false;
