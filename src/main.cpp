@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
 	if(macroPart)
 	{
 		macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
-		cell2BestLayer(macros, topDie, btmDie, netsOfMacros);
+		cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
 		macroLegalization(macros, topDie, btmDie);
 		// macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
-		penaltyWeight = 1e-10;
+		penaltyWeight = 1e-7;
 		
 		/*	Refinement(CG)	*/
 
@@ -177,12 +177,13 @@ int main(int argc, char *argv[]){
 		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
 		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap, fillers);
 		printf("Time: %lds, iter: %d, score: %f\n", (endTime - startTime), qqq , newScore);
+		updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
 
 	}
 	
 	if(true)
 	{	
-		cell2BestLayer(instances, topDie, btmDie, rawnet);
+		cell2BestLayer(instances, topDie, btmDie, rawnet, terminalTech);
 		place2BestRow(instances, numStdCells, topDie, btmDie, macros);
 		insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
 		writeVisualFile(instances, 0, topDie);

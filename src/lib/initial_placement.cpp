@@ -103,8 +103,8 @@ void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &mac
             maxX = 13600;
             minY = 9800;
             maxY = 10000;
-            minZ = 4994;
-            maxZ = 5000;
+            minZ = 4990;
+            maxZ = 5010;
         }
         
         float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;

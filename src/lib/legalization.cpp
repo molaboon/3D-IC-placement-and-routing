@@ -16,7 +16,7 @@ using namespace std;
 #define topLayer 1
 #define theCellDoesntPlaceToLayer 3
 
-void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie, vector <RawNet> rawNets)
+void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die btmDie, vector <RawNet> &rawNets, Hybrid_terminal hbtTech)
 {
     float topDieArea = 0.0;
     float btmDieArea = 0.0;
@@ -72,12 +72,17 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
         }
     }
 
+// if #terminal > maxNumTerminal 
+    
     int numTerminal = 0;
+    int numMaxhbt = 0;
+
+    numMaxhbt = ((int) topDie.upperRightX - hbtTech.spacing) / (hbtTech.sizeX + hbtTech.spacing) ;
+    numMaxhbt = numMaxhbt * ((int) topDie.upperRightY - hbtTech.spacing) / (hbtTech.sizeY + hbtTech.spacing);
 
     for(int net = 0; net < rawNets.size(); net++)
     {
         int firstInstLater = rawNets[net].Connection[0]->layer;
-
         for(int inst = 1 ; inst < rawNets[net].numPins; inst++)
         {
             if( rawNets[net].Connection[inst]->layer != firstInstLater )
@@ -95,6 +100,11 @@ void cell2BestLayer( vector <instance> &instances, const Die topDie, const Die b
     btmDieMaxUtl = (float) btmDie.MaxUtil / 100.0;
 
     printf("%d, %f, %f\n", numTerminal, topDieUtl, btmDieUtl);
+
+    // if(numTerminal > numMaxhbt)
+    // {
+        
+    // }
 
     /* if any die exceed the  max utilizaiton*/
     int whileLoop = 1;
@@ -658,18 +668,15 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
     for(int net = 0; net < numNet; net++)
     {
         int firstInstLater = rawNet[net].Connection[0]->layer;
-
         for(int inst = 1 ; inst < rawNet[net].numPins; inst++)
         {
             if( rawNet[net].Connection[inst]->layer != firstInstLater )
             {
                 terminal newTerminal;
-
                 numTerminal++;
                 newTerminal.netID = net;
                 newTerminal.x = 0;
                 newTerminal.y = 0;
-
                 terminals.push_back(newTerminal);
 
                 break;
@@ -704,6 +711,17 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
 
         terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
         terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
+        
+        if(terminals[t].x < terminalTech.spacing)
+            terminals[t].x = terminalTech.spacing;
+        else if (terminals[t].x > dieWidth - terminalTech.spacing - terminalTech.sizeX)
+            terminals[t].x = dieWidth - terminalTech.spacing - terminalTech.sizeX;
+        
+        if(terminals[t].y < terminalTech.spacing)
+            terminals[t].y = terminalTech.spacing;
+        else if (terminals[t].y > dieWidth - terminalTech.spacing - terminalTech.sizeY)
+            terminals[t].y = dieWidth - terminalTech.spacing - terminalTech.sizeY;
+        
 
         if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
         {

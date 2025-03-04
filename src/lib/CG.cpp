@@ -643,7 +643,7 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, needMinus = false, &graGrade, graVaribaleZ);
         
         instances[i].gra_z = (alpha) * (score);
-        instances[i].gra_d = 0;
+        instances[i].gra_d = penaltyWeight * score2;
     }
 
     free(fl);
@@ -676,7 +676,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     penaltyScore = score_of_z * (alpha) + (densityScore) * penaltyWeight; 
     wireLength = score_of_x + score_of_y;
 
-    writeData(wireLength, score_of_z, densityScore);
+    // writeData(wireLength, score_of_z, densityScore);
     
     if(penaltyWeight == 1)
     {
@@ -685,7 +685,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     }
         
 
-    return penaltyScore + wireLength;
+    return score_of_z;
 }
 
 void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG)
