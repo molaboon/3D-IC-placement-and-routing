@@ -653,15 +653,18 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
     }
 }
 
-void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet, vector <terminal> &terminals, Hybrid_terminal terminalTech, Die topDie)
+void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet, vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie)
 { 
-    int numNet = rawNet.size();
+    const int numNet = rawNet.size();
     int numTerminal = 0;
-    int dieWidth = (int) topDie.upperRightX;
-    int dieHight = (int) topDie.upperRightY;
+    const int dieWidth = (int) topDie.upperRightX;
+    const int dieHight = (int) topDie.upperRightY;
 
-    int spaceX = terminalTech.spacing + terminalTech.sizeX;
-    int spaceY = terminalTech.spacing + terminalTech.sizeY;
+    const int sizeX = terminalTech.sizeX;
+    const int sizeY = terminalTech.sizeY;
+    const int space = terminalTech.spacing;
+    const int spaceX = space + sizeX;
+    const int spaceY = space + sizeY;;
     int numTerOfX = 0, numTerOfY = 0;
 
     // calculate the number of the terminal in rawnet
@@ -684,8 +687,8 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
         }
     }
 
-    numTerOfX = (dieWidth - terminalTech.sizeX) / spaceX;
-    numTerOfY = (dieHight - terminalTech.sizeY) / spaceY;
+    numTerOfX = (dieWidth - sizeX) / spaceX;
+    numTerOfY = (dieHight - sizeY) / spaceY;
     char terminalArray[numTerOfY][numTerOfX] = {0};
 
     // place the terminal to the position
@@ -712,15 +715,15 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
         terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
         terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
         
-        if(terminals[t].x < terminalTech.spacing)
-            terminals[t].x = terminalTech.spacing;
-        else if (terminals[t].x > dieWidth - terminalTech.spacing - terminalTech.sizeX)
-            terminals[t].x = dieWidth - terminalTech.spacing - terminalTech.sizeX;
+        if(terminals[t].x < space)
+            terminals[t].x = space;
+        else if (terminals[t].x > dieWidth - space - sizeX)
+            terminals[t].x = dieWidth - space - sizeX;
         
-        if(terminals[t].y < terminalTech.spacing)
-            terminals[t].y = terminalTech.spacing;
-        else if (terminals[t].y > dieWidth - terminalTech.spacing - terminalTech.sizeY)
-            terminals[t].y = dieWidth - terminalTech.spacing - terminalTech.sizeY;
+        if(terminals[t].y < space)
+            terminals[t].y = space;
+        else if (terminals[t].y > dieHight - space - sizeY)
+            terminals[t].y = dieHight - space - sizeY;
         
 
         if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)

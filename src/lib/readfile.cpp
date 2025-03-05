@@ -123,7 +123,7 @@ void readHybridTerminalInfo(FILE *input, Hybrid_terminal *terminal){
     assert(input);
 
     //read terminal size & spacing
-    fscanf(input, "%*s %d %d",&(terminal->sizeX),&(terminal->sizeY));
+    fscanf(input, "%*s %d %d",&(terminal->sizeX), &(terminal->sizeY));
     fscanf(input, "%*s %d",&(terminal->spacing));
     fscanf(input, "%*s %d",&(terminal->cost));
     read_one_blank_line(input);
