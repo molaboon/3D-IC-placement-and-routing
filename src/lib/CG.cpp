@@ -685,7 +685,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     }
         
 
-    return score_of_z;
+    return penaltyScore + wireLength;
 }
 
 void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG)
@@ -771,6 +771,8 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
     float score = 0.0, wireLength = 0.0, weight = 1;
+    const float binWidth = binInfo.binWidth;
+    const float binHeight = binInfo.binHeight;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
@@ -785,8 +787,8 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * binInfo.binWidth * 0.99f;
-        spaceY = tmp[1] * Alpha * binInfo.binHeight * 0.99f;
+        spaceX = tmp[0] * Alpha * binWidth * 2.0f;
+        spaceY = tmp[1] * Alpha * binHeight * 2.0f ;
         spaceZ = (nowCG[index * Dimensions + 2] > 0)? 5.0f : -5.0f ;
 
         instances[index].refX = instances[index].x;

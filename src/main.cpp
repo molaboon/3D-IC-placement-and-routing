@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
-		penaltyWeight = 1e-7;
+		penaltyWeight = 1e-8;
 		
 		/*	Refinement(CG)	*/
 
@@ -127,7 +127,7 @@ int main(int argc, char *argv[]){
 
 			if( !useEplace )
 			{
-				for(int j = 0; j < 200; j++)
+				for(int j = 0; j < 300; j++)
 				{
 					qqq++;
 					// mvFiller(fillers, binInfo);

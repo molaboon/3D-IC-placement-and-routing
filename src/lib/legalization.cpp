@@ -653,7 +653,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
     }
 }
 
-void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet, vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie)
+void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,  vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie)
 { 
     const int numNet = rawNet.size();
     int numTerminal = 0;
@@ -665,7 +665,9 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
     const int space = terminalTech.spacing;
     const int spaceX = space + sizeX;
     const int spaceY = space + sizeY;;
-    int numTerOfX = 0, numTerOfY = 0;
+    const int numTerOfX = (dieWidth - space) / spaceX - 1;
+    const int numTerOfY = (dieHight - space) / spaceY - 1;
+    char terminalArray[numTerOfY][numTerOfX] = {0};
 
     // calculate the number of the terminal in rawnet
     for(int net = 0; net < numNet; net++)
@@ -687,9 +689,6 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
         }
     }
 
-    numTerOfX = (dieWidth - sizeX) / spaceX;
-    numTerOfY = (dieHight - sizeY) / spaceY;
-    char terminalArray[numTerOfY][numTerOfX] = {0};
 
     // place the terminal to the position
     for (int t = 0; t < numTerminal; t++)
@@ -711,24 +710,20 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
             if( rawNet[terminals[t].netID].Connection[i]->finalY > maxY )
                 maxY = rawNet[terminals[t].netID].Connection[i]->finalY;
         }
-
-        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX ;
-        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY ;
-        
-        if(terminals[t].x < space)
-            terminals[t].x = space;
-        else if (terminals[t].x > dieWidth - space - sizeX)
-            terminals[t].x = dieWidth - space - sizeX;
-        
-        if(terminals[t].y < space)
-            terminals[t].y = space;
-        else if (terminals[t].y > dieHight - space - sizeY)
-            terminals[t].y = dieHight - space - sizeY;
         
 
-        if(terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] == 0)
+        terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX + space + sizeX/2 ;
+        terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY + space + sizeY/2;
+        
+        if (terminals[t].x > dieWidth - spaceX - sizeX/2)
+            terminals[t].x = dieWidth - spaceX - sizeX/2;
+        
+        if (terminals[t].y > dieHight - spaceY - sizeY/2)
+            terminals[t].y = dieHight - spaceY - sizeY/2;
+
+        if(terminalArray[(terminals[t].y - space - sizeY/2) / spaceY][(terminals[t].x - space - sizeX/2) / spaceX] == 0)
         {
-            terminalArray[terminals[t].y / spaceY][terminals[t].x / spaceX] = 1;
+            terminalArray[(terminals[t].y - space - sizeY/2) / spaceY][(terminals[t].x - space - sizeX/2) / spaceX] = 1;
         }
         else
         {
@@ -739,9 +734,15 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
             maxX = maxX / spaceX ;
             
             if(minX < 1)
-                minX = 1;
+                minX = 0;
             if(minY < 1)
-                minY = 1;
+                minY = 0;
+            
+            if(maxX <= minX)
+                maxX = minX + 1;
+            if(maxY <= minY) 
+                maxY = minY + 1;
+
             do
             {
                 for (int yy = minY; yy < maxY; yy++)
@@ -750,8 +751,8 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                     {
                         if(terminalArray[yy][xx] == 0)
                         {
-                            terminals[t].x = xx * spaceX;
-                            terminals[t].y = yy * spaceY;
+                            terminals[t].x = xx * (spaceX) + space + sizeX/2;
+                            terminals[t].y = yy * (spaceY) + space + sizeY/2;
                             found = true;
                             terminalArray[yy][xx] = 1;
                             break;
@@ -767,15 +768,16 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                 maxX = maxX << 1;
                 maxY = maxY << 1;
                 
-                if(maxX >= dieWidth/spaceX)
-                    maxX = (dieWidth - spaceX) / spaceX - 1;
-                if(maxY >= dieHight/spaceY)
-                    maxY = (dieHight - spaceY) / spaceY - 1;
+                if(maxX >= numTerOfX)
+                    maxX = numTerOfX;
+                
+                if(maxY >= numTerOfY)
+                    maxY = numTerOfY;
                 
                 if(minX < 1)
-                    minX = 1;
+                    minX = 0;
                 if(minY < 1)
-                    minY = 1;
+                    minY = 0;
 
             } while (!found);
             
