@@ -1049,3 +1049,102 @@ void writeData(const float hpwl, const float hbt, const float penalty)
     fclose(hbtOutput);
     fclose(penaltyOutput);
 }
+
+void wirteNodes(vector <instance> &instances, vector <instance> &macros)
+{
+    FILE *output;
+    
+    char filename[30];
+    int numInstances = 0;
+    int numMacros = 3;
+    int qqq = 0;
+
+    for(int i = 0; i < instances.size(); i++)
+        if(instances[i].layer == 0)
+            numInstances ++;
+
+    snprintf(filename, sizeof(filename), "./test/test.nodes");
+
+    output = fopen(filename, "w");
+
+    fprintf(output, "UCLA nodes 1.0\n# Created : \n# User    :   Modified MMS Benchmark\n\n");
+    fprintf(output, "NumNodes :   %d\n", numInstances);
+    fprintf(output, "NumTerminals :   %d\n\n", numMacros);
+
+    for(int i = 0; i < instances.size(); i++)
+    {
+        if(instances[i].layer == 0)
+        {
+            fprintf(output, "o%d %d %d\n", qqq, instances[i].finalWidth, instances[i].finalHeight);
+            qqq++;
+        }
+            
+    }
+
+    fclose(output);
+}
+
+void wirtePl(vector <instance> &instances, vector <instance> &macros)
+{
+    FILE *output;
+    
+    char filename[30];
+    int numInstances = 0;
+    int numMacros = 3;
+    int qqq = 0;
+
+    for(int i = 0; i < instances.size(); i++)
+        if(instances[i].layer == 0)
+            numInstances ++;
+
+    snprintf(filename, sizeof(filename), "./test/test.ntup.pl");
+    output = fopen(filename, "w");
+
+    fprintf(output, "UCLA pl 1.0\n\n");
+
+    for(int i = 0; i < instances.size(); i++)
+    {
+        if(instances[i].layer == 0)
+        {
+            fprintf(output, "o%d %d %d : N\n", qqq, (int) instances[i].x, (int) instances[i].y);
+            qqq++;
+        }
+    }
+
+    fclose(output);
+}
+
+void writeRow(vector <instance> &macros, Die topDie)
+{
+    
+    
+
+
+
+    
+    FILE *output;
+    char filename[30];
+    int numRow = topDie.repeatCount;
+    snprintf(filename, sizeof(filename), "./test/test.scl");
+    output = fopen(filename, "w");
+
+    fprintf(output, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
+    fprintf(output, "NumRows : %d\n", numRow);
+
+
+    for(int i = 0; i < numRow; i++)
+    {
+        fprintf(output, "CoreRow Horizontal\n");
+        fprintf(output, " Coordinate    :   %d\n", i * topDie.rowHeight);
+        fprintf(output, " Height        :   %d\n", topDie.rowHeight);
+        fprintf(output, " Sitewidth     :    1\n");
+        fprintf(output, " Sitespacing   :    1\n");
+        fprintf(output, " Siteorient    :    1\n");
+        fprintf(output, " Sitesymmetry  :    1\n");
+        fprintf(output, " Sitesymmetry  :    1\n");
+        fprintf(output, " SubrowOrigin  :    100	NumSites  :  10000\n");
+        fprintf(output, "End\n");
+    }
+
+    fclose(output);
+}

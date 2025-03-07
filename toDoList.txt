@@ -1,5 +1,0 @@
-發現的問題與待解決事項
-
-2025/1/13
-1. insertTerminal 當 為macro 時，finalX 並非為 pin 角的位置，而是macro 的位置 (done)
-2. macro 還未考慮旋轉與排列位置( 打算使用SA 來排 )

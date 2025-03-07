@@ -27,3 +27,9 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie);
 void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> stdCells);
 
 void writeData(const float hpwl, const float hbt, const float penalty);
+
+void wirteNodes(vector <instance> &instances, vector <instance> &macros);
+
+void wirtePl(vector <instance> &instances, vector <instance> &macros);
+
+void writeRow(vector <instance> &macros, Die topDie);

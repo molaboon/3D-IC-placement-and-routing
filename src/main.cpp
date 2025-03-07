@@ -184,10 +184,13 @@ int main(int argc, char *argv[]){
 	if(true)
 	{	
 		cell2BestLayer(instances, topDie, btmDie, rawnet, terminalTech);
-		place2BestRow(instances, numStdCells, topDie, btmDie, macros);
-		insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
-		writeVisualFile(instances, 0, topDie);
-		writeFile(instances, rawnet, numStdCells, terminals);
+		wirteNodes(instances, macros);
+		wirtePl(instances, macros);
+		writeRow(macros, topDie);
+		// place2BestRow(instances, numStdCells, topDie, btmDie, macros);
+		// insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
+		// writeVisualFile(instances, 0, topDie);
+		// writeFile(instances, rawnet, numStdCells, terminals);
 	}
 
 	return 0;
