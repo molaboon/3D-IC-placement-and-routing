@@ -186,7 +186,8 @@ int main(int argc, char *argv[]){
 		cell2BestLayer(instances, topDie, btmDie, rawnet, terminalTech);
 		wirteNodes(instances, macros);
 		wirtePl(instances, macros);
-		writeRow(macros, topDie);
+		writeRow(macros, topDie, btmDie);
+		readAbcusResult(instances);
 		// place2BestRow(instances, numStdCells, topDie, btmDie, macros);
 		// insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
 		// writeVisualFile(instances, 0, topDie);

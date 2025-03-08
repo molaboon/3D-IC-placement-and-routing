@@ -348,3 +348,46 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
     fclose(input);
 }
+
+void readAbcusResult(vector <instance> &instances)
+{
+    vector <int> instMap;
+    int numIns = 0;
+
+    instMap.reserve(instances.size());
+
+    for(int i = 0; i < instances.size(); i++)
+    {
+        if(instances[i].layer == 1 && !instances[i].isMacro)
+        {
+            instMap.push_back(i);
+            numIns++;
+        }
+    }
+    
+    FILE *input;
+    char filename[30];
+    snprintf(filename, sizeof(filename), "./output/test.result");
+    input = fopen(filename, "r");
+
+    for(int i = 0; i < numIns; i++)
+    {
+        int x = 0;
+        int y = 0;
+        int instIndex = 0;
+        char libCellName[LIBCELL_NAME_SIZE];
+        fscanf(input, "%s %d %d %*s %*s", libCellName, &x, &y); 
+
+        char current_libCellName[LIBCELL_NAME_SIZE];
+		memset(current_libCellName,'\0', LIBCELL_NAME_SIZE);
+		strncpy(current_libCellName, libCellName + 1, strlen(libCellName)-1);
+        
+        instIndex = instMap[ atoi(current_libCellName) ];
+
+        instances[instIndex].finalX = x;
+        instances[instIndex].finalY = y;
+    }
+    
+    fclose(input);
+
+}

@@ -229,8 +229,8 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     vector < vector<int> > topDiePlacementState( topDie.repeatCount );
     vector < vector<int> > btmDiePlacementState( btmDie.repeatCount );
 
-    vector < vector<int> > topDieMacrosPlacement(topDie.repeatCount);
-    vector < vector<int> > btmDieMacrosPlacement(btmDie.repeatCount);
+    vector < vector<int> > topDieMacros(topDie.repeatCount);
+    vector < vector<int> > btmDieMacros(btmDie.repeatCount);
 
     int topDieCellsWidth[topDie.repeatCount] = {0};
     int btmDieCellsWidth[btmDie.repeatCount] = {0};
@@ -239,13 +239,13 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
     for(int row = 0; row < topDie.repeatCount; row++)
     {
         topDiePlacementState[row].reserve(numInstances/5);
-        topDieMacrosPlacement[row].reserve(numMacro);
+        topDieMacros[row].reserve(numMacro);
     }
     
     for(int row = 0; row < btmDie.repeatCount; row++)
     {
         btmDiePlacementState[row].reserve(numInstances/5);
-        btmDieMacrosPlacement[row].reserve(numMacro);
+        btmDieMacros[row].reserve(numMacro);
     }
     
     /*  place standard cell to best row */
@@ -276,7 +276,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
                 {
                     topDieCellsWidth[row] += (int) instances[inst].finalWidth;
                     topDiePlacementState[row].push_back(instances[inst].instIndex);
-                    topDieMacrosPlacement[row].push_back(instances[inst].instIndex);
+                    topDieMacros[row].push_back(instances[inst].instIndex);
                 } 
             }   
             else
@@ -291,7 +291,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
                 {
                     btmDieCellsWidth[row] += instances[inst].finalWidth;
                     btmDiePlacementState[row].push_back(instances[inst].instIndex);
-                    btmDieMacrosPlacement[row].push_back(instances[inst].instIndex);
+                    btmDieMacros[row].push_back(instances[inst].instIndex);
                 }
             }
         }
@@ -339,8 +339,8 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
     /*  place instances to best X position*/
 
-    placeInst2BestX(topDie, topDiePlacementState, topDieMacrosPlacement, instances, topDieCellsWidth);
-    placeInst2BestX(btmDie, btmDiePlacementState, btmDieMacrosPlacement, instances, btmDieCellsWidth);
+    placeInst2BestX(topDie, topDiePlacementState, topDieMacros, instances, topDieCellsWidth);
+    placeInst2BestX(btmDie, btmDiePlacementState, btmDieMacros, instances, btmDieCellsWidth);
 }
 
 void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <vector<int>> &dieMacroPlacementState, vector <instance> &instances, int *cellWidth)
@@ -910,8 +910,8 @@ void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet
 
 void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
 {
-    // int topDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
-    // int btmDieMacrosPlacement [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
+    // int topDieMacros [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
+    // int btmDieMacros [ (int)topDie.upperRightX ][ (int)topDie.upperRightY ] = {0};
     int numMacro = macros.size();
 
     int topDieMacro[3] = {0, 1, 4};
@@ -932,14 +932,14 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[0] ].rotate = 0;
     macros[ btmDieMacro[0] ].rotate = 180;
     
-    macros[ topDieMacro[0] ].finalX = 0;
-    macros[ btmDieMacro[0] ].finalX = 0;
+    macros[ topDieMacro[0] ].finalX = 100;
+    macros[ btmDieMacro[0] ].finalX = 100;
     
     macros[ topDieMacro[1] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 100;
     macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 100;
 
-    macros[ topDieMacro[1] ].finalX = 0;
-    macros[ btmDieMacro[1] ].finalX = 0;
+    macros[ topDieMacro[1] ].finalX = 100;
+    macros[ btmDieMacro[1] ].finalX = 100;
 
     macros[ topDieMacro[1] ].rotate = 180;
     macros[ btmDieMacro[1] ].rotate = 0;
@@ -1089,6 +1089,9 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros)
     FILE *output;
     
     char filename[30];
+    snprintf(filename, sizeof(filename), "./test/test.ntup.pl");
+    output = fopen(filename, "w");
+
     int numInstances = 0;
     int numMacros = 3;
     int qqq = 0;
@@ -1096,9 +1099,6 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros)
     for(int i = 0; i < instances.size(); i++)
         if(instances[i].layer == 0)
             numInstances ++;
-
-    snprintf(filename, sizeof(filename), "./test/test.ntup.pl");
-    output = fopen(filename, "w");
 
     fprintf(output, "UCLA pl 1.0\n\n");
 
@@ -1116,27 +1116,24 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros)
 
 void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
 {
-    vector < vector<int> > topDieMacrosPlacement(topDie.repeatCount);
-    vector < vector<int> > btmDieMacrosPlacement(btmDie.repeatCount);
+    vector < vector<int> > topDieMacros(topDie.repeatCount);
+    vector < vector<int> > btmDieMacros(btmDie.repeatCount);
     const int numRow = topDie.repeatCount;
+    const int height = topDie.rowHeight;
+    const int diewidth = (int) topDie.upperRightX;
+    int totalRow = 0;
 
-    int topDieCellsWidth[numRow] = {0};
-    int btmDieCellsWidth[numRow] = {0};
     int numMacro = macros.size();
 
     for(int row = 0; row < numRow; row++)
-        topDieMacrosPlacement[row].reserve(numMacro);
+        topDieMacros[row].reserve(numMacro);
     for(int row = 0; row< btmDie.repeatCount; row++)
-        btmDieMacrosPlacement[row].reserve(numMacro);
+        btmDieMacros[row].reserve(numMacro);
     
     for(int inst = 0; inst < numMacro; inst++)
     {
         int row = 0;
-        float upOrdown = macros[inst].y ;
- 
-        int uperX = macros[inst].finalX + (macros[inst].finalWidth) ;
         int uperY = macros[inst].finalY + (macros[inst].finalHeight) ;
-        int lowerX = macros[inst].finalX;
         int lowerY = macros[inst].finalY;
         int uperRow, lowerRow;
         macros[inst].finalY = lowerY;  
@@ -1150,30 +1147,20 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
                 uperRow = topDie.repeatCount - 1;
 
             for(int row = lowerRow; row <= uperRow; row++)
-            {
-                topDieCellsWidth[row] += (int) macros[inst].finalWidth;
-                topDieMacrosPlacement[row].push_back(macros[inst].instIndex);
-            } 
+                topDieMacros[row].push_back(inst);
         }   
         else
         {
             uperRow = (uperY / btmDie.rowHeight);
             lowerRow = lowerY / btmDie.rowHeight;
-
+            
             if(uperRow >= btmDie.repeatCount)
                 uperRow = btmDie.repeatCount-1;
 
             for(int row = lowerRow; row <= uperRow; row++)
-            {
-                btmDieCellsWidth[row] += macros[inst].finalWidth;
-                btmDieMacrosPlacement[row].push_back(macros[inst].instIndex);
-            }
+                btmDieMacros[row].push_back(inst);
         }
     }
-    
-
-
-
     
     FILE *output;
     char filename[30];
@@ -1181,21 +1168,59 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     output = fopen(filename, "w");
 
     fprintf(output, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
-    fprintf(output, "NumRows : %d\n", numRow);
-
 
     for(int i = 0; i < numRow; i++)
     {
-        fprintf(output, "CoreRow Horizontal\n");
-        fprintf(output, " Coordinate    :   %d\n", i * topDie.rowHeight);
-        fprintf(output, " Height        :   %d\n", topDie.rowHeight);
-        fprintf(output, " Sitewidth     :    1\n");
-        fprintf(output, " Sitespacing   :    1\n");
-        fprintf(output, " Siteorient    :    1\n");
-        fprintf(output, " Sitesymmetry  :    1\n");
-        fprintf(output, " Sitesymmetry  :    1\n");
-        fprintf(output, " SubrowOrigin  :    100	NumSites  :  10000\n");
-        fprintf(output, "End\n");
+        vector <int> subrow;
+
+        for(int j = 0; j < topDieMacros[i].size(); j++)
+        {
+            int x =  macros[topDieMacros[i].at(j)].finalX;
+            int w =  macros[topDieMacros[i].at(j)].finalWidth;
+            subrow.push_back( x );
+            subrow.push_back( x+w ) ;
+        }
+
+        sort(subrow.begin(), subrow.end());
+        totalRow += topDieMacros[i].size() + 1;
+        
+        if(subrow[0] == 0)
+            totalRow--;
+        if(subrow.back() == (int) topDie.upperRightX)
+            totalRow--;
+    }
+    
+    fprintf(output, "NumRows : %d\n", totalRow);
+
+    for(int i = 0; i < numRow; i++)
+    {
+        vector <int> subrow;
+        
+        subrow.push_back(0);
+
+        for(int j = 0; j < topDieMacros[i].size(); j++)
+        {
+            int x =  macros[topDieMacros[i].at(j)].finalX;
+            int w =  macros[topDieMacros[i].at(j)].finalWidth;
+            subrow.push_back( x );
+            subrow.push_back( x+w ) ;
+        }
+        subrow.push_back(diewidth);
+
+        sort(subrow.begin(), subrow.end());
+        
+        for(int k = 0; k < topDieMacros[i].size() + 1; k++)
+        {
+            fprintf(output, "CoreRow Horizontal\n");
+            fprintf(output, " Coordinate    :   %d\n", i * height);
+            fprintf(output, " Height        :   %d\n", height);
+            fprintf(output, " Sitewidth     :    1\n");
+            fprintf(output, " Sitespacing   :    1\n");
+            fprintf(output, " Siteorient    :    1\n");
+            fprintf(output, " Sitesymmetry  :    1\n");
+            fprintf(output, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
+            fprintf(output, "End\n");
+        }
     }
 
     fclose(output);

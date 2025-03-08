@@ -32,4 +32,4 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros);
 
 void wirtePl(vector <instance> &instances, vector <instance> &macros);
 
-void writeRow(vector <instance> &macros, Die topDie);
+void writeRow(vector <instance> &macros, Die topDie, Die btmDie);

@@ -169,4 +169,6 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
 void printNetInfo(int NumNets, vector <RawNet> rawnet);
 
+void readAbcusResult(vector <instance> &instances);
+
 #endif
