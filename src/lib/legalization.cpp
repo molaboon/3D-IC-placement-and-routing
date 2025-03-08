@@ -1114,9 +1114,62 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros)
     fclose(output);
 }
 
-void writeRow(vector <instance> &macros, Die topDie)
+void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
 {
+    vector < vector<int> > topDieMacrosPlacement(topDie.repeatCount);
+    vector < vector<int> > btmDieMacrosPlacement(btmDie.repeatCount);
+    const int numRow = topDie.repeatCount;
+
+    int topDieCellsWidth[numRow] = {0};
+    int btmDieCellsWidth[numRow] = {0};
+    int numMacro = macros.size();
+
+    for(int row = 0; row < numRow; row++)
+        topDieMacrosPlacement[row].reserve(numMacro);
+    for(int row = 0; row< btmDie.repeatCount; row++)
+        btmDieMacrosPlacement[row].reserve(numMacro);
     
+    for(int inst = 0; inst < numMacro; inst++)
+    {
+        int row = 0;
+        float upOrdown = macros[inst].y ;
+ 
+        int uperX = macros[inst].finalX + (macros[inst].finalWidth) ;
+        int uperY = macros[inst].finalY + (macros[inst].finalHeight) ;
+        int lowerX = macros[inst].finalX;
+        int lowerY = macros[inst].finalY;
+        int uperRow, lowerRow;
+        macros[inst].finalY = lowerY;  
+        
+        if( macros[inst].layer == topLayer)
+        {
+            uperRow = (uperY / topDie.rowHeight) ;
+            lowerRow = (lowerY / topDie.rowHeight);
+            
+            if(uperRow >= topDie.repeatCount)
+                uperRow = topDie.repeatCount - 1;
+
+            for(int row = lowerRow; row <= uperRow; row++)
+            {
+                topDieCellsWidth[row] += (int) macros[inst].finalWidth;
+                topDieMacrosPlacement[row].push_back(macros[inst].instIndex);
+            } 
+        }   
+        else
+        {
+            uperRow = (uperY / btmDie.rowHeight);
+            lowerRow = lowerY / btmDie.rowHeight;
+
+            if(uperRow >= btmDie.repeatCount)
+                uperRow = btmDie.repeatCount-1;
+
+            for(int row = lowerRow; row <= uperRow; row++)
+            {
+                btmDieCellsWidth[row] += macros[inst].finalWidth;
+                btmDieMacrosPlacement[row].push_back(macros[inst].instIndex);
+            }
+        }
+    }
     
 
 
@@ -1124,7 +1177,6 @@ void writeRow(vector <instance> &macros, Die topDie)
     
     FILE *output;
     char filename[30];
-    int numRow = topDie.repeatCount;
     snprintf(filename, sizeof(filename), "./test/test.scl");
     output = fopen(filename, "w");
 
