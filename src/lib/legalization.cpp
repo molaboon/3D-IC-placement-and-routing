@@ -653,7 +653,7 @@ void place2nearRow(const Die die, const Die theOtherDie, vector <vector<int>> &d
     }
 }
 
-void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,  vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie)
+void insertTerminal(const vector <instance> &instances, const vector <RawNet> &rawNet, vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie)
 { 
     const int numNet = rawNet.size();
     int numTerminal = 0;
@@ -669,6 +669,8 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
     const int numTerOfY = (dieHight - space) / spaceY - 1;
     char terminalArray[numTerOfY][numTerOfX] = {0};
 
+    terminals.resize(rawNet.size());
+
     // calculate the number of the terminal in rawnet
     for(int net = 0; net < numNet; net++)
     {
@@ -678,12 +680,11 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
             if( rawNet[net].Connection[inst]->layer != firstInstLater )
             {
                 terminal newTerminal;
-                numTerminal++;
                 newTerminal.netID = net;
                 newTerminal.x = 0;
                 newTerminal.y = 0;
-                terminals.push_back(newTerminal);
-
+                terminals[numTerminal] = newTerminal;
+                numTerminal++;
                 break;
             }
         }
@@ -711,7 +712,6 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                 maxY = rawNet[terminals[t].netID].Connection[i]->finalY;
         }
         
-
         terminals[t].x = ((maxX - minX)/2 + minX ) - ((maxX - minX)/2 + minX ) % spaceX + space + sizeX/2 ;
         terminals[t].y = ((maxY - minY)/2 + minY ) - ((maxY - minY)/2 + minY ) % spaceY + space + sizeY/2;
         
@@ -749,18 +749,15 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
                 {
                     for(int xx = minX; xx < maxX; xx++)
                     {
-                        if(terminalArray[yy][xx] == 0)
+                        if(terminalArray[yy][xx] != 0)
                         {
                             terminals[t].x = xx * (spaceX) + space + sizeX/2;
                             terminals[t].y = yy * (spaceY) + space + sizeY/2;
                             found = true;
                             terminalArray[yy][xx] = 1;
-                            break;
+                            goto nextRound;
                         }
                     }
-
-                    if(found)
-                        break;
                 }
 
                 minY = minY >> 1;
@@ -781,6 +778,9 @@ void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,
 
             } while (!found);
             
+            nextRound:
+            continue;
+
         }
     }
 }
@@ -1053,65 +1053,94 @@ void writeData(const float hpwl, const float hbt, const float penalty)
 void wirteNodes(vector <instance> &instances, vector <instance> &macros)
 {
     FILE *output;
+    FILE *output2;
+
     
     char filename[30];
+    char filename2[30];
+
     int numInstances = 0;
+    int numInst2 = 0;
     int numMacros = 3;
     int qqq = 0;
+    int jjj = 0;
 
-    for(int i = 0; i < instances.size(); i++)
-        if(instances[i].layer == 0)
+    for(int i = 0; i < instances.size(); i++)   
+    {
+        if(instances[i].layer == 1)
             numInstances ++;
-
+        else
+            numInst2 ++;
+    }
+        
     snprintf(filename, sizeof(filename), "./test/test.nodes");
+    snprintf(filename2, sizeof(filename2), "./test/test2.nodes");
 
     output = fopen(filename, "w");
+    output2 = fopen(filename2, "w");
 
     fprintf(output, "UCLA nodes 1.0\n# Created : \n# User    :   Modified MMS Benchmark\n\n");
     fprintf(output, "NumNodes :   %d\n", numInstances);
     fprintf(output, "NumTerminals :   %d\n\n", numMacros);
 
+    fprintf(output2, "UCLA nodes 1.0\n# Created : \n# User    :   Modified MMS Benchmark\n\n");
+    fprintf(output2, "NumNodes :   %d\n", numInst2);
+    fprintf(output2, "NumTerminals :   %d\n\n", numMacros);
+
     for(int i = 0; i < instances.size(); i++)
     {
-        if(instances[i].layer == 0)
+        if(instances[i].layer == 1 && !instances[i].isMacro)
         {
             fprintf(output, "o%d %d %d\n", qqq, instances[i].finalWidth, instances[i].finalHeight);
             qqq++;
         }
-            
+        else if(instances[i].layer == 0 && !instances[i].isMacro)
+        {
+            fprintf(output2, "o%d %d %d\n", jjj, instances[i].finalWidth, instances[i].finalHeight);
+            jjj++;   
+        }
     }
 
     fclose(output);
+    fclose(output2);
 }
 
 void wirtePl(vector <instance> &instances, vector <instance> &macros)
 {
     FILE *output;
+    FILE *output2;
     
     char filename[30];
+    char filename2[30];
+
     snprintf(filename, sizeof(filename), "./test/test.ntup.pl");
     output = fopen(filename, "w");
 
+    snprintf(filename2, sizeof(filename2), "./test/test2.ntup.pl");
+    output2 = fopen(filename2, "w");
+
     int numInstances = 0;
-    int numMacros = 3;
-    int qqq = 0;
-
-    for(int i = 0; i < instances.size(); i++)
-        if(instances[i].layer == 0)
-            numInstances ++;
-
+    int numInst2 = 0;
+    
     fprintf(output, "UCLA pl 1.0\n\n");
+    fprintf(output2, "UCLA pl 1.0\n\n");
 
     for(int i = 0; i < instances.size(); i++)
     {
-        if(instances[i].layer == 0)
+        if(instances[i].layer == 1 && !instances[i].isMacro)
         {
-            fprintf(output, "o%d %d %d : N\n", qqq, (int) instances[i].x, (int) instances[i].y);
-            qqq++;
+            fprintf(output, "o%d %d %d : N\n", numInstances, (int) instances[i].x, (int) instances[i].y);
+            numInstances++;
+        }
+        else if(instances[i].layer == 0 && !instances[i].isMacro)
+        {
+            fprintf(output2, "o%d %d %d : N\n", numInst2, (int) instances[i].x, (int) instances[i].y);
+            numInst2++;
         }
     }
 
     fclose(output);
+    fclose(output2);
 }
 
 void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
@@ -1224,4 +1253,68 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     }
 
     fclose(output);
+
+    // btm die
+    FILE *output2;
+    char filename2[30];
+    snprintf(filename2, sizeof(filename2), "./test/test2.scl");
+    output2 = fopen(filename2, "w");
+
+    fprintf(output2, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
+
+    for(int i = 0; i < numRow; i++)
+    {
+        vector <int> subrow;
+
+        for(int j = 0; j < btmDieMacros[i].size(); j++)
+        {
+            int x =  macros[btmDieMacros[i].at(j)].finalX;
+            int w =  macros[btmDieMacros[i].at(j)].finalWidth;
+            subrow.push_back( x );
+            subrow.push_back( x+w ) ;
+        }
+
+        sort(subrow.begin(), subrow.end());
+        totalRow += btmDieMacros[i].size() + 1;
+        
+        if(subrow[0] == 0)
+            totalRow--;
+        if(subrow.back() == (int) topDie.upperRightX)
+            totalRow--;
+    }
+    
+    fprintf(output2, "NumRows : %d\n", totalRow);
+
+    for(int i = 0; i < numRow; i++)
+    {
+        vector <int> subrow;
+        
+        subrow.push_back(0);
+
+        for(int j = 0; j < btmDieMacros[i].size(); j++)
+        {
+            int x =  macros[btmDieMacros[i].at(j)].finalX;
+            int w =  macros[btmDieMacros[i].at(j)].finalWidth;
+            subrow.push_back( x );
+            subrow.push_back( x+w ) ;
+        }
+        subrow.push_back(diewidth);
+
+        sort(subrow.begin(), subrow.end());
+        
+        for(int k = 0; k < btmDieMacros[i].size() + 1; k++)
+        {
+            fprintf(output2, "CoreRow Horizontal\n");
+            fprintf(output2, " Coordinate    :   %d\n", i * btmDie.rowHeight);
+            fprintf(output2, " Height        :   %d\n", btmDie.rowHeight);
+            fprintf(output2, " Sitewidth     :    1\n");
+            fprintf(output2, " Sitespacing   :    1\n");
+            fprintf(output2, " Siteorient    :    1\n");
+            fprintf(output2, " Sitesymmetry  :    1\n");
+            fprintf(output2, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
+            fprintf(output2, "End\n");
+        }
+    }
+
+    fclose(output2);
 }

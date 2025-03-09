@@ -14,7 +14,7 @@ void place2BestRow( vector <instance> &instances, const int numInstances, Die to
 
 void writeFile(const vector <instance> &instances, const vector <RawNet> &rawNet, const int numInstances, const vector <terminal> &terminals);
 
-void insertTerminal(const vector <instance> &instances, vector <RawNet> &rawNet,  vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie);
+void insertTerminal(const vector <instance> &instances, const vector <RawNet> &rawNet,  vector <terminal> &terminals, const Hybrid_terminal terminalTech, Die topDie);
 
 void placeInst2BestX(const Die die, vector <vector<int>> &diePlacementState, vector <vector<int>> &dieMacroPlacementState, vector <instance> &instances, int *cellWidth);
 

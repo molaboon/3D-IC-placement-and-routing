@@ -349,7 +349,7 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
     fclose(input);
 }
 
-void readAbcusResult(vector <instance> &instances)
+void readAbcusResult(vector <instance> &instances, int layer)
 {
     vector <int> instMap;
     int numIns = 0;
@@ -358,7 +358,7 @@ void readAbcusResult(vector <instance> &instances)
 
     for(int i = 0; i < instances.size(); i++)
     {
-        if(instances[i].layer == 1 && !instances[i].isMacro)
+        if(instances[i].layer == layer && !instances[i].isMacro)
         {
             instMap.push_back(i);
             numIns++;
@@ -367,7 +367,11 @@ void readAbcusResult(vector <instance> &instances)
     
     FILE *input;
     char filename[30];
-    snprintf(filename, sizeof(filename), "./output/test.result");
+    if(layer == 1)
+        snprintf(filename, sizeof(filename), "./output/test.result");
+    else
+        snprintf(filename, sizeof(filename), "./output/test2.result");
+    
     input = fopen(filename, "r");
 
     for(int i = 0; i < numIns; i++)

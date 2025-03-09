@@ -6,6 +6,7 @@
 #include <omp.h>
 #include <iostream>
 #include <map>
+#include <unistd.h>
 
 #include "lib/readfile.h"
 #include "lib/initial_placement.h"
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
 	returnGridInfo(&topDie, &binInfo, numStdCells, instances);
 	returnDensityMap(densityMap);
-	fillerPreprocess(fillers, binInfo, topDie, btmDie);
+	// fillerPreprocess(fillers, binInfo, topDie, btmDie);
 	
 	/*	macro gradient and placement	*/
 	
@@ -187,10 +188,17 @@ int main(int argc, char *argv[]){
 		wirteNodes(instances, macros);
 		wirtePl(instances, macros);
 		writeRow(macros, topDie, btmDie);
-		readAbcusResult(instances);
+		
+		system("./hw4 ./test/test.aux");
+		system("./hw4 ./test/test2.aux");
+		sleep(3);
+
+		readAbcusResult(instances, 1);
+		readAbcusResult(instances, 0);
+
 		// place2BestRow(instances, numStdCells, topDie, btmDie, macros);
-		// insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
-		// writeVisualFile(instances, 0, topDie);
+		insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
+		writeVisualFile(instances, 0, topDie);
 		// writeFile(instances, rawnet, numStdCells, terminals);
 	}
 

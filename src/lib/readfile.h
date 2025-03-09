@@ -161,14 +161,11 @@ void printHybridTerminalInfo(Hybrid_terminal terminal);
 void readInstanceInfo(FILE *input, int *NumInstances, vector <instance> &instances, int *NumTechnologies, 
                         vector <Tech_menu> *TechMenu, vector <instance> &macros, vector <instance> &stdCells, 
                         vector< vector<instance> > &pinsInMacros);
-void printInstanceInfo(int NumInstances, vector <instance> InstanceArray);
 
 void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <instance> &InstanceArray, 
                 vector <instance> &macros, vector <RawNet> &netsOfMacros, vector <int> &numStdCellConnectMacro,
                 vector <vector<instance>> &pinsInMacro);
 
-void printNetInfo(int NumNets, vector <RawNet> rawnet);
-
-void readAbcusResult(vector <instance> &instances);
+void readAbcusResult(vector <instance> &instances, int layer);
 
 #endif
