@@ -10,16 +10,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  100
-End
-CoreRow Horizontal
- Coordinate    :   0
- Height        :   33
- Sitewidth     :    1
- Sitespacing   :    1
- Siteorient    :    1
- Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  11581
+ SubrowOrigin  :    0	NumSites  :  23000
 End
 CoreRow Horizontal
  Coordinate    :   33
@@ -28,16 +19,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  100
-End
-CoreRow Horizontal
- Coordinate    :   33
- Height        :   33
- Sitewidth     :    1
- Sitespacing   :    1
- Siteorient    :    1
- Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  11581
+ SubrowOrigin  :    0	NumSites  :  23000
 End
 CoreRow Horizontal
  Coordinate    :   66
@@ -46,16 +28,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  100
-End
-CoreRow Horizontal
- Coordinate    :   66
- Height        :   33
- Sitewidth     :    1
- Sitespacing   :    1
- Siteorient    :    1
- Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  11581
+ SubrowOrigin  :    0	NumSites  :  23000
 End
 CoreRow Horizontal
  Coordinate    :   99
@@ -2971,7 +2944,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5412
@@ -2980,7 +2953,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5445
@@ -2998,7 +2971,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5445
@@ -3007,7 +2980,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5478
@@ -3025,7 +2998,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5478
@@ -3034,7 +3007,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5511
@@ -3052,7 +3025,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5511
@@ -3061,7 +3034,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5544
@@ -3079,7 +3052,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5544
@@ -3088,7 +3061,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5577
@@ -3106,7 +3079,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5577
@@ -3115,7 +3088,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5610
@@ -3133,7 +3106,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5610
@@ -3142,7 +3115,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5643
@@ -3160,7 +3133,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5643
@@ -3169,7 +3142,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5676
@@ -3187,7 +3160,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5676
@@ -3196,7 +3169,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5709
@@ -3214,7 +3187,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5709
@@ -3223,7 +3196,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5742
@@ -3241,7 +3214,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5742
@@ -3250,7 +3223,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5775
@@ -3268,7 +3241,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5775
@@ -3277,7 +3250,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5808
@@ -3295,7 +3268,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5808
@@ -3304,7 +3277,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5841
@@ -3322,7 +3295,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5841
@@ -3331,7 +3304,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5874
@@ -3349,7 +3322,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5874
@@ -3358,7 +3331,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5907
@@ -3376,7 +3349,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5907
@@ -3385,7 +3358,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5940
@@ -3403,7 +3376,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5940
@@ -3412,7 +3385,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   5973
@@ -3430,7 +3403,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   5973
@@ -3439,7 +3412,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6006
@@ -3457,7 +3430,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6006
@@ -3466,7 +3439,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6039
@@ -3484,7 +3457,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6039
@@ -3493,7 +3466,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6072
@@ -3511,7 +3484,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6072
@@ -3520,7 +3493,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6105
@@ -3538,7 +3511,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6105
@@ -3547,7 +3520,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6138
@@ -3565,7 +3538,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6138
@@ -3574,7 +3547,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6171
@@ -3592,7 +3565,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6171
@@ -3601,7 +3574,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6204
@@ -3619,7 +3592,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6204
@@ -3628,7 +3601,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6237
@@ -3646,7 +3619,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6237
@@ -3655,7 +3628,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6270
@@ -3673,7 +3646,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6270
@@ -3682,7 +3655,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6303
@@ -3700,7 +3673,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6303
@@ -3709,7 +3682,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6336
@@ -3727,7 +3700,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6336
@@ -3736,7 +3709,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6369
@@ -3754,7 +3727,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6369
@@ -3763,7 +3736,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6402
@@ -3781,7 +3754,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6402
@@ -3790,7 +3763,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6435
@@ -3808,7 +3781,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6435
@@ -3817,7 +3790,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6468
@@ -3835,7 +3808,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6468
@@ -3844,7 +3817,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6501
@@ -3862,7 +3835,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6501
@@ -3871,7 +3844,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6534
@@ -3889,7 +3862,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6534
@@ -3898,7 +3871,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6567
@@ -3916,7 +3889,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6567
@@ -3925,7 +3898,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6600
@@ -3943,7 +3916,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6600
@@ -3952,7 +3925,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6633
@@ -3970,7 +3943,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6633
@@ -3979,7 +3952,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6666
@@ -3997,7 +3970,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6666
@@ -4006,7 +3979,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6699
@@ -4024,7 +3997,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6699
@@ -4033,7 +4006,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6732
@@ -4051,7 +4024,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6732
@@ -4060,7 +4033,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6765
@@ -4078,7 +4051,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6765
@@ -4087,7 +4060,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6798
@@ -4105,7 +4078,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6798
@@ -4114,7 +4087,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6831
@@ -4132,7 +4105,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6831
@@ -4141,7 +4114,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6864
@@ -4159,7 +4132,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6864
@@ -4168,7 +4141,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6897
@@ -4186,7 +4159,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6897
@@ -4195,7 +4168,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6930
@@ -4213,7 +4186,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6930
@@ -4222,7 +4195,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6963
@@ -4240,7 +4213,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6963
@@ -4249,7 +4222,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   6996
@@ -4267,7 +4240,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   6996
@@ -4276,7 +4249,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7029
@@ -4294,7 +4267,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7029
@@ -4303,7 +4276,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7062
@@ -4321,7 +4294,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7062
@@ -4330,7 +4303,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7095
@@ -4348,7 +4321,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7095
@@ -4357,7 +4330,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7128
@@ -4375,7 +4348,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7128
@@ -4384,7 +4357,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7161
@@ -4402,7 +4375,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7161
@@ -4411,7 +4384,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7194
@@ -4429,7 +4402,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7194
@@ -4438,7 +4411,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7227
@@ -4456,7 +4429,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7227
@@ -4465,7 +4438,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7260
@@ -4483,7 +4456,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7260
@@ -4492,7 +4465,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7293
@@ -4510,7 +4483,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7293
@@ -4519,7 +4492,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7326
@@ -4537,7 +4510,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7326
@@ -4546,7 +4519,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7359
@@ -4564,7 +4537,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7359
@@ -4573,7 +4546,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7392
@@ -4591,7 +4564,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7392
@@ -4600,7 +4573,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7425
@@ -4618,7 +4591,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7425
@@ -4627,7 +4600,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7458
@@ -4645,7 +4618,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7458
@@ -4654,7 +4627,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7491
@@ -4672,7 +4645,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7491
@@ -4681,7 +4654,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7524
@@ -4699,7 +4672,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7524
@@ -4708,7 +4681,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7557
@@ -4726,7 +4699,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7557
@@ -4735,7 +4708,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7590
@@ -4753,7 +4726,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7590
@@ -4762,7 +4735,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7623
@@ -4780,7 +4753,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7623
@@ -4789,7 +4762,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7656
@@ -4807,7 +4780,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7656
@@ -4816,7 +4789,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7689
@@ -4834,7 +4807,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7689
@@ -4843,7 +4816,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7722
@@ -4861,7 +4834,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7722
@@ -4870,7 +4843,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7755
@@ -4888,7 +4861,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7755
@@ -4897,7 +4870,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7788
@@ -4915,7 +4888,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7788
@@ -4924,7 +4897,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7821
@@ -4942,7 +4915,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7821
@@ -4951,7 +4924,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7854
@@ -4969,7 +4942,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7854
@@ -4978,7 +4951,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7887
@@ -4996,7 +4969,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7887
@@ -5005,7 +4978,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7920
@@ -5023,7 +4996,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7920
@@ -5032,7 +5005,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7953
@@ -5050,7 +5023,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7953
@@ -5059,7 +5032,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   7986
@@ -5077,7 +5050,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   7986
@@ -5086,7 +5059,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8019
@@ -5104,7 +5077,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8019
@@ -5113,7 +5086,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8052
@@ -5131,7 +5104,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8052
@@ -5140,7 +5113,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8085
@@ -5158,7 +5131,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8085
@@ -5167,7 +5140,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8118
@@ -5185,7 +5158,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8118
@@ -5194,7 +5167,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8151
@@ -5212,7 +5185,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8151
@@ -5221,7 +5194,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8184
@@ -5239,7 +5212,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8184
@@ -5248,7 +5221,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8217
@@ -5266,7 +5239,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8217
@@ -5275,7 +5248,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8250
@@ -5293,7 +5266,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8250
@@ -5302,7 +5275,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8283
@@ -5320,7 +5293,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8283
@@ -5329,7 +5302,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8316
@@ -5347,7 +5320,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8316
@@ -5356,7 +5329,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8349
@@ -5374,7 +5347,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8349
@@ -5383,7 +5356,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8382
@@ -5401,7 +5374,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8382
@@ -5410,7 +5383,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8415
@@ -5428,7 +5401,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8415
@@ -5437,7 +5410,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8448
@@ -5455,7 +5428,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8448
@@ -5464,7 +5437,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8481
@@ -5482,7 +5455,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8481
@@ -5491,7 +5464,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8514
@@ -5509,7 +5482,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8514
@@ -5518,7 +5491,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8547
@@ -5536,7 +5509,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8547
@@ -5545,7 +5518,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8580
@@ -5563,7 +5536,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   8580
@@ -5572,7 +5545,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8613
@@ -5581,7 +5554,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  100
 End
 CoreRow Horizontal
  Coordinate    :   8613
@@ -5590,7 +5563,16 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    11419	NumSites  :  2402
+End
+CoreRow Horizontal
+ Coordinate    :   8613
+ Height        :   33
+ Sitewidth     :    1
+ Sitespacing   :    1
+ Siteorient    :    1
+ Sitesymmetry  :    1
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8646
@@ -5599,7 +5581,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  100
 End
 CoreRow Horizontal
  Coordinate    :   8646
@@ -5608,7 +5590,16 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    11419	NumSites  :  2402
+End
+CoreRow Horizontal
+ Coordinate    :   8646
+ Height        :   33
+ Sitewidth     :    1
+ Sitespacing   :    1
+ Siteorient    :    1
+ Sitesymmetry  :    1
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8679
@@ -5617,7 +5608,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  100
 End
 CoreRow Horizontal
  Coordinate    :   8679
@@ -5626,7 +5617,16 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    11419	NumSites  :  2402
+End
+CoreRow Horizontal
+ Coordinate    :   8679
+ Height        :   33
+ Sitewidth     :    1
+ Sitespacing   :    1
+ Siteorient    :    1
+ Sitesymmetry  :    1
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8712
@@ -5635,7 +5635,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8712
@@ -5644,7 +5644,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8745
@@ -5653,7 +5653,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8745
@@ -5662,7 +5662,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8778
@@ -5671,7 +5671,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8778
@@ -5680,7 +5680,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8811
@@ -5689,7 +5689,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8811
@@ -5698,7 +5698,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8844
@@ -5707,7 +5707,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8844
@@ -5716,7 +5716,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8877
@@ -5725,7 +5725,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8877
@@ -5734,7 +5734,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8910
@@ -5743,7 +5743,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8910
@@ -5752,7 +5752,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8943
@@ -5761,7 +5761,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8943
@@ -5770,7 +5770,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   8976
@@ -5779,7 +5779,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   8976
@@ -5788,7 +5788,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9009
@@ -5797,7 +5797,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9009
@@ -5806,7 +5806,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9042
@@ -5815,7 +5815,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9042
@@ -5824,7 +5824,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9075
@@ -5833,7 +5833,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9075
@@ -5842,7 +5842,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9108
@@ -5851,7 +5851,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9108
@@ -5860,7 +5860,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9141
@@ -5869,7 +5869,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9141
@@ -5878,7 +5878,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9174
@@ -5887,7 +5887,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9174
@@ -5896,7 +5896,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9207
@@ -5905,7 +5905,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9207
@@ -5914,7 +5914,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9240
@@ -5923,7 +5923,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9240
@@ -5932,7 +5932,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9273
@@ -5941,7 +5941,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9273
@@ -5950,7 +5950,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9306
@@ -5959,7 +5959,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9306
@@ -5968,7 +5968,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9339
@@ -5977,7 +5977,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9339
@@ -5986,7 +5986,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9372
@@ -5995,7 +5995,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9372
@@ -6004,7 +6004,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9405
@@ -6013,7 +6013,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9405
@@ -6022,7 +6022,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9438
@@ -6031,7 +6031,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9438
@@ -6040,7 +6040,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9471
@@ -6049,7 +6049,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9471
@@ -6058,7 +6058,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9504
@@ -6067,7 +6067,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9504
@@ -6076,7 +6076,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9537
@@ -6085,7 +6085,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9537
@@ -6094,7 +6094,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9570
@@ -6103,7 +6103,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9570
@@ -6112,7 +6112,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9603
@@ -6121,7 +6121,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9603
@@ -6130,7 +6130,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9636
@@ -6139,7 +6139,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9636
@@ -6148,7 +6148,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9669
@@ -6157,7 +6157,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9669
@@ -6166,7 +6166,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9702
@@ -6175,7 +6175,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9702
@@ -6184,7 +6184,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9735
@@ -6193,7 +6193,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9735
@@ -6202,7 +6202,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9768
@@ -6211,7 +6211,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9768
@@ -6220,7 +6220,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9801
@@ -6229,7 +6229,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9801
@@ -6238,7 +6238,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9834
@@ -6247,7 +6247,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9834
@@ -6256,7 +6256,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9867
@@ -6265,7 +6265,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9867
@@ -6274,7 +6274,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9900
@@ -6283,7 +6283,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9900
@@ -6292,7 +6292,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9933
@@ -6301,7 +6301,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9933
@@ -6310,7 +6310,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9966
@@ -6319,7 +6319,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9966
@@ -6328,7 +6328,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   9999
@@ -6337,7 +6337,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   9999
@@ -6346,7 +6346,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10032
@@ -6355,7 +6355,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10032
@@ -6364,7 +6364,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10065
@@ -6373,7 +6373,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10065
@@ -6382,7 +6382,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10098
@@ -6391,7 +6391,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10098
@@ -6400,7 +6400,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10131
@@ -6409,7 +6409,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10131
@@ -6418,7 +6418,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10164
@@ -6427,7 +6427,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10164
@@ -6436,7 +6436,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10197
@@ -6445,7 +6445,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10197
@@ -6454,7 +6454,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10230
@@ -6463,7 +6463,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10230
@@ -6472,7 +6472,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10263
@@ -6481,7 +6481,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    0	NumSites  :  14221
+ SubrowOrigin  :    0	NumSites  :  13821
 End
 CoreRow Horizontal
  Coordinate    :   10263
@@ -6490,7 +6490,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10296
@@ -6508,7 +6508,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10296
@@ -6517,7 +6517,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10329
@@ -6535,7 +6535,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10329
@@ -6544,7 +6544,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10362
@@ -6562,7 +6562,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10362
@@ -6571,7 +6571,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10395
@@ -6589,7 +6589,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10395
@@ -6598,7 +6598,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10428
@@ -6616,7 +6616,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10428
@@ -6625,7 +6625,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10461
@@ -6643,7 +6643,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10461
@@ -6652,7 +6652,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10494
@@ -6670,7 +6670,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10494
@@ -6679,7 +6679,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10527
@@ -6697,7 +6697,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10527
@@ -6706,7 +6706,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10560
@@ -6724,7 +6724,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10560
@@ -6733,7 +6733,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10593
@@ -6751,7 +6751,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10593
@@ -6760,7 +6760,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10626
@@ -6778,7 +6778,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10626
@@ -6787,7 +6787,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10659
@@ -6805,7 +6805,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10659
@@ -6814,7 +6814,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10692
@@ -6832,7 +6832,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10692
@@ -6841,7 +6841,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10725
@@ -6859,7 +6859,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10725
@@ -6868,7 +6868,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10758
@@ -6886,7 +6886,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10758
@@ -6895,7 +6895,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10791
@@ -6913,7 +6913,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10791
@@ -6922,7 +6922,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10824
@@ -6940,7 +6940,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10824
@@ -6949,7 +6949,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10857
@@ -6967,7 +6967,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10857
@@ -6976,7 +6976,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10890
@@ -6994,7 +6994,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10890
@@ -7003,7 +7003,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10923
@@ -7021,7 +7021,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10923
@@ -7030,7 +7030,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10956
@@ -7048,7 +7048,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10956
@@ -7057,7 +7057,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   10989
@@ -7075,7 +7075,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   10989
@@ -7084,7 +7084,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11022
@@ -7102,7 +7102,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11022
@@ -7111,7 +7111,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11055
@@ -7129,7 +7129,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11055
@@ -7138,7 +7138,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11088
@@ -7156,7 +7156,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11088
@@ -7165,7 +7165,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11121
@@ -7183,7 +7183,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11121
@@ -7192,7 +7192,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11154
@@ -7210,7 +7210,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11154
@@ -7219,7 +7219,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11187
@@ -7237,7 +7237,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11187
@@ -7246,7 +7246,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11220
@@ -7264,7 +7264,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11220
@@ -7273,7 +7273,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11253
@@ -7291,7 +7291,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11253
@@ -7300,7 +7300,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11286
@@ -7318,7 +7318,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11286
@@ -7327,7 +7327,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11319
@@ -7345,7 +7345,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11319
@@ -7354,7 +7354,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11352
@@ -7372,7 +7372,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11352
@@ -7381,7 +7381,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11385
@@ -7399,7 +7399,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11385
@@ -7408,7 +7408,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11418
@@ -7426,7 +7426,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11418
@@ -7435,7 +7435,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11451
@@ -7453,7 +7453,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11451
@@ -7462,7 +7462,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11484
@@ -7480,7 +7480,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11484
@@ -7489,7 +7489,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11517
@@ -7507,7 +7507,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11517
@@ -7516,7 +7516,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11550
@@ -7534,7 +7534,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11550
@@ -7543,7 +7543,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11583
@@ -7561,7 +7561,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11583
@@ -7570,7 +7570,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11616
@@ -7588,7 +7588,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11616
@@ -7597,7 +7597,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11649
@@ -7615,7 +7615,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11649
@@ -7624,7 +7624,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11682
@@ -7642,7 +7642,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11682
@@ -7651,7 +7651,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11715
@@ -7669,7 +7669,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11715
@@ -7678,7 +7678,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11748
@@ -7696,7 +7696,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11748
@@ -7705,7 +7705,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11781
@@ -7723,7 +7723,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11781
@@ -7732,7 +7732,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11814
@@ -7750,7 +7750,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11814
@@ -7759,7 +7759,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11847
@@ -7777,7 +7777,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11847
@@ -7786,7 +7786,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11880
@@ -7804,7 +7804,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11880
@@ -7813,7 +7813,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11913
@@ -7831,7 +7831,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11913
@@ -7840,7 +7840,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11946
@@ -7858,7 +7858,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11946
@@ -7867,7 +7867,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   11979
@@ -7885,7 +7885,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   11979
@@ -7894,7 +7894,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12012
@@ -7912,7 +7912,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12012
@@ -7921,7 +7921,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12045
@@ -7939,7 +7939,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12045
@@ -7948,7 +7948,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12078
@@ -7966,7 +7966,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12078
@@ -7975,7 +7975,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12111
@@ -7993,7 +7993,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12111
@@ -8002,7 +8002,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12144
@@ -8020,7 +8020,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12144
@@ -8029,7 +8029,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12177
@@ -8047,7 +8047,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12177
@@ -8056,7 +8056,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12210
@@ -8074,7 +8074,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12210
@@ -8083,7 +8083,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12243
@@ -8101,7 +8101,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12243
@@ -8110,7 +8110,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12276
@@ -8128,7 +8128,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12276
@@ -8137,7 +8137,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12309
@@ -8155,7 +8155,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12309
@@ -8164,7 +8164,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12342
@@ -8182,7 +8182,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12342
@@ -8191,7 +8191,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12375
@@ -8209,7 +8209,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12375
@@ -8218,7 +8218,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12408
@@ -8236,7 +8236,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12408
@@ -8245,7 +8245,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12441
@@ -8263,7 +8263,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12441
@@ -8272,7 +8272,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12474
@@ -8290,7 +8290,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12474
@@ -8299,7 +8299,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12507
@@ -8317,7 +8317,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12507
@@ -8326,7 +8326,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12540
@@ -8344,7 +8344,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12540
@@ -8353,7 +8353,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12573
@@ -8371,7 +8371,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12573
@@ -8380,7 +8380,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12606
@@ -8398,7 +8398,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12606
@@ -8407,7 +8407,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12639
@@ -8425,7 +8425,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12639
@@ -8434,7 +8434,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12672
@@ -8452,7 +8452,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12672
@@ -8461,7 +8461,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12705
@@ -8479,7 +8479,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12705
@@ -8488,7 +8488,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12738
@@ -8506,7 +8506,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12738
@@ -8515,7 +8515,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12771
@@ -8533,7 +8533,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12771
@@ -8542,7 +8542,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12804
@@ -8560,7 +8560,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12804
@@ -8569,7 +8569,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12837
@@ -8587,7 +8587,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12837
@@ -8596,7 +8596,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12870
@@ -8614,7 +8614,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12870
@@ -8623,7 +8623,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12903
@@ -8641,7 +8641,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12903
@@ -8650,7 +8650,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12936
@@ -8668,7 +8668,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12936
@@ -8677,7 +8677,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   12969
@@ -8695,7 +8695,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   12969
@@ -8704,7 +8704,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13002
@@ -8722,7 +8722,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13002
@@ -8731,7 +8731,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13035
@@ -8749,7 +8749,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13035
@@ -8758,7 +8758,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13068
@@ -8776,7 +8776,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13068
@@ -8785,7 +8785,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13101
@@ -8803,7 +8803,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13101
@@ -8812,7 +8812,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13134
@@ -8830,7 +8830,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13134
@@ -8839,7 +8839,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13167
@@ -8857,7 +8857,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13167
@@ -8866,7 +8866,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13200
@@ -8884,7 +8884,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13200
@@ -8893,7 +8893,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13233
@@ -8911,7 +8911,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13233
@@ -8920,7 +8920,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13266
@@ -8938,7 +8938,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13266
@@ -8947,7 +8947,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13299
@@ -8965,7 +8965,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13299
@@ -8974,7 +8974,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13332
@@ -8992,7 +8992,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13332
@@ -9001,7 +9001,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13365
@@ -9019,7 +9019,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13365
@@ -9028,7 +9028,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13398
@@ -9046,7 +9046,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13398
@@ -9055,7 +9055,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13431
@@ -9073,7 +9073,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13431
@@ -9082,7 +9082,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13464
@@ -9100,7 +9100,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13464
@@ -9109,7 +9109,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13497
@@ -9127,7 +9127,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13497
@@ -9136,7 +9136,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13530
@@ -9154,7 +9154,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13530
@@ -9163,7 +9163,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13563
@@ -9181,7 +9181,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13563
@@ -9190,7 +9190,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13596
@@ -9208,7 +9208,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13596
@@ -9217,7 +9217,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13629
@@ -9235,7 +9235,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13629
@@ -9244,7 +9244,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13662
@@ -9262,7 +9262,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13662
@@ -9271,7 +9271,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13695
@@ -9289,7 +9289,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13695
@@ -9298,7 +9298,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13728
@@ -9316,7 +9316,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13728
@@ -9325,7 +9325,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13761
@@ -9343,7 +9343,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13761
@@ -9352,7 +9352,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13794
@@ -9370,7 +9370,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13794
@@ -9379,7 +9379,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13827
@@ -9397,7 +9397,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13827
@@ -9406,7 +9406,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13860
@@ -9424,7 +9424,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13860
@@ -9433,7 +9433,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13893
@@ -9451,7 +9451,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13893
@@ -9460,7 +9460,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13926
@@ -9478,7 +9478,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13926
@@ -9487,7 +9487,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13959
@@ -9505,7 +9505,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13959
@@ -9514,7 +9514,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   13992
@@ -9532,7 +9532,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   13992
@@ -9541,7 +9541,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14025
@@ -9559,7 +9559,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14025
@@ -9568,7 +9568,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14058
@@ -9586,7 +9586,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14058
@@ -9595,7 +9595,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14091
@@ -9613,7 +9613,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14091
@@ -9622,7 +9622,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14124
@@ -9640,7 +9640,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14124
@@ -9649,7 +9649,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14157
@@ -9667,7 +9667,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14157
@@ -9676,7 +9676,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14190
@@ -9694,7 +9694,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14190
@@ -9703,7 +9703,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14223
@@ -9721,7 +9721,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14223
@@ -9730,7 +9730,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14256
@@ -9748,7 +9748,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14256
@@ -9757,7 +9757,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14289
@@ -9775,7 +9775,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14289
@@ -9784,7 +9784,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14322
@@ -9802,7 +9802,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14322
@@ -9811,7 +9811,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14355
@@ -9829,7 +9829,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14355
@@ -9838,7 +9838,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14388
@@ -9856,7 +9856,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14388
@@ -9865,7 +9865,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14421
@@ -9883,7 +9883,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14421
@@ -9892,7 +9892,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14454
@@ -9910,7 +9910,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14454
@@ -9919,7 +9919,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14487
@@ -9937,7 +9937,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14487
@@ -9946,7 +9946,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14520
@@ -9964,7 +9964,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14520
@@ -9973,7 +9973,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14553
@@ -9991,7 +9991,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14553
@@ -10000,7 +10000,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14586
@@ -10018,7 +10018,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14586
@@ -10027,7 +10027,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14619
@@ -10045,7 +10045,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14619
@@ -10054,7 +10054,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14652
@@ -10072,7 +10072,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14652
@@ -10081,7 +10081,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14685
@@ -10099,7 +10099,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14685
@@ -10108,7 +10108,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14718
@@ -10126,7 +10126,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14718
@@ -10135,7 +10135,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14751
@@ -10153,7 +10153,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14751
@@ -10162,7 +10162,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14784
@@ -10180,7 +10180,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14784
@@ -10189,7 +10189,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14817
@@ -10207,7 +10207,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14817
@@ -10216,7 +10216,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14850
@@ -10234,7 +10234,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14850
@@ -10243,7 +10243,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14883
@@ -10261,7 +10261,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14883
@@ -10270,7 +10270,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14916
@@ -10288,7 +10288,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14916
@@ -10297,7 +10297,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14949
@@ -10315,7 +10315,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14949
@@ -10324,7 +10324,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   14982
@@ -10342,7 +10342,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   14982
@@ -10351,7 +10351,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15015
@@ -10369,7 +10369,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15015
@@ -10378,7 +10378,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15048
@@ -10396,7 +10396,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15048
@@ -10405,7 +10405,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15081
@@ -10423,7 +10423,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15081
@@ -10432,7 +10432,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15114
@@ -10450,7 +10450,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15114
@@ -10459,7 +10459,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15147
@@ -10477,7 +10477,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15147
@@ -10486,7 +10486,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15180
@@ -10504,7 +10504,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15180
@@ -10513,7 +10513,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15213
@@ -10531,7 +10531,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15213
@@ -10540,7 +10540,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15246
@@ -10558,7 +10558,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15246
@@ -10567,7 +10567,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15279
@@ -10585,7 +10585,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15279
@@ -10594,7 +10594,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15312
@@ -10612,7 +10612,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15312
@@ -10621,7 +10621,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15345
@@ -10639,7 +10639,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15345
@@ -10648,7 +10648,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15378
@@ -10666,7 +10666,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15378
@@ -10675,7 +10675,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15411
@@ -10693,7 +10693,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15411
@@ -10702,7 +10702,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15444
@@ -10720,7 +10720,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15444
@@ -10729,7 +10729,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15477
@@ -10747,7 +10747,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15477
@@ -10756,7 +10756,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15510
@@ -10774,7 +10774,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15510
@@ -10783,7 +10783,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15543
@@ -10801,7 +10801,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15543
@@ -10810,7 +10810,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15576
@@ -10828,7 +10828,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15576
@@ -10837,7 +10837,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15609
@@ -10855,7 +10855,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15609
@@ -10864,7 +10864,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15642
@@ -10882,7 +10882,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15642
@@ -10891,7 +10891,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15675
@@ -10909,7 +10909,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15675
@@ -10918,7 +10918,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15708
@@ -10936,7 +10936,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15708
@@ -10945,7 +10945,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15741
@@ -10963,7 +10963,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15741
@@ -10972,7 +10972,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15774
@@ -10990,7 +10990,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15774
@@ -10999,7 +10999,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15807
@@ -11017,7 +11017,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15807
@@ -11026,7 +11026,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15840
@@ -11044,7 +11044,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15840
@@ -11053,7 +11053,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15873
@@ -11071,7 +11071,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15873
@@ -11080,7 +11080,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15906
@@ -11098,7 +11098,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15906
@@ -11107,7 +11107,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15939
@@ -11125,7 +11125,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15939
@@ -11134,7 +11134,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   15972
@@ -11152,7 +11152,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   15972
@@ -11161,7 +11161,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16005
@@ -11179,7 +11179,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16005
@@ -11188,7 +11188,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16038
@@ -11206,7 +11206,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16038
@@ -11215,7 +11215,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16071
@@ -11233,7 +11233,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16071
@@ -11242,7 +11242,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16104
@@ -11260,7 +11260,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16104
@@ -11269,7 +11269,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16137
@@ -11287,7 +11287,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16137
@@ -11296,7 +11296,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16170
@@ -11314,7 +11314,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16170
@@ -11323,7 +11323,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16203
@@ -11341,7 +11341,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16203
@@ -11350,7 +11350,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16236
@@ -11368,7 +11368,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16236
@@ -11377,7 +11377,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16269
@@ -11395,7 +11395,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16269
@@ -11404,7 +11404,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16302
@@ -11422,7 +11422,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16302
@@ -11431,7 +11431,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16335
@@ -11449,7 +11449,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16335
@@ -11458,7 +11458,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16368
@@ -11476,7 +11476,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16368
@@ -11485,7 +11485,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16401
@@ -11503,7 +11503,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16401
@@ -11512,7 +11512,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16434
@@ -11530,7 +11530,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16434
@@ -11539,7 +11539,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16467
@@ -11557,7 +11557,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16467
@@ -11566,7 +11566,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16500
@@ -11584,7 +11584,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16500
@@ -11593,7 +11593,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16533
@@ -11611,7 +11611,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16533
@@ -11620,7 +11620,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16566
@@ -11638,7 +11638,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16566
@@ -11647,7 +11647,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16599
@@ -11665,7 +11665,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16599
@@ -11674,7 +11674,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16632
@@ -11692,7 +11692,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16632
@@ -11701,7 +11701,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16665
@@ -11719,7 +11719,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16665
@@ -11728,7 +11728,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16698
@@ -11746,7 +11746,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16698
@@ -11755,7 +11755,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16731
@@ -11773,7 +11773,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16731
@@ -11782,7 +11782,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16764
@@ -11800,7 +11800,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    11419	NumSites  :  2802
+ SubrowOrigin  :    11419	NumSites  :  2402
 End
 CoreRow Horizontal
  Coordinate    :   16764
@@ -11809,7 +11809,7 @@ CoreRow Horizontal
  Sitespacing   :    1
  Siteorient    :    1
  Sitesymmetry  :    1
- SubrowOrigin  :    22900	NumSites  :  100
+ SubrowOrigin  :    22500	NumSites  :  500
 End
 CoreRow Horizontal
  Coordinate    :   16797

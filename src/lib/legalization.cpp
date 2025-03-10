@@ -660,13 +660,13 @@ void insertTerminal(const vector <instance> &instances, const vector <RawNet> &r
     const int dieWidth = (int) topDie.upperRightX;
     const int dieHight = (int) topDie.upperRightY;
 
-    const int sizeX = terminalTech.sizeX;
-    const int sizeY = terminalTech.sizeY;
-    const int space = terminalTech.spacing;
-    const int spaceX = space + sizeX;
-    const int spaceY = space + sizeY;;
-    const int numTerOfX = (dieWidth - space) / spaceX - 1;
-    const int numTerOfY = (dieHight - space) / spaceY - 1;
+    const unsigned int sizeX = terminalTech.sizeX;
+    const unsigned int sizeY = terminalTech.sizeY;
+    const unsigned int space = terminalTech.spacing;
+    const unsigned int spaceX = space + sizeX;
+    const unsigned int spaceY = space + sizeY;;
+    const unsigned int numTerOfX = (dieWidth - space) / spaceX - 1;
+    const unsigned int numTerOfY = (dieHight - space) / spaceY - 1;
     char terminalArray[numTerOfY][numTerOfX] = {0};
 
     terminals.resize(rawNet.size());
@@ -690,6 +690,7 @@ void insertTerminal(const vector <instance> &instances, const vector <RawNet> &r
         }
     }
 
+    terminals.resize(numTerminal);
 
     // place the terminal to the position
     for (int t = 0; t < numTerminal; t++)
@@ -749,11 +750,10 @@ void insertTerminal(const vector <instance> &instances, const vector <RawNet> &r
                 {
                     for(int xx = minX; xx < maxX; xx++)
                     {
-                        if(terminalArray[yy][xx] != 0)
+                        if(terminalArray[yy][xx] != 1)
                         {
                             terminals[t].x = xx * (spaceX) + space + sizeX/2;
                             terminals[t].y = yy * (spaceY) + space + sizeY/2;
-                            found = true;
                             terminalArray[yy][xx] = 1;
                             goto nextRound;
                         }
@@ -925,39 +925,51 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[0]].layer = topLayer;
     macros[ btmDieMacro[0]].layer = btmLayer;
     
-
-    macros[ topDieMacro[0] ].finalY = 0;
-    macros[ btmDieMacro[0] ].finalY = 0;
-
-    macros[ topDieMacro[0] ].rotate = 0;
-    macros[ btmDieMacro[0] ].rotate = 180;
+    macros[ topDieMacro[0] ].rotate = 180;
+    macros[ btmDieMacro[0] ].rotate = 90;
     
+    macros[ topDieMacro[1] ].rotate = 180;
+    macros[ btmDieMacro[1] ].rotate = 180;
+
+    macros[topDieMacro[2]].rotate = 270;
+    macros[btmDieMacro[2]].rotate = 0;
+
+    for(int i = 0; i < macros.size(); i++)
+    {
+        if(macros[i].rotate == 90 || macros[i].rotate == 270)
+        {
+            float tmp = macros[i].width;
+            macros[i].width = macros[i].height;
+            macros[i].height = tmp;
+            macros[i].finalWidth = (int) macros[i].width;
+            macros[i].finalHeight = (int) macros[i].height;
+            
+        }
+        else
+        {
+            macros[i].finalWidth = (int) macros[i].width;
+            macros[i].finalHeight = (int) macros[i].height;
+        }   
+    }
+
     macros[ topDieMacro[0] ].finalX = 100;
-    macros[ btmDieMacro[0] ].finalX = 100;
+    macros[ btmDieMacro[0] ].finalX = 1000;
+
+    macros[ topDieMacro[0] ].finalY = 100;
+    macros[ btmDieMacro[0] ].finalY = 3000;
+
     
+    macros[ topDieMacro[1] ].finalX = 100;
+    macros[ btmDieMacro[1] ].finalX = btmDie.upperRightX - macros[btmDieMacro[1]].finalWidth - 500;
+
     macros[ topDieMacro[1] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 100;
     macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 100;
-
-    macros[ topDieMacro[1] ].finalX = 100;
-    macros[ btmDieMacro[1] ].finalX = 100;
-
-    macros[ topDieMacro[1] ].rotate = 180;
-    macros[ btmDieMacro[1] ].rotate = 0;
-
     
-    macros[topDieMacro[2]].rotate = 270;
-    macros[topDieMacro[2]].finalWidth = (int) macros[topDieMacro[2]].height;
-    macros[topDieMacro[2]].finalHeight = (int) macros[topDieMacro[2]].width;
+    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 500;
+    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 500;
 
-    macros[btmDieMacro[2]].rotate = 270;
-    macros[btmDieMacro[2]].finalWidth = (int) macros[btmDieMacro[2]].height;
-    macros[btmDieMacro[2]].finalHeight = (int) macros[btmDieMacro[2]].width;
-    
     macros[ topDieMacro[2] ].finalY = btmDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 5000;
-    macros[ btmDieMacro[2] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 5000;
-
-    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
-    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 100;
+    macros[ btmDieMacro[2] ].finalY = 100;
 
 }
 
@@ -1213,10 +1225,14 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
         sort(subrow.begin(), subrow.end());
         totalRow += topDieMacros[i].size() + 1;
         
-        if(subrow[0] == 0)
-            totalRow--;
-        if(subrow.back() == (int) topDie.upperRightX)
-            totalRow--;
+        if(subrow.size() > 0)
+        {
+            if(subrow[0] == 0)
+                totalRow--;
+            if(subrow.back() == (int) topDie.upperRightX)
+                totalRow--;
+        }
+        
     }
     
     fprintf(output, "NumRows : %d\n", totalRow);
@@ -1277,6 +1293,8 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
         sort(subrow.begin(), subrow.end());
         totalRow += btmDieMacros[i].size() + 1;
         
+        if(subrow.size() < 1)
+            continue;
         if(subrow[0] == 0)
             totalRow--;
         if(subrow.back() == (int) topDie.upperRightX)

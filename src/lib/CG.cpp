@@ -512,8 +512,10 @@ float scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo)
     float score = 0.0;
     float area = binInfo.binWidth * binInfo.binHeight;
     
-    int binXnum = (int) binInfo.binXnum;
-    int binYnum = (int) binInfo.binYnum;
+    const int binXnum = (int) binInfo.binXnum;
+    const int binYnum = (int) binInfo.binYnum;
+
+    
 
     for(int i = 0; i < binYnum; i++)
     {
@@ -771,8 +773,8 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
     float score = 0.0, wireLength = 0.0, weight = 1;
-    const float binWidth = binInfo.binWidth;
-    const float binHeight = binInfo.binHeight;
+    const float binWidth = binInfo.binWidth * 0.99 * 2;
+    const float binHeight = binInfo.binHeight * 0.99 * 2;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
@@ -787,8 +789,8 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         Alpha = returnAlpha(tmp);
 
-        spaceX = tmp[0] * Alpha * binWidth * 2.0f;
-        spaceY = tmp[1] * Alpha * binHeight * 2.0f ;
+        spaceX = tmp[0] * Alpha * binWidth ;
+        spaceY = tmp[1] * Alpha * binHeight ;
         spaceZ = (nowCG[index * Dimensions + 2] > 0)? 5.0f : -5.0f ;
 
         instances[index].refX = instances[index].x;
@@ -839,9 +841,6 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
 
         for(int j = 0; j < numInstances; j++)
             penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
-        
-        // for(int j = 0; j < numFiller; j++)
-        //     penaltyInfoOfinstance(fillers[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
 
         penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);  
     }
@@ -855,13 +854,11 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     #pragma omp section
         gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
-    // #pragma omp section
-    // if(needFillers)
-    // {
-    //     graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-    //     graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-    // }
-        
+    #pragma omp section
+    {
+        graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+        graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+    }    
 }    
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(float) );
@@ -1036,7 +1033,7 @@ void refPosition(vector <instance> &instances)
 
 void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, Die btmDie)
 {
-    float binArea = binInfo.binWidth * 2 * binInfo.binHeight * 2;
+    float binArea = binInfo.binWidth * 3 * binInfo.binHeight * 3;
     float topDieArea = (topDie.upperRightX * topDie.upperRightY) * (float) (100 - topDie.MaxUtil) / 100.0;
     float btmDieArea = (btmDie.upperRightX * btmDie.upperRightY) * (float) (100 - btmDie.MaxUtil) / 100.0;
 
@@ -1060,7 +1057,7 @@ void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, D
         filler.emplace_back(tmp);
     }
 
-    for(int i = 0; i < numTopFiller; i++)
+    for(int i = 0; i < numBtmFiller; i++)
     {
         // float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
         instance tmp;
@@ -1205,3 +1202,23 @@ bool OvRatio(vector <instance> &instances, gridInfo binInfo)
     else
         return false;
 }
+
+void fillbin(float* ori1stLayer, float* ori2stLayer, gridInfo binInfo)
+{   
+    int edgex = 1;
+    int edgey = 1;
+
+    if(binInfo.binWidth * binInfo.binXnum > binInfo.dieWidth)
+        edgex = (int) binInfo.binXnum;
+    if(binInfo.binHeight * binInfo.binYnum > binInfo.dieHeight)
+        edgey = (int) binInfo.binYnum;
+
+    for(int y = 0; y < edgey; y++)
+    {
+        for(int x = 0; x < edgex; x++)
+        {
+             
+        }
+    }
+}
+

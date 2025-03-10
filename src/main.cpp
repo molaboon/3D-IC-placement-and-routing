@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
 	readNetInfo(input, &NumNets, rawnet, instances, macros, netsOfMacros, numStdCellConncetMacro, pinsInMacros);
 	returnGridInfo(&topDie, &binInfo, numStdCells, instances);
 	returnDensityMap(densityMap);
-	// fillerPreprocess(fillers, binInfo, topDie, btmDie);
+	fillerPreprocess(fillers, binInfo, topDie, btmDie);
 	
 	/*	macro gradient and placement	*/
 	
@@ -131,10 +131,10 @@ int main(int argc, char *argv[]){
 				for(int j = 0; j < 300; j++)
 				{
 					qqq++;
-					// mvFiller(fillers, binInfo);
+					mvFiller(fillers, binInfo);
 					newSolution(instances, nowCG, binInfo);
 					updatePinsInMacroInfo( macros, pinsInMacros, instances);
-					writeVisualFile(instances, qqq, topDie);
+					writeVisualFile(fillers, qqq, topDie);
 
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
 					
@@ -199,7 +199,8 @@ int main(int argc, char *argv[]){
 		// place2BestRow(instances, numStdCells, topDie, btmDie, macros);
 		insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
 		writeVisualFile(instances, 0, topDie);
-		// writeFile(instances, rawnet, numStdCells, terminals);
+		writeFile(instances, rawnet, numStdCells, terminals);
+
 	}
 
 	return 0;
