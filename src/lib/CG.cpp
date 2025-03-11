@@ -331,11 +331,11 @@ float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
     }
 
-    if (needFillers)
-    {
-        for(int i = 0; i < numFiller; i++)
-            penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
-    }
+    // if (needFillers)
+    // {
+    //     for(int i = 0; i < numFiller; i++)
+    //         penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
+    // }
     
     score = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
@@ -773,8 +773,8 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
     float score = 0.0, wireLength = 0.0, weight = 1;
-    const float binWidth = binInfo.binWidth * 0.99 * 2;
-    const float binHeight = binInfo.binHeight * 0.99 * 2;
+    const float binWidth = binInfo.binWidth ;
+    const float binHeight = binInfo.binHeight ;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
@@ -842,6 +842,8 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         for(int j = 0; j < numInstances; j++)
             penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
 
+        fillbin(originFirstLayer, originSecondLayer, binInfo);
+
         penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);  
     }
 }
@@ -854,11 +856,11 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     #pragma omp section
         gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
-    #pragma omp section
-    {
-        graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-        graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-    }    
+    // #pragma omp section
+    // {
+    //     graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+    //     graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
+    // }    
 }    
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(float) );
@@ -1203,21 +1205,29 @@ bool OvRatio(vector <instance> &instances, gridInfo binInfo)
         return false;
 }
 
-void fillbin(float* ori1stLayer, float* ori2stLayer, gridInfo binInfo)
+void fillbin(float* ori1stLayer, float* ori2ndLayer, gridInfo binInfo)
 {   
-    int edgex = 1;
-    int edgey = 1;
+    const float area = binInfo.binHeight * binInfo.binWidth;
 
     if(binInfo.binWidth * binInfo.binXnum > binInfo.dieWidth)
-        edgex = (int) binInfo.binXnum;
-    if(binInfo.binHeight * binInfo.binYnum > binInfo.dieHeight)
-        edgey = (int) binInfo.binYnum;
-
-    for(int y = 0; y < edgey; y++)
     {
-        for(int x = 0; x < edgex; x++)
+        const int num = (int) binInfo.binYnum;
+        for(int x = 1; x < num; x++)
         {
-             
+            ori1stLayer[x * num - 1] += area;
+            ori2ndLayer[x * num - 1] += area;
+        }
+    
+    }
+        
+    if(binInfo.binHeight * binInfo.binYnum > binInfo.dieHeight)
+    {
+        const int num = (int) binInfo.binXnum;
+        const int totalNum = (int) binInfo.binXnum * (int) binInfo.binYnum - 1;
+        for(int y = 0; y < num; y++)
+        {
+            ori1stLayer[totalNum - y] += area;
+            ori2ndLayer[totalNum - y] += area;
         }
     }
 }

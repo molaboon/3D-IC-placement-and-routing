@@ -128,13 +128,13 @@ int main(int argc, char *argv[]){
 
 			if( !useEplace )
 			{
-				for(int j = 0; j < 300; j++)
+				for(int j = 0; j < 1; j++)
 				{
 					qqq++;
-					mvFiller(fillers, binInfo);
+					// mvFiller(fillers, binInfo);
 					newSolution(instances, nowCG, binInfo);
 					updatePinsInMacroInfo( macros, pinsInMacros, instances);
-					writeVisualFile(fillers, qqq, topDie);
+					writeVisualFile(instances, qqq, topDie);
 
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
 					

@@ -65,3 +65,5 @@ void graFillerY(vector <instance> &fillers, gridInfo binInfo, const float penalt
 void mvFiller(vector <instance> &fillers, gridInfo binInfo);
 
 bool OvRatio(vector <instance> &instances, gridInfo binInfo);
+
+void fillbin(float* ori1stLayer, float* ori2ndLayer, gridInfo binInfo);
