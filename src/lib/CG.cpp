@@ -629,7 +629,7 @@ void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
         if(instances[i].z < 4996)
             instances[i].tmpZ = 8888;
         else
-            instances[i].tmpZ = 2222;
+            instances[i].tmpZ = 1111;
         
         instances[i].tmpD = returnDensity(instances[i].tmpZ, densityMap);
 
@@ -678,7 +678,7 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     penaltyScore = score_of_z * (alpha) + (densityScore) * penaltyWeight; 
     wireLength = score_of_x + score_of_y;
 
-    // writeData(wireLength, score_of_z, densityScore);
+    writeData(wireLength, score_of_z, densityScore);
     
     if(penaltyWeight == 1)
     {
@@ -791,7 +791,11 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         spaceX = tmp[0] * Alpha * binWidth ;
         spaceY = tmp[1] * Alpha * binHeight ;
-        spaceZ = (nowCG[index * Dimensions + 2] > 0)? 5.0f : -5.0f ;
+        
+        if(instances[index].z < 4996)
+            spaceZ = (nowCG[index * Dimensions + 2] > 0)? 8888.0f : 1111.0f ;
+        else
+            spaceZ = (nowCG[index * Dimensions + 2] > 0)? 1111.0f : 8888.0f ;
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;
@@ -799,11 +803,12 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-
-        if(instances[index].z < 4997)
-            instances[index].z += spaceZ;
-        else
-            instances[index].z -= spaceZ;
+        instances[index].z = spaceZ;
+        
+        // if(instances[index].z < 4997)
+        //     instances[index].z += spaceZ;
+        // else
+        //     instances[index].z -= spaceZ;
         
         glodenSearch(instances[index], binInfo);
     
@@ -1224,7 +1229,7 @@ void fillbin(float* ori1stLayer, float* ori2ndLayer, gridInfo binInfo)
     {
         const int num = (int) binInfo.binXnum;
         const int totalNum = (int) binInfo.binXnum * (int) binInfo.binYnum - 1;
-        for(int y = 0; y < num; y++)
+        for(int y = 1; y < num; y++)
         {
             ori1stLayer[totalNum - y] += area;
             ori2ndLayer[totalNum - y] += area;

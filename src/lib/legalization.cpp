@@ -922,6 +922,9 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     macros[ topDieMacro[2] ].layer = topLayer;
     macros[ btmDieMacro[2] ].layer = btmLayer;
 
+    macros[ topDieMacro[1] ].layer = topLayer;
+    macros[ btmDieMacro[1] ].layer = btmLayer;
+
     macros[ topDieMacro[0]].layer = topLayer;
     macros[ btmDieMacro[0]].layer = btmLayer;
     
@@ -960,13 +963,13 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
 
     
     macros[ topDieMacro[1] ].finalX = 100;
-    macros[ btmDieMacro[1] ].finalX = btmDie.upperRightX - macros[btmDieMacro[1]].finalWidth - 500;
+    macros[ btmDieMacro[1] ].finalX = btmDie.upperRightX - macros[btmDieMacro[1]].finalWidth - 1000;
 
     macros[ topDieMacro[1] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 100;
     macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 100;
     
-    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 500;
-    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 500;
+    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 1000;
+    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 1000;
 
     macros[ topDieMacro[2] ].finalY = btmDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 5000;
     macros[ btmDieMacro[2] ].finalY = 100;
@@ -1038,28 +1041,28 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
 void writeData(const float hpwl, const float hbt, const float penalty)
 {
     FILE *hpwlOutput;
-    FILE *hbtOutput;
-    FILE *penaltyOutput;
+    // FILE *hbtOutput;
+    // FILE *penaltyOutput;
     
     char filename[30];
-    char filename1[30];
-    char filename2[30];
+    // char filename1[30];
+    // char filename2[30];
 
-    snprintf(filename, sizeof(filename), "HPWL.txt");
-    snprintf(filename1, sizeof(filename), "HBT.txt");
-    snprintf(filename2, sizeof(filename), "Penalty.txt");
+    snprintf(filename, sizeof(filename), "hpwl.txt");
+    // snprintf(filename1, sizeof(filename), "HBT.txt");
+    // snprintf(filename2, sizeof(filename), "Penalty.txt");
 
     hpwlOutput = fopen(filename, "a");
-    hbtOutput = fopen(filename1, "a");
-    penaltyOutput = fopen(filename2, "a");
+    // hbtOutput = fopen(filename1, "a");
+    // penaltyOutput = fopen(filename2, "a");
 
     fprintf(hpwlOutput, "%f\n", hpwl);
-    fprintf(hbtOutput, "%f\n", hbt);
-    fprintf(penaltyOutput, "%f\n", penalty);
+    // fprintf(hbtOutput, "%f\n", hbt);
+    // fprintf(penaltyOutput, "%f\n", penalty);
 
     fclose(hpwlOutput);
-    fclose(hbtOutput);
-    fclose(penaltyOutput);
+    // fclose(hbtOutput);
+    // fclose(penaltyOutput);
 }
 
 void wirteNodes(vector <instance> &instances, vector <instance> &macros)

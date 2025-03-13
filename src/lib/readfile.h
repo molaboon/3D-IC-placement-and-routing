@@ -127,6 +127,7 @@ typedef struct _RawNet{
     bool hasTerminal;
     int terminalX;
     int terminalY;
+    float hpwl;
 
     vector < instance* > Connection;
 

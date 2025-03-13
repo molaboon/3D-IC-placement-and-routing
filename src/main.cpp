@@ -81,8 +81,8 @@ int main(int argc, char *argv[]){
 	
 	if(macroPart)
 	{
-		macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
-		cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
+		// macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
+		// cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
 		macroLegalization(macros, topDie, btmDie);
 		// macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
 	/*	first placement and CG preprocessing	*/
 	
 	if (stdCellPart){
-
+		system("rm hpwl.txt");
 		float gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
 		float wireLength, newWireLength;
 
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
-		penaltyWeight = 1e-8;
+		penaltyWeight = 1000;
 		
 		/*	Refinement(CG)	*/
 
@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
 
 			if( !useEplace )
 			{
-				for(int j = 0; j < 1; j++)
+				for(int j = 0; j < 300; j++)
 				{
 					qqq++;
 					// mvFiller(fillers, binInfo);
@@ -151,8 +151,8 @@ int main(int argc, char *argv[]){
 				}
 				
 				// refPosition(instances);
-				if(penaltyWeight < 100.0)
-					penaltyWeight *= 2;
+				if(penaltyWeight > 1e-6)
+					penaltyWeight /= 2;
 			}
 			else
 			{
@@ -191,6 +191,7 @@ int main(int argc, char *argv[]){
 		
 		system("./hw4 ./test/test.aux");
 		system("./hw4 ./test/test2.aux");
+		system("rm visulization/graph/*");
 		sleep(3);
 
 		readAbcusResult(instances, 1);
@@ -200,6 +201,7 @@ int main(int argc, char *argv[]){
 		insertTerminal(instances, rawnet, terminals, terminalTech, topDie);
 		writeVisualFile(instances, 0, topDie);
 		writeFile(instances, rawnet, numStdCells, terminals);
+		
 
 	}
 
