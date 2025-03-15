@@ -28,7 +28,7 @@
 using namespace std;
 
 
-float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore)
+float scoreOfX( vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore)
 {
     float score = 0.0;
 
@@ -80,6 +80,7 @@ float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isG
                 numerator_2 += tmp * exp(-tmp/ gamma);
                 denominator_2 += exp(-tmp/ gamma);
             }
+            rawNet[net].hpwlX = numerator_1/denominator_1 - numerator_2 / denominator_2;
             score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
         }
     }
@@ -87,7 +88,7 @@ float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isG
     return score;
 }
 
-float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore)
+float scoreOfY( vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore)
 {
     float score = 0.0;
 
@@ -115,6 +116,7 @@ float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isG
                 mn_2 += tmpGra * exp(-tmpGra/ gamma);
                 md_2 += exp(-tmpGra/ gamma);
             }
+
             score += ( mn_1/md_1 - mn_2/md_2 ) - ( n_1/d_1 - n_2/d_2 ); 
         }
     }
@@ -138,6 +140,7 @@ float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isG
                 numerator_2 += tmp * exp(-tmp/ gamma);
                 denominator_2 += exp(-tmp/ gamma);
             }
+            rawNet[net].hpwlY = numerator_1/denominator_1 - numerator_2 / denominator_2;
             score += numerator_1/denominator_1 - numerator_2 / denominator_2 ;
         }
     }

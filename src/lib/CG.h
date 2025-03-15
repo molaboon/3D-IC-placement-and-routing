@@ -1,8 +1,8 @@
 #include "readfile.h"
 
-float scoreOfX( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
+float scoreOfX(  vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
 
-float scoreOfY( const vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
+float scoreOfY(  vector <RawNet> &rawNet, const float gamma, const bool isGra, instance graInstance, float originScore);
 
 float TSVofNet( vector <RawNet> &rawNet, bool isGra, instance graInstance, float originScore, float *densityMap);
 

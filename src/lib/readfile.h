@@ -127,8 +127,10 @@ typedef struct _RawNet{
     bool hasTerminal;
     int terminalX;
     int terminalY;
-    float hpwl;
-
+    
+    float hpwlX;
+    float hpwlY;
+    
     vector < instance* > Connection;
 
 }RawNet;
