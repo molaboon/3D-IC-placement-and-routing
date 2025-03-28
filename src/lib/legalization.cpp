@@ -956,22 +956,22 @@ void macroPlace(vector <instance> &macros, Die topDie, Die btmDie)
     }
 
     macros[ topDieMacro[0] ].finalX = 100;
-    macros[ btmDieMacro[0] ].finalX = 1000;
+    macros[ btmDieMacro[0] ].finalX = 100;
 
     macros[ topDieMacro[0] ].finalY = 100;
-    macros[ btmDieMacro[0] ].finalY = 3000;
+    macros[ btmDieMacro[0] ].finalY = 1000;
 
     
     macros[ topDieMacro[1] ].finalX = 100;
-    macros[ btmDieMacro[1] ].finalX = btmDie.upperRightX - macros[btmDieMacro[1]].finalWidth - 1000;
+    macros[ btmDieMacro[1] ].finalX = btmDie.upperRightX - macros[btmDieMacro[1]].finalWidth - 100;
 
     macros[ topDieMacro[1] ].finalY = topDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 100;
     macros[ btmDieMacro[1] ].finalY = btmDie.upperRightY - macros[ btmDieMacro[1] ].finalHeight - 100;
     
-    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 1000;
-    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 1000;
+    macros[ topDieMacro[2] ].finalX = topDie.upperRightX - macros[ topDieMacro[2] ].finalWidth - 100;
+    macros[ btmDieMacro[2] ].finalX = topDie.upperRightX - macros[ btmDieMacro[2] ].finalWidth - 100;
 
-    macros[ topDieMacro[2] ].finalY = btmDie.upperRightY - macros[ topDieMacro[1] ].finalHeight - 5000;
+    macros[ topDieMacro[2] ].finalY = 100;
     macros[ btmDieMacro[2] ].finalY = 100;
 
 }
@@ -983,6 +983,24 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
     // according to the grade, we rotate the heighest grade of corner of macro to the center 
 
     int numOfmacros = macros.size();
+    int numCells = stdCells.size();
+    map <int, int> indexMap; 
+
+    // int gradeOfCorners[numOfmacros][numOfmacros][4] = {0};
+
+    // for(int i = 0; i < numCells; i++)
+    // {
+    //     for(int j = 0; j < stdCells[i].numNetConnection; j ++)
+    //     {
+    //         vector <int> macro;
+    //         int netID = stdCells[i].connectedNet[j];
+            
+    //         for(int k = 0; k < rawnets[netID].numPins; k++)
+    //         {                    
+    //         }
+    //     }
+
+    // }
 
     for(int i = 0; i < numOfmacros; i++)
     {
@@ -1024,8 +1042,8 @@ void macroRotate(vector <instance> &macros, vector < vector<instance> > &pinsInM
 
                             if(stdCells[instIndex2].isMacro && stdCells[instIndex2].instIndex != nowMacroIndex)
                             {
-                                int otherPinx = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalX;
-                                int otherPiny = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalY;
+                                // int otherPinx = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalX;
+                                // int otherPiny = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->finalY;
 
                                 gradeOfCorners[gradeIndex] += 1 ; 
                             }
@@ -1338,4 +1356,58 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     }
 
     fclose(output2);
+}
+
+void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> stdCells)
+{
+    int numOfmacros = macros.size();
+    int numCells = stdCells.size();
+
+    vector < vector<int> > maa;
+    FILE *output;
+    
+    char filename[30];
+    
+    snprintf(filename, sizeof(filename), "./case3.nets");
+    output = fopen(filename, "w");
+
+    int numInstances = 0;
+    int numInst2 = 0;
+    
+    fprintf(output, "UCLA pl 1.0\n\n");
+
+    for(int i = 0; i < numOfmacros; i++)
+    {
+        int numOfPinsInMacros = pinsInMacros[i].size();
+        int nowMacroIndex = macros[i].instIndex;
+
+        for(int j = 0; j < numOfPinsInMacros; j++)
+        {
+            vector<int> mm;
+            
+            for(int k = 0; k < pinsInMacros[i][j].numNetConnection; k++)
+            {
+                int netIndex = pinsInMacros[i][j].connectedNet[k];
+                
+                for(int l = 0; l < rawnets[netIndex].numPins; l++)
+                {
+                    int instIndex = rawnets[netIndex].Connection[l]->instIndex;
+                    int numNets = stdCells[instIndex].numNetConnection;
+                    
+                    for(int m = 0; m < numNets; m++)
+                    {
+                        for(int n = 0; n < rawnets[ stdCells[instIndex].connectedNet[m] ].numPins; n++)
+                        {
+                            int instIndex2 = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->instIndex;
+
+                            if(stdCells[instIndex2].isMacro && stdCells[instIndex2].instIndex != nowMacroIndex)
+                            {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

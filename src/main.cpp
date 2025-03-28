@@ -84,7 +84,7 @@ int main(int argc, char *argv[]){
 		// macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
 		// cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
 		macroLegalization(macros, topDie, btmDie);
-		// macroRotate(macros, pinsInMacros, rawnet, instances);
+		macroRotate(macros, pinsInMacros, rawnet, instances);
 		updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		writeVisualFile(macros, 2, topDie);
@@ -147,11 +147,10 @@ int main(int argc, char *argv[]){
 
 					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
 					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
-					
 				}
 				
 				// refPosition(instances);
-				if(penaltyWeight <4)
+				if(penaltyWeight < 4)
 					penaltyWeight *= 2;
 			}
 			else

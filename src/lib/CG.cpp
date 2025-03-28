@@ -775,9 +775,9 @@ void glodenSearch(instance &inst, const gridInfo binInfo)
 
 void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 {
-    float score = 0.0, wireLength = 0.0, weight = 1;
-    const float binWidth = binInfo.binWidth ;
-    const float binHeight = binInfo.binHeight ;
+    float score = 0.0, wireLength = 0.0, weight = 1.0f;
+    const float binWidth = binInfo.binWidth * weight ;
+    const float binHeight = binInfo.binHeight * weight ;
     for(int index = 0; index < binInfo.Numinstance; index++)
     {
         if(instances[index].canPass)
@@ -796,9 +796,9 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
         spaceY = tmp[1] * Alpha * binHeight ;
         
         if(instances[index].z < 4996)
-            spaceZ = (nowCG[index * Dimensions + 2] > 0)? 8888.0f : 1111.0f ;
+            spaceZ = (nowCG[index * Dimensions + 2] > 0)? 5.0f : -5.0f ;
         else
-            spaceZ = (nowCG[index * Dimensions + 2] > 0)? 1111.0f : 8888.0f ;
+            spaceZ = (nowCG[index * Dimensions + 2] > 0)? -5.0f : 5.0f ;
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;
@@ -806,7 +806,7 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-        instances[index].z = spaceZ;
+        instances[index].z += spaceZ;
         
         // if(instances[index].z < 4997)
         //     instances[index].z += spaceZ;
