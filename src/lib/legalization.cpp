@@ -1363,7 +1363,6 @@ void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pins
     int numOfmacros = macros.size();
     int numCells = stdCells.size();
 
-    vector < vector<int> > maa;
     FILE *output;
     
     char filename[30];
@@ -1374,7 +1373,7 @@ void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pins
     int numInstances = 0;
     int numInst2 = 0;
     
-    fprintf(output, "UCLA pl 1.0\n\n");
+    fprintf(output, "Numnet\n\n");
 
     for(int i = 0; i < numOfmacros; i++)
     {
@@ -1388,6 +1387,7 @@ void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pins
             for(int k = 0; k < pinsInMacros[i][j].numNetConnection; k++)
             {
                 int netIndex = pinsInMacros[i][j].connectedNet[k];
+                mm.push_back(nowMacroIndex);
                 
                 for(int l = 0; l < rawnets[netIndex].numPins; l++)
                 {
@@ -1410,4 +1410,101 @@ void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pins
             }
         }
     }
+}
+
+void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie)
+{
+    bool a =  cooradinate(macros, topDie);
+
+}
+
+bool cooradinate(vector <instance> &macros, Die topDie)
+{
+    int topY = topDie.upperRightY;
+    int btmY = 0;
+    int leftX = 0;
+    int rightX = topDie.upperRightX;
+    int direction = 0;  // 0 = left, 1 = up, 2 = right, 3 = down
+    
+    int tmp[4] = {btmY, rightX, topY, leftX};
+    
+    bool updateContour = 0;
+
+    macros[0].finalX = 0;
+    macros[0].finalY = 0;
+    macros[0].layer = 1;
+    macros[0].finalWidth = macros[0].width;
+    macros[0].finalHeight = macros[0].height;
+        
+
+    for(int i = 1; i < macros.size(); i++)
+    {
+        macros[i].layer = 1;
+        macros[i].finalWidth = macros[i].width;
+        macros[i].finalHeight = macros[i].height;
+        int _w = macros[i].finalWidth;
+        int _h = macros[i].finalHeight;
+        bool chang = false;
+        
+        direction = direction % 4;
+
+        switch (direction) {
+            case 0: // 向右
+                macros[i].finalX = macros[i-1].finalX + macros[i-1].finalWidth;
+                macros[i].finalY = btmY;
+
+                if(btmY + _h >= tmp[direction])
+                    tmp[direction] = btmY + _h;
+
+                if(macros[i].finalX + _w > rightX) 
+                    chang = true;
+
+                break;
+            case 1: // 向上
+                macros[i].finalX = rightX - _w;
+                macros[i].finalY = macros[i-1].finalY + macros[i-1].finalHeight;
+
+                if( rightX - _w <= tmp[direction])
+                    tmp[direction] = rightX - _w;
+
+                if( macros[i].finalY + macros[i].finalHeight > topY)
+                    chang = true;
+
+                break;
+            case 2: // 向左
+                macros[i].finalX = macros[i-1].finalX - _w;
+                macros[i].finalY = topY - _h;
+
+                if( topY - _h <= tmp[direction])
+                    tmp[direction] = topY - _h;
+                
+                if( macros[i].finalX < leftX)
+                    chang = true;
+                break;
+            case 3: // 向下
+                macros[i].finalX = leftX ;
+                macros[i].finalY = macros[i-1].finalY - _h;
+
+                if(leftX + macros[i].finalWidth > tmp[direction] )
+                    tmp[direction] = leftX + macros[i].finalWidth;
+                
+                if(macros[i].finalY < btmY)
+                    chang = true;
+                break;
+
+        }
+
+        if(chang)
+        {
+            i--;
+            direction ++;
+            btmY = tmp[0];
+            rightX = tmp[1];
+            topY = tmp[2];
+            leftX = tmp[3];
+        }
+        
+    }
+
+    return true;
 }

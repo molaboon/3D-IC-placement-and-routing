@@ -83,11 +83,12 @@ int main(int argc, char *argv[]){
 	{
 		// macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
 		// cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
-		macroLegalization(macros, topDie, btmDie);
-		macroRotate(macros, pinsInMacros, rawnet, instances);
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		// macroLegalization(macros, topDie, btmDie);
+		// macroRotate(macros, pinsInMacros, rawnet, instances);
+		macroPlacement(macros, rawnet, topDie);
+		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
-		writeVisualFile(macros, 2, topDie);
+		writeVisualFile(macros, 999, topDie);
 		// macroPartition( macros, netsOfMacros, topDie);
 	}
 

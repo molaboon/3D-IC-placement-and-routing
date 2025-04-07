@@ -33,3 +33,7 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros);
 void wirtePl(vector <instance> &instances, vector <instance> &macros);
 
 void writeRow(vector <instance> &macros, Die topDie, Die btmDie);
+
+void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie);
+
+bool cooradinate(vector <instance> &macros, Die topDie);
