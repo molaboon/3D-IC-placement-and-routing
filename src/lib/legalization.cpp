@@ -1414,11 +1414,11 @@ void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pins
 
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie)
 {
-    bool a =  cooradinate(macros, topDie);
+    bool a =  cooradinate(macros, topDie, rawnets);
 
 }
 
-bool cooradinate(vector <instance> &macros, Die topDie)
+bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets)
 {
     int topY = topDie.upperRightY;
     int btmY = 0;
@@ -1426,69 +1426,71 @@ bool cooradinate(vector <instance> &macros, Die topDie)
     int rightX = topDie.upperRightX;
     int direction = 0;  // 0 = left, 1 = up, 2 = right, 3 = down
     
+    int list[9] = {8, 7, 4, 5, 6, 3, 0 ,1 ,2};
     int tmp[4] = {btmY, rightX, topY, leftX};
     
     bool updateContour = 0;
 
-    macros[0].finalX = 0;
-    macros[0].finalY = 0;
-    macros[0].layer = 1;
-    macros[0].finalWidth = macros[0].width;
-    macros[0].finalHeight = macros[0].height;
+    macros[list[0]].finalX = 0;
+    macros[list[0]].finalY = 0;
+    macros[list[0]].rotate = 0;
+    macros[list[0]].layer = 1;
+    macros[list[0]].finalWidth = macros[0].width;
+    macros[list[0]].finalHeight = macros[0].height;
         
-
     for(int i = 1; i < macros.size(); i++)
     {
-        macros[i].layer = 1;
-        macros[i].finalWidth = macros[i].width;
-        macros[i].finalHeight = macros[i].height;
-        int _w = macros[i].finalWidth;
-        int _h = macros[i].finalHeight;
+        macros[list[i]].layer = 1;
+        macros[list[i]].rotate = 0;
+        macros[list[i]].finalWidth = macros[list[i]].width;
+        macros[list[i]].finalHeight = macros[list[i]].height;
+        int _w = macros[list[i]].finalWidth;
+        int _h = macros[list[i]].finalHeight;
         bool chang = false;
         
         direction = direction % 4;
 
         switch (direction) {
             case 0: // 向右
-                macros[i].finalX = macros[i-1].finalX + macros[i-1].finalWidth;
-                macros[i].finalY = btmY;
+                macros[list[i]].finalX = macros[list[i-1]].finalX + macros[list[i-1]].finalWidth;
+                macros[list[i]].finalY = btmY;
 
                 if(btmY + _h >= tmp[direction])
                     tmp[direction] = btmY + _h;
 
-                if(macros[i].finalX + _w > rightX) 
+                if(macros[list[i]].finalX + _w > rightX) 
                     chang = true;
 
                 break;
             case 1: // 向上
-                macros[i].finalX = rightX - _w;
-                macros[i].finalY = macros[i-1].finalY + macros[i-1].finalHeight;
+                macros[list[i]].finalX = rightX - _w;
+                macros[list[i]].finalY = macros[list[i-1]].finalY + macros[list[i-1]].finalHeight;
 
                 if( rightX - _w <= tmp[direction])
                     tmp[direction] = rightX - _w;
 
-                if( macros[i].finalY + macros[i].finalHeight > topY)
+                if( macros[list[i]].finalY + macros[list[i]].finalHeight > topY)
                     chang = true;
 
                 break;
             case 2: // 向左
-                macros[i].finalX = macros[i-1].finalX - _w;
-                macros[i].finalY = topY - _h;
+                macros[list[i]].finalX = macros[list[i-1]].finalX - _w;
+                macros[list[i]].finalY = topY - _h;
 
                 if( topY - _h <= tmp[direction])
                     tmp[direction] = topY - _h;
                 
-                if( macros[i].finalX < leftX)
+                if( macros[list[i]].finalX < leftX)
                     chang = true;
                 break;
             case 3: // 向下
-                macros[i].finalX = leftX ;
-                macros[i].finalY = macros[i-1].finalY - _h;
+                macros[list[i]].finalX = leftX ;
+                macros[list[i]].finalY = macros[list[i-1]].finalY - _h;
 
-                if(leftX + macros[i].finalWidth > tmp[direction] )
-                    tmp[direction] = leftX + macros[i].finalWidth;
+                if(leftX + macros[list[i]].finalWidth > tmp[direction] )
+                    tmp[direction] = leftX + macros[list[i]].finalWidth;
                 
-                if(macros[i].finalY < btmY)
+                if(macros[list[i]].finalY < btmY)
                     chang = true;
                 break;
 
@@ -1507,4 +1509,39 @@ bool cooradinate(vector <instance> &macros, Die topDie)
     }
 
     return true;
+}
+
+int actualHPWL(vector <RawNet> &rawnets)
+{
+    int numnet = rawnets.size();
+    float sum = 0;
+
+    for(int i = 0; i < numnet; i++)
+    {
+        float maxx = 0;
+        float maxy = 0;
+        float minx = 999999;
+        float miny = 999999;
+
+        for(int j = 0; j < rawnets[i].numPins; j++)
+        {
+            if(rawnets[i].Connection[j]->x < minx)
+                minx = rawnets[i].Connection[j]->x;
+            
+            if(rawnets[i].Connection[j]->x > maxx)
+                maxx = rawnets[i].Connection[j]->x;
+
+            
+            if(rawnets[i].Connection[j]->y < miny)
+                miny = rawnets[i].Connection[j]->y;
+            
+            if(rawnets[i].Connection[j]->y > maxy)
+                maxy = rawnets[i].Connection[j]->y;
+        }
+
+        sum += (maxx - minx) + (maxy - miny);
+
+    }
+
+    return (int) sum;
 }

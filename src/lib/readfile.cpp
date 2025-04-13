@@ -291,7 +291,10 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
                 for(int j = 0; j < (int)macros.size(); j++)
                 {
                     if(macros[j].instIndex == (atoi(current_libCellName)-1))
+                    {
                         macros_connection.push_back( &macros[j] );
+                        break;
+                    }
                 }
 
                 numStdCellConnectMacro[ macroIndex ] += temp.numPins;
@@ -329,22 +332,22 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
     // copy the connectedNet array from "instances" to "macros"
 
-    for(int i = 0; i < macros.size(); i++)
-    {
-        macros[i].numNetConnection = 0;
+    // for(int i = 0; i < macros.size(); i++)
+    // {
+    //     macros[i].numNetConnection = 0;
         
-        for(int net = 0; net < netsOfMacros.size(); net++)
-        {
-            for(int pin = 0; pin < netsOfMacros[net].numPins; pin++)
-            {
-                if(netsOfMacros[net].Connection[pin]->instIndex == macros[i].instIndex)
-                {
-                    macros[i].connectedNet[ macros[i].numNetConnection ] = net;
-                    macros[i].numNetConnection++;
-                }
-            }
-        }
-    }
+    //     for(int net = 0; net < netsOfMacros.size(); net++)
+    //     {
+    //         for(int pin = 0; pin < netsOfMacros[net].numPins; pin++)
+    //         {
+    //             if(netsOfMacros[net].Connection[pin]->instIndex == macros[i].instIndex)
+    //             {
+    //                 macros[i].connectedNet[ macros[i].numNetConnection ] = net;
+    //                 macros[i].numNetConnection++;
+    //             }
+    //         }
+    //     }
+    // }
 
     fclose(input);
 }

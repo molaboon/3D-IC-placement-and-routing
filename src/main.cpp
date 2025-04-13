@@ -20,7 +20,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 1
+#define stdCellPart 0
 #define useEplace 0
 
 int main(int argc, char *argv[]){
@@ -86,7 +86,41 @@ int main(int argc, char *argv[]){
 		// macroLegalization(macros, topDie, btmDie);
 		// macroRotate(macros, pinsInMacros, rawnet, instances);
 		macroPlacement(macros, rawnet, topDie);
-		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		
+		int numMacro = macros.size();
+
+		int numnet = rawnet.size();
+		float sum = 0;
+
+		for(int i = 0; i < numnet; i++)
+		{
+			int maxx = 0;
+			int maxy = 0;
+			int minx = 999999;
+			int miny = 999999;
+
+			for(int j = 0; j < rawnet[i].numPins; j++)
+			{	
+				int x = rawnet[i].Connection[j]->x;
+				int y = rawnet[i].Connection[j]->y;
+				
+				if( x < minx)
+					minx = x;
+				
+				if(x > maxx)
+					maxx = x;
+				
+				if(y < miny)
+					miny = y;
+				
+				if(y > maxy)
+					maxy = y;
+			}
+
+			sum += (maxx - minx) + (maxy - miny);
+		}
+		cout << sum << endl;
 
 		writeVisualFile(macros, 999, topDie);
 		// macroPartition( macros, netsOfMacros, topDie);

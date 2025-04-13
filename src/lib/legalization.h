@@ -36,4 +36,6 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie);
 
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie);
 
-bool cooradinate(vector <instance> &macros, Die topDie);
+bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets);
+
+int actualHPWL(vector<RawNet> &rawnet);
