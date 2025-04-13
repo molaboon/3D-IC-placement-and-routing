@@ -201,6 +201,20 @@ def build_max_spanning_tree_bfs_sequence(weight_matrix):
                 visited.add(neighbor)
         
         return sequence
+    def dfs_generate_sequence(start):
+        sequence = []
+        visited = set()
+        
+        def dfs(node):
+            sequence.append(node)
+            visited.add(node)
+            # 按節點編號排序鄰居以確保一致性
+            for neighbor, _ in sorted(adj_list[node], key=lambda x: x[0]):
+                if neighbor not in visited:
+                    dfs(neighbor)
+        
+        dfs(start)
+        return sequence
     
     # 從最大邊的兩個節點分別開始，選擇較長的序列
     start_node1, start_node2 = max_edge
@@ -251,14 +265,14 @@ def build_max_spanning_tree_bfs_sequence(weight_matrix):
         plt.title(f"Maximum Spanning Tree with BFS Sequence from Edge {max_edge} (Weight: {max_weight})")
         plt.axis('equal')
         plt.axis('off')
-        plt.show()
+        plt.savefig("aaa.png")
     
     draw_graph(weight_matrix, mst_edges, sequence)
     return sequence, max_edge, max_weight
 
 def turn2graph():
     newnets = open("{}.nets".format(name), "r")
-    grade = [[0 for x in range(8)] for y in range(8)] 
+    grade = [[0 for x in range(9)] for y in range(9)] 
 
     line = newnets.readline().replace("\n", "")
     line = line.split(" ")
@@ -283,8 +297,70 @@ def turn2graph():
                 grade[fnum-1][snum-1] += 1
     
     grade = np.array(grade)
+    print(grade)
     build_max_spanning_tree_bfs_sequence(grade)
 
+def turn2case():
+    block  = open("{}.block".format(name), "r")
+    nets  = open("{}.nets".format(name), "r") 
+    newcase = open("case{}.txt".format(name), "w")
+
+    line = block.readline().replace("\n", "")
+    line = line.split(" ")
+    diewidth = line[1]
+    dieheight = line[2]
+    line = block.readline().replace("\n", "")
+    line = line.split(" ")
+    numblock = line[1]
+    line = block.readline().replace("\n", "")
+
+    newcase.write("NumTechnologies 1\n")
+    newcase.write("Tech TA {}\n".format(numblock))
+
+    for i in range(int(numblock)):
+        line = block.readline().replace("\n", "")
+        line = line.split(" ")
+        
+        w = line[1]
+        h = line[2]
+        newcase.write("LibCell Y MC{} {} {} 1\n".format(i+1, w, h))
+        newcase.write("Pin P1 {} {}\n".format( str(int(int(w)/2)), str(int(int(h)/2)) ))
+    
+    newcase.write("\n")
+    newcase.write("DieSize 0 0 {} {}\n".format(diewidth, dieheight))
+    newcase.write("\n")
+    newcase.write("TopDieMaxUtil 80\n")
+    newcase.write("BottomDieMaxUtil 80\n")
+    newcase.write("\n")
+    newcase.write("TopDieRows 0 0 40 10 3\n")
+    newcase.write("BottomDieRows 0 0 40 15 2\n")
+    newcase.write("\n")
+    newcase.write("TopDieTech TA\n")
+    newcase.write("BottomDieTech TA\n")
+    newcase.write("\n")
+    newcase.write("TerminalSize 6 6\nTerminalSpacing 5\nTerminalCost 10\n\n")
+    newcase.write("NumInstances {}\n".format(numblock))
+
+    for i in range(int(numblock)):
+        newcase.write("Inst C{} MC{}\n".format(i+1, i+1))
+    newcase.write("\n")
+
+    line = nets.readline().replace("\n", "")
+    line = line.split(" ")
+    numnet = line[1]
+    newcase.write("NumNets {}\n".format(numnet))
+    for i in range(int(numnet)):
+        line = nets.readline().replace("\n", "")
+        line = line.split(" ")
+        numdegree = line[1]
+        newcase.write("Net N{} {}\n".format(i+1, numdegree))
+        for j in range(int(numdegree)):
+            line = nets.readline().replace("\n", "")
+            line = line.replace("cc_", "")
+            newcase.write("Pin C{}/P1\n".format(line))
+
+
+# turn2net()
 # turn2num()
-turn2graph()
+turn2case()
         
