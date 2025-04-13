@@ -148,6 +148,32 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
     macroPlace(macros, topDie, btmDie);
 }
 
+void updateRotate(instance &macro)
+{
+    switch ( macro.rotate )
+    {
+        case 0:
+            macro.finalWidth = macro.width;
+            macro.finalHeight = macro.height;
+            break;
+        
+        case 90:
+            macro.finalWidth = macro.height;
+            macro.finalHeight = macro.width;
+            break;
+        
+        case 180:
+            macro.finalWidth = macro.width;
+            macro.finalHeight = macro.height;
+            break;
+        
+        case 270:
+            macro.finalWidth = macro.height;
+            macro.finalHeight = macro.width;
+            break;
+    }
+}
+
 void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> > &pinsInMacros, vector<instance> &instances)
 {
     int numMacro = macro.size();
@@ -160,6 +186,8 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
         int y = macro[i].finalY;
         int w = macro[i].finalWidth;
         int h = macro[i].finalHeight;
+
+        
 
         for(int j = 0; j < numPins; j++)
         {
@@ -192,20 +220,20 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
             }
         }
 
-        instances[ macro[i].instIndex ].width = (float) w;
-        instances[ macro[i].instIndex ].height = (float) h;
-        instances[ macro[i].instIndex ].x = float (macro[i].finalX + macro[i].finalWidth / 2);
-        instances[ macro[i].instIndex ].y = float (macro[i].finalY + macro[i].finalHeight / 2);
-        instances[ macro[i].instIndex ].z = float (macro[i].layer*9900);
-        instances[ macro[i].instIndex ].finalX = x;
-        instances[ macro[i].instIndex ].finalY = y;
-        instances[ macro[i].instIndex ].finalWidth = w;
-        instances[ macro[i].instIndex ].finalHeight = h;
-        instances[ macro[i].instIndex ].layer = macro[i].layer;
-        instances[ macro[i].instIndex ].rotate = macro[i].rotate;
-        instances[ macro[i].instIndex ].canPass = true;
-        instances[ macro[i].instIndex ].density = instances[ macro[i].instIndex ].layer;
-        instances[ macro[i].instIndex ].tmpD = instances[ macro[i].instIndex ].layer;
+        // instances[ macro[i].instIndex ].width = (float) w;
+        // instances[ macro[i].instIndex ].height = (float) h;
+        // instances[ macro[i].instIndex ].x = float (macro[i].finalX + macro[i].finalWidth / 2);
+        // instances[ macro[i].instIndex ].y = float (macro[i].finalY + macro[i].finalHeight / 2);
+        // instances[ macro[i].instIndex ].z = float (macro[i].layer*9900);
+        // instances[ macro[i].instIndex ].finalX = x;
+        // instances[ macro[i].instIndex ].finalY = y;
+        // instances[ macro[i].instIndex ].finalWidth = w;
+        // instances[ macro[i].instIndex ].finalHeight = h;
+        // instances[ macro[i].instIndex ].layer = macro[i].layer;
+        // instances[ macro[i].instIndex ].rotate = macro[i].rotate;
+        // instances[ macro[i].instIndex ].canPass = true;
+        // instances[ macro[i].instIndex ].density = instances[ macro[i].instIndex ].layer;
+        // instances[ macro[i].instIndex ].tmpD = instances[ macro[i].instIndex ].layer;
     }
 }
 
@@ -266,3 +294,4 @@ void finalUpdatePinsInMacro(vector<instance> &macro, vector < vector<instance> >
         instances[ macro[i].instIndex ].rotate = macro[i].rotate;
     }
 }
+

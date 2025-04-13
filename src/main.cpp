@@ -85,45 +85,44 @@ int main(int argc, char *argv[]){
 		// cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
 		// macroLegalization(macros, topDie, btmDie);
 		// macroRotate(macros, pinsInMacros, rawnet, instances);
-		macroPlacement(macros, rawnet, topDie);
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
-		
-		int numMacro = macros.size();
+		int bestHPWL = 999999;
+		int rotation = 90;
+		int list[9] = {8, 7, 4, 5, 6, 3, 0 ,1 ,2};
+		int bestrotation[9] = {0};
+		int first = 0b000000000;
 
-		int numnet = rawnet.size();
-		float sum = 0;
-
-		for(int i = 0; i < numnet; i++)
+		while (first < 0b111111111)
 		{
-			int maxx = 0;
-			int maxy = 0;
-			int minx = 999999;
-			int miny = 999999;
+			int now = first;
 
-			for(int j = 0; j < rawnet[i].numPins; j++)
-			{	
-				int x = rawnet[i].Connection[j]->x;
-				int y = rawnet[i].Connection[j]->y;
-				
-				if( x < minx)
-					minx = x;
-				
-				if(x > maxx)
-					maxx = x;
-				
-				if(y < miny)
-					miny = y;
-				
-				if(y > maxy)
-					maxy = y;
+			for(int i = 0; i < macros.size(); i++)
+			{
+				bool ifrotate = now * 0b1;
+				macros[ list[i] ].rotate = rotation * ifrotate;
+				now = now >> 1;
 			}
 
-			sum += (maxx - minx) + (maxy - miny);
-		}
-		cout << sum << endl;
+			macroPlacement(macros, rawnet, topDie);
+			updatePinsInMacroInfo( macros, pinsInMacros, instances);
+			
+			int sum = actualHPWL(rawnet);
+			first++;
+			cout << sum << endl;
 
+			if(sum < bestHPWL)
+			{
+				bestHPWL = sum;
+				for(int i = 0; i < macros.size(); i++)
+				{
+					bestrotation[i] = macros[ list[i] ].rotate;
+				}
+			}
+		}
+
+		cout << bestHPWL << endl;
+		cout << bestrotation << endl;
+		
 		writeVisualFile(macros, 999, topDie);
-		// macroPartition( macros, netsOfMacros, topDie);
 	}
 
 	/*	coarsening */
@@ -216,7 +215,7 @@ int main(int argc, char *argv[]){
 
 	}
 	
-	if(true)
+	if(false)
 	{	
 		cell2BestLayer(instances, topDie, btmDie, rawnet, terminalTech);
 		wirteNodes(instances, macros);

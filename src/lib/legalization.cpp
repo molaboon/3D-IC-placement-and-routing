@@ -9,6 +9,7 @@
 
 #include "readfile.h"
 #include "legalization.h"
+#include "partition.h"
 
 using namespace std;
 
@@ -1433,17 +1434,13 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
 
     macros[list[0]].finalX = 0;
     macros[list[0]].finalY = 0;
-    macros[list[0]].rotate = 0;
     macros[list[0]].layer = 1;
-    macros[list[0]].finalWidth = macros[0].width;
-    macros[list[0]].finalHeight = macros[0].height;
+    updateRotate(macros[list[0]]);
         
     for(int i = 1; i < macros.size(); i++)
     {
         macros[list[i]].layer = 1;
-        macros[list[i]].rotate = 0;
-        macros[list[i]].finalWidth = macros[list[i]].width;
-        macros[list[i]].finalHeight = macros[list[i]].height;
+        updateRotate(macros[list[i]]);
         int _w = macros[list[i]].finalWidth;
         int _h = macros[list[i]].finalHeight;
         bool chang = false;
@@ -1505,7 +1502,6 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
             topY = tmp[2];
             leftX = tmp[3];
         }
-        
     }
 
     return true;
