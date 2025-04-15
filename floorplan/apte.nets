@@ -1,0 +1,199 @@
+NumNets: 44
+NetDegree: 9
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+cc_9
+NetDegree: 8
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+NetDegree: 2
+cc_1
+cc_2
+NetDegree: 2
+cc_1
+cc_2
+NetDegree: 2
+cc_1
+cc_2
+NetDegree: 2
+cc_1
+cc_5
+NetDegree: 9
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+cc_9
+NetDegree: 8
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+NetDegree: 2
+cc_1
+cc_5
+NetDegree: 2
+cc_1
+cc_5
+NetDegree: 9
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+cc_9
+NetDegree: 9
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+cc_9
+NetDegree: 4
+cc_1
+cc_2
+cc_5
+cc_6
+NetDegree: 4
+cc_1
+cc_2
+cc_3
+cc_4
+NetDegree: 2
+cc_1
+cc_2
+NetDegree: 9
+cc_1
+cc_2
+cc_3
+cc_4
+cc_5
+cc_6
+cc_7
+cc_8
+cc_9
+NetDegree: 2
+cc_1
+cc_2
+NetDegree: 2
+cc_1
+cc_8
+NetDegree: 2
+cc_1
+cc_5
+NetDegree: 2
+cc_2
+cc_3
+NetDegree: 2
+cc_2
+cc_3
+NetDegree: 2
+cc_2
+cc_3
+NetDegree: 3
+cc_2
+cc_5
+cc_6
+NetDegree: 3
+cc_2
+cc_5
+cc_6
+NetDegree: 3
+cc_2
+cc_5
+cc_6
+NetDegree: 4
+cc_2
+cc_3
+cc_6
+cc_7
+NetDegree: 2
+cc_2
+cc_3
+NetDegree: 2
+cc_2
+cc_3
+NetDegree: 2
+cc_3
+cc_4
+NetDegree: 2
+cc_3
+cc_4
+NetDegree: 2
+cc_3
+cc_4
+NetDegree: 3
+cc_3
+cc_6
+cc_7
+NetDegree: 3
+cc_3
+cc_6
+cc_7
+NetDegree: 3
+cc_3
+cc_6
+cc_7
+NetDegree: 4
+cc_3
+cc_4
+cc_7
+cc_8
+NetDegree: 2
+cc_3
+cc_4
+NetDegree: 2
+cc_3
+cc_4
+NetDegree: 3
+cc_4
+cc_7
+cc_8
+NetDegree: 3
+cc_4
+cc_7
+cc_8
+NetDegree: 3
+cc_4
+cc_7
+cc_8
+NetDegree: 2
+cc_5
+cc_6
+NetDegree: 4
+cc_5
+cc_6
+cc_7
+cc_8
+NetDegree: 2
+cc_6
+cc_7
+NetDegree: 2
+cc_7
+cc_8

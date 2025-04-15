@@ -121,7 +121,16 @@ int main(int argc, char *argv[]){
 
 		cout << bestHPWL << endl;
 		cout << bestrotation << endl;
-		
+
+		for(int i = 0; i < macros.size(); i++)
+		{
+			macros[ list[i] ].rotate = bestrotation[i];
+			updateRotate(macros[list[i]]);
+		}
+		macroPlacement(macros, rawnet, topDie);
+		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+			
+
 		writeVisualFile(macros, 999, topDie);
 	}
 

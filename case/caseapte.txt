@@ -1,0 +1,246 @@
+NumTechnologies 1
+Tech TA 9
+LibCell Y MC1 3146 1826 1
+Pin P1 1573 913
+LibCell Y MC2 3146 1826 1
+Pin P1 1573 913
+LibCell Y MC3 3146 1826 1
+Pin P1 1573 913
+LibCell Y MC4 3146 1826 1
+Pin P1 1573 913
+LibCell Y MC5 3186 1832 1
+Pin P1 1593 916
+LibCell Y MC6 3186 1832 1
+Pin P1 1593 916
+LibCell Y MC7 3186 1832 1
+Pin P1 1593 916
+LibCell Y MC8 3186 1832 1
+Pin P1 1593 916
+LibCell Y MC9 826 286 1
+Pin P1 413 143
+
+DieSize 0 0 11894 6314
+
+TopDieMaxUtil 80
+BottomDieMaxUtil 80
+
+TopDieRows 0 0 40 10 3
+BottomDieRows 0 0 40 15 2
+
+TopDieTech TA
+BottomDieTech TA
+
+TerminalSize 6 6
+TerminalSpacing 5
+TerminalCost 10
+
+NumInstances 9
+Inst C1 MC1
+Inst C2 MC2
+Inst C3 MC3
+Inst C4 MC4
+Inst C5 MC5
+Inst C6 MC6
+Inst C7 MC7
+Inst C8 MC8
+Inst C9 MC9
+
+NumNets 44
+Net N1 9
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Pin C9/P1
+Net N2 8
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Net N3 2
+Pin C1/P1
+Pin C2/P1
+Net N4 2
+Pin C1/P1
+Pin C2/P1
+Net N5 2
+Pin C1/P1
+Pin C2/P1
+Net N6 2
+Pin C1/P1
+Pin C5/P1
+Net N7 9
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Pin C9/P1
+Net N8 8
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Net N9 2
+Pin C1/P1
+Pin C5/P1
+Net N10 2
+Pin C1/P1
+Pin C5/P1
+Net N11 9
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Pin C9/P1
+Net N12 9
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Pin C9/P1
+Net N13 4
+Pin C1/P1
+Pin C2/P1
+Pin C5/P1
+Pin C6/P1
+Net N14 4
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Net N15 2
+Pin C1/P1
+Pin C2/P1
+Net N16 9
+Pin C1/P1
+Pin C2/P1
+Pin C3/P1
+Pin C4/P1
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Pin C9/P1
+Net N17 2
+Pin C1/P1
+Pin C2/P1
+Net N18 2
+Pin C1/P1
+Pin C8/P1
+Net N19 2
+Pin C1/P1
+Pin C5/P1
+Net N20 2
+Pin C2/P1
+Pin C3/P1
+Net N21 2
+Pin C2/P1
+Pin C3/P1
+Net N22 2
+Pin C2/P1
+Pin C3/P1
+Net N23 3
+Pin C2/P1
+Pin C5/P1
+Pin C6/P1
+Net N24 3
+Pin C2/P1
+Pin C5/P1
+Pin C6/P1
+Net N25 3
+Pin C2/P1
+Pin C5/P1
+Pin C6/P1
+Net N26 4
+Pin C2/P1
+Pin C3/P1
+Pin C6/P1
+Pin C7/P1
+Net N27 2
+Pin C2/P1
+Pin C3/P1
+Net N28 2
+Pin C2/P1
+Pin C3/P1
+Net N29 2
+Pin C3/P1
+Pin C4/P1
+Net N30 2
+Pin C3/P1
+Pin C4/P1
+Net N31 2
+Pin C3/P1
+Pin C4/P1
+Net N32 3
+Pin C3/P1
+Pin C6/P1
+Pin C7/P1
+Net N33 3
+Pin C3/P1
+Pin C6/P1
+Pin C7/P1
+Net N34 3
+Pin C3/P1
+Pin C6/P1
+Pin C7/P1
+Net N35 4
+Pin C3/P1
+Pin C4/P1
+Pin C7/P1
+Pin C8/P1
+Net N36 2
+Pin C3/P1
+Pin C4/P1
+Net N37 2
+Pin C3/P1
+Pin C4/P1
+Net N38 3
+Pin C4/P1
+Pin C7/P1
+Pin C8/P1
+Net N39 3
+Pin C4/P1
+Pin C7/P1
+Pin C8/P1
+Net N40 3
+Pin C4/P1
+Pin C7/P1
+Pin C8/P1
+Net N41 2
+Pin C5/P1
+Pin C6/P1
+Net N42 4
+Pin C5/P1
+Pin C6/P1
+Pin C7/P1
+Pin C8/P1
+Net N43 2
+Pin C6/P1
+Pin C7/P1
+Net N44 2
+Pin C7/P1
+Pin C8/P1

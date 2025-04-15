@@ -216,14 +216,61 @@ def build_max_spanning_tree_bfs_sequence(weight_matrix):
         dfs(start)
         return sequence
     
+    def greedy(start):
+        sequence = []
+        visited = set()
+        
+        def find_next_node(current):
+            # 找出當前節點的所有鄰居中，權重最大的未訪問節點
+            neighbors = [(weight_matrix[current, j], j) for j in range(n) 
+                        if weight_matrix[current, j] > -np.inf and j not in visited]
+            if not neighbors:
+                return None, None
+            max_weight, next_node = max(neighbors)
+            return max_weight, next_node
+        
+        current = start
+        sequence.append(current)
+        visited.add(current)
+        
+        # 遍歷直到當前連通分量無法繼續
+        while True:
+            max_weight, next_node = find_next_node(current)
+            if next_node is None:
+                break
+            sequence.append(next_node)
+            visited.add(next_node)
+            current = next_node
+        
+        # 如果還有未訪問的節點，選擇一個新的起點繼續
+        while len(visited) < n:
+            # 從未訪問節點中選擇一個（這裡簡單按編號選最早的）
+            for new_start in range(n):
+                if new_start not in visited:
+                    sequence.append(new_start)
+                    visited.add(new_start)
+                    current = new_start
+                    # 繼續貪婪遍歷
+                    while True:
+                        max_weight, next_node = find_next_node(current)
+                        if next_node is None:
+                            break
+                        sequence.append(next_node)
+                        visited.add(next_node)
+                        current = next_node
+                    break
+        
+        return sequence
+
     # 從最大邊的兩個節點分別開始，選擇較長的序列
     start_node1, start_node2 = max_edge
-    sequence1 = bfs_generate_sequence(start_node1)
-    sequence2 = bfs_generate_sequence(start_node2)
+    # sequence1 = bfs_generate_sequence(start_node1)
+    # sequence2 = bfs_generate_sequence(start_node2)
     
-    # 選擇包含更多節點的序列（通常應該相同，因為是連通圖）
-    sequence = sequence1 if len(sequence1) >= len(sequence2) else sequence2
-    
+    # # 選擇包含更多節點的序列（通常應該相同，因為是連通圖）
+    # sequence = sequence1 if len(sequence1) >= len(sequence2) else sequence2
+    print(start_node2)
+    sequence = greedy(start_node2)
     print(sequence)
     
     def draw_graph(weight_matrix, mst_edges, sequence):
@@ -272,7 +319,7 @@ def build_max_spanning_tree_bfs_sequence(weight_matrix):
 
 def turn2graph():
     newnets = open("{}.nets".format(name), "r")
-    grade = [[0 for x in range(9)] for y in range(9)] 
+    grade = [[0 for x in range(8)] for y in range(8)] 
 
     line = newnets.readline().replace("\n", "")
     line = line.split(" ")
@@ -297,70 +344,107 @@ def turn2graph():
                 grade[fnum-1][snum-1] += 1
     
     grade = np.array(grade)
-    print(grade)
     build_max_spanning_tree_bfs_sequence(grade)
 
-def turn2case():
-    block  = open("{}.block".format(name), "r")
-    nets  = open("{}.nets".format(name), "r") 
-    newcase = open("case{}.txt".format(name), "w")
-
-    line = block.readline().replace("\n", "")
-    line = line.split(" ")
-    diewidth = line[1]
-    dieheight = line[2]
-    line = block.readline().replace("\n", "")
-    line = line.split(" ")
-    numblock = line[1]
-    line = block.readline().replace("\n", "")
-
-    newcase.write("NumTechnologies 1\n")
-    newcase.write("Tech TA {}\n".format(numblock))
-
-    for i in range(int(numblock)):
-        line = block.readline().replace("\n", "")
-        line = line.split(" ")
-        
-        w = line[1]
-        h = line[2]
-        newcase.write("LibCell Y MC{} {} {} 1\n".format(i+1, w, h))
-        newcase.write("Pin P1 {} {}\n".format( str(int(int(w)/2)), str(int(int(h)/2)) ))
+def turn2img(arr):
+    print(arr)
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i][j] > 0:
+                if j == 64:
+                    print("[{}, pseudo macro] = {}".format(i, arr[i][j]))
+                else:
+                    print("[{}, {}] = {}".format(i, j, arr[i][j]))
+                    
+def blue2case():
+    block = open("newblue1.nodes", "r")
+    net = open("newblue1.nets", "r")
     
-    newcase.write("\n")
-    newcase.write("DieSize 0 0 {} {}\n".format(diewidth, dieheight))
-    newcase.write("\n")
-    newcase.write("TopDieMaxUtil 80\n")
-    newcase.write("BottomDieMaxUtil 80\n")
-    newcase.write("\n")
-    newcase.write("TopDieRows 0 0 40 10 3\n")
-    newcase.write("BottomDieRows 0 0 40 15 2\n")
-    newcase.write("\n")
-    newcase.write("TopDieTech TA\n")
-    newcase.write("BottomDieTech TA\n")
-    newcase.write("\n")
-    newcase.write("TerminalSize 6 6\nTerminalSpacing 5\nTerminalCost 10\n\n")
-    newcase.write("NumInstances {}\n".format(numblock))
-
-    for i in range(int(numblock)):
-        newcase.write("Inst C{} MC{}\n".format(i+1, i+1))
-    newcase.write("\n")
-
-    line = nets.readline().replace("\n", "")
-    line = line.split(" ")
-    numnet = line[1]
-    newcase.write("NumNets {}\n".format(numnet))
-    for i in range(int(numnet)):
-        line = nets.readline().replace("\n", "")
-        line = line.split(" ")
-        numdegree = line[1]
-        newcase.write("Net N{} {}\n".format(i+1, numdegree))
-        for j in range(int(numdegree)):
-            line = nets.readline().replace("\n", "")
-            line = line.replace("cc_", "")
-            newcase.write("Pin C{}/P1\n".format(line))
-
-
-# turn2net()
-# turn2num()
-turn2case()
+    macro = []
+    terminals = []
+    
+    line = block.readline().replace("\n", "")
+    line = block.readline().replace("\n", "")
+    line = block.readline().replace("\n", "")
+    
+    while line:
+        line = line.split(" ")        
+        if(len(line) < 4):
+            if(line[2] != "12"):
+                macro.append(line[0])
+        else:
+            terminals.append(line[0])
         
+        line = block.readline().replace("\n", "")
+
+    grade = [[0 for x in range( len(macro) + 1 )] for y in range( len(macro) + 1 )] 
+    
+    #------------------------------------------
+    line = net.readline().replace("\n", "")
+    line = line.split(" ")
+    numnet = int(line[1])
+    line = net.readline().replace("\n", "")
+    
+    for i in range(numnet):
+        line = net.readline().replace("\n", "")
+        line = line.split(" ")
+        degree = int(line[1])
+        numter = 0
+        numstdcell = 0
+        macrosInNet = []
+        
+        for j in range(degree):
+            line = net.readline().replace("\n", "")
+            line = line.split(" ")
+            
+            if line[0] in macro and macro.index(line[0]) not in macrosInNet:
+                macrosInNet.append( macro.index(line[0]) )
+            
+            elif line[0] in terminals:
+                numter += 1
+            else:
+                numstdcell +=1
+
+        if degree - numter > 1 and len(macrosInNet) > 0:
+            macrosInNet.append( len(macro) )
+            macrosInNet = sorted(macrosInNet)
+            for j in range( len(macrosInNet) ):
+                for k in range(j+1, len(macrosInNet)):
+                    grade[ macrosInNet[j] ][ macrosInNet[k] ] += numstdcell + 1
+
+    # turn2img(grade)
+    build_max_spanning_tree_bfs_sequence(grade)
+    allmacro = [x for x in range( len(macro) + 1 )]
+    find_path(grade, allmacro)
+
+def find_path(grade , macro):
+    n = len(macro)  # 矩陣大小
+    visited = set()   # 記錄已訪問的點
+    path = []         # 儲存路徑
+    current = macro[-1]   # 當前起點
+
+    visited.add(current)
+    path.append(current)
+
+    # 遍歷，直到訪問所有點或無可選邊
+    while len(visited) < n:
+        # 找出當前點的所有鄰接邊（排除已訪問的點）
+        weights = grade[current].copy()
+        for v in visited:
+            weights[v] = -np.inf  # 已訪問的點設為無效
+
+        # 找到最大權重的鄰接點
+        next_node = np.argmax(weights)
+        max_weight = weights[next_node]
+
+        # 如果沒有有效邊（全為 -inf），結束
+        if max_weight == -np.inf:
+            break
+
+        # 記錄路徑並更新狀態
+        path.append(next_node)
+        visited.add(next_node)
+        current = next_node
+    print(path)
+
+blue2case()
