@@ -1416,7 +1416,6 @@ void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pins
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie)
 {
     bool a =  cooradinate(macros, topDie, rawnets);
-
 }
 
 bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets)
@@ -1430,7 +1429,7 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
     int list[9] = {8, 7, 4, 5, 6, 3, 0 ,1 ,2};
     int tmp[4] = {btmY, rightX, topY, leftX};
     
-    bool updateContour = 0;
+    bool changeTwice = false;
 
     macros[list[0]].finalX = 0;
     macros[list[0]].finalY = 0;
@@ -1493,8 +1492,12 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
 
         }
 
+        if(changeTwice && chang)
+            return false;
+
         if(chang)
         {
+            changeTwice = true;
             i--;
             direction ++;
             btmY = tmp[0];
@@ -1502,6 +1505,8 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
             topY = tmp[2];
             leftX = tmp[3];
         }
+        else
+            changeTwice = false;
     }
 
     return true;

@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
 		// macroRotate(macros, pinsInMacros, rawnet, instances);
 		int bestHPWL = 999999;
 		int rotation = 90;
-		int list[9] = {8, 7, 4, 5, 6, 3, 0 ,1 ,2};
+		int list[9] = {5, 4, 6, 2, 1, 0, 8, 7, 3};
 		int bestrotation[9] = {0};
 		int first = 0b000000000;
 
@@ -102,21 +102,21 @@ int main(int argc, char *argv[]){
 				now = now >> 1;
 			}
 
-			macroPlacement(macros, rawnet, topDie);
-			updatePinsInMacroInfo( macros, pinsInMacros, instances);
+			bool needupdate = cooradinate(macros, topDie, rawnet);
 			
-			int sum = actualHPWL(rawnet);
-			first++;
-			cout << sum << endl;
-
-			if(sum < bestHPWL)
+			if(needupdate)
 			{
-				bestHPWL = sum;
-				for(int i = 0; i < macros.size(); i++)
+				updatePinsInMacroInfo( macros, pinsInMacros, instances);
+				int sum = actualHPWL(rawnet);
+				
+				if(sum < bestHPWL)
 				{
-					bestrotation[i] = macros[ list[i] ].rotate;
+					bestHPWL = sum;
+					for(int i = 0; i < macros.size(); i++)
+						bestrotation[i] = macros[ list[i] ].rotate;
 				}
 			}
+			first++;
 		}
 
 		cout << bestHPWL << endl;
