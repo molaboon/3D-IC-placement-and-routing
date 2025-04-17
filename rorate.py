@@ -301,7 +301,7 @@ def blue2case():
         
         line = block.readline().replace("\n", "")
 
-    pinsinmacro = [[]for y in range( len(macro))]
+    pinsinmacro = [[0 for x in range(4)]for y in range( len(macro))]
     grade = [[0 for x in range( len(macro) + 1 )] for y in range( len(macro) + 1 )] 
     
     #------------------------------------------
@@ -324,9 +324,18 @@ def blue2case():
             line = line.split(" ")
             
             if line[0] in macro:
-                pinsinmacro[macro.index(line[0])].append(int(line[1]))
-                pinsinmacro[macro.index(line[0])].append(int(line[2]))
-            
+                x = int(line[1])
+                y = int(line[2])
+
+                if x < 0 and y < 0:
+                    pinsinmacro[macro.index(line[0])][0] += 1
+                elif x > 0 and y < 0:
+                    pinsinmacro[macro.index(line[0])][1] += 1
+                elif x < 0 and y > 0:
+                    pinsinmacro[macro.index(line[0])][2] += 1
+                else:
+                    pinsinmacro[macro.index(line[0])][2] += 1
+                    
             if line[0] in macro and macro.index(line[0]) not in macrosInNet:
                 macrosInNet.append( macro.index(line[0]) )
             
@@ -343,7 +352,7 @@ def blue2case():
                     grade[ macrosInNet[j] ][ macrosInNet[k] ] += numstdcell + 1
                     grade[ macrosInNet[k] ][ macrosInNet[j] ] += numstdcell + 1
 
-    # print(pinsinmacro)
+    print(pinsinmacro)
     # turn2img(grade)
     # build_max_spanning_tree_bfs_sequence(grade)
     
@@ -402,13 +411,11 @@ def find_path(grade):
 
 def turn2case(macros):
     block = open("newblue1.nodes", "r")
-    net = open("newblue1.nets", "r")
     bluecase = open("caseblue.txt", "w")
     
     macro = []
     macro_w = []
     macro_h = []
-    pinsinmacro = [[]for y in range( len(macro) + 1 )]
     terminals = []
     
     line = block.readline().replace("\n", "")
@@ -427,47 +434,37 @@ def turn2case(macros):
         
         line = block.readline().replace("\n", "")
 
-    pinsinmacro = [[]for y in range( len(macro))]
-    grade = [[0 for x in range( len(macro) + 1 )] for y in range( len(macro) + 1 )] 
+    bluecase.write("NumTechnologies 1\n")
+    bluecase.write("Tech TA {}\n".format(len(macro)))
     
-    #------------------------------------------
-    #----find pin and in macros-----
-    line = net.readline().replace("\n", "")
-    line = line.split(" ")
-    numnet = int(line[1])
-    line = net.readline().replace("\n", "")
-    
-    for i in range(numnet):
-        line = net.readline().replace("\n", "")
-        line = line.split(" ")
-        degree = int(line[1])
-        numter = 0
-        numstdcell = 0
-        macrosInNet = []
-        
-        for j in range(degree):
-            line = net.readline().replace("\n", "")
-            line = line.split(" ")
-            
-            if line[0] in macro:
-                pinsinmacro[macro.index(line[0])].append(int(line[1]))
-                pinsinmacro[macro.index(line[0])].append(int(line[2]))
-            
-            if line[0] in macro and macro.index(line[0]) not in macrosInNet:
-                macrosInNet.append( macro.index(line[0]) )
-            
-            elif line[0] in terminals:
-                numter += 1
-            else:
-                numstdcell +=1
+    for i in range(len(macro)):
+        bluecase.write("LibCell Y MC{} {} {} {}\n".format( i+1, macro_w[i], macro_h[i] ))
+        bluecase.write("Pin P1 0 0\n")
+    bluecase.write("\n")
+    bluecase.write("DieSize 0 0 40 30\n\n")
+    bluecase.write("TopDieMaxUtil 80\nBottomDieMaxUtil 90\n\n")
+    bluecase.write("TopDieRows 0 0 40 10 3\nBottomDieRows 0 0 40 15 2\n\n")
+    bluecase.write("TopDieTech TA\nBottomDieTech TB\n\n")
 
-        if degree - numter > 1 and len(macrosInNet) > 0:
-            macrosInNet.append( len(macro) )
-            macrosInNet = sorted(macrosInNet)
-            for j in range( len(macrosInNet) ):
-                for k in range(j+1, len(macrosInNet)):
-                    grade[ macrosInNet[j] ][ macrosInNet[k] ] += numstdcell + 1
-                    grade[ macrosInNet[k] ][ macrosInNet[j] ] += numstdcell + 1
+TerminalSize 6 6
+TerminalSpacing 5
+TerminalCost 10
+
+NumInstances 8
+Inst C1 MC1
+Inst C2 MC3
+Inst C3 MC3
+Inst C4 MC2
+Inst C5 MC2
+Inst C6 MC3
+Inst C7 MC2
+Inst C8 MC1
+
+NumNets 6
+Net N1 2
+Pin C1/P1
+Pin C2/P2
+
     
     
 blue2case()
