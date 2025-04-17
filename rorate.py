@@ -360,17 +360,18 @@ def blue2case():
     find_path(grade)
 
 
-def find_path(grade):
+def find_path(grade, die):
     
     sequence = []
     visited = set()
-    start = len(grade[0]) - 1
-    n = len(grade[0])
+    start = die[-1]
+    n = len(die)
+    
     
     def find_next_node(current):
         # 找出當前節點的所有鄰居中，權重最大的未訪問節點
         neighbors = [(grade[current, j], j) for j in range(n) 
-                    if grade[current, j] > 0 and j not in visited]
+                    if grade[current, j] > 0 and j not in visited and j in die]
         if not neighbors:
             return None, None
         max_weight, next_node = max(neighbors)
@@ -379,21 +380,9 @@ def find_path(grade):
     current = start
     sequence.append(current)
     visited.add(current)
-        
-    # 遍歷直到當前連通分量無法繼續
-    while True:
-        max_weight, next_node = find_next_node(current)
-        if next_node is None:
-            break
-        sequence.append(next_node)
-        visited.add(next_node)
-        current = next_node
-    
-    # 如果還有未訪問的節點，選擇一個新的起點繼續
+    next_node = 0
+            
     while len(visited) < n:
-        # 從未訪問節點中選擇一個（這裡簡單按編號選最早的）
-        current = start
-        # 繼續貪婪遍歷
         while True:
             max_weight, next_node = find_next_node(current)
             if next_node is None:
@@ -401,6 +390,17 @@ def find_path(grade):
             sequence.append(next_node)
             visited.add(next_node)
             current = next_node
+        
+        if next_node is None and current == start:
+            for i in range(n):
+                new_start = die[i]
+                if new_start not in visited:
+                    sequence.append(new_start)
+                    visited.add(new_start)
+                    current = new_start
+        else:
+            current = start
+
     
     for i in range(len(sequence)):
         print("{}, ".format(sequence[i]), end="")
@@ -409,7 +409,7 @@ def find_path(grade):
     # for i in range(len(path), 0, -1):
     #     print("{}, ".format(path[i-1]), end="")
 
-def turn2case(macros):
+def turn2case():
     block = open("newblue1.nodes", "r")
     bluecase = open("caseblue.txt", "w")
     
@@ -438,33 +438,129 @@ def turn2case(macros):
     bluecase.write("Tech TA {}\n".format(len(macro)))
     
     for i in range(len(macro)):
-        bluecase.write("LibCell Y MC{} {} {} {}\n".format( i+1, macro_w[i], macro_h[i] ))
+        bluecase.write("LibCell Y MC{} {} {} 1\n".format( i+1, macro_w[i], macro_h[i] ))
         bluecase.write("Pin P1 0 0\n")
     bluecase.write("\n")
     bluecase.write("DieSize 0 0 40 30\n\n")
     bluecase.write("TopDieMaxUtil 80\nBottomDieMaxUtil 90\n\n")
     bluecase.write("TopDieRows 0 0 40 10 3\nBottomDieRows 0 0 40 15 2\n\n")
     bluecase.write("TopDieTech TA\nBottomDieTech TB\n\n")
-
-TerminalSize 6 6
-TerminalSpacing 5
-TerminalCost 10
-
-NumInstances 8
-Inst C1 MC1
-Inst C2 MC3
-Inst C3 MC3
-Inst C4 MC2
-Inst C5 MC2
-Inst C6 MC3
-Inst C7 MC2
-Inst C8 MC1
-
-NumNets 6
-Net N1 2
-Pin C1/P1
-Pin C2/P2
-
+    bluecase.write("TerminalSize 6 6\nTerminalSpacing 5\nTerminalCost 10\n\n")
+    bluecase.write("NumInstances {}\n".format(len(macro)))
     
+    for i in range(len(macro)):
+        bluecase.write("Inst C{} MC{}\n".format( i+1, i+1 ))
+
+    bluecase.write("\n")
+    bluecase.write("NumNets 1\nNet N1 2\nPin C1/P1\nPin C2/P1")
+
+
+def kj2case():
+    case3 = open("./case/case3.txt", "r")
+    kj = open("kjoutput.txt", "r") 
     
-blue2case()
+    num_tech = 0
+    num_pins = 0
+    num_cell = 0
+    macro = []
+    number = []
+    top_die = []
+    btm_die = []
+    
+    line = case3.readline().replace("\n", "").split(" ")
+    num_tech = int(line[1])
+    
+    for tech in range(num_tech):
+        line = case3.readline().replace("\n", "").split(" ")
+        num_cell = int(line[2])
+        
+        for cell in range(num_cell):
+            line = case3.readline().replace("\n", "").split(" ")
+            num_pins = int(line[5])
+            is_macro = line[1]
+            
+            if is_macro == "Y":
+                macro.append(line[2])
+            
+            for pin in range(num_pins):
+                line = case3.readline().replace("\n", "").split(" ")
+    
+    for empty in range(16):
+        line = case3.readline().replace("\n", "").split(" ")
+
+    line = case3.readline().replace("\n", "").split(" ")
+    num_instances = int(line[1])
+    
+    for ins in range(num_instances):
+        line = case3.readline().replace("\n", "").split(" ")
+        instance = line[2]
+        if instance in macro:
+            num = line[1].replace("C", "")
+            number.append(num)
+    
+    for ins in range(num_instances):
+        line = kj.readline().replace("\n", "").split(" ")
+        
+        if line[0] in number and line[1] == "0":
+            top_die.append( line[0]) 
+        elif line[0] in number and line[1] == "1":
+            btm_die.append( line[0])
+    
+    index_of_top = []
+    index_of_btm = []
+    
+    for i in top_die:
+        index_of_top.append( number.index(i) )
+        
+    for i in btm_die:
+        index_of_btm.append( number.index(i) )
+    
+    # -----calculate the grade of macros-----------------------
+
+    # pinsinmacro = [[0 for x in range(4)]for y in range( len(macro))]
+    grade = [[0 for x in range( len(number) + 1 )] for y in range( len(number) + 1 )] 
+    
+    line = case3.readline().replace("\n", "")
+    line = case3.readline().replace("\n", "")
+    line = line.split(" ")
+    numnet = int(line[1])
+    
+    for i in range(numnet):
+        line = case3.readline().replace("\n", "").split(" ")
+        degree = int(line[2])
+        numstdcell = 0
+        macrosInNet = []
+        
+        for j in range(degree):
+            line = case3.readline().replace("\n", "").split(" ")
+            line = line[1].split("/")
+            line = line[0].replace("C", "")
+                    
+            if line in number:
+                if number.index(line) not in macrosInNet:
+                    macrosInNet.append( number.index(line) )
+            else:
+                numstdcell +=1
+
+        if degree > 1 and len(macrosInNet) > 0:
+            macrosInNet.append( len(number) )
+            macrosInNet = sorted(macrosInNet)
+            for j in range( len(macrosInNet) ):
+                for k in range(j+1, len(macrosInNet)):
+                    grade[ macrosInNet[j] ][ macrosInNet[k] ] += numstdcell + 1
+                    grade[ macrosInNet[k] ][ macrosInNet[j] ] += numstdcell + 1
+    
+    #---decide the sequence of the top_die and btm_die
+
+    grade = np.array(grade)
+    turn2img(grade)    
+    index_of_top.append(len(number))
+    index_of_btm.append(len(number))
+
+    # print(index_of_top, index_of_btm)
+    find_path(grade, index_of_top)
+    find_path(grade, index_of_btm)
+            
+kj2case()
+# blue2case()
+# turn2case()
