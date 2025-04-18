@@ -399,14 +399,14 @@ def find_path(grade, die):
                     current = new_start
         else:
             current = start
-
+    return sequence
     
     # for i in range(len(sequence)):
     #     print("{}, ".format(sequence[i]), end="")
     # print()
     
-    for i in range(len(sequence), 0, -1):
-        print("{}, ".format(sequence[i-1]), end="")
+    # for i in range(len(sequence), 0, -1):
+    #     print("{}, ".format(sequence[i-1]), end="")
 
 def turn2case():
     block = open("newblue1.nodes", "r")
@@ -453,7 +453,6 @@ def turn2case():
     bluecase.write("\n")
     bluecase.write("NumNets 1\nNet N1 2\nPin C1/P1\nPin C2/P1")
 
-
 def kj2case():
     case3 = open("./case/case3.txt", "r")
     kj = open("kjoutput.txt", "r") 
@@ -463,13 +462,12 @@ def kj2case():
     num_cell = 0
     macro = [] # store MC"x"
     number = []  # store C"x"
-    pinsNumber = [] # store MC"x" to map the pins in macro
+    macroType = [] # store MC"x" to map the pins in macro
     top_die = []
     btm_die = []
     macro_w = 0
     macro_h = 0
     pinsinmacro = [[]for y in range( 34 )]
-    pins_grade = [[0, 0, 0, 0]for y in range( 34 )]
     
     line = case3.readline().replace("\n", "").split(" ")
     num_tech = int(line[1])
@@ -495,18 +493,18 @@ def kj2case():
                     pin_h = int(line[3])
 
                     if pin_w < macro_w and pin_h < macro_h:
-                        pinsinmacro[ macroIndex ].append(1)
+                        pinsinmacro[ macroIndex ].append(0)
                     elif pin_w > macro_w and pin_h < macro_h:
-                        pinsinmacro[ macroIndex ].append(2)
+                        pinsinmacro[ macroIndex ].append(1)
                     elif pin_w < macro_w and pin_h > macro_h:
-                        pinsinmacro[ macroIndex ].append(3)
+                        pinsinmacro[ macroIndex ].append(2)
                     elif pin_w > macro_w and pin_h > macro_h:
-                        pinsinmacro[ macroIndex ].append(4)
+                        pinsinmacro[ macroIndex ].append(3)
             else:
                 for pin in range(num_pins):
                     line = case3.readline().replace("\n", "").split(" ")
                 
-                    
+    
     for empty in range(16):
         line = case3.readline().replace("\n", "").split(" ")
 
@@ -514,12 +512,14 @@ def kj2case():
     num_instances = int(line[1])
     
 
-    #-----store CX to macro, and MCX to pinsNumber
+    #-----store CX to macro, and MCX to  macroType
     for ins in range(num_instances):
         line = case3.readline().replace("\n", "").split(" ")
         instance = line[2]
         if instance in macro:
             num = line[1].replace("C", "")
+            index = macro.index(line[2])
+            macroType.append( index )
             number.append(num)
     
     for ins in range(num_instances):
@@ -540,7 +540,7 @@ def kj2case():
         index_of_btm.append( number.index(i) )
     
     # -----calculate the grade of macros-----------------------
-
+    pins_grade = [[0, 0, 0, 0]for y in range( len(number) )]
     grade = [[0 for x in range( len(number) + 1 )] for y in range( len(number) + 1 )] 
     
     line = case3.readline().replace("\n", "")
@@ -554,14 +554,21 @@ def kj2case():
         numstdcell = 0
         macrosInNet = []
         
+        
         for j in range(degree):
             line = case3.readline().replace("\n", "").split(" ")
             line = line[1].split("/")
+            Pin = int(line[1].replace("P", "")) - 1
             line = line[0].replace("C", "")
                     
             if line in number:
-                if number.index(line) not in macrosInNet:
+                macroIndex = number.index(line)
+                if macroIndex not in macrosInNet:
                     macrosInNet.append( number.index(line) )
+                
+                whatType = macroType[macroIndex]
+                whatPin = pinsinmacro[whatType][Pin]
+                pins_grade[macroIndex][whatPin] += degree
             else:
                 numstdcell +=1
 
@@ -573,6 +580,7 @@ def kj2case():
                     grade[ macrosInNet[j] ][ macrosInNet[k] ] += numstdcell + 1
                     grade[ macrosInNet[k] ][ macrosInNet[j] ] += numstdcell + 1
     
+    
     #---decide the sequence of the top_die and btm_die
 
     grade = np.array(grade)
@@ -581,9 +589,35 @@ def kj2case():
     index_of_btm.append(len(number))
 
     # print(index_of_top, index_of_btm)
-    find_path(grade, index_of_top)
-    find_path(grade, index_of_btm)
+    sequence = find_path(grade, index_of_top)
+    
+    for i in range(len(sequence), 1, -1):
+        print("{}, ".format( macroType[sequence[i-1]] ), end="")
+    # for i in range(len(sequence), 1, -1):
+    #     print("op{}po, ".format(pins_grade[sequence[i-1]] ), end="")
+    
+    sequence = find_path(grade, index_of_btm)
+
+
+def case2nodes():
+    case3Node = open("./case/case3.nodes", "w")
+    kj = open("kjoutput.txt", "r") 
+    top_die = []
+    height = 33
+    numCell = 0
+    line = kj.readline().replace("\n", "")
+
+    while line:
+        line = line.split(" ")
+        if line[1] == "0" and int(line[2]) < 10000:
+            top_die.append( int(line[2])/height ) 
+            numCell += 1
             
+        line = kj.readline().replace("\n", "")
+    
+    for i in range(numCell):
+        case3Node.write("o{} {} {}\n".format(i, int(top_die[i]), height))
+
+    print(numCell)
+
 kj2case()
-# blue2case()
-# turn2case()

@@ -39,3 +39,5 @@ void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topD
 bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets);
 
 int actualHPWL(vector<RawNet> &rawnet);
+
+int decideRotation(int direction, int (&pinGrade)[][4], int index);

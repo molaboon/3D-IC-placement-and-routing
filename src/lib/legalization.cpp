@@ -1426,19 +1426,23 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
     int rightX = topDie.upperRightX;
     int direction = 0;  // 0 = left, 1 = up, 2 = right, 3 = down
     
-    int list[9] = {8, 7, 4, 5, 6, 3, 0 ,1 ,2};
+    int list[] = {33,32,30,29,27,26,24,22,21,8,15,16,4,12,19,6,18,10,0,2};
+    int pinsGrade [][4] = { {45, 29, 62, 40},  {44, 38, 50, 40 },  {50, 32, 58, 29 },  {5, 36, 72, 57 },  {47, 43, 48, 37 },  {38, 135, 0, 0 },  {4, 38, 76, 55 },  {49, 43, 48, 44 },  {39, 133, 0, 0 },  {44, 29, 57, 35 },  {55, 34, 56, 29 },  {36, 136, 0, 0 },  {37, 140, 0, 0 },  {46, 30, 55, 40 },  {4, 41, 75, 59 },  {45, 38, 48, 50 },  {44, 30, 59, 45 },  {45, 34, 63, 38 },  {4, 46, 73, 57 },  {56, 32, 62, 32 }};
     int tmp[4] = {btmY, rightX, topY, leftX};
+    int listSize = sizeof(list)/sizeof(int);
     
     bool changeTwice = false;
 
     macros[list[0]].finalX = 0;
     macros[list[0]].finalY = 0;
     macros[list[0]].layer = 1;
+    macros[list[0]].rotate = decideRotation(direction, pinsGrade, 0);
     updateRotate(macros[list[0]]);
         
-    for(int i = 1; i < macros.size(); i++)
+    for(int i = 1; i < listSize; i++)
     {
         macros[list[i]].layer = 1;
+        macros[list[i]].rotate = decideRotation(direction, pinsGrade, i);
         updateRotate(macros[list[i]]);
         int _w = macros[list[i]].finalWidth;
         int _h = macros[list[i]].finalHeight;
@@ -1545,4 +1549,54 @@ int actualHPWL(vector <RawNet> &rawnets)
     }
 
     return (int) sum;
+}
+
+
+int decideRotation(int direction, int (&pinGrade)[][4], int index)
+{
+    int down = pinGrade[index][0] + pinGrade[index][1];
+    int left = pinGrade[index][0] + pinGrade[index][2];
+    int top = pinGrade[index][2] + pinGrade[index][3];
+    int right = pinGrade[index][1] + pinGrade[index][3];
+    
+    int winner = 0;
+
+    winner = max(down, top);
+    winner = max(winner, left);
+    winner = max(winner, right);
+
+    if(winner == down) winner = 0;
+    else if (winner == right) winner = 1;
+    else if (winner == left) winner = 2;
+    else winner == 3;
+
+
+    switch (direction) {
+        case 0: // 向右
+            if(winner == down) return 180;
+            else if (winner == right) return 90;
+            else if (winner == left) return 270;
+            else return 0;
+            break;
+        case 1: // 向上
+            if(winner == down) return 270;
+            else if (winner == right) return 180;
+            else if (winner == left) return 0;
+            else return 90;
+            break;
+        case 2: // 向左
+            if(winner == down) return 0;
+            else if (winner == right) return 270;
+            else if (winner == left) return 90;
+            else return 180;
+            break;
+        case 3: // 向下
+            if(winner == down) return 90;
+            else if (winner == right) return 0;
+            else if (winner == left) return 180;
+            else return 270;
+            break;
+    }
+
+    return 0;
 }
