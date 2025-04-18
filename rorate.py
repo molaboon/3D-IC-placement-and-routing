@@ -367,7 +367,6 @@ def find_path(grade, die):
     start = die[-1]
     n = len(die)
     
-    
     def find_next_node(current):
         # 找出當前節點的所有鄰居中，權重最大的未訪問節點
         neighbors = [(grade[current, j], j) for j in range(n) 
@@ -402,12 +401,12 @@ def find_path(grade, die):
             current = start
 
     
-    for i in range(len(sequence)):
-        print("{}, ".format(sequence[i]), end="")
-    print()
+    # for i in range(len(sequence)):
+    #     print("{}, ".format(sequence[i]), end="")
+    # print()
     
-    # for i in range(len(path), 0, -1):
-    #     print("{}, ".format(path[i-1]), end="")
+    for i in range(len(sequence), 0, -1):
+        print("{}, ".format(sequence[i-1]), end="")
 
 def turn2case():
     block = open("newblue1.nodes", "r")
@@ -462,10 +461,15 @@ def kj2case():
     num_tech = 0
     num_pins = 0
     num_cell = 0
-    macro = []
-    number = []
+    macro = [] # store MC"x"
+    number = []  # store C"x"
+    pinsNumber = [] # store MC"x" to map the pins in macro
     top_die = []
     btm_die = []
+    macro_w = 0
+    macro_h = 0
+    pinsinmacro = [[]for y in range( 34 )]
+    pins_grade = [[0, 0, 0, 0]for y in range( 34 )]
     
     line = case3.readline().replace("\n", "").split(" ")
     num_tech = int(line[1])
@@ -479,18 +483,38 @@ def kj2case():
             num_pins = int(line[5])
             is_macro = line[1]
             
-            if is_macro == "Y":
+            if is_macro == "Y" and line[2] not in macro:
                 macro.append(line[2])
-            
-            for pin in range(num_pins):
-                line = case3.readline().replace("\n", "").split(" ")
-    
+                macroIndex = macro.index(line[2])
+                macro_w = int(line[3]) / 2
+                macro_h = int(line[4]) / 2 
+                
+                for pin in range(num_pins):
+                    line = case3.readline().replace("\n", "").split(" ")
+                    pin_w = int(line[2])
+                    pin_h = int(line[3])
+
+                    if pin_w < macro_w and pin_h < macro_h:
+                        pinsinmacro[ macroIndex ].append(1)
+                    elif pin_w > macro_w and pin_h < macro_h:
+                        pinsinmacro[ macroIndex ].append(2)
+                    elif pin_w < macro_w and pin_h > macro_h:
+                        pinsinmacro[ macroIndex ].append(3)
+                    elif pin_w > macro_w and pin_h > macro_h:
+                        pinsinmacro[ macroIndex ].append(4)
+            else:
+                for pin in range(num_pins):
+                    line = case3.readline().replace("\n", "").split(" ")
+                
+                    
     for empty in range(16):
         line = case3.readline().replace("\n", "").split(" ")
 
     line = case3.readline().replace("\n", "").split(" ")
     num_instances = int(line[1])
     
+
+    #-----store CX to macro, and MCX to pinsNumber
     for ins in range(num_instances):
         line = case3.readline().replace("\n", "").split(" ")
         instance = line[2]
@@ -517,7 +541,6 @@ def kj2case():
     
     # -----calculate the grade of macros-----------------------
 
-    # pinsinmacro = [[0 for x in range(4)]for y in range( len(macro))]
     grade = [[0 for x in range( len(number) + 1 )] for y in range( len(number) + 1 )] 
     
     line = case3.readline().replace("\n", "")
@@ -553,7 +576,7 @@ def kj2case():
     #---decide the sequence of the top_die and btm_die
 
     grade = np.array(grade)
-    turn2img(grade)    
+    # turn2img(grade)    
     index_of_top.append(len(number))
     index_of_btm.append(len(number))
 
