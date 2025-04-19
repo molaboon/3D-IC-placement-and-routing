@@ -600,10 +600,13 @@ def kj2case():
 
 
 def case2nodes():
-    case3Node = open("./case/case3.nodes", "w")
+    # case3Node = open("./case/case3.nodes", "w")
+    case3pl = open("./case/case3.pl", "w")
+    data = open("./visulization/data/999.txt", "r")
     kj = open("kjoutput.txt", "r") 
     top_die = []
     height = 33
+    numMacro = 20
     numCell = 0
     line = kj.readline().replace("\n", "")
 
@@ -616,8 +619,20 @@ def case2nodes():
         line = kj.readline().replace("\n", "")
     
     for i in range(numCell):
-        case3Node.write("o{} {} {}\n".format(i, int(top_die[i]), height))
+        # case3Node.write("o{} {} {}\n".format(i, int(top_die[i]), height))
+        case3pl.write("o{} 0 0 : N\n".format(i) )
+    
+    for i in range(numCell, numCell+numMacro, 1):
+        line = data.readline().replace("\n", "")
+        line = line.split(" ")
+        x = line[1]
+        y = line[2]
+        
+        case3pl.write("o{} {} {} : N /FIXED\n".format(i, x, y))
 
     print(numCell)
 
-kj2case()
+def case2cl():
+    
+
+case2nodes()
