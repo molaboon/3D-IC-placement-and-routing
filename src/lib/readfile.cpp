@@ -398,3 +398,26 @@ void readAbcusResult(vector <instance> &instances, int layer)
     fclose(input);
 
 }
+
+void readkj(vector <instance> &instances)
+{
+    int numCell = instances.size();
+    FILE *input;
+    char filename[30];
+    snprintf(filename, sizeof(filename), "./kjoutput.txt");
+    
+    input = fopen(filename, "r");
+
+
+    for(int i = 0; i < numCell; i++)
+    {
+        int cellIndex = 0;
+        int layer = 0;
+        
+        fscanf(input, "%d %d %*s %*s", &cellIndex, &layer);
+        if(layer == 0)
+            instances[cellIndex-1].layer = 1;
+        else
+            instances[cellIndex-1].layer = 0;
+    }
+}

@@ -76,6 +76,7 @@ int main(int argc, char *argv[]){
 	returnGridInfo(&topDie, &binInfo, numStdCells, instances);
 	returnDensityMap(densityMap);
 	fillerPreprocess(fillers, binInfo, topDie, btmDie);
+	readkj(instances);
 	
 	/*	macro gradient and placement	*/
 	
@@ -98,8 +99,9 @@ int main(int argc, char *argv[]){
 		{
 			macros[ list[i] ].rotate = 0;
 		}	
-
-		writeVisualFile(macros, 999, topDie);
+		writeRow(macros, topDie, btmDie);
+		// writeVisualFile(macros, 999, topDie);
+		
 	}
 
 	/*	coarsening */

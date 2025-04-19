@@ -4,7 +4,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
 from collections import deque
+from Readfile import *
 name = "apte"
+
+instance, net = parse_data("./case/case3.txt")
+
+print(net[0])
+
 
 def turn2net():
     f = open("./input_pa2/{}.nets".format(name), "r")
@@ -599,40 +605,57 @@ def kj2case():
     sequence = find_path(grade, index_of_btm)
 
 
-def case2nodes():
-    # case3Node = open("./case/case3.nodes", "w")
+def node2topOrbtmDie():
+    topOrBtm = []
+    kj = open("kjoutput.txt", "r") 
+    die = []
+    terminal = []
+    line = kj.readline().replace("\n", "")
+    
+    while line:
+        line = line.split(" ")
+        if line[1] == "0" :
+            die.append(line[0])
+        else:
+            terminal.append(line[0])
+
+        line = kj.readline().replace("\n", "")
+
+    
+    
+    return topOrBtm, terminal
+
+
+def case2nodesAndPl():
+    case3Node = open("./case/case3.nodes", "w")
     case3pl = open("./case/case3.pl", "w")
     data = open("./visulization/data/999.txt", "r")
     kj = open("kjoutput.txt", "r") 
-    top_die = []
     height = 33
     numMacro = 20
     numCell = 0
     line = kj.readline().replace("\n", "")
+    
+    die, terminal = node2topOrbtmDie()
 
     while line:
         line = line.split(" ")
-        if line[1] == "0" and int(line[2]) < 10000:
-            top_die.append( int(line[2])/height ) 
-            numCell += 1
-            
-        line = kj.readline().replace("\n", "")
-    
-    for i in range(numCell):
-        # case3Node.write("o{} {} {}\n".format(i, int(top_die[i]), height))
-        case3pl.write("o{} 0 0 : N\n".format(i) )
-    
-    for i in range(numCell, numCell+numMacro, 1):
-        line = data.readline().replace("\n", "")
-        line = line.split(" ")
-        x = line[1]
-        y = line[2]
+        if line[1] == "0" and int(line[2]) < 20000:
+            case3Node.write("o{} {} {}\n".format(numCell, int(int(line[2])/height), height))
+            case3pl.write("o{} 0 0\n".format(numCell, int(int(line[2])/height), height))
         
-        case3pl.write("o{} {} {} : N /FIXED\n".format(i, x, y))
+        elif line[1] == "0" and int(line[2]) > 20000:
+            macro = data.readline().replace("\n", "")
+            macro = macro.split(" ")
+            w = int(macro[3])
+            h = int(macro[4])
+            x = int(macro[1]) + int(w/2)
+            y = int(macro[2]) + int(h/2)
+            case3Node.write("o{} {} {} terminal\n".format(numCell, w, h))
+            case3pl.write("o{} {} {} \FIXED\n".format(numCell, x, y))
+        
+        numCell += 1
+        line = kj.readline().replace("\n", "")
+        
 
-    print(numCell)
-
-def case2cl():
-    
-
-case2nodes()
+# case2nodesAndPl()

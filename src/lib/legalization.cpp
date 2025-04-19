@@ -1292,125 +1292,143 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
 
     fclose(output);
 
-    // btm die
-    FILE *output2;
-    char filename2[30];
-    snprintf(filename2, sizeof(filename2), "./test/test2.scl");
-    output2 = fopen(filename2, "w");
-
-    fprintf(output2, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
-
-    for(int i = 0; i < numRow; i++)
+    if(false)
     {
-        vector <int> subrow;
+        // btm die
+        FILE *output2;
+        char filename2[30];
+        snprintf(filename2, sizeof(filename2), "./test/test2.scl");
+        output2 = fopen(filename2, "w");
 
-        for(int j = 0; j < btmDieMacros[i].size(); j++)
+        fprintf(output2, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
+
+        for(int i = 0; i < numRow; i++)
         {
-            int x =  macros[btmDieMacros[i].at(j)].finalX;
-            int w =  macros[btmDieMacros[i].at(j)].finalWidth;
-            subrow.push_back( x );
-            subrow.push_back( x+w ) ;
+            vector <int> subrow;
+
+            for(int j = 0; j < btmDieMacros[i].size(); j++)
+            {
+                int x =  macros[btmDieMacros[i].at(j)].finalX;
+                int w =  macros[btmDieMacros[i].at(j)].finalWidth;
+                subrow.push_back( x );
+                subrow.push_back( x+w ) ;
+            }
+
+            sort(subrow.begin(), subrow.end());
+            totalRow += btmDieMacros[i].size() + 1;
+            
+            if(subrow.size() < 1)
+                continue;
+            if(subrow[0] == 0)
+                totalRow--;
+            if(subrow.back() == (int) topDie.upperRightX)
+                totalRow--;
+        }
+        
+        fprintf(output2, "NumRows : %d\n", totalRow);
+
+        for(int i = 0; i < numRow; i++)
+        {
+            vector <int> subrow;
+            
+            subrow.push_back(0);
+
+            for(int j = 0; j < btmDieMacros[i].size(); j++)
+            {
+                int x =  macros[btmDieMacros[i].at(j)].finalX;
+                int w =  macros[btmDieMacros[i].at(j)].finalWidth;
+                subrow.push_back( x );
+                subrow.push_back( x+w ) ;
+            }
+            subrow.push_back(diewidth);
+
+            sort(subrow.begin(), subrow.end());
+            
+            for(int k = 0; k < btmDieMacros[i].size() + 1; k++)
+            {
+                fprintf(output2, "CoreRow Horizontal\n");
+                fprintf(output2, " Coordinate    :   %d\n", i * btmDie.rowHeight);
+                fprintf(output2, " Height        :   %d\n", btmDie.rowHeight);
+                fprintf(output2, " Sitewidth     :    1\n");
+                fprintf(output2, " Sitespacing   :    1\n");
+                fprintf(output2, " Siteorient    :    1\n");
+                fprintf(output2, " Sitesymmetry  :    1\n");
+                fprintf(output2, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
+                fprintf(output2, "End\n");
+            }
         }
 
-        sort(subrow.begin(), subrow.end());
-        totalRow += btmDieMacros[i].size() + 1;
-        
-        if(subrow.size() < 1)
-            continue;
-        if(subrow[0] == 0)
-            totalRow--;
-        if(subrow.back() == (int) topDie.upperRightX)
-            totalRow--;
+        fclose(output2);
     }
-    
-    fprintf(output2, "NumRows : %d\n", totalRow);
-
-    for(int i = 0; i < numRow; i++)
-    {
-        vector <int> subrow;
-        
-        subrow.push_back(0);
-
-        for(int j = 0; j < btmDieMacros[i].size(); j++)
-        {
-            int x =  macros[btmDieMacros[i].at(j)].finalX;
-            int w =  macros[btmDieMacros[i].at(j)].finalWidth;
-            subrow.push_back( x );
-            subrow.push_back( x+w ) ;
-        }
-        subrow.push_back(diewidth);
-
-        sort(subrow.begin(), subrow.end());
-        
-        for(int k = 0; k < btmDieMacros[i].size() + 1; k++)
-        {
-            fprintf(output2, "CoreRow Horizontal\n");
-            fprintf(output2, " Coordinate    :   %d\n", i * btmDie.rowHeight);
-            fprintf(output2, " Height        :   %d\n", btmDie.rowHeight);
-            fprintf(output2, " Sitewidth     :    1\n");
-            fprintf(output2, " Sitespacing   :    1\n");
-            fprintf(output2, " Siteorient    :    1\n");
-            fprintf(output2, " Sitesymmetry  :    1\n");
-            fprintf(output2, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
-            fprintf(output2, "End\n");
-        }
-    }
-
-    fclose(output2);
 }
 
-void writeMacroNest(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> stdCells)
+void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> instances)
 {
     int numOfmacros = macros.size();
-    int numCells = stdCells.size();
+    int numCells = instances.size();
+    int numNets = rawnets.size();
+    int netsCount = 0;
+    int pinsCount = 0;
+    int topDieCell = 0, topDieMacro = 0, btmDieCell = 0, btmDieMacro = 0 ;
+
+    for(int i = 0; i < numCells; i++)
+    {
+        switch (instances[i].layer)
+        {
+        case topLayer:
+            if(instances[i].isMacro)
+                topDieMacro++;
+            else
+                topDieCell++;
+            break;
+        
+        case btmLayer:
+            if(instances[i].isMacro)
+                btmDieMacro++;
+            else
+                btmDieCell++;
+
+        default:
+            break;
+        }
+    }
 
     FILE *output;
     
     char filename[30];
     
-    snprintf(filename, sizeof(filename), "./case3.nets");
+    snprintf(filename, sizeof(filename), "./test/case3.nets");
     output = fopen(filename, "w");
-
-    int numInstances = 0;
-    int numInst2 = 0;
-    
     fprintf(output, "Numnet\n\n");
 
-    for(int i = 0; i < numOfmacros; i++)
+    for(int i = 0; i < numNets; i++)
     {
-        int numOfPinsInMacros = pinsInMacros[i].size();
-        int nowMacroIndex = macros[i].instIndex;
+        int numPin = rawnets[i].numPins;
+        int notSameLayer = 0;
 
-        for(int j = 0; j < numOfPinsInMacros; j++)
+        for(int j = 0; j < numPin; j++)
+            if(rawnets[i].Connection[j]->layer != topLayer)
+                notSameLayer ++;
+
+        if(notSameLayer == numPin)
+            continue;
+        
+        fprintf(output, "NetDegree : %d n%d\n", numPin-notSameLayer, netsCount);
+        
+        for(int j = 0; j < numPin; j++)
         {
-            vector<int> mm;
             
-            for(int k = 0; k < pinsInMacros[i][j].numNetConnection; k++)
-            {
-                int netIndex = pinsInMacros[i][j].connectedNet[k];
-                mm.push_back(nowMacroIndex);
-                
-                for(int l = 0; l < rawnets[netIndex].numPins; l++)
-                {
-                    int instIndex = rawnets[netIndex].Connection[l]->instIndex;
-                    int numNets = stdCells[instIndex].numNetConnection;
-                    
-                    for(int m = 0; m < numNets; m++)
-                    {
-                        for(int n = 0; n < rawnets[ stdCells[instIndex].connectedNet[m] ].numPins; n++)
-                        {
-                            int instIndex2 = rawnets[ stdCells[instIndex].connectedNet[m] ].Connection[n]->instIndex;
-
-                            if(stdCells[instIndex2].isMacro && stdCells[instIndex2].instIndex != nowMacroIndex)
-                            {
-                                
-                            }
-                        }
-                    }
-                }
-            }
         }
+
     }
+
+
+    NetDegree : 162   n16
+	o495829	I : 197.000000	-29.000000
+	o495827	I : 197.000000	-29.000000
+	o495825	I : 197.000000	-29.000000
+
+   
 }
 
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie)
@@ -1550,7 +1568,6 @@ int actualHPWL(vector <RawNet> &rawnets)
 
     return (int) sum;
 }
-
 
 int decideRotation(int direction, int (&pinGrade)[][4], int index)
 {
