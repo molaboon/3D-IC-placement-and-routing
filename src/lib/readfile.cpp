@@ -399,7 +399,7 @@ void readAbcusResult(vector <instance> &instances, int layer)
 
 }
 
-void readkj(vector <instance> &instances)
+void readkj(vector <instance> &instances, vector <instance> &macros)
 {
     int numCell = instances.size();
     FILE *input;
@@ -416,8 +416,34 @@ void readkj(vector <instance> &instances)
         
         fscanf(input, "%d %d %*s %*s", &cellIndex, &layer);
         if(layer == 0)
+        {
             instances[cellIndex-1].layer = 1;
+            instances[cellIndex-1].rotate = 0;
+            instances[cellIndex-1].finalWidth = instances[cellIndex-1].width;
+            instances[cellIndex-1].finalHeight = instances[cellIndex-1].height;
+        }
         else
+        {
             instances[cellIndex-1].layer = 0;
+            instances[cellIndex-1].rotate = 0;
+            instances[cellIndex-1].finalWidth = instances[cellIndex-1].inflateWidth;
+            instances[cellIndex-1].finalHeight = instances[cellIndex-1].inflateHeight;
+        }
+        
+        if(instances[cellIndex].isMacro)
+        {
+            for(int j = 0; j < macros.size(); j++)
+            {
+                if(macros[j].instIndex == cellIndex-1)
+                {
+                    macros[j].layer = instances[cellIndex-1].layer;
+                    macros[j].rotate = instances[cellIndex-1].rotate;
+                    macros[j].finalWidth = instances[cellIndex-1].finalWidth;
+                    macros[j].finalHeight = instances[cellIndex-1].finalHeight;
+                    
+                    break;
+                }
+            }
+        }
     }
 }

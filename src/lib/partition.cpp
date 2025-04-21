@@ -187,8 +187,6 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
         int w = macro[i].finalWidth;
         int h = macro[i].finalHeight;
 
-        
-
         for(int j = 0; j < numPins; j++)
         {
             switch ( macro[i].rotate )
@@ -222,15 +220,15 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
 
         // instances[ macro[i].instIndex ].width = (float) w;
         // instances[ macro[i].instIndex ].height = (float) h;
-        // instances[ macro[i].instIndex ].x = float (macro[i].finalX + macro[i].finalWidth / 2);
-        // instances[ macro[i].instIndex ].y = float (macro[i].finalY + macro[i].finalHeight / 2);
+        instances[ macro[i].instIndex ].x = float (macro[i].finalX);
+        instances[ macro[i].instIndex ].y = float (macro[i].finalY);
         // instances[ macro[i].instIndex ].z = float (macro[i].layer*9900);
         // instances[ macro[i].instIndex ].finalX = x;
         // instances[ macro[i].instIndex ].finalY = y;
-        // instances[ macro[i].instIndex ].finalWidth = w;
-        // instances[ macro[i].instIndex ].finalHeight = h;
-        // instances[ macro[i].instIndex ].layer = macro[i].layer;
-        // instances[ macro[i].instIndex ].rotate = macro[i].rotate;
+        instances[ macro[i].instIndex ].finalWidth = w;
+        instances[ macro[i].instIndex ].finalHeight = h;
+        instances[ macro[i].instIndex ].layer = macro[i].layer;
+        instances[ macro[i].instIndex ].rotate = macro[i].rotate;
         // instances[ macro[i].instIndex ].canPass = true;
         // instances[ macro[i].instIndex ].density = instances[ macro[i].instIndex ].layer;
         // instances[ macro[i].instIndex ].tmpD = instances[ macro[i].instIndex ].layer;

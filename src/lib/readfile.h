@@ -171,6 +171,6 @@ void readNetInfo(FILE *input, int *NumNets, vector <RawNet> &rawnet, vector <ins
 
 void readAbcusResult(vector <instance> &instances, int layer);
 
-void readkj(vector <instance> &instances);
+void readkj(vector <instance> &instances, vector <instance> &macros);
 
 #endif

@@ -30,7 +30,7 @@ void writeData(const float hpwl, const float hbt, const float penalty);
 
 void wirteNodes(vector <instance> &instances, vector <instance> &macros);
 
-void wirtePl(vector <instance> &instances, vector <instance> &macros);
+void wirtePl(vector <instance> &instances, vector <instance> &macros, Die topDie);
 
 void writeRow(vector <instance> &macros, Die topDie, Die btmDie);
 
@@ -41,3 +41,5 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
 int actualHPWL(vector<RawNet> &rawnet);
 
 int decideRotation(int direction, int (&pinGrade)[][4], int index);
+
+void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> instances);

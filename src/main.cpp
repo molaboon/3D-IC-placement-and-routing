@@ -76,37 +76,22 @@ int main(int argc, char *argv[]){
 	returnGridInfo(&topDie, &binInfo, numStdCells, instances);
 	returnDensityMap(densityMap);
 	fillerPreprocess(fillers, binInfo, topDie, btmDie);
-	readkj(instances);
+	readkj(instances, macros);
 	
 	/*	macro gradient and placement	*/
 	
 	if(macroPart)
 	{
-		// macroGradient( macros, netsOfMacros, topDie, 20, densityMap, fillers);
-		// cell2BestLayer(macros, topDie, btmDie, netsOfMacros, terminalTech);
-		// macroLegalization(macros, topDie, btmDie);
-		// macroRotate(macros, pinsInMacros, rawnet, instances);
-		int bestHPWL = 999999;
-		int rotation = 90;
-		int list[] = {33,32,30,29,27,26,24,22,21,8,15,16,4,12,19,6,18,10,0,2};
-		int pinsGrade [][4] = { {45, 29, 62, 40},  {44, 38, 50, 40 },  {50, 32, 58, 29 },  {5, 36, 72, 57 },  {47, 43, 48, 37 },  {38, 135, 0, 0 },  {4, 38, 76, 55 },  {49, 43, 48, 44 },  {39, 133, 0, 0 },  {44, 29, 57, 35 },  {55, 34, 56, 29 },  {36, 136, 0, 0 },  {37, 140, 0, 0 },  {46, 30, 55, 40 },  {4, 41, 75, 59 },  {45, 38, 48, 50 },  {44, 30, 59, 45 },  {45, 34, 63, 38 },  {4, 46, 73, 57 },  {56, 32, 62, 32 }};
-	
-		int first = 0;
 		bool needupdate = cooradinate(macros, topDie, rawnet);
-			
-
-		for(int i = 0; i < sizeof(list)/sizeof(int) ; i++)
-		{
-			macros[ list[i] ].rotate = 0;
-		}	
+		updatePinsInMacroInfo(macros, pinsInMacros, instances);
+		
+		writeVisualFile(macros, 999, topDie);
+		wirteNodes(instances, macros);
+		wirtePl(instances, macros, topDie);
+		writeNet(macros, pinsInMacros, rawnet, instances);
 		writeRow(macros, topDie, btmDie);
-		// writeVisualFile(macros, 999, topDie);
 		
 	}
-
-	/*	coarsening */
-
-	// coarsen(rawnet, instances);
 
 	/*	first placement and CG preprocessing	*/
 	
@@ -196,10 +181,6 @@ int main(int argc, char *argv[]){
 	
 	if(false)
 	{	
-		cell2BestLayer(instances, topDie, btmDie, rawnet, terminalTech);
-		wirteNodes(instances, macros);
-		wirtePl(instances, macros);
-		writeRow(macros, topDie, btmDie);
 		
 		system("./hw4 ./test/test.aux");
 		system("./hw4 ./test/test2.aux");

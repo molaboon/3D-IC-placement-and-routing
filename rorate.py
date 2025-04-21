@@ -7,11 +7,6 @@ from collections import deque
 from Readfile import *
 name = "apte"
 
-instance, net = parse_data("./case/case3.txt")
-
-print(net[0])
-
-
 def turn2net():
     f = open("./input_pa2/{}.nets".format(name), "r")
     o = open("{}.net".format(name), "w")
@@ -278,7 +273,6 @@ def turn2img(arr):
                 else:
                     print("[{}, {}] = {}".format(i, j, arr[i][j]))
 
-
 #   turn new blue to case_newblue
 def blue2case():
     block = open("newblue1.nodes", "r")
@@ -364,7 +358,6 @@ def blue2case():
     
     grade = np.array(grade)
     find_path(grade)
-
 
 def find_path(grade, die):
     
@@ -597,12 +590,15 @@ def kj2case():
     # print(index_of_top, index_of_btm)
     sequence = find_path(grade, index_of_top)
     
-    for i in range(len(sequence), 1, -1):
-        print("{}, ".format( macroType[sequence[i-1]] ), end="")
+    # for i in range(len(sequence), 1, -1):
+    #     print("{}, ".format( macroType[sequence[i-1]] ), end="")
     # for i in range(len(sequence), 1, -1):
     #     print("op{}po, ".format(pins_grade[sequence[i-1]] ), end="")
     
     sequence = find_path(grade, index_of_btm)
+    # print(sequence)
+    for i in range(len(sequence), 1, -1):
+        print("op{}po, ".format( pins_grade[sequence[i-1]] ), end="")
 
 
 def node2topOrbtmDie():
@@ -657,5 +653,4 @@ def case2nodesAndPl():
         numCell += 1
         line = kj.readline().replace("\n", "")
         
-
-# case2nodesAndPl()
+kj2case()

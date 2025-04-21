@@ -840,10 +840,10 @@ void writeVisualFile(const vector <instance> instances, int iteration, Die &topD
         else if( instances[inst].layer == btmLayer) 
             fprintf(output, "Inst %d %d %d %d %d\n", 
             instances[inst].instIndex + 1, 
-            (int) instances[inst].finalX, 
-            (int) instances[inst].finalY,
-            (int) instances[inst].finalWidth,
-            (int) instances[inst].finalHeight);
+            instances[inst].finalX, 
+            instances[inst].finalY,
+            instances[inst].finalWidth,
+            instances[inst].finalHeight);
     }
 
     fclose(output);
@@ -1095,7 +1095,7 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
 
     int numInstances = 0;
     int numInst2 = 0;
-    int numMacros = 3;
+    int numMacros = 20;
     int qqq = 0;
     int jjj = 0;
 
@@ -1107,8 +1107,8 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
             numInst2 ++;
     }
         
-    snprintf(filename, sizeof(filename), "./test/test.nodes");
-    snprintf(filename2, sizeof(filename2), "./test/test2.nodes");
+    snprintf(filename, sizeof(filename), "./test/case3top.nodes");
+    snprintf(filename2, sizeof(filename2), "./test/case3btm.nodes");
 
     output = fopen(filename, "w");
     output2 = fopen(filename2, "w");
@@ -1123,15 +1123,19 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
 
     for(int i = 0; i < instances.size(); i++)
     {
-        if(instances[i].layer == 1 && !instances[i].isMacro)
+        if(instances[i].layer == 1 )
         {
-            fprintf(output, "o%d %d %d\n", qqq, instances[i].finalWidth, instances[i].finalHeight);
-            qqq++;
+            if(!instances[i].isMacro)
+                fprintf(output, "o%d %d %d\n", i, instances[i].finalWidth, instances[i].finalHeight);
+            else
+                fprintf(output, "o%d %d %d terminal\n", i, instances[i].finalWidth, instances[i].finalHeight);
         }
-        else if(instances[i].layer == 0 && !instances[i].isMacro)
+        else if(instances[i].layer == 0 )
         {
-            fprintf(output2, "o%d %d %d\n", jjj, instances[i].finalWidth, instances[i].finalHeight);
-            jjj++;   
+            if(!instances[i].isMacro)
+                fprintf(output2, "o%d %d %d\n", i, instances[i].finalWidth, instances[i].finalHeight);
+            else
+                fprintf(output2, "o%d %d %d terminal\n", i, instances[i].finalWidth, instances[i].finalHeight);
         }
     }
 
@@ -1139,7 +1143,7 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
     fclose(output2);
 }
 
-void wirtePl(vector <instance> &instances, vector <instance> &macros)
+void wirtePl(vector <instance> &instances, vector <instance> &macros, Die topDie)
 {
     FILE *output;
     FILE *output2;
@@ -1147,29 +1151,41 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros)
     char filename[30];
     char filename2[30];
 
-    snprintf(filename, sizeof(filename), "./test/test.ntup.pl");
+    snprintf(filename, sizeof(filename), "./test/case3top.pl");
     output = fopen(filename, "w");
 
-    snprintf(filename2, sizeof(filename2), "./test/test2.ntup.pl");
+    snprintf(filename2, sizeof(filename2), "./test/case3btm.pl");
     output2 = fopen(filename2, "w");
 
     int numInstances = 0;
     int numInst2 = 0;
     
-    fprintf(output, "UCLA pl 1.0\n\n");
-    fprintf(output2, "UCLA pl 1.0\n\n");
+    fprintf(output, "UCLA pl 1.0\nCreated	:	Dec 27 2004\nUser :	Gi-Joon Nam \n\n");
+    fprintf(output2, "UCLA pl 1.0\nCreated	:	Dec 27 2004\nUser :	Gi-Joon Nam \n\n");
 
     for(int i = 0; i < instances.size(); i++)
     {
-        if(instances[i].layer == 1 && !instances[i].isMacro)
+        int x = instances[i].x;
+        int y = instances[i].y;
+        int _w = instances[i].finalWidth/2;
+        int _h = instances[i].finalHeight/2;
+        int cx = (int) topDie.upperRightX /2;
+        int cy = (int) topDie.upperRightY /2;
+
+        if(instances[i].layer == 1)
         {
-            fprintf(output, "o%d %d %d : N\n", numInstances, (int) instances[i].x, (int) instances[i].y);
-            numInstances++;
+            if(!instances[i].isMacro)
+                fprintf(output, "o%d %d %d : N\n", i, cx, cy);
+            else
+                fprintf(output, "o%d %d %d : N /FIXED\n", i, x, y);
+            
         }
-        else if(instances[i].layer == 0 && !instances[i].isMacro)
+        else if(instances[i].layer == 0 )
         {
-            fprintf(output2, "o%d %d %d : N\n", numInst2, (int) instances[i].x, (int) instances[i].y);
-            numInst2++;
+            if(!instances[i].isMacro)
+                fprintf(output2, "o%d 0 0 : N\n", i);
+            else
+                fprintf(output2, "o%d %d %d : N /FIXED\n", i, x+_w, y+_h);
         }
     }
 
@@ -1227,7 +1243,7 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     
     FILE *output;
     char filename[30];
-    snprintf(filename, sizeof(filename), "./test/test.scl");
+    snprintf(filename, sizeof(filename), "./test/case3top.scl");
     output = fopen(filename, "w");
 
     fprintf(output, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
@@ -1256,8 +1272,29 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
         }
         
     }
+    for(int i = 0; i < numRow; i++)
+    {
+        vector <int> subrow;
+        
+        subrow.push_back(0);
+
+        for(int j = 0; j < topDieMacros[i].size(); j++)
+        {
+            int x =  macros[topDieMacros[i].at(j)].finalX;
+            int w =  macros[topDieMacros[i].at(j)].finalWidth;
+            subrow.push_back( x );
+            subrow.push_back( x+w ) ;
+        }
+        subrow.push_back(diewidth);
+
+        sort(subrow.begin(), subrow.end());
+        
+        for(int k = 0; k < topDieMacros[i].size() + 1; k++)
+            if( subrow[2*k+1] - subrow[2*k] == 0);
+                totalRow--;
+    }
     
-    fprintf(output, "NumRows : %d\n", totalRow);
+    fprintf(output, "NumRows : %d\n\n", totalRow);
 
     for(int i = 0; i < numRow; i++)
     {
@@ -1278,15 +1315,18 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
         
         for(int k = 0; k < topDieMacros[i].size() + 1; k++)
         {
-            fprintf(output, "CoreRow Horizontal\n");
-            fprintf(output, " Coordinate    :   %d\n", i * height);
-            fprintf(output, " Height        :   %d\n", height);
-            fprintf(output, " Sitewidth     :    1\n");
-            fprintf(output, " Sitespacing   :    1\n");
-            fprintf(output, " Siteorient    :    1\n");
-            fprintf(output, " Sitesymmetry  :    1\n");
-            fprintf(output, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
-            fprintf(output, "End\n");
+            if(subrow[2*k+1] - subrow[2*k] != 0)
+            {
+                fprintf(output, "CoreRow Horizontal\n");
+                fprintf(output, " Coordinate    :   %d\n", i * height);
+                fprintf(output, " Height        :   %d\n", height);
+                fprintf(output, " Sitewidth     :    1\n");
+                fprintf(output, " Sitespacing   :    1\n");
+                fprintf(output, " Siteorient    :    1\n");
+                fprintf(output, " Sitesymmetry  :    1\n");
+                fprintf(output, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
+                fprintf(output, "End\n");
+            }
         }
     }
 
@@ -1371,35 +1411,12 @@ void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacr
     int pinsCount = 0;
     int topDieCell = 0, topDieMacro = 0, btmDieCell = 0, btmDieMacro = 0 ;
 
-    for(int i = 0; i < numCells; i++)
-    {
-        switch (instances[i].layer)
-        {
-        case topLayer:
-            if(instances[i].isMacro)
-                topDieMacro++;
-            else
-                topDieCell++;
-            break;
-        
-        case btmLayer:
-            if(instances[i].isMacro)
-                btmDieMacro++;
-            else
-                btmDieCell++;
-
-        default:
-            break;
-        }
-    }
-
     FILE *output;
     
     char filename[30];
     
-    snprintf(filename, sizeof(filename), "./test/case3.nets");
+    snprintf(filename, sizeof(filename), "./test/case3top.nets");
     output = fopen(filename, "w");
-    fprintf(output, "Numnet\n\n");
 
     for(int i = 0; i < numNets; i++)
     {
@@ -1410,25 +1427,50 @@ void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacr
             if(rawnets[i].Connection[j]->layer != topLayer)
                 notSameLayer ++;
 
-        if(notSameLayer == numPin)
+        if(notSameLayer == numPin || numPin-notSameLayer == 1)
+            continue;
+        netsCount++;
+        for(int j = 0; j < numPin; j++)
+        {
+            int layer = rawnets[i].Connection[j]->layer;
+            int index = rawnets[i].Connection[j]->instIndex;
+            if(layer == topLayer)
+                pinsCount++;
+        }
+    }
+    
+    fprintf(output, "UCLA\n# Created	:	Dec 27 2004\n# User   	:	Gi-Joon Nam \n\n");
+    fprintf(output, "NumNets : %d\nNumPins : %d\n\n", netsCount, pinsCount);
+    netsCount = 0;
+
+    for(int i = 0; i < numNets; i++)
+    {
+        int numPin = rawnets[i].numPins;
+        int notSameLayer = 0;
+
+        for(int j = 0; j < numPin; j++)
+            if(rawnets[i].Connection[j]->layer != topLayer)
+                notSameLayer ++;
+
+        if(notSameLayer == numPin || numPin-notSameLayer == 1)
             continue;
         
         fprintf(output, "NetDegree : %d n%d\n", numPin-notSameLayer, netsCount);
+        netsCount++;
         
         for(int j = 0; j < numPin; j++)
         {
-            
-        }
+            int layer = rawnets[i].Connection[j]->layer;
+            int index = rawnets[i].Connection[j]->instIndex;
 
+            if(layer == topLayer)
+            {
+                fprintf(output, "o%d I : 1.0 1.0\n", index);
+            }    
+        }
     }
 
-
-    NetDegree : 162   n16
-	o495829	I : 197.000000	-29.000000
-	o495827	I : 197.000000	-29.000000
-	o495825	I : 197.000000	-29.000000
-
-   
+    fclose(output);
 }
 
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie)
@@ -1443,23 +1485,22 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
     int leftX = 0;
     int rightX = topDie.upperRightX;
     int direction = 0;  // 0 = left, 1 = up, 2 = right, 3 = down
-    
-    int list[] = {33,32,30,29,27,26,24,22,21,8,15,16,4,12,19,6,18,10,0,2};
-    int pinsGrade [][4] = { {45, 29, 62, 40},  {44, 38, 50, 40 },  {50, 32, 58, 29 },  {5, 36, 72, 57 },  {47, 43, 48, 37 },  {38, 135, 0, 0 },  {4, 38, 76, 55 },  {49, 43, 48, 44 },  {39, 133, 0, 0 },  {44, 29, 57, 35 },  {55, 34, 56, 29 },  {36, 136, 0, 0 },  {37, 140, 0, 0 },  {46, 30, 55, 40 },  {4, 41, 75, 59 },  {45, 38, 48, 50 },  {44, 30, 59, 45 },  {45, 34, 63, 38 },  {4, 46, 73, 57 },  {56, 32, 62, 32 }};
     int tmp[4] = {btmY, rightX, topY, leftX};
+    int nowLayer = btmLayer;
+
+    int list[] = {31, 28, 25, 23, 20, 17, 7, 9, 5, 11, 3, 13, 1, 14 };
+    int pinsGrade [][4] = { {40, 144, 0, 0}, {44, 31, 55, 40}, {52, 30, 70, 28}, {46, 31, 56, 42}, {50, 34, 60, 24}, {47, 39, 44, 42}, {48, 40, 40, 35}, {46, 29, 58, 37}, {39, 133, 0, 0}, {44, 33, 53, 41}, {50, 31, 58, 34}, {47, 30, 60, 39}, {4, 45, 77, 52}, {4, 43, 91, 57}};
     int listSize = sizeof(list)/sizeof(int);
     
     bool changeTwice = false;
 
     macros[list[0]].finalX = 0;
     macros[list[0]].finalY = 0;
-    macros[list[0]].layer = 1;
     macros[list[0]].rotate = decideRotation(direction, pinsGrade, 0);
     updateRotate(macros[list[0]]);
         
     for(int i = 1; i < listSize; i++)
     {
-        macros[list[i]].layer = 1;
         macros[list[i]].rotate = decideRotation(direction, pinsGrade, i);
         updateRotate(macros[list[i]]);
         int _w = macros[list[i]].finalWidth;
@@ -1587,7 +1628,6 @@ int decideRotation(int direction, int (&pinGrade)[][4], int index)
     else if (winner == left) winner = 2;
     else winner == 3;
 
-
     switch (direction) {
         case 0: // 向右
             if(winner == down) return 180;
@@ -1616,4 +1656,9 @@ int decideRotation(int direction, int (&pinGrade)[][4], int index)
     }
 
     return 0;
+}
+
+void returnList(vector<instance> macros, vector<int> topDieList, vector<int> btmDieList)
+{
+    
 }
