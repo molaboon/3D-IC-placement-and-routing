@@ -1107,8 +1107,8 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
             numInst2 ++;
     }
         
-    snprintf(filename, sizeof(filename), "./test/case3top.nodes");
-    snprintf(filename2, sizeof(filename2), "./test/case3btm.nodes");
+    snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.nodes");
+    snprintf(filename2, sizeof(filename2), "./easyplace/case3btm/case3btm.nodes");
 
     output = fopen(filename, "w");
     output2 = fopen(filename2, "w");
@@ -1151,10 +1151,10 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros, Die topDie
     char filename[30];
     char filename2[30];
 
-    snprintf(filename, sizeof(filename), "./test/case3top.pl");
+    snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.pl");
     output = fopen(filename, "w");
 
-    snprintf(filename2, sizeof(filename2), "./test/case3btm.pl");
+    snprintf(filename2, sizeof(filename2), "./easyplace/case3btm/case3btm.pl");
     output2 = fopen(filename2, "w");
 
     int numInstances = 0;
@@ -1243,7 +1243,7 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     
     FILE *output;
     char filename[30];
-    snprintf(filename, sizeof(filename), "./test/case3top.scl");
+    snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.scl");
     output = fopen(filename, "w");
 
     fprintf(output, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
@@ -1332,12 +1332,12 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
 
     fclose(output);
 
-    if(false)
+    if(true)
     {
         // btm die
         FILE *output2;
         char filename2[30];
-        snprintf(filename2, sizeof(filename2), "./test/test2.scl");
+        snprintf(filename2, sizeof(filename2), "./easyplace/case3btm/case3btm.scl");
         output2 = fopen(filename2, "w");
 
         fprintf(output2, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
@@ -1415,7 +1415,7 @@ void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacr
     
     char filename[30];
     
-    snprintf(filename, sizeof(filename), "./test/case3top.nets");
+    snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.nets");
     output = fopen(filename, "w");
 
     for(int i = 0; i < numNets; i++)
@@ -1496,6 +1496,7 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
 
     macros[list[0]].finalX = 0;
     macros[list[0]].finalY = 0;
+    macros[list[0]].layer = nowLayer;
     macros[list[0]].rotate = decideRotation(direction, pinsGrade, 0);
     updateRotate(macros[list[0]]);
         
@@ -1503,6 +1504,7 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
     {
         macros[list[i]].rotate = decideRotation(direction, pinsGrade, i);
         updateRotate(macros[list[i]]);
+        macros[list[i]].layer = nowLayer;
         int _w = macros[list[i]].finalWidth;
         int _h = macros[list[i]].finalHeight;
         bool chang = false;

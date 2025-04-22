@@ -88,7 +88,7 @@ int main(int argc, char *argv[]){
 		writeVisualFile(macros, 999, topDie);
 		wirteNodes(instances, macros);
 		wirtePl(instances, macros, topDie);
-		writeNet(macros, pinsInMacros, rawnet, instances);
+		// writeNet(macros, pinsInMacros, rawnet, instances);s
 		writeRow(macros, topDie, btmDie);
 		
 	}
