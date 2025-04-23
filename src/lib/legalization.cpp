@@ -1090,8 +1090,8 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
     FILE *output2;
 
     
-    char filename[30];
-    char filename2[30];
+    char filename[40];
+    char filename2[40];
 
     int numInstances = 0;
     int numInst2 = 0;
@@ -1103,8 +1103,10 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
     {
         if(instances[i].layer == 1)
             numInstances ++;
-        else
+        else if (instances[i].layer == btmLayer)
             numInst2 ++;
+        if(instances[i].layer == 3)
+            cout << i << endl;
     }
         
     snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.nodes");
@@ -1119,7 +1121,7 @@ void wirteNodes(vector <instance> &instances, vector <instance> &macros)
 
     fprintf(output2, "UCLA nodes 1.0\n# Created : \n# User    :   Modified MMS Benchmark\n\n");
     fprintf(output2, "NumNodes :   %d\n", numInst2);
-    fprintf(output2, "NumTerminals :   %d\n\n", numMacros);
+    fprintf(output2, "NumTerminals :   14\n\n", numMacros);
 
     for(int i = 0; i < instances.size(); i++)
     {
@@ -1148,8 +1150,8 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros, Die topDie
     FILE *output;
     FILE *output2;
     
-    char filename[30];
-    char filename2[30];
+    char filename[40];
+    char filename2[40];
 
     snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.pl");
     output = fopen(filename, "w");
@@ -1169,23 +1171,23 @@ void wirtePl(vector <instance> &instances, vector <instance> &macros, Die topDie
         int y = instances[i].y;
         int _w = instances[i].finalWidth/2;
         int _h = instances[i].finalHeight/2;
-        int cx = (int) topDie.upperRightX /2;
-        int cy = (int) topDie.upperRightY /2;
+        int cx =  topDie.upperRightX /2;
+        int cy =  topDie.upperRightY /2;
 
-        if(instances[i].layer == 1)
+        if(instances[i].layer == topLayer)
         {
             if(!instances[i].isMacro)
-                fprintf(output, "o%d %d %d : N\n", i, cx, cy);
+                fprintf(output, "o%d 0 0 : N\n", i);
             else
                 fprintf(output, "o%d %d %d : N /FIXED\n", i, x, y);
             
         }
-        else if(instances[i].layer == 0 )
+        else if(instances[i].layer == btmLayer )
         {
             if(!instances[i].isMacro)
-                fprintf(output2, "o%d 0 0 : N\n", i);
+                fprintf(output2, "o%d %d %d : N\n", i, cx, cy);
             else
-                fprintf(output2, "o%d %d %d : N /FIXED\n", i, x+_w, y+_h);
+                fprintf(output2, "o%d %d %d : N /FIXED\n", i, x, y);
         }
     }
 
@@ -1197,8 +1199,9 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
 {
     vector < vector<int> > topDieMacros(topDie.repeatCount);
     vector < vector<int> > btmDieMacros(btmDie.repeatCount);
-    const int numRow = topDie.repeatCount;
-    const int height = topDie.rowHeight;
+    int numRow = topDie.repeatCount;
+    int height = topDie.rowHeight;
+
     const int diewidth = (int) topDie.upperRightX;
     int totalRow = 0;
 
@@ -1242,7 +1245,7 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     }
     
     FILE *output;
-    char filename[30];
+    char filename[40];
     snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.scl");
     output = fopen(filename, "w");
 
@@ -1336,9 +1339,10 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     {
         // btm die
         FILE *output2;
-        char filename2[30];
+        char filename2[40];
         snprintf(filename2, sizeof(filename2), "./easyplace/case3btm/case3btm.scl");
         output2 = fopen(filename2, "w");
+        numRow = btmDie.repeatCount;
 
         fprintf(output2, "UCLA scl 1.0 \n# Created	:	2005 \n# User   	:	Gi-Joon\n\n");
 
@@ -1364,6 +1368,28 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
             if(subrow.back() == (int) topDie.upperRightX)
                 totalRow--;
         }
+
+        for(int i = 0; i < numRow; i++)
+        {
+            vector <int> subrow;
+            
+            subrow.push_back(0);
+
+            for(int j = 0; j < btmDieMacros[i].size(); j++)
+            {
+                int x =  macros[btmDieMacros[i].at(j)].finalX;
+                int w =  macros[btmDieMacros[i].at(j)].finalWidth;
+                subrow.push_back( x );
+                subrow.push_back( x+w ) ;
+            }
+            subrow.push_back(diewidth);
+
+            sort(subrow.begin(), subrow.end());
+            
+            for(int k = 0; k < btmDieMacros[i].size() + 1; k++)
+                if( subrow[2*k+1] - subrow[2*k] == 0);
+                    totalRow--;
+        }
         
         fprintf(output2, "NumRows : %d\n", totalRow);
 
@@ -1386,15 +1412,18 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
             
             for(int k = 0; k < btmDieMacros[i].size() + 1; k++)
             {
-                fprintf(output2, "CoreRow Horizontal\n");
-                fprintf(output2, " Coordinate    :   %d\n", i * btmDie.rowHeight);
-                fprintf(output2, " Height        :   %d\n", btmDie.rowHeight);
-                fprintf(output2, " Sitewidth     :    1\n");
-                fprintf(output2, " Sitespacing   :    1\n");
-                fprintf(output2, " Siteorient    :    1\n");
-                fprintf(output2, " Sitesymmetry  :    1\n");
-                fprintf(output2, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
-                fprintf(output2, "End\n");
+                if(subrow[2*k+1] - subrow[2*k] != 0)
+                {
+                    fprintf(output2, "CoreRow Horizontal\n");
+                    fprintf(output2, " Coordinate    :   %d\n", i * btmDie.rowHeight);
+                    fprintf(output2, " Height        :   %d\n", btmDie.rowHeight);
+                    fprintf(output2, " Sitewidth     :    1\n");
+                    fprintf(output2, " Sitespacing   :    1\n");
+                    fprintf(output2, " Siteorient    :    1\n");
+                    fprintf(output2, " Sitesymmetry  :    1\n");
+                    fprintf(output2, " SubrowOrigin  :    %d	NumSites  :  %d\n", subrow[2*k], subrow[2*k+1] - subrow[2*k]);
+                    fprintf(output2, "End\n");
+                }
             }
         }
 
@@ -1409,14 +1438,21 @@ void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacr
     int numNets = rawnets.size();
     int netsCount = 0;
     int pinsCount = 0;
-    int topDieCell = 0, topDieMacro = 0, btmDieCell = 0, btmDieMacro = 0 ;
+
+    int netsCount2 = 0;
+    int pinsCount2 = 0;
 
     FILE *output;
+    FILE *output2;
     
-    char filename[30];
+    char filename[40];
+    char filename2[40];
     
     snprintf(filename, sizeof(filename), "./easyplace/case3top/case3top.nets");
+    snprintf(filename2, sizeof(filename), "./easyplace/case3btm/case3btm.nets");
+    
     output = fopen(filename, "w");
+    output2 = fopen(filename2, "w");
 
     for(int i = 0; i < numNets; i++)
     {
@@ -1438,10 +1474,37 @@ void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacr
                 pinsCount++;
         }
     }
+
+    for(int i = 0; i < numNets; i++)
+    {
+        int numPin = rawnets[i].numPins;
+        int notSameLayer = 0;
+
+        for(int j = 0; j < numPin; j++)
+            if(rawnets[i].Connection[j]->layer != btmLayer)
+                notSameLayer ++;
+
+        if(notSameLayer == numPin || numPin-notSameLayer == 1)
+            continue;
+        netsCount2++;
+        for(int j = 0; j < numPin; j++)
+        {
+            int layer = rawnets[i].Connection[j]->layer;
+            int index = rawnets[i].Connection[j]->instIndex;
+            if(layer == btmLayer)
+                pinsCount2++;
+        }
+    }
     
     fprintf(output, "UCLA\n# Created	:	Dec 27 2004\n# User   	:	Gi-Joon Nam \n\n");
     fprintf(output, "NumNets : %d\nNumPins : %d\n\n", netsCount, pinsCount);
+    
+    fprintf(output2, "UCLA\n# Created	:	Dec 27 2004\n# User   	:	Gi-Joon Nam \n\n");
+    fprintf(output2, "NumNets : %d\nNumPins : %d\n\n", netsCount2, pinsCount2);
+    
+
     netsCount = 0;
+    netsCount2 = 0;
 
     for(int i = 0; i < numNets; i++)
     {
@@ -1464,45 +1527,68 @@ void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacr
             int index = rawnets[i].Connection[j]->instIndex;
 
             if(layer == topLayer)
-            {
                 fprintf(output, "o%d I : 1.0 1.0\n", index);
-            }    
         }
     }
 
+    for(int i = 0; i < numNets; i++)
+    {
+        int numPin = rawnets[i].numPins;
+        int notSameLayer = 0;
+
+        for(int j = 0; j < numPin; j++)
+            if(rawnets[i].Connection[j]->layer != btmLayer)
+                notSameLayer ++;
+
+        if(notSameLayer == numPin || numPin-notSameLayer == 1)
+            continue;
+        
+        fprintf(output2, "NetDegree : %d n%d\n", numPin-notSameLayer, netsCount2);
+        netsCount2++;
+        for(int j = 0; j < numPin; j++)
+        {
+            int layer = rawnets[i].Connection[j]->layer;
+            int index = rawnets[i].Connection[j]->instIndex;
+            if(layer == btmLayer)
+                fprintf(output2, "o%d I : 1.0 1.0\n", index);
+        }
+    }
+    
     fclose(output);
+    fclose(output2);
 }
 
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie)
 {
-    bool a =  cooradinate(macros, topDie, rawnets);
+    // bool a =  cooradinate(macros, topDie, rawnets);
 }
 
-bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets)
+bool cooradinate(vector <instance> &macros, Die die, vector <RawNet> &rawnets, int rotation, int list[], int (&pinsGrade)[][4])
 {
-    int topY = topDie.upperRightY;
+    
+    int topY = die.upperRightY;
     int btmY = 0;
     int leftX = 0;
-    int rightX = topDie.upperRightX;
+    int rightX = die.upperRightX;
     int direction = 0;  // 0 = left, 1 = up, 2 = right, 3 = down
     int tmp[4] = {btmY, rightX, topY, leftX};
-    int nowLayer = btmLayer;
-
-    int list[] = {31, 28, 25, 23, 20, 17, 7, 9, 5, 11, 3, 13, 1, 14 };
-    int pinsGrade [][4] = { {40, 144, 0, 0}, {44, 31, 55, 40}, {52, 30, 70, 28}, {46, 31, 56, 42}, {50, 34, 60, 24}, {47, 39, 44, 42}, {48, 40, 40, 35}, {46, 29, 58, 37}, {39, 133, 0, 0}, {44, 33, 53, 41}, {50, 31, 58, 34}, {47, 30, 60, 39}, {4, 45, 77, 52}, {4, 43, 91, 57}};
-    int listSize = sizeof(list)/sizeof(int);
-    
+    int nowLayer = die.index;
+    int listSize = 0;
     bool changeTwice = false;
+
+    for(int i = 0; i < macros.size(); i++)
+        if(macros[i].layer == die.index)
+            listSize++;
 
     macros[list[0]].finalX = 0;
     macros[list[0]].finalY = 0;
     macros[list[0]].layer = nowLayer;
-    macros[list[0]].rotate = decideRotation(direction, pinsGrade, 0);
+    macros[list[0]].rotate = decideRotation(direction, pinsGrade, 0, rotation);
     updateRotate(macros[list[0]]);
         
     for(int i = 1; i < listSize; i++)
     {
-        macros[list[i]].rotate = decideRotation(direction, pinsGrade, i);
+        macros[list[i]].rotate = decideRotation(direction, pinsGrade, i, rotation);
         updateRotate(macros[list[i]]);
         macros[list[i]].layer = nowLayer;
         int _w = macros[list[i]].finalWidth;
@@ -1558,7 +1644,7 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
         }
 
         if(changeTwice && chang)
-            return false;
+            return true;
 
         if(chang)
         {
@@ -1574,7 +1660,7 @@ bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets
             changeTwice = false;
     }
 
-    return true;
+    return false;
 }
 
 int actualHPWL(vector <RawNet> &rawnets)
@@ -1612,13 +1698,14 @@ int actualHPWL(vector <RawNet> &rawnets)
     return (int) sum;
 }
 
-int decideRotation(int direction, int (&pinGrade)[][4], int index)
+int decideRotation(int direction, int (&pinGrade)[][4], int index, int roatation)
 {
     int down = pinGrade[index][0] + pinGrade[index][1];
     int left = pinGrade[index][0] + pinGrade[index][2];
     int top = pinGrade[index][2] + pinGrade[index][3];
     int right = pinGrade[index][1] + pinGrade[index][3];
-    
+    bool feasible = (roatation >> index) & 0b1;
+    int ans = 0;
     int winner = 0;
 
     winner = max(down, top);
@@ -1632,32 +1719,32 @@ int decideRotation(int direction, int (&pinGrade)[][4], int index)
 
     switch (direction) {
         case 0: // 向右
-            if(winner == down) return 180;
-            else if (winner == right) return 90;
-            else if (winner == left) return 270;
-            else return 0;
+            if(winner == down) ans = 180;
+            else if (winner == right) ans = 90;
+            else if (winner == left) ans = 270;
+            else ans = 0;
             break;
         case 1: // 向上
-            if(winner == down) return 270;
-            else if (winner == right) return 180;
-            else if (winner == left) return 0;
-            else return 90;
+            if(winner == down) ans = 270;
+            else if (winner == right) ans = 180;
+            else if (winner == left) ans = 0;
+            else ans = 90;
             break;
         case 2: // 向左
-            if(winner == down) return 0;
-            else if (winner == right) return 270;
-            else if (winner == left) return 90;
-            else return 180;
+            if(winner == down) ans = 0;
+            else if (winner == right) ans = 270;
+            else if (winner == left) ans = 90;
+            else ans = 180;
             break;
         case 3: // 向下
-            if(winner == down) return 90;
-            else if (winner == right) return 0;
-            else if (winner == left) return 180;
-            else return 270;
+            if(winner == down) ans = 90;
+            else if (winner == right) ans = 0;
+            else if (winner == left) ans = 180;
+            else ans = 270;
             break;
     }
 
-    return 0;
+    return (ans + 90*feasible) % 360;
 }
 
 void returnList(vector<instance> macros, vector<int> topDieList, vector<int> btmDieList)

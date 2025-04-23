@@ -36,10 +36,10 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie);
 
 void macroPlacement(vector <instance> &macros, vector<RawNet> &rawnets, Die topDie);
 
-bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets);
+bool cooradinate(vector <instance> &macros, Die topDie, vector <RawNet> &rawnets, int rotation, int list[], int (&pinsGrade)[][4]);
 
 int actualHPWL(vector<RawNet> &rawnet);
 
-int decideRotation(int direction, int (&pinGrade)[][4], int index);
+int decideRotation(int direction, int (&pinGrade)[][4], int index, int rotation);
 
 void writeNet(vector <instance> &macros, vector < vector<instance> > &pinsInMacros, vector <RawNet> &rawnets, vector <instance> instances);

@@ -430,7 +430,7 @@ void readkj(vector <instance> &instances, vector <instance> &macros)
             instances[cellIndex-1].finalHeight = instances[cellIndex-1].inflateHeight;
         }
         
-        if(instances[cellIndex].isMacro)
+        if(instances[cellIndex-1].isMacro)
         {
             for(int j = 0; j < macros.size(); j++)
             {

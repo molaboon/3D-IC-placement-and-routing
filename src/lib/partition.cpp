@@ -150,26 +150,36 @@ void macroLegalization(vector <instance> &macros, Die topDie, Die btmDie)
 
 void updateRotate(instance &macro)
 {
+    int _w, _h;
+    if (macro.layer == 1)
+    {
+        _w = macro.width;
+        _h = macro.height;
+    }else
+    {
+        _w = macro.inflateWidth;
+        _h = macro.inflateHeight;
+    }
     switch ( macro.rotate )
     {
         case 0:
-            macro.finalWidth = macro.width;
-            macro.finalHeight = macro.height;
+            macro.finalWidth = _w;
+            macro.finalHeight = _h;
             break;
         
         case 90:
-            macro.finalWidth = macro.height;
-            macro.finalHeight = macro.width;
+            macro.finalWidth = _h;
+            macro.finalHeight = _w;
             break;
         
         case 180:
-            macro.finalWidth = macro.width;
-            macro.finalHeight = macro.height;
+            macro.finalWidth = _w;
+            macro.finalHeight = _h;
             break;
         
         case 270:
-            macro.finalWidth = macro.height;
-            macro.finalHeight = macro.width;
+            macro.finalWidth = _h;
+            macro.finalHeight = _w;
             break;
     }
 }
