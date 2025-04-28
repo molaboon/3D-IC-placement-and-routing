@@ -104,10 +104,6 @@ typedef struct _Instance{
     float gra_z = 0.0;
     float gra_d = 0.0;
 
-    float refX = 0.0;
-    float refY = 0.0;
-    float refZ = 0.0;
-
     int numNetConnection;
     vector<int> connectedNet;
 

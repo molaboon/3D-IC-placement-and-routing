@@ -24,7 +24,7 @@ void penaltyInfoOfinstance(const instance instance, const gridInfo binInfo, floa
 
 void calculatePenaltyArea(float coordinate[], int *length, float *firstLayer, float *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, float *grade);
 
-float scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo);
+double scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo);
 
 void gradientX(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float xScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer);
 
@@ -32,7 +32,7 @@ void gradientY(vector <RawNet> &rawNet, const float gamma, vector <instance> &in
 
 void gradientZ(vector <RawNet> &rawNet, const float gamma, vector <instance> &instances, gridInfo binInfo, const float penaltyWeight, const float yScore, const float penaltyScore, const float *originFirstLayer, const float *originSecondLayer, float *dnesityMap);
 
-float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap, vector <instance> &fillers);
+double returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap, vector <instance> &fillers);
 
 void CGandGraPreprocessing( vector <instance> &instances, float *nowGra, float *nowCG, float *lastGra, float *lastCG);
 
@@ -54,7 +54,6 @@ void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int
             
 float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGra, float *nowGra, int numOfStdCell);
 
-void refPosition(vector <instance> &instances);
 
 void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, Die btmDie);
 

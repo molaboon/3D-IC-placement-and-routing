@@ -20,7 +20,7 @@ using std::vector;
 
 #define dimention 3
 #define macroPart 1
-#define stdCellPart 0
+#define stdCellPart 1
 #define useEplace 0
 
 int main(int argc, char *argv[]){
@@ -117,7 +117,8 @@ int main(int argc, char *argv[]){
 	
 	if (stdCellPart){
 		system("rm hpwl.txt");
-		float gamma, penaltyWeight, totalScore = 0.0, newScore = 0.0;
+		float gamma, penaltyWeight;
+		double totalScore = 0.0, newScore = 0.0;
 		float wireLength, newWireLength;
 
 		float *lastCG = new float[ numStdCells * 3 ]{0.0};
@@ -128,7 +129,7 @@ int main(int argc, char *argv[]){
 		int qqq = -1;
 
 		stdCellFirstPlacement(instances, macros, binInfo, topDie);
-		updatePinsInMacroInfo( macros, pinsInMacros, instances);
+		// updatePinsInMacroInfo( macros, pinsInMacros, instances);
 
 		gamma = 0.05 * binInfo.dieWidth;
 		penaltyWeight = returnPenaltyWeight(rawnet, gamma, instances, binInfo, densityMap);
@@ -157,7 +158,7 @@ int main(int argc, char *argv[]){
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
 					
 					if( newScore > totalScore)
-						break;
+						break; 
 					else if(OvRatio(instances, binInfo))
 						break;
 					else
@@ -166,7 +167,7 @@ int main(int argc, char *argv[]){
 					updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);
 					conjugateGradient(nowGra, nowCG, lastCG, lastGra, numStdCells, 1);
 				}
-				
+				cout << totalScore << endl;
 				// refPosition(instances);
 				if(penaltyWeight < 4)
 					penaltyWeight *= 2;

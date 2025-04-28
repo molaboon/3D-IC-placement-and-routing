@@ -85,43 +85,36 @@ void firstPlacement(vector <instance> &instances, gridInfo binInfo, Die topDie)
 void stdCellFirstPlacement( vector <instance> &instances, vector <instance> &macros, gridInfo binInfo, Die topDie) 
 {
     int cellSize = instances.size();
-    
+    float minX, minY, maxX, maxY, minZ, maxZ;
+
+
+    minX = topDie.upperRightX / 2;
+    maxX = topDie.upperRightX / 2 + 100;
+    minY = topDie.upperRightY / 2;
+    maxY = topDie.upperRightY / 2 + 100;
+
     for(int i = 0; i < cellSize; i++)
     {
-        float minX, minY, maxX, maxY, minZ, maxZ;
+        if(!instances[i].isMacro)
+        {      
+            float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
+            float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
+            float Z = fmod( (float) rand(), ( maxZ - minZ + 1) ) + minZ;
 
-        if(instances[i].isMacro)
-        {
-            minX = instances[i].inflateWidth;
-            maxX = binInfo.dieWidth - instances[i].inflateWidth;
-            minY = instances[i].inflateHeight;
-            maxY = binInfo.dieHeight - instances[i].inflateHeight;
+            instances[i].rotate = 0;
+
+            instances[i].x = X;
+            instances[i].y = Y;
+            
+            if(instances[i].layer == 1)
+                instances[i].z = 9999;
+            else
+                instances[i].z = 1;
+
+            instances[i].tmpX = instances[i].x;
+            instances[i].tmpY = instances[i].y;
+            instances[i].tmpZ = instances[i].z;
         }
-        else
-        {
-            minX = 13500;
-            maxX = 13600;
-            minY = 9800;
-            maxY = 10000;
-            minZ = 4990;
-            maxZ = 5010;
-        }
-        
-        float X = fmod( (float) rand(), ( maxX - minX + 1) ) + minX ;
-        float Y = fmod( (float) rand(), ( maxY - minY + 1) ) + minY ;
-        float Z = fmod( (float) rand(), ( maxZ - minZ + 1) ) + minZ;
-
-        instances[i].rotate = 0;
-
-        instances[i].x = X;
-        instances[i].y = Y;
-        instances[i].z = Z;
-        instances[i].tmpX = instances[i].x;
-        instances[i].tmpY = instances[i].y;
-        instances[i].tmpZ = instances[i].z;
-        instances[i].refX = X;
-        instances[i].refY = Y;
-        instances[i].refZ = Z;
     }
 }
 
@@ -150,87 +143,6 @@ float returnPenaltyWeight(vector <RawNet> &rawNet, const float gamma, vector <in
     tsvScore = TSVofNet(rawNet, false, instances[0], 0, densityMap);
 
     penaltyScore = scoreOfPenalty(originfl, originsl, binInfo);
-
-    memcpy(fl, originfl, binInfo.binXnum * binInfo.binYnum * sizeof(float));
-    memcpy(sl, originsl, binInfo.binXnum * binInfo.binYnum * sizeof(float));
-
-    if(false)
-    {
-        // for(int i = 0; i < size; i++)
-        // {        
-        //     float tmpXscore = 0.0, tmpYscore = 0.0, tmpDen = 0.0;
-        //     float graGrade = 0.0;
-
-        //     // part of x
-        //     instances[i].tmpX = instances[i].x;
-        //     instances[i].tmpX += h;
-            
-        //     tmpXscore = scoreOfX(rawNet, gamma, true, instances[i], xScore);
-
-        //     tmpDen = penaltyScore;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        //     tmpDen -= graGrade;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
-        //     tmpDen += graGrade;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-
-        //     instances[i].tmpX = instances[i].x;
-            
-        //     grax += fabs( (tmpXscore) / h);
-        //     grad += fabs( (tmpDen - penaltyScore) / h );
-
-        //     // part of y /////////////////////////////////////////////////////////////
-
-        //     instances[i].tmpY = instances[i].y;
-        //     instances[i].tmpY += h;
-
-        //     tmpYscore = scoreOfY(rawNet, gamma, true, instances[i], yScore);
-
-        //     tmpDen = penaltyScore;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        //     tmpDen -= graGrade;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, false, &graGrade);
-        //     tmpDen += graGrade;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, true, true, &graGrade);
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-
-        //     gray += fabs( (tmpYscore) / h);
-        //     grad += fabs( (tmpDen - penaltyScore) / h );
-        //     instances[i].tmpY = instances[i].y;
-
-        //     // part of z /////////////////////////////////////////////////////////////
-                        
-        //     float tmpTSV = 0.0;
-
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-
-        //     instances[i].tmpZ = instances[i].z;
-        //     instances[i].tmpZ += h;
-        //     instances[i].density = returnDensity(instances[i].tmpZ, densityMap);
-
-        //     tmpTSV = TSVofNet(rawNet, true, instances[i], tsvScore, densityMap);
-
-        //     tmpDen = penaltyScore;
-        //     tmpDen -= graGrade;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-        //     tmpDen += graGrade;
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, true, &graGrade);
-        //     instances[i].tmpZ = instances[i].z;
-        //     instances[i].density = returnDensity(instances[i].z, densityMap);
-        //     penaltyInfoOfinstance(instances[i], binInfo, fl, sl, false, false, &graGrade);
-            
-        //     graz += fabs( (tmpTSV) / h);
-        //     grad += fabs( (tmpDen - penaltyScore) / h);
-        // } 
-
-        // free(fl);
-        // free(sl);
-        // penaltyWeight = ((grax + gray + graz) / grad);
-    }
-
-    free(originfl);
-    free(originsl);
 
     // printf("penalty Time: %fs\n", (endTime - startTime) / (float) CLOCKS_PER_SEC );
 

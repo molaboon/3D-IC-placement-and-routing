@@ -323,23 +323,8 @@ float scoreOfz( vector <RawNet> &rawNets, vector <instance> &instances, gridInfo
     //  claculate score of penalty
 
     for(int i = 0; i < size; i++)
-    {
-        if(zisChanged)
-        {
-            float tmpD = returnDensity(instances[i].z, densityMap);
-
-            instances[i].density = tmpD;
-            instances[i].tmpD = instances[i].density;
-        }
         penaltyInfoOfinstance(instances[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
-    }
 
-    // if (needFillers)
-    // {
-    //     for(int i = 0; i < numFiller; i++)
-    //         penaltyInfoOfinstance(fillers[i], binInfo, firstLayer, secondLayer, false, false, 0, 0);
-    // }
-    
     score = scoreOfPenalty(firstLayer, secondLayer, binInfo);
 
     free(firstLayer);
@@ -361,52 +346,58 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, flo
 {
     int leftXnum, rightXnum, topYnum, btmYnum;
     int row = (int) binInfo.binXnum;
-
-    float coordinate[5] = { 0.0 };
     int length[4] = {0};
-    
-    float leftX = 0, rightX = 0, topY = 0, btmY = 0;
+    float coordinate[5] = { 0.0 };
+    float leftX = 0, rightX = 0, topY = 0, btmY = 0 , _w = 0, _h = 0;
 
-    float _w = 0, _h = 0;
-
-    if(instance.layer == 1)
-    {
-        _w = instance.width;
+    if(instance.isMacro){
+        _w = (float) instance.finalWidth;
+        _h = (float) instance.finalHeight;
+    }
+    else if(instance.layer == 1){
+        _w = instance.width; 
         _h = instance.height;
     }
-    else
-    {
+    else{
         _w = instance.inflateWidth;
         _h = instance.inflateHeight;
     }
 
-    if(isGra)
+    if(instance.isMacro)
+    {
+        leftX = instance.x;
+        rightX = instance.x + (_w);
+        topY = instance.y;
+        btmY = instance.y + (_h );
+        coordinate[4] = instance.density;
+    }
+    else if(isGra)
     {   
         switch (graVariable)
         {
-        case 0:
-            leftX = instance.tmpX - (_w * 0.5);
-            rightX = instance.tmpX + (_w * 0.5);
-            topY = instance.y - (_h * 0.5);
-            btmY = instance.y + (_h * 0.5);
-            coordinate[4] = instance.density;
-            break;
-        
-        case 1:
-            leftX = instance.x - (_w * 0.5);
-            rightX = instance.x + (_w * 0.5);
-            topY = instance.tmpY - (_h * 0.5);
-            btmY = instance.tmpY + (_h * 0.5);
-            coordinate[4] = instance.density;
-            break;
-        
-        case 2:
-            leftX = instance.x - (_w * 0.5);
-            rightX = instance.x + (_w * 0.5);
-            topY = instance.y - (_h * 0.5);
-            btmY = instance.y + (_h * 0.5);
-            coordinate[4] = instance.tmpD;
-            break;
+            case 0:
+                leftX = instance.tmpX - (_w * 0.5);
+                rightX = instance.tmpX + (_w * 0.5);
+                topY = instance.y - (_h * 0.5);
+                btmY = instance.y + (_h * 0.5);
+                coordinate[4] = instance.density;
+                break;
+            
+            case 1:
+                leftX = instance.x - (_w * 0.5);
+                rightX = instance.x + (_w * 0.5);
+                topY = instance.tmpY - (_h * 0.5);
+                btmY = instance.tmpY + (_h * 0.5);
+                coordinate[4] = instance.density;
+                break;
+            
+            case 2:
+                leftX = instance.x - (_w * 0.5);
+                rightX = instance.x + (_w * 0.5);
+                topY = instance.y - (_h * 0.5);
+                btmY = instance.y + (_h * 0.5);
+                coordinate[4] = instance.tmpD;
+                break;
         }
     }
     else
@@ -517,22 +508,20 @@ void calculatePenaltyArea( float coordinate[], int *length, float *firstLayer, f
     // instance.inflate_ratio = 1;
 }
 
-float scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo)
+double scoreOfPenalty(float *firstLayer, float *secondLayer, gridInfo binInfo)
 {
-    float score = 0.0;
+    double score = 0.0;
     float area = binInfo.binWidth * binInfo.binHeight;
     
     const int binXnum = (int) binInfo.binXnum;
     const int binYnum = (int) binInfo.binYnum;
-
-    
 
     for(int i = 0; i < binYnum; i++)
     {
         for(int j = 0; j < binXnum; j++)
         {
             int b = j + i*binXnum;
-            score +=  (firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area);                
+            score +=  float((firstLayer[b] - area) * (firstLayer[b] - area) + (secondLayer[b] - area) * (secondLayer[b] - area));
         }
     }
     
@@ -667,10 +656,10 @@ float infaltionRatio(instance instance, float routingOverflow)
     return 0.0;
 }
 
-float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap, vector <instance> &fillers)
+double returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo binInfo, const float penaltyWeight, vector <instance> &instances, float *densityMap, vector <instance> &fillers)
 {
-    float score_of_x, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
-    float penaltyScore = 0.0;
+    double score_of_x = 0.0, score_of_y = 0.0, score_of_z = 0.0, densityScore = 0.0, totalScore, wireLength;
+    double penaltyScore = 0.0;
 
 #pragma omp parallel sections num_threads(8)
 {
@@ -681,18 +670,14 @@ float returnTotalScore(vector<RawNet> &rawNet, const float gamma, const gridInfo
     #pragma omp section
     {
         densityScore = scoreOfz(rawNet, instances, binInfo, 1, densityMap, fillers);
-        score_of_z = TSVofNet(rawNet, false, instances[0], 0, densityMap);
     }
 }
     
     penaltyScore = score_of_z * (alpha) + (densityScore) * penaltyWeight; 
     wireLength = score_of_x + score_of_y;
-
-    writeData(wireLength, score_of_z, densityScore);
     
     if(penaltyWeight == 1)
     {
-        score_of_z = TSVofNet(rawNet, false, instances[0], 1, densityMap);
         printf("HPWL: %f, HBT: %f\n", wireLength, score_of_z);
     }
         
@@ -801,30 +786,18 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         spaceX = tmp[0] * Alpha * binWidth ;
         spaceY = tmp[1] * Alpha * binHeight ;
-        
-        if(instances[index].z < 4996)
-            spaceZ = (nowCG[index * Dimensions + 2] > 0)? 5.0f : -5.0f ;
-        else
-            spaceZ = (nowCG[index * Dimensions + 2] > 0)? -5.0f : 5.0f ;
-
-        instances[index].refX = instances[index].x;
-        instances[index].refY = instances[index].y;
-        // instances[index].refZ = instances[index].z;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-        // instances[index].z += spaceZ;
-        
-        // if(instances[index].z < 4997)
-        //     instances[index].z += spaceZ;
-        // else
-        //     instances[index].z -= spaceZ;
+     
         
         glodenSearch(instances[index], binInfo);
     
         instances[index].tmpX = instances[index].x;
         instances[index].tmpY = instances[index].y;
         instances[index].tmpZ = instances[index].z;
+        instances[index].finalX = int(instances[index].x - instances[index].finalWidth);
+        instances[index].finalY = int(instances[index].y - instances[index].finalHeight);
     }
 }
 
@@ -844,20 +817,20 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         yScore = scoreOfY(rawNets, gamma, false, instances[0], 0);
     #pragma omp section
     {
-        for(int j = 0; j < numInstances; j++)
-        {
-            float tmpD = returnDensity(instances[j].z, densityMap);
+        // for(int j = 0; j < numInstances; j++)
+        // {
+        //     float tmpD = returnDensity(instances[j].z, densityMap);
 
-            instances[j].density = tmpD;
-            instances[j].tmpD = tmpD;
-        }
+        //     instances[j].density = tmpD;
+        //     instances[j].tmpD = tmpD;
+        // }
             
         zScore = TSVofNet(rawNets, false, instances[0], 0, densityMap);
 
         for(int j = 0; j < numInstances; j++)
             penaltyInfoOfinstance(instances[j], binInfo, originFirstLayer, originSecondLayer, false, false, NULL, 0);
 
-        fillbin(originFirstLayer, originSecondLayer, binInfo);
+        // fillbin(originFirstLayer, originSecondLayer, binInfo);
 
         penaltyScore = scoreOfPenalty(originFirstLayer, originSecondLayer, binInfo);  
     }
@@ -899,123 +872,7 @@ void returnDensityMap(float *densityMap)
     }
 }
 
-void clacBktrk( vector <instance> &instances, float *lastGra, float *nowGra, int iteration, float *optParam, 
-                vector <RawNet> &rawNets, float gamma, grid_info &binInfo, float *lastCG, float *nowCG, 
-                float &penaltyWeight, float *densityMap, float *lastRefSoltion, float *curRefSoltion)
-{
-    float stepSize = 0.0;
-    float newParam =  (1+ sqrt( 4.0 * *optParam * *optParam + 1.0) ) / 2;
-    int numInstances = instances.size();
 
-    float *curRefGra = new float [numInstances *3] {0.0};
-    float *curUk = new float [numInstances *3] {0.0};
-    float *newRefSolution = new float [numInstances *3] {0.0};
-    float param = ((*optParam-1) / newParam);
-
-
-    memcpy(curRefGra, nowGra, numInstances * 3 * sizeof(float));
-
-    for(int i = 0; i < numInstances; i++)
-    {
-        curUk[i*3] = instances[i].x;
-        curUk[i*3 + 1] = instances[i].y;
-        curUk[i*3 + 2] = instances[i].z;
-
-        curRefSoltion[i*3] = instances[i].refX;
-        curRefSoltion[i*3+1] = instances[i].refY;
-        curRefSoltion[i*3+2] = instances[i].refZ;
-    }
-
-    if(iteration == 0)
-    {
-        stepSize = 1;
-        memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(float));
-    }
-    else
-        stepSize = calcLipschitz(lastRefSoltion, curRefSoltion, lastGra, nowGra, numInstances);
-    
-
-    while (true)
-    {
-        for(int i = 0; i < numInstances; i++)
-        {
-            float refX, refY, refZ;
-            refX = curRefSoltion[i * 3] - curRefGra[i * 3] * stepSize;
-            refY = curRefSoltion[i * 3 + 1] - curRefGra[i * 3 + 1] * stepSize;
-            refZ = curRefSoltion[i * 3 + 2] - curRefGra[i * 3 + 2] * stepSize;
-
-            instances[i].x = refX + (refX - curUk[i*3]) * param;
-            instances[i].y = refY + (refY - curUk[i*3]) * param;
-            instances[i].z = refZ + (refZ - curUk[i*3]) * param;
-
-            glodenSearch(instances[i], binInfo);
-
-            newRefSolution[i*3] = instances[i].x;
-            newRefSolution[i*3+1] = instances[i].y;
-            newRefSolution[i*3+2] = instances[i].z;
-            
-        }
-
-        // updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
-
-        float newStepsize = calcLipschitz(curRefSoltion, newRefSolution, curRefGra, nowGra, numInstances);
-        
-        if( 0.95 * stepSize <= newStepsize)
-        {
-            stepSize = newStepsize;
-            break;
-        }
-
-        stepSize = newStepsize;
-    }
-
-    //Net's Method
-
-    for(int i = 0; i < numInstances; i++)
-    {   
-        instances[i].x = curRefSoltion[i*3] - curRefGra[i*3] * stepSize;
-        instances[i].y = curRefSoltion[i*3+1] - curRefGra[i*3+1] * stepSize;
-        instances[i].z = curRefSoltion[i*3+2] - curRefGra[i*3+2] * stepSize;
-
-        glodenSearch(instances[i], binInfo);
-
-        instances[i].refX = instances[i].x + ( instances[i].x - curUk[i*3]) * param;
-        instances[i].refY = instances[i].y + ( instances[i].y - curUk[i*3]) * param;
-        instances[i].refZ = instances[i].z + ( instances[i].z - curUk[i*3]) * param;
-
-        instances[i].x = instances[i].refX;
-        instances[i].y = instances[i].refY;
-        instances[i].z = instances[i].refZ;
-
-        glodenSearch(instances[i], binInfo);
-
-        instances[i].refX = instances[i].x;
-        instances[i].refY = instances[i].y;
-        instances[i].refZ = instances[i].z;
-    }
-
-    // updateGra(rawNets, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap);
-
-    for(int i = 0; i < numInstances; i++)
-    {
-        instances[i].x = curRefSoltion[i*3] - curRefGra[i*3] * stepSize;
-        instances[i].y = curRefSoltion[i*3+1] - curRefGra[i*3+1] * stepSize;
-        instances[i].z = curRefSoltion[i*3+2] - curRefGra[i*3+2] * stepSize;
-
-        glodenSearch(instances[i], binInfo);
-
-    }
-    
-    memcpy(lastRefSoltion, curRefSoltion, numInstances * 3 * sizeof(float));
-    memcpy(lastGra, curRefGra, numInstances * 3 * sizeof(float));
-
-    *optParam = newParam;
-
-    free(curUk);
-    free(curRefGra);
-    free(newRefSolution);
-
-}
 
 
 float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGra, float *nowGra, int numOfStdCell)
@@ -1030,18 +887,6 @@ float calcLipschitz(float *lastRefSolution, float *nowRefSolution, float *lastGr
     }
 
     return sqrt(numerator)/sqrt(denomenator);
-}
-
-void refPosition(vector <instance> &instances)
-{
-    int size = instances.size();
-
-    for(int i = 0; i < size; i++)
-    {
-        instances[i].x = instances[i].refX;
-        instances[i].y = instances[i].refY;
-        instances[i].z = instances[i].refZ;
-    }
 }
 
 void fillerPreprocess(vector <instance> &filler, gridInfo binInfo, Die topDie, Die btmDie)
