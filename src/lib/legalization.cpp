@@ -1201,7 +1201,7 @@ void writeRow(vector <instance> &macros, Die topDie, Die btmDie)
     vector < vector<int> > btmDieMacros(btmDie.repeatCount);
     int numRow = topDie.repeatCount;
     int height = topDie.rowHeight;
-
+ 
     const int diewidth = (int) topDie.upperRightX;
     int totalRow = 0;
 

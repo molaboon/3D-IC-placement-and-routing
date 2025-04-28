@@ -106,10 +106,10 @@ int main(int argc, char *argv[]){
 		updatePinsInMacroInfo(macros, pinsInMacros, instances);
 		
 		writeVisualFile(macros, 999, topDie);
-		wirteNodes(instances, macros);
-		wirtePl(instances, macros, topDie);
-		writeNet(macros, pinsInMacros, rawnet, instances);
-		writeRow(macros, topDie, btmDie);
+		// wirteNodes(instances, macros);
+		// wirtePl(instances, macros, topDie);
+		// writeNet(macros, pinsInMacros, rawnet, instances);
+		// writeRow(macros, topDie, btmDie);
 		
 	}
 

@@ -367,41 +367,54 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, flo
     
     float leftX = 0, rightX = 0, topY = 0, btmY = 0;
 
+    float _w = 0, _h = 0;
+
+    if(instance.layer == 1)
+    {
+        _w = instance.width;
+        _h = instance.height;
+    }
+    else
+    {
+        _w = instance.inflateWidth;
+        _h = instance.inflateHeight;
+    }
+
     if(isGra)
     {   
         switch (graVariable)
         {
         case 0:
-            leftX = instance.tmpX - (instance.width * 0.5);
-            rightX = instance.tmpX + (instance.width * 0.5);
-            topY = instance.y - (instance.height * 0.5);
-            btmY = instance.y + (instance.height * 0.5);
+            leftX = instance.tmpX - (_w * 0.5);
+            rightX = instance.tmpX + (_w * 0.5);
+            topY = instance.y - (_h * 0.5);
+            btmY = instance.y + (_h * 0.5);
             coordinate[4] = instance.density;
             break;
         
         case 1:
-            leftX = instance.x - (instance.width * 0.5);
-            rightX = instance.x + (instance.width * 0.5);
-            topY = instance.tmpY - (instance.height * 0.5);
-            btmY = instance.tmpY + (instance.height * 0.5);
+            leftX = instance.x - (_w * 0.5);
+            rightX = instance.x + (_w * 0.5);
+            topY = instance.tmpY - (_h * 0.5);
+            btmY = instance.tmpY + (_h * 0.5);
             coordinate[4] = instance.density;
             break;
         
         case 2:
-            leftX = instance.x - (instance.width * 0.5);
-            rightX = instance.x + (instance.width * 0.5);
-            topY = instance.y - (instance.height * 0.5);
-            btmY = instance.y + (instance.height * 0.5);
+            leftX = instance.x - (_w * 0.5);
+            rightX = instance.x + (_w * 0.5);
+            topY = instance.y - (_h * 0.5);
+            btmY = instance.y + (_h * 0.5);
             coordinate[4] = instance.tmpD;
             break;
         }
     }
     else
     {
-        leftX = instance.x - (instance.width * 0.5);
-        rightX = instance.x + (instance.width * 0.5);
-        topY = instance.y - (instance.height * 0.5);
-        btmY = instance.y + (instance.height * 0.5);
+        leftX = instance.x - (_w * 0.5);
+        rightX = instance.x + (_w * 0.5);
+        topY = instance.y - (_h * 0.5);
+        btmY = instance.y + (_h * 0.5);
         coordinate[4] = instance.density;
     }
     
@@ -431,12 +444,6 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, flo
     if( graGrade != NULL)
         *graGrade = grade[0] + grade[1];
 
-    // if_left_x_num = int( if_left_x // grid_info[2] )
-    // if_right_x_num = int( if_right_x // grid_info[2])
-    // if_top_y_num = int( if_top_y // grid_info[3] )
-    // if_btm_y_num = int( if_btm_y // grid_info[3])     
-    // if_coordinate = [if_left_x, if_right_x , if_top_y, if_btm_y]
-    // if_length = [if_left_x_num, if_right_x_num, if_top_y_num, if_btm_y_num ]
 }
 
 void calculatePenaltyArea( float coordinate[], int *length, float *firstLayer, float *secondLayer, int row, instance instance, gridInfo binInfo, bool needMinus, float *grade)
@@ -802,11 +809,11 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
 
         instances[index].refX = instances[index].x;
         instances[index].refY = instances[index].y;
-        instances[index].refZ = instances[index].z;
+        // instances[index].refZ = instances[index].z;
 
         instances[index].x += spaceX;
         instances[index].y += spaceY;
-        instances[index].z += spaceZ;
+        // instances[index].z += spaceZ;
         
         // if(instances[index].z < 4997)
         //     instances[index].z += spaceZ;
@@ -864,11 +871,7 @@ void updateGra(vector <RawNet> &rawNets, float gamma, vector<instance> &instance
         gradientY(rawNets, gamma, instances, binInfo, penaltyWeight, yScore, penaltyScore, originFirstLayer, originSecondLayer);
     #pragma omp section
         gradientZ(rawNets, gamma, instances, binInfo, penaltyWeight, zScore, penaltyScore, originFirstLayer, originSecondLayer, densityMap);
-    // #pragma omp section
-    // {
-    //     graFillerX(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-    //     graFillerY(fillers, binInfo, penaltyWeight, originFirstLayer, originSecondLayer);
-    // }    
+    
 }    
     memcpy( lastGra, nowGra, Dimensions * numInstances * sizeof(float) );
     memcpy( lastCG, nowCG, Dimensions * numInstances * sizeof(float) );
