@@ -228,13 +228,14 @@ void updatePinsInMacroInfo( vector<instance> &macro, vector < vector<instance> >
             }
         }
 
-        // instances[ macro[i].instIndex ].width = (float) w;
-        // instances[ macro[i].instIndex ].height = (float) h;
+        instances[ macro[i].instIndex ].width = (float) w;
+        instances[ macro[i].instIndex ].height = (float) h;
+        instances[ macro[i].instIndex ].inflateWidth = (float) w;
+        instances[ macro[i].instIndex ].inflateHeight = (float) h;
         instances[ macro[i].instIndex ].x = float (macro[i].finalX);
         instances[ macro[i].instIndex ].y = float (macro[i].finalY);
-        // instances[ macro[i].instIndex ].z = float (macro[i].layer*9900);
-        // instances[ macro[i].instIndex ].finalX = x;
-        // instances[ macro[i].instIndex ].finalY = y;
+        instances[ macro[i].instIndex ].finalX = float (macro[i].finalX);
+        instances[ macro[i].instIndex ].finalY = float (macro[i].finalY);
         instances[ macro[i].instIndex ].finalWidth = w;
         instances[ macro[i].instIndex ].finalHeight = h;
         instances[ macro[i].instIndex ].layer = macro[i].layer;

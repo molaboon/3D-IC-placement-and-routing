@@ -94,14 +94,14 @@ int main(int argc, char *argv[]){
 		do{
 			needupdate = cooradinate(macros, topDie, rawnet, roatation, topList, topPinsGrade);
 			roatation++;
-		}while (needupdate && roatation < 16384);
+		}while (needupdate && roatation < 66666);
 
 		roatation = 0;
 
 		do{
 			needupdate = cooradinate(macros, btmDie, rawnet, roatation, btmList, btmPinsGrade);
 			roatation++;
-		}while (needupdate && roatation < 16384);
+		}while (needupdate && roatation < 66666);
 		
 		updatePinsInMacroInfo(macros, pinsInMacros, instances);
 		
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]){
 					qqq++;
 					// mvFiller(fillers, binInfo);
 					newSolution(instances, nowCG, binInfo);
-					updatePinsInMacroInfo( macros, pinsInMacros, instances);
+					// updatePinsInMacroInfo( macros, pinsInMacros, instances);
 					writeVisualFile(instances, qqq, topDie);
 
 					newScore = returnTotalScore( rawnet, gamma, binInfo, penaltyWeight, instances, densityMap, fillers);
@@ -193,7 +193,7 @@ int main(int argc, char *argv[]){
 		}
 
 		endTime = time(NULL);
-		finalUpdatePinsInMacro( macros, pinsInMacros, instances);
+		// finalUpdatePinsInMacro( macros, pinsInMacros, instances);
 		newScore = returnTotalScore( rawnet, gamma, binInfo, 1, instances, densityMap, fillers);
 		printf("Time: %lds, iter: %d, score: %f\n", (endTime - startTime), qqq , newScore);
 		updateGra(rawnet, gamma, instances, binInfo, lastGra, nowGra, lastCG, nowCG, penaltyWeight, densityMap, fillers);

@@ -368,7 +368,7 @@ void penaltyInfoOfinstance( const instance instance, const gridInfo binInfo, flo
         leftX = instance.x;
         rightX = instance.x + (_w);
         topY = instance.y;
-        btmY = instance.y + (_h );
+        btmY = instance.y + (_h);
         coordinate[4] = instance.density;
     }
     else if(isGra)
@@ -492,6 +492,9 @@ void calculatePenaltyArea( float coordinate[], int *length, float *firstLayer, f
             {
                 firstLayer[bin_index] += y_length * x_length * density ;
                 secondLayer[bin_index] += y_length * x_length * (1.0 - density) ;
+
+                if(isnan(y_length * x_length * density))
+                    cout<< "a" << endl;
                 
                 firstLayerGrade += (binInfo.binHeight * binInfo.binWidth - firstLayer[bin_index] ) * (binInfo.binHeight * binInfo.binWidth - firstLayer[bin_index] );
                 secondLayerGrade += (binInfo.binHeight * binInfo.binWidth - secondLayer[bin_index] ) * (binInfo.binHeight * binInfo.binWidth - secondLayer[bin_index] );
@@ -782,7 +785,10 @@ void newSolution(vector<instance> &instances, float *nowCG, grid_info binInfo)
         tmp[1] = nowCG[index * Dimensions + 1] ;
         tmp[2] = 0;
 
-        Alpha = returnAlpha(tmp);
+        if(tmp[0] == 0 && tmp[1] == 0)
+            Alpha = 0;
+        else
+            Alpha = returnAlpha(tmp);
 
         spaceX = tmp[0] * Alpha * binWidth ;
         spaceY = tmp[1] * Alpha * binHeight ;
